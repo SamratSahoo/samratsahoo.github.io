@@ -1,28 +1,17 @@
 ---
 layout: page
-title: About
+title: Hi, I'm Samrat 👋
 ---
 
-Sidey is a simple and minimalistic jekyll blogging theme.
+welcome to my thoughtspace! the world is a crazy place and sometimes I need a place to spill my brain so here I am! be warned, this isn't your typical blog -- you might find my jocular side talking about how dinosaur space aliens will take over the world or perhaps my nerdy side talking about how we can build a more robust future with peer2peer technology. whatever it is, I hope you enjoy this wild journey.
 
-### Features
+if you would like to learn more about who I am from a professional standpoint, I'll leave my socials below so feel free to give me a shout
 
-- Responsive design
-- Inline CSS
-- Anchor headings
-- Search
-- Tags & tag pages
-- Security headers (for Netlify hosting)
-- 404 page
-- Compressed CSS and HTML
-- 100/100 score on Lighthouse, Page Speed Insights & Webpagetest
-- Robots.txt
-- Atom & Json feeds
-- Sass
-- Seo optimized (Twitter cards, Facebook Open Graph, Schema.org)
-- Ultra fast (Only ~5kb of CSS)
-- Sidebar navigation
+- [twitter](https://twitter.com/samratdotjs)
+- [linkedin](https://www.linkedin.com/in/samratsahoo/)
 
-### Screenshot
+### oh and here is a random photo of me :)
 
-![Screenshot](screenshot.png)
+if you want to put a face to this writing, here I am !!
+
+<img src="samrat.jpg" width="60%"  />
