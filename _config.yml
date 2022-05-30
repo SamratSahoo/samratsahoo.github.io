@@ -1,14 +1,14 @@
-site: Sidey
+site: samrat's thought space
 url: #yoururl
-title: Sidey
-description: Simple and minimalistic jekyll blogging theme.
+title: samrat's thought space
+description: chaos written down.
 twitter:
-  username: #yourusername
+  username: samratdotjs
   card: summary
-  creator: #yourusername
+  creator: samratdotjs
 author:
-  twitter: #yourusername
-  name: #yourusername
+  twitter: samratdotjs
+  name: samrat sahoo
   avatar:
   email: #youremail
   url: #yoururl
@@ -20,19 +20,19 @@ highlighter: none
 
 exclude:
   - .jekyll-cache
-  
+
 compress_html:
   clippings: all
   comments: ["<!-- ", " -->"]
 
 sass:
-  sass_dir:          _sass
-  style:            :compressed
+  sass_dir: _sass
+  style: :compressed
 
 plugins:
   - jekyll-paginate
   - jekyll-seo-tag
-  - jekyll-sitemap  
+  - jekyll-sitemap
 
 collections:
   pages:
@@ -41,21 +41,18 @@ collections:
   posts:
     output: true
     permalink: /:year/:month/:day/:slug
-  
+
 defaults:
-  -
-    scope:
+  - scope:
       path: ""
     values:
       layout: "default"
-  -
-    scope:
+  - scope:
       path: ""
       type: "pages"
     values:
       layout: "page"
-  -
-    scope:
+  - scope:
       path: ""
       type: "posts"
     values:
