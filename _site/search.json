@@ -2,9 +2,20 @@
   
     {
 
+      "title"    : "two point five.",
+      "description" : "the average of two and three is two point five.",
+      "url"      : "/2022/06/11/two-point-five",
+      "category" : "",
+      "tags"     : "web3, tech, stuff i think is big brain",
+      "date"     : "2022-06-11 00:00:00 -0500"
+
+    } ,
+  
+    {
+
       "title"    : "anya forger.",
       "description" : "anya &gt;&gt;&gt; every anime character",
-      "url"      : "/2022/05/29/anya",
+      "url"      : "/2022/05/29/anya-forger",
       "category" : "",
       "tags"     : "anime, random fun to keep me occupied, philosophy",
       "date"     : "2022-05-29 00:00:00 -0500"

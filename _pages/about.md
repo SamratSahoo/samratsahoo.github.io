@@ -10,7 +10,7 @@ if you would like to learn more about who I am from a professional standpoint, I
 - [twitter](https://twitter.com/samratdotjs)
 - [linkedin](https://www.linkedin.com/in/samratsahoo/)
 
-_P.S. if you are an employer or a VC who randomly happens to be reading my blog -- please do not judge me from this blog. this blog is representative of my non-professional life. my blog is better representative of my personality + interests outside of what I do professionally_
+_P.S. if you are an employer or a VC who randomly happens to be reading my blog -- be warned this blog is representative of my personality + interests outside of what I do professionally_
 
 ### oh and here is a random photo of me :)
 
