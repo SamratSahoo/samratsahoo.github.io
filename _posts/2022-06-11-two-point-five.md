@@ -34,4 +34,4 @@ as much as I believe in an internet built on top of web3 technologies, I don't t
 
 its hard for me to say if an internet on built on web2 or web3 will completely dominate but I would not be suprised if a web2.5 happens.
 
-I can say with confidence though, a [web5](https://twitter.com/samratdotjs/status/1535382169329102848) system will never take over the internet :)
+I can say with confidence though, a [web5](https://twitter.com/jack/status/1585724288274931714) system will never take over the internet :)
