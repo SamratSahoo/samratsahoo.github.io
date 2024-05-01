@@ -16,4 +16,4 @@ _P.S. if you are an employer who randomly happens to be reading my blog -- be wa
 
 if you want to put a face to this writing, here I am !!
 
-<img src="samrat.jpg" width="60%"  />
+<img src="samrat.png" width="60%"  />

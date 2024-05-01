@@ -1,0 +1,13 @@
+---
+layout: default
+---
+
+<section class="posts">
+    <ul>
+        {% for lecture in site.lectures %}
+        {% if lecture.course == page.course %}
+        <li><a href="{{ site.baseurl }}{{ lecture.url }}">{{ lecture.title }}</a><time datetime="{{ lecture.date | date_to_xmlschema }}">{{ lecture.date | date: "%m-%d-%Y" }}</time></li>
+        {% endif %}
+        {% endfor %}
+    </ul>
+</section>

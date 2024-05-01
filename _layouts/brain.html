@@ -1,0 +1,12 @@
+---
+layout: default
+---
+
+<section class="posts">
+    {{content }}
+    <ul>
+        {% for brain in site.brain %}
+        <li><a href="{{ site.baseurl }}{{ brain.url }}">{{ brain.name }}</a><div>{{brain.course}}, {{brain.source}}</div></li>
+        {% endfor %}
+    </ul>
+</section>

@@ -1,5 +1,5 @@
 site: samrat's thought space
-url: #yoururl
+url: https://samratsahoo.com
 title: samrat's thought space
 description: chaos written down.
 twitter:
@@ -13,7 +13,7 @@ author:
   email: #youremail
   url: #yoururl
 permalink: pretty
-
+markdown: kramdown
 baseurl: ""
 
 highlighter: none
@@ -33,6 +33,22 @@ plugins:
   - jekyll-paginate
   - jekyll-seo-tag
   - jekyll-sitemap
+  - jekyll-spaceship
+
+jekyll-spaceship:
+  # default enabled processors
+  processors:
+    - mermaid-processor
+  mermaid-processor:
+    mode: default  # mode value 'pre-fetch' for fetching image at building stage
+    css:
+      class: mermaid
+    syntax:
+      code: 'mermaid!'
+      custom: ['@startmermaid', '@endmermaid']
+    config:
+      theme: default
+    src: https://mermaid.ink/svg/
 
 collections:
   pages:
@@ -41,6 +57,10 @@ collections:
   posts:
     output: true
     permalink: /:year/:month/:day/:slug
+  brain:
+    output: true
+  lectures:
+    output: true
 
 defaults:
   - scope:
@@ -57,3 +77,8 @@ defaults:
       type: "posts"
     values:
       layout: "post"
+  - scope:
+      path: ""
+      type: "brain"
+    values:
+      layout: "brain"
