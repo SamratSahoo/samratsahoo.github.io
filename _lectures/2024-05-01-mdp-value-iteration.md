@@ -1,11 +1,17 @@
 ---
 layout: page
-title: Background Lecture 0 - Markov Decision Processes
+title: Background Lecture 0 - Markov Decision Processes Value Iteration
 course: cs234
-permalink: /brain/cs234/markov-decision-processes
+permalink: /brain/cs234/markov-decision-processes-value-iteration
+order: 0
 ---
 
-## Introduction
+*Note: This was from stanford cs221 and is not part of cs234. I used this to gain some prerequistie knowledge for cs234*
+
+**Resources:**
+- [Lecture Video](https://youtu.be/9g32v7bK3Co?feature=shared)
+
+### Introduction
 Based on uncertainty / randomness of the real world where a state + action combo can lead to two different states.
 
 **Applications:**
@@ -71,8 +77,7 @@ V_\pi(s) =
             \text{else } Q_\pi(s, a)\}
     \end{cases}
 $$
-
-$Q_\pi(s, a) = \sum_{s'}T(s, a, s')[R(s, a, s') + \gamma V_\pi(s')]$
+$$Q_\pi(s, a) = \sum_{s'}T(s, a, s')[R(s, a, s') + \gamma V_\pi(s')]$$
 
 **Iterative Algorithm:** Start with arbitrary policy values and apply the recurrence until convergence
 
