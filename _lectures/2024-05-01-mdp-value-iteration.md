@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Background Lecture 0 - Markov Decision Processes Value Iteration
+title: background lecture 0 - markov decision processes value iteration
 course: cs234
 permalink: /brain/cs234/markov-decision-processes-value-iteration
 order: 0

@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Background Lecture 1 - Markov Decision Processes Reinforcement Learning
+title: background lecture 1 - markov decision processes reinforcement learning
 course: cs234
 permalink: /brain/cs234/markov-decision-processes-reinforcement-learning
 order: 1
