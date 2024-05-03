@@ -212,3 +212,25 @@ figcaption {
 img.mermaid {
 	max-width: 200px;
 }
+
+.url{
+	color: #0645AD;
+}
+
+*::-moz-selection { /* Code for Firefox */
+	color: white;
+	background: rgb(112, 17, 220);
+  }
+  
+  *::selection {
+	color: white;
+	background: rgb(112, 17, 220);
+  }
+
+  *{
+	font-family: "Outfit", sans-serif;
+  }
+
+  li > ul {
+    padding-left: 1rem;
+}

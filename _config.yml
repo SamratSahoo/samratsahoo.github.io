@@ -11,9 +11,8 @@ author:
   name: samrat sahoo
   avatar:
   email: #youremail
-  url: #yoururl
+  url: https://samratsahoo.com
 permalink: pretty
-markdown: kramdown
 baseurl: ""
 
 highlighter: none

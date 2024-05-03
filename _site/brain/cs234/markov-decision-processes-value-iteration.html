@@ -4,6 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet">
 <meta name="generator" content="Jekyll v4.2.2">
 <meta property="og:title" content="background lecture 0 - markov decision processes value iteration">
 <meta name="author" content="samrat sahoo">
@@ -18,12 +21,12 @@
 <meta name="twitter:card" content="summary">
 <meta property="twitter:title" content="background lecture 0 - markov decision processes value iteration">
 <meta name="twitter:site" content="@samratdotjs">
-<meta name="twitter:creator" content="@samratdotjs"> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"samrat sahoo"},"dateModified":"2024-05-01T00:00:00-05:00","datePublished":"2024-05-01T00:00:00-05:00","description":"Note: This was from stanford cs221 and is not part of cs234. I used this to gain some prerequistie knowledge for cs234","headline":"background lecture 0 - markov decision processes value iteration","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/brain/cs234/markov-decision-processes-value-iteration"},"url":"http://localhost:4000/brain/cs234/markov-decision-processes-value-iteration"}</script><title> background lecture 0 - markov decision processes value iteration - samrat's thought space</title>
+<meta name="twitter:creator" content="@samratdotjs"> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"samrat sahoo","url":"https://samratsahoo.com"},"dateModified":"2024-05-01T00:00:00-05:00","datePublished":"2024-05-01T00:00:00-05:00","description":"Note: This was from stanford cs221 and is not part of cs234. I used this to gain some prerequistie knowledge for cs234","headline":"background lecture 0 - markov decision processes value iteration","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/brain/cs234/markov-decision-processes-value-iteration"},"url":"http://localhost:4000/brain/cs234/markov-decision-processes-value-iteration"}</script><title> background lecture 0 - markov decision processes value iteration - samrat's thought space</title>
 <link rel="shortcut icon" href="/favicon.png">
 <link rel="alternate" type="application/atom+xml" title="samrat's thought space" href="/atom.xml">
 <link rel="alternate" type="application/json" title="samrat's thought space" href="http://localhost:4000/feed.json">
 <link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml">
-<style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:10rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5{line-height:1;margin:1rem 0;font-weight:600}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:60rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}@media print{.no-print,.no-print *{display:none !important}}img.mermaid{max-width:200px}</style>
+<style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:10rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5{line-height:1;margin:1rem 0;font-weight:600}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:60rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}@media print{.no-print,.no-print *{display:none !important}}img.mermaid{max-width:200px}.url{color:#0645AD}*::-moz-selection{color:white;background:#7011dc}*::selection{color:white;background:#7011dc}*{font-family:"Outfit", sans-serif}li>ul{padding-left:1rem}</style>
 <script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"},"svg":{"fontCache":"global"}}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body><main><header aria-hidden="true" class="no-print"> <!--<h1 class="logo">samrat's thought space</h1>--><nav role="navigation" aria-hidden="true"><ul>
@@ -31,7 +34,8 @@
 <li><a href="/about">about</a></li>
 <li><a href="/search">search</a></li>
 <li><a href="/brain">brain</a></li>
-</ul></nav></header><section class="post"><h2>background lecture 0 - markov decision processes value iteration</h2>
+</ul></nav></header><section class="post"><h2>
+<a href="/brain/cs234" class="url">cs234</a> / background lecture 0 - markov decision processes value iteration</h2>
 <p><em>Note: This was from stanford cs221 and is not part of cs234. I used this to gain some prerequistie knowledge for cs234</em></p>
 <p><strong>Resources:</strong></p>
 <ul><li><a href="https://youtu.be/9g32v7bK3Co?feature=shared">Lecture Video</a></li></ul>
@@ -50,9 +54,7 @@
 <p><strong>Transition Function:</strong> Gives you the probability of going from a given state to another state given an action.</p>
 <ul>
 <li>$T(s, a, s’) &gt; 0$ where $s$ is a given state, $a$ is an action, and $s’$ is the next state</li>
-<li>
-<p>Adding up all possible $s’$ you can end up at for the same $s, a$ should result in 1</p>
-<p>$\sum_{s’ \in \text{states}}T(s, a, s’) = 1$</p>
+<li>Adding up all possible $s’$ you can end up at for the same $s, a$ should result in 1<ul><li>$\sum_{s’ \in \text{states}}T(s, a, s’) = 1$</li></ul>
 </li>
 </ul>
 <p><strong>Reward Function:</strong> Gives you the reward of the transition from one state to another given an action</p>

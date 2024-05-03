@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: lecture
 title: background lecture 0 - markov decision processes value iteration
 course: cs234
 permalink: /brain/cs234/markov-decision-processes-value-iteration
@@ -37,8 +37,7 @@ Blocks represent the state nodes/ state-action node. Label edges represent the p
 **Transition Function:** Gives you the probability of going from a given state to another state given an action.
 - $T(s, a, s') > 0$ where $s$ is a given state, $a$ is an action, and $s'$ is the next state
 - Adding up all possible $s'$ you can end up at for the same $s, a$ should result in 1
-    
-    $\sum_{s' \in \text{states}}T(s, a, s') = 1$
+    - $\sum_{s' \in \text{states}}T(s, a, s') = 1$
 
 **Reward Function:** Gives you the reward of the transition from one state to another given an action
 - $R(s, a, s')$ where $s$ is a given state, $a$ is an action, and $s'$ is the next state

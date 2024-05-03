@@ -42,6 +42,12 @@
     },
   
     {
+      "title"       : "lecture 2 - given a model of the world",
+      "url"         : "/brain/cs234/given-a-model-of-the-world",
+      "date"        : "2024-05-02 00:00:00 -0500"
+    },
+  
+    {
       "title"       : "lecture 1 - introduction to reinforcement learning",
       "url"         : "/brain/cs234/introduction-to-reinforcement-learning",
       "date"        : "2024-05-02 00:00:00 -0500"
