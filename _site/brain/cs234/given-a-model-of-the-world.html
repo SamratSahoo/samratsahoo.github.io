@@ -43,5 +43,171 @@
 <li>Memoryless / random sequence of events which satisfies the markov property</li>
 <li>No rewards, no actions</li>
 <li>Dynamics model specifies the probability of the next state given the previous state. This is expressible as a matrix: $$ \begin{pmatrix} P(s_1 \vert s_1) &amp; P(s_1 \vert s_2) &amp; \dots &amp; P(s_1 \vert s_N)<br> \\ \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ P(s_N \vert s_1) &amp; P(s_N \vert s_2) &amp; \dots &amp; P(s_N \vert s_N) \end{pmatrix} $$</li>
+</ul>
+<h3 id="markov-reward-process">Markov Reward Process</h3>
+<ul>
+<li>Markov Reward Process: Markov Chains + rewards (no actions)</li>
+<li>$S:$ Finite number of states ($s \in S$)</li>
+<li>$P:$ Dynamics / transition model where $P(s _{t+1} = s’ \vert s_t = s)$</li>
+<li>$R:$ Reward function $R(s_t = s) = E[r_t \vert s_t = s]$<ul><li>Tied to immediate state or state and next state</li></ul>
+</li>
+<li>$\gamma:$ Discount factor [0, 1]</li>
+</ul>
+<h3 id="return-and-value-function">Return and Value Function</h3>
+<ul>
+<li>
+<strong>Horizon:</strong> The number of time steps in an episodes<ul><li>Can be infinite or finite (finite Markov Process)</li></ul>
+</li>
+<li>
+<strong>Return:</strong> Discounted sum of rewards from time step t to horizon<ul><li>$G_t = r_t + \gamma r _{t+1} + \gamma^2 r _{t+2} \dots$</li></ul>
+</li>
+<li>
+<strong>Value Function:</strong> Expected return from a state<ul>
+<li>$V(s) = E[G_t \vert s_t = s] = E[r_t + \gamma r _{t+1} + \gamma^2 r _{t+2} \dots \vert s_t = s]$</li>
+<li>Same as return if the process is deterministic (single next state from a state)</li>
+<li>Different from return if process is stochastic</li>
+</ul>
+</li>
+</ul>
+<h3 id="discount-factor">Discount Factor</h3>
+<ul>
+<li>Used to avoid inifinite returns and values</li>
+<li>$\gamma = 0:$ Only care about immediate rewards</li>
+<li>$\gamma = 1:$ Future reward and immediate reward equally beneficial<ul><li>Use $\gamma = 1$ for finite episode lengths (for mathematical convenience)</li></ul>
+</li>
+</ul>
+<h3 id="computing-value-of-a-markov-reward-process">Computing Value of a Markov Reward Process</h3>
+<ul>
+<li>Estimate by simulation by generating a large number of episodes<ul>
+<li>Average the returns</li>
+<li>Requires no assumption of Markov structure</li>
+</ul>
+</li>
+<li>Using markov structure<ul><li>MRP Value Function: $V(s) = R(s) + \gamma \sum _{s’ \in S}P(s’ \vert s)V(s’)$<ul>
+<li>$R(s):$ Immediate rewards</li>
+<li>$\gamma \sum _{s’ \in S}P(s’ \vert s)V(s’):$ Discounted sum of future rewards</li>
+</ul>
+</li></ul>
+</li>
+<li>Matrix form of Bellman Equation for MRPs: $V = R + \gamma PV$<ul><li>Simplify equation to: $V - \gamma PV = R = (I - \gamma P)V = R \rightarrow V = (I - \gamma P)^{-1}R$</li></ul>
+</li>
+</ul>
+<p>$$ \begin{pmatrix} V(s_1)<br> \\ \vdots \\ V(s_N) \end{pmatrix} = \begin{pmatrix} R(s_1)<br> \\ \vdots \\ R(s_N) \end{pmatrix} + \gamma \begin{pmatrix} P(s_1 \vert s_1) &amp; P(s_1 \vert s_2) &amp; \dots &amp; P(s_1 \vert s_N)<br> \\ \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ P(s_N \vert s_1) &amp; P(s_N \vert s_2) &amp; \dots &amp; P(s_N \vert s_N) \end{pmatrix} \begin{pmatrix} V(s_1)<br> \\ \vdots \\ V(s_N) \end{pmatrix} $$</p>
+<ul><li>Iterative Algorithm for Computing Value of an MRP (Dynamic Programming)<ul>
+<li>Initialize $V_0(s) = 0$ for all s</li>
+<li>For k = 1 until convergence<ul><li>For all s in S<ul><li>$V_k = R(s) + \gamma \sum _{s’ \in S}P(s’\vert s)V _{k-1}(s’)$</li></ul>
+</li></ul>
+</li>
+</ul>
+</li></ul>
+<h3 id="markov-decision-processes">Markov Decision Processes</h3>
+<ul>
+<li>Markov reward processes with actions ($a \in A$)</li>
+<li>We have a dynamics model that is specified differently for <em>each action</em> $\rightarrow P(s _{t+1} = s’ \vert s_t = s, a_t = a)$<ul><li>Multiple matrices (one for each action)</li></ul>
+</li>
+<li>Our reward function can be a function current state, current state + action, or current state + action + next state<ul><li>$R(s_t = s, a_t = a) = E[r_t \vert s_t = s, a_t = a]$</li></ul>
+</li>
+<li>Can express MDPs as a tuple of $(S, A, R, P, \gamma)$</li>
+</ul>
+<p><strong>Policies</strong></p>
+<ul>
+<li>Expressed as $\pi(a_t = a \vert s_t = s) = P(a_t = a \vert s_t = s)$</li>
+<li>Specifies which action to take in each state $\rightarrow$ can be deterministic or stochastic</li>
+<li>Markov Reward Process = MDP + Policy $\rightarrow$ specifying a policy induces MRP because it defines the expected rewards and transition model<ul>
+<li>$R^{\pi}(s) = \sum _{a \in A} \pi(a \vert s)R(s,a)$</li>
+<li>$P^{\pi}(s) = \sum _{a \in A} \pi(a \vert s)P(s’\vert s,a)$</li>
+</ul>
+</li>
+</ul>
+<h3 id="policy-evaluation">Policy Evaluation</h3>
+<ul><li>Iterative Algorithm (Bellman Backup)<ul>
+<li>Initialize $V_0(s) = 0$ for all s</li>
+<li>For k = 1 until convergence<ul><li>For all s in S<ul><li>$V^{\pi}_k = r(s, \pi(s)) + \gamma \sum _{s’ \in S}P(s’\vert s, \pi(s))V^{\pi} _{k-1}(s’)$</li></ul>
+</li></ul>
+</li>
+</ul>
+</li></ul>
+<h3 id="mdp-control">MDP Control</h3>
+<ul>
+<li>We want to find the optimal policy<ul>
+<li>$\pi^*(s) = argmax _{pi} V^{\pi}(s)$</li>
+<li>There exists a unique optimal value function</li>
+</ul>
+</li>
+<li>Optimal Policy Characteristics (for infinite horizon MDPs):<ul>
+<li>Deterministic</li>
+<li>Stationary (doesn’t depend on time step)</li>
+<li>not necessarily unique (there could be ties between policies that get the optimal value function)</li>
+</ul>
+</li>
+</ul>
+<h3 id="policy-search">Policy Search</h3>
+<ul>
+<li>We know that the number of deterministic policies is $\vert A \vert ^{\vert S \vert}$</li>
+<li>Using enumeration is inefficient (evaluating every policy exhaustively)</li>
+<li>We prefer policy iteration</li>
+</ul>
+<h3 id="mdp-policy-iteration">MDP Policy Iteration</h3>
+<ul>
+<li>We take a “guess” of the optimal policy, we evaluate it, and then we try to improve it until we cannot improve it anymore</li>
+<li>Algorithm:<ul>
+<li>Set i = 0</li>
+<li>Intialize $\pi_{0}(s)$ randomly for all states $s$</li>
+<li>While i == 0 or $\vert\vert \pi_i - \pi _{i-1}\vert\vert &gt; 0$ (L1 Norm to see if policy changes)<ul>
+<li>$V^{\pi i} \leftarrow \text{MDP Value Function}$</li>
+<li>$\pi _{i+1} \leftarrow \text{Policy Improvement}$</li>
+<li>$i = i + 1$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>State Value:</strong> $V^{\pi}(s)$<ul><li><em>“If you start in state s and follow a policy, what is the discounted sum of rewards”</em></li></ul>
+</li>
+<li>
+<strong>State-Action Value:</strong> $Q^{\pi}(s, a) = R(s, a) + \gamma \sum _{s’ \in S} P(s’ \vert s, a)V^{\pi}(s’)$<ul><li><em>“If you start in state s, take an action, and then follow a policy, what is the discounted sum of rewards”</em></li></ul>
+</li>
+<li>
+<strong>Policy Improvement:</strong><ul>
+<li>Compute the state action value of a policy<ul><li>For s in S and a in A<ul><li>Compute $Q ^{\pi i}(s,a) = R(s, a) + \gamma \sum _{s’ \in S} P(s’ \vert s, a)V^{\pi}(s’)$</li></ul>
+</li></ul>
+</li>
+<li>Compute new policy $\pi _{i+1}$ for all $s \in S$<ul><li>$\pi _{i+1} = argmax _{a} Q^{\pi i}(s, a) \forall s \in S$</li></ul>
+</li>
+</ul>
+</li>
+<li>Monotonic Improvement in Policy: The value of the policy is greater than or equal to the old policy for all states</li>
+<li>Once the policy stops changing, you know you are at the global best policy</li>
+<li>There is a maximum of $\vert A \vert ^{\vert S \vert}$ iterations for policy iteration</li>
+</ul>
+<h3 id="value-iteration">Value Iteration</h3>
+<ul>
+<li>Maintain the optimal value of starting in a state if we have a finite number of steps left in the episode</li>
+<li>Value function must satisfy the bellman equation</li>
+<li>
+<strong>Bellman Backup Operator:</strong> Allows us to transform an old value function into a new one to improve it<ul>
+<li>$BV(s) = max_a R(s, a) + \gamma \sum _{s’ \in S}P(s’ \vert s, a)V(s’)$</li>
+<li>For a particular policy: $B^{\pi}V(s) = R^{\pi}(s) + \gamma \sum _{s’ \in S}P^{\pi}(s’ \vert s)V(s)$<ul><li>We can do policy evaluation using this operating as follows: $B^{\pi}B^{\pi}B^{\pi}\cdots V$ until it converges</li></ul>
+</li>
+</ul>
+</li>
+<li>Value Iteration Algorithm<ul>
+<li>Set k = 1</li>
+<li>Initialize $V_0(s) = 0$ for all s</li>
+<li>Loop until finite horizon ends or convergence<ul><li>For each state, s:<ul>
+<li>Compute $V _{k+1} = max_a R(s, a) + \gamma \sum _{s’ \in S} P(s’ \vert s, a)V_k(s’)$</li>
+<li>$V _{k+1} = BV_k$</li>
+<li>$\pi _{k+1}(s) = argmax_a R(s,a) + \gamma \sum _{s’ \in S} P(s’ \vert s, a)V_k(s’)$</li>
+</ul>
+</li></ul>
+</li>
+</ul>
+</li>
+<li>Contraction Operator<ul>
+<li>Let $O$ be an operator $\vert x \vert$ be any norm of $x$</li>
+<li>If $\vert OV - OV’ \vert \leq \vert V - V’\vert$ then O is a contraction operator</li>
+<li>Value iteration converges because the Bellman Backup is a contractor operator when $\gamma &lt; 1$</li>
+</ul>
+</li>
 </ul></section></main></body>
 </html>

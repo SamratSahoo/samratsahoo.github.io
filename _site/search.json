@@ -51,6 +51,18 @@
       "title"       : "lecture 1 - introduction to reinforcement learning",
       "url"         : "/brain/cs234/introduction-to-reinforcement-learning",
       "date"        : "2024-05-02 00:00:00 -0500"
+    },
+  
+    {
+      "title"       : "lecture 3 - model free policy evaluation",
+      "url"         : "/brain/cs234/model-free-policy-evaluation",
+      "date"        : "2024-05-03 00:00:00 -0500"
+    },
+  
+    {
+      "title"       : "lecture 4 - model free control",
+      "url"         : "/brain/cs234/model-free-control",
+      "date"        : "2024-05-05 00:00:00 -0500"
     }
   
 ]

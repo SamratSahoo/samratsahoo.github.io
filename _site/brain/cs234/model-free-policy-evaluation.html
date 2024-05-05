@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet">
+<meta name="generator" content="Jekyll v4.2.2">
+<meta property="og:title" content="lecture 3 - model free policy evaluation">
+<meta name="author" content="samrat sahoo">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="Resources: Lecture Video">
+<meta property="og:description" content="Resources: Lecture Video">
+<link rel="canonical" href="http://localhost:4000/brain/cs234/model-free-policy-evaluation">
+<meta property="og:url" content="http://localhost:4000/brain/cs234/model-free-policy-evaluation">
+<meta property="og:site_name" content="samrat’s thought space">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2024-05-03T00:00:00-05:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="lecture 3 - model free policy evaluation">
+<meta name="twitter:site" content="@samratdotjs">
+<meta name="twitter:creator" content="@samratdotjs"> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"samrat sahoo","url":"https://samratsahoo.com"},"dateModified":"2024-05-03T00:00:00-05:00","datePublished":"2024-05-03T00:00:00-05:00","description":"Resources: Lecture Video","headline":"lecture 3 - model free policy evaluation","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/brain/cs234/model-free-policy-evaluation"},"url":"http://localhost:4000/brain/cs234/model-free-policy-evaluation"}</script><title> lecture 3 - model free policy evaluation - samrat's thought space</title>
+<link rel="shortcut icon" href="/favicon.png">
+<link rel="alternate" type="application/atom+xml" title="samrat's thought space" href="/atom.xml">
+<link rel="alternate" type="application/json" title="samrat's thought space" href="http://localhost:4000/feed.json">
+<link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml">
+<style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:10rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5{line-height:1;margin:1rem 0;font-weight:600}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:60rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}@media print{.no-print,.no-print *{display:none !important}}img.mermaid{max-width:200px}.url{color:#0645AD}*::-moz-selection{color:white;background:#7011dc}*::selection{color:white;background:#7011dc}*{font-family:"Outfit", sans-serif}li>ul{padding-left:1rem}</style>
+<script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"},"svg":{"fontCache":"global"}}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body><main><header aria-hidden="true" class="no-print"> <!--<h1 class="logo">samrat's thought space</h1>--><nav role="navigation" aria-hidden="true"><ul>
+<li><a href="/">writing</a></li>
+<li><a href="/about">about</a></li>
+<li><a href="/search">search</a></li>
+<li><a href="/brain">brain</a></li>
+</ul></nav></header><section class="post"><h2>
+<a href="/brain/cs234" class="url">cs234</a> / lecture 3 - model free policy evaluation</h2>
+<p><strong>Resources:</strong></p>
+<ul><li><a href="https://youtu.be/dRIhrn8cc9w?feature=shared">Lecture Video</a></li></ul>
+<h3 id="dynamic-programming-policy-evaluation">Dynamic Programming Policy Evaluation</h3>
+<p><img class="mermaid" src="https://mermaid.ink/svg/eyJjb2RlIjoiZ3JhcGggVEQ7XG5zdWJncmFwaCBib290c3RyYXBcblMxLS0-QTE7XG5BMS0tPnxFeHBlY3RhdGlvbnxTMjtcbkExLS0-fEV4cGVjdGF0aW9ufFMzO1xuZW5kO1xuUzItLT5BMjtcblMzLS0-QTM7XG5BMi0tPnxFeHBlY3RhdGlvbnxTNDtcbkEyLS0-fEV4cGVjdGF0aW9ufFM1O1xuQTMtLT58RXhwZWN0YXRpb258UzY7XG5BMy0tPnxFeHBlY3RhdGlvbnxTNztcbiUlLVxuc3R5bGUgQTEgZmlsbDogI2ZmOTQ4Y1xuc3R5bGUgQTIgZmlsbDogI2ZmOTQ4Y1xuc3R5bGUgQTMgZmlsbDogI2ZmOTQ4YyIsIm1lcm1haWQiOnsidGhlbWUiOiJkZWZhdWx0In19"></p>
+<ul><li>
+<strong>Bootstrapping:</strong> Dynamic programming computes the highlighted area by bootstrapping the rest of the expected return with value estimate of $V _{k-1}$<ul><li>Update for $V$ uses an estimate as opposed to an exact value</li></ul>
+</li></ul>
+<h3 id="monte-carlo-policy-evaluation">Monte Carlo Policy Evaluation</h3>
+<ul>
+<li>Does not require an MDP dynamics or rewards</li>
+<li>No Bootstrapping</li>
+<li>Does not assume state is markov</li>
+<li>Can only be applied to episodic MDPs<ul>
+<li>Requires each episode to terminate</li>
+<li>Averaging returns over a complete episode</li>
+</ul>
+</li>
+<li>Value Function: $V^{\pi}(s) = E _{T \tilde{\pi}}[G_t \vert s_t = s]$<ul><li>Get the value over all possible trajectories and average them</li></ul>
+</li>
+<li>Done in an incremental fashion<ul><li>After each episode, $V^{\pi}(s)$ gets updated</li></ul>
+</li>
+<li>
+<strong>First-Visit Monte Carlo On Policy Evaluation Algorithm</strong><ul>
+<li>Initialize $N(s) = 0, G(s) = 0, \forall s \in S$ $\rightarrow N(s)$ is the number of times a state has been visited</li>
+<li>Loop<ul>
+<li>Take a sample episode $i = s _{i,1}, a _{i, 1}, r _{i, 1}, s _{i,2}, a _{i, 2}, r _{i, 2}, \dots s _{i,T}$</li>
+<li>Define $G _{i, t} = r _{i, t} + \gamma r _{i, t+1} + \dots$ as return from time step t onwards for the ith episode</li>
+<li>For each state, $s$, visited in episode i<ul><li>For the first time $t$ that state $s$ is visited in that episode<ul>
+<li>Increment $N(s)$: $N(s) = N(s) + 1$</li>
+<li>Increment total return: $G(s) = G(s) + G _{i, t}$</li>
+<li>Update Estimate $V^{\pi}(s) = G(s) / N(s)$</li>
+</ul>
+</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Every-Visit Monte Carlo On Policy Evaluation Algorithm</strong><ul>
+<li>Initialize $N(s) = 0, G(s) = 0, \forall s \in S$ $\rightarrow N(s)$ is the number of times a state has been visited</li>
+<li>Loop<ul>
+<li>Take a sample episode $i = s _{i,1}, a _{i, 1}, r _{i, 1}, s _{i,2}, a _{i, 2}, r _{i, 2}, \dots s _{i,T}$</li>
+<li>Define $G _{i, t} = r _{i, t} + \gamma r _{i, t+1} + \dots$ as return from time step t onwards for the ith episode</li>
+<li>For each state, $s$, visited in episode i<ul><li>For the <strong>every</strong> time $t$ that state $s$ is visited in that episode<ul>
+<li>Increment $N(s)$: $N(s) = N(s) + 1$</li>
+<li>Increment total return: $G(s) = G(s) + G _{i, t}$</li>
+<li>Update Estimate $V^{\pi}(s) = G(s) / N(s)$</li>
+</ul>
+</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Incremental Monte Carlo On Policy Evaluation Algorithm</strong><ul>
+<li>After each episode $i = s _{i,1}, a _{i, 1}, r _{i, 1}, s _{i,2}, a _{i, 2}, r _{i, 2}, \dots s _{i,T}$<ul>
+<li>Define $G _{i, t} = r _{i, t} + \gamma r _{i, t+1} + \dots$ as return from time step t onwards for the ith episode</li>
+<li>For each state, $s$, visited in episode i<ul>
+<li>Increment $N(s)$: $N(s) = N(s) + 1$</li>
+<li>Update Estimate: $V^{\pi}(s) = V^{\pi}(s) \frac{N(s) -1}{N(s)}+ \frac{G _{i,t}}{N(s)} = V^{\pi}(s) + \frac{1}{N(s)}(G _{i,t} - V^{\pi}(s))$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>We can rewrite the running mean (estimate) as follows: $V^{\pi}(s) + \alpha(G _{i,t} - V^{\pi}(s))$<ul>
+<li>If $\alpha = \frac{1}{N(s)}$: This is identical to every visit monte carlo</li>
+<li>If $\alpha &gt; \frac{1}{N(s)}$: Forget older data (good for non-stationary domains)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Limitations<ul>
+<li>High Variance estimator</li>
+<li>Requires episodic settings $\rightarrow$ episode must end before we can use it to update the value function</li>
+</ul>
+</li>
+</ul>
+<h3 id="bias-variance-and-mse">Bias, Variance, and MSE</h3>
+<ul>
+<li>
+<strong>Bias:</strong> Expected Value - True Value<ul><li>$Bias _{\theta}(\hat{\theta}) = E _{x\vert\theta}[\hat{\theta}] - \theta$</li></ul>
+</li>
+<li>
+<strong>Variance:</strong> $Var(\hat{\theta}) = E _{x\vert\theta}[(\hat{\theta} - E[\hat{\theta}])^2]$</li>
+<li>
+<strong>Mean Squared Error:</strong> $MSE(\hat{\theta}) = Var(\hat{\theta})^2 + Bias(\hat{\theta})^2$</li>
+</ul>
+<p><strong>Back to First Visit Monte Carlo:</strong></p>
+<ul><li>$V^{\pi}$ is an unbiased estimator of the true $E _{\pi}[G_t \vert s_t = s]$<ul><li>
+<strong>Consistent:</strong> By law of large numbers, as $N(s) \rightarrow \infty$, $V^{\pi}$ converges to $E _{\pi}[G_t \vert s_t = s]$</li></ul>
+</li></ul>
+<p><strong>Back to Every Visit Monte Carlo:</strong></p>
+<ul><li>$V^{\pi}$ is a biased estimator of the true $E _{\pi}[G_t \vert s_t = s]$<ul><li>Better MSE and still consistent</li></ul>
+</li></ul>
+<h3 id="temporal-difference-learning">Temporal Difference Learning</h3>
+<ul>
+<li>Model free approach that combines monte carlo and dynamic programming methods for policy evaluation $\rightarrow$ both bootstraps and samples<ul>
+<li>Can be used for episodic and infinite horizon settings</li>
+<li>Can immediately update estimates of $V$</li>
+</ul>
+</li>
+<li>Similar to incremental every visit monte carlo but instead of having to wait until the end of an episode to get $G_t$, we can estimate $V^\pi$ using our old estimate of our next state $\rightarrow r_t + \gamma V^\pi (s _{t+1})$ (bootstrapping)<ul>
+<li>$V^\pi(s_t) = V^\pi(s_t) + \alpha([r_t + \gamma V^\pi(s _{t+1})] - V^\pi(s_t))$</li>
+<li>TD Error: $\delta _t = r_t + \gamma V^\pi(s _{t+1}) - V^\pi(s_t)$<ul><li>TD Target: $r_t + \gamma V^\pi(s _{t+1})$</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Temporal Difference (0) Learning Algorithm</strong><ul>
+<li>Initialize $V^{\pi}(s) = 0 \forall s \in S$</li>
+<li>Loop<ul>
+<li>Sample $(s_t, a_t, r_t, s _{t+1})$</li>
+<li>Compute $V^\pi(s_t) = V^\pi(s_t) + \alpha([r_t + \gamma V^\pi(s _{t+1})] - V^\pi(s_t))$</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="dynamic-programming-vs-monte-carlo-vs-temporal-difference">Dynamic Programming vs Monte Carlo vs Temporal Difference</h3>
+<table>
+<thead><tr>
+<th style="text-align: left"> </th>
+<th style="text-align: left">Dynamic Programming</th>
+<th style="text-align: left">Monte Carlo</th>
+<th style="text-align: left">Temporal Difference</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align: left"><strong>Usable without a model of the domain</strong></td>
+<td style="text-align: left">✅</td>
+<td style="text-align: left">✅</td>
+<td style="text-align: left">✅</td>
+</tr>
+<tr>
+<td style="text-align: left"><strong>Usable with non-episodic domains</strong></td>
+<td style="text-align: left">✅</td>
+<td style="text-align: left"> </td>
+<td style="text-align: left">✅</td>
+</tr>
+<tr>
+<td style="text-align: left"><strong>Handles Non-Markovian domains</strong></td>
+<td style="text-align: left"> </td>
+<td style="text-align: left">✅</td>
+<td style="text-align: left"> </td>
+</tr>
+<tr>
+<td style="text-align: left"><strong>Converges to true value in limit</strong></td>
+<td style="text-align: left">✅</td>
+<td style="text-align: left">✅</td>
+<td style="text-align: left">✅</td>
+</tr>
+<tr>
+<td style="text-align: left"><strong>Unbiased estimate of value</strong></td>
+<td style="text-align: left"> </td>
+<td style="text-align: left">✅ (first visit)</td>
+<td style="text-align: left"> </td>
+</tr>
+</tbody>
+</table>
+<p>Properties to Evaluate Algorithms:</p>
+<ul>
+<li>Bias / Variance<ul>
+<li>Monte Carlo is unbiased + high variance + consistent</li>
+<li>Temporal Difference (0) has some bias + lower variance + converges with tabular representation (not necessarily with function approximation)</li>
+</ul>
+</li>
+<li>Data efficiency</li>
+<li>
+<p>Computational efficiency</p>
+<h3 id="batch-monte-carlo-and-temporal-difference">Batch Monte Carlo and Temporal Difference</h3>
+<ul>
+<li>Batch / Offline Solution for finite dataset:<ul>
+<li>Given K episodes</li>
+<li>Repeatedly sample an episode from K</li>
+<li>Apply TD(0) or MC until convergence</li>
+</ul>
+</li>
+<li>Monte Carlo in batch setting minimizes MSE<ul>
+<li>Minimize loss with respect to expected returns</li>
+<li>TD(0) converges DP policy $V^\pi$ for the MDP with the maximum likelihood model estimates</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul></section></main></body>
+</html>
