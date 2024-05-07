@@ -121,7 +121,7 @@ $$
 - Using enumeration is inefficient (evaluating every policy exhaustively)
 - We prefer policy iteration
 
-### MDP Policy Iteration
+### [MDP Policy Iteration](#mdp-policy-iteration)
 - We take a "guess" of the optimal policy, we evaluate it, and then we try to improve it until we cannot improve it anymore
 - Algorithm:
   - Set i = 0

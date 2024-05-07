@@ -27,6 +27,7 @@
 <link rel="alternate" type="application/json" title="samrat's thought space" href="http://localhost:4000/feed.json">
 <link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml">
 <style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:10rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5{line-height:1;margin:1rem 0;font-weight:600}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:60rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}@media print{.no-print,.no-print *{display:none !important}}img.mermaid{max-width:200px}.url{color:#0645AD}*::-moz-selection{color:white;background:#7011dc}*::selection{color:white;background:#7011dc}*{font-family:"Outfit", sans-serif}li>ul{padding-left:1rem}</style>
+<script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"},"svg":{"fontCache":"global"}}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body><main><header aria-hidden="true" class="no-print"> <!--<h1 class="logo">samrat's thought space</h1>--><nav role="navigation" aria-hidden="true"><ul>
 <li><a href="/">writing</a></li>
@@ -36,5 +37,190 @@
 </ul></nav></header><section class="post"><h2>
 <a href="/brain/cs234" class="url">cs234</a> / lecture 4 - model free control</h2>
 <p><strong>Resources:</strong></p>
-<ul><li><a href="https://youtu.be/j080VBVGkfQ?feature=shared">Lecture Video</a></li></ul></section></main></body>
+<ul><li><a href="https://youtu.be/j080VBVGkfQ?feature=shared">Lecture Video</a></li></ul>
+<h3 id="control-objectives">Control Objectives</h3>
+<ul>
+<li>
+<strong>Optimization:</strong> Find policy with high expected rewards</li>
+<li>
+<strong>Delayed Consequences:</strong> May take many time steps to see if an earlier decision was good</li>
+<li>
+<strong>Exploration:</strong> Need to try different actions to learn what actions can lead to high rewards</li>
+</ul>
+<h3 id="on-policy-vs-off-policy-learning">On Policy vs Off Policy Learning</h3>
+<ul>
+<li>On Policy: Use direct experience from the world to estimate and evaluate a policy by following that policy</li>
+<li>Off Policy: Learn to estimate and evaluate a policy using experience gathered from following a different policy</li>
+</ul>
+<h3 id="model-free-policy-iteration">Model Free Policy Iteration</h3>
+<ul>
+<li>Revisit <a href="http://localhost:4000/brain/cs234/given-a-model-of-the-world#mdp-policy-iteration">policy iteration from lecture 2</a>
+</li>
+<li>Model Free Policy Iteration Alogrithm<ul>
+<li>Initialize policy $\pi$</li>
+<li>Repeat<ul>
+<li>Policy Evaluation: Compute $Q^\pi$ directly</li>
+<li>Policy Improvement: Update $\pi$ given $Q^\pi$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Monte Carlo On Policy Q Evaluation<ul>
+<li>Initialize $N(s, a) = 0, G(s, a) = 0, Q^\pi(s, a) = 0 \forall s \in S, \forall a \in A$</li>
+<li>Loop<ul>
+<li>Using policy $\pi$, sample episode $i = s _{i,1}, a _{i, 1}, r _{i, 1}, s _{i,2}, a _{i, 2}, r _{i, 2}, \dots s _{i,T}$</li>
+<li>Define $G _{i, t} = r _{i, t} + \gamma r _{i, t+1} + \dots$</li>
+<li>For each state, action pair $(s, a)$ visited in episode i<ul><li>For the <strong>first or every</strong> time t that $(s, a)$ is visited in episode i<ul>
+<li>$N(s,a) = N(s,a) + 1, G(s, a) = G(s, a) + G _{i,t}$</li>
+<li>Update Estimate: $Q^{\pi}(s, a) = G(s, a)/N(s, a)$</li>
+</ul>
+</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Model Free Policy Improvement: $\pi _{i+1}(s) = argmax_a Q^{\pi i}(s, a)$</li>
+<li>Issue: If $\pi$ is deterministic, can’t compute $Q(s,a)$ for any $a \neq \pi(s)$ (no exploration occurring so we can’t evaluate it for actions not taken)</li>
+</ul>
+<h3 id="policy-evaluation-with-exploration">Policy Evaluation with Exploration</h3>
+<ul>
+<li>$\epsilon$ greedy policies: Balance exploration and exploitation</li>
+<li>Let $\vert A \vert$ be number of actions<ul>
+<li>With a probability of $1 - \epsilon$ take $argmax_a$</li>
+<li>Else take action $a$ with probability $\frac{\epsilon}{\vert A \vert}$ (a random action)</li>
+</ul>
+</li>
+<li>Monotonic $\epsilon$ greedy policy improvement: for any $\epsilon$ greedy polcicy with respect to $Q^{\pi i}, \pi _{i+1}$ is a monotonic improvement $V^{\pi i + 1} \geq V^{\pi}$<ul><li>Assumes that the value of $Q^{\pi i}$ is being calculated exactly, not an estimate</li></ul>
+</li>
+</ul>
+<h3 id="greedy-limit-of-infinite-exploration-glie">Greedy Limit of Infinite Exploration (GLIE)</h3>
+<ul>
+<li>All state action pairs are visited an infinite number of times: $\lim _{i \rightarrow \infty} N_i(s, a) \rightarrow \infty$<ul><li>Behavior policy converges to greedy policy<ul><li>$\lim _{i \rightarrow \infty} \pi(a/s) \rightarrow argmax_a Q(s, a)$ with probability 1</li></ul>
+</li></ul>
+</li>
+<li>One way to implement this is to decay $\epsilon$ to 0 at a rate of $\epsilon_i = \frac{1}{i}$</li>
+<li>Will converge to Q value function to the optimal function: $Q(s, a) \rightarrow Q^*(s, a)$</li>
+</ul>
+<h3 id="monte-carlo-online--on-policy-control">Monte Carlo Online / On Policy Control</h3>
+<ul><li>
+<strong>Algorithm:</strong><ul>
+<li>Initialize $N(s, a) = 0, Q(s, a) = 0 \forall s \in S, \forall a \in A$ and set $\epsilon = 1, k = 1$</li>
+<li>$\pi_k = \epsilon\text{-Greedy}(Q)$ // Create initial $\epsilon$-greedy policy</li>
+<li>Loop<ul>
+<li>Sample k-th episode ($s _{k,1}, a _{k, 1}, r _{k, 1}, s _{k,2}, a _{k, 2}, r _{k, 2}, \dots s _{k,T}$) given $\pi_k$</li>
+<li>Compute $G _{k, t} = r _{k, t} + \gamma r _{k, t+1} + \dots$</li>
+<li>for $t = 1 \dots T$<ul><li>if first visit (or every visit) to $(s, a)$ in episode k<ul>
+<li>$N(s,a) = N(s,a) + 1$</li>
+<li>$Q(s+t,a_t) = Q(s_t,a_t) + \frac{1}{N(s,a)}(G _{k, t} - Q(s_t, a_t))$</li>
+</ul>
+</li></ul>
+</li>
+<li>$k = k + 1, \epsilon = \frac{1}{k}$</li>
+<li>$\pi_k = \epsilon\text{-Greedy}(Q)$</li>
+</ul>
+</li>
+</ul>
+</li></ul>
+<h3 id="model-free-policy-iteration-with-temporal-difference-methods">Model Free Policy Iteration with Temporal Difference Methods</h3>
+<ul>
+<li>Process:<ul>
+<li>Initialize policy $\pi$</li>
+<li>Repeat:<ul>
+<li>Policy Evaluation: Compute $Q^\pi$ using TD updating with $\epsilon-\text{Greedy}$ policy</li>
+<li>Policy Improvement: Same as Monte Carlo policy improvement, set $\pi$ to $\epsilon-\text{Greedy}(Q^\pi)$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>SARSA Algorithm:</strong><ul>
+<li>Set Initial $\epsilon\text{-Greedy}$ policy $\pi$ randomly, $t = 0$, initial state $s_t = s_0$</li>
+<li>Sample an action from the policy $a_t \tilde \pi(s_t)$</li>
+<li>Observe $(r_t, s _{t+1})$</li>
+<li>Loop<ul>
+<li>Take action $a _{t+1} \tilde \pi(s _{t+1})$</li>
+<li>Observe $(r _{t+1}, s _{t+2})$</li>
+<li>Update Q given $(s_t, a_t, r_t, s _{t+1}, a _{t+1})$<ul><li>$Q(s_t, a_t) = Q(s_t, a_t) + \alpha(r_t + \gamma Q(s _{t+1}, a _{t+1}) - Q(s_t, a_t))$</li></ul>
+</li>
+<li>Perform policy improvement<ul><li>$\pi(s_t) = argmax_a Q(s_t, a)$ (or random depending on $\epsilon\text{-Greedy}$)</li></ul>
+</li>
+<li>$t = t+1$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>SARSA Convergence Properties<ul><li>$Q(s, a) \rightarrow Q^*(s,a)$ (the optimal state-action value function) under the following conditions:<ul>
+<li>$\pi_t(a \vert s)$ satisfies GLIE</li>
+<li>Step size, $\alpha_t$, needs to Robbins-Munro satisfy the sequence<ul>
+<li>$\sum _{t=1}^\infty \alpha_t = \infty$</li>
+<li>$\sum _{t=1}^\infty \alpha_t^2 &lt; \infty$<ul><li>Theoretically fine to use this but empirically do not want to use this</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li></ul>
+</li>
+<li>
+<strong>Q-Learning:</strong> Similar to SARSA but instead of looking at the next action, we look at the optimal action<ul>
+<li>$Q(s_t, a_t) = Q(s_t, a_t) + \alpha(r_t + \gamma max _{a^{‘}}Q(s _{t+1}, a’) - Q(s_t, a_t))$</li>
+<li>
+<strong>Q-Learning Algorithm:</strong><ul>
+<li>Initialize $Q(s, a) \forall s \in S, \forall a \in A, t= 0, s_t = s_0$</li>
+<li>Set Initial policy $\pi_b$ to be $\epsilon\text{-Greedy}$ with respect to Q</li>
+<li>Sample an action from the policy $a_t \tilde \pi(s_t)$</li>
+<li>Observe $(r_t, s _{t+1})$</li>
+<li>Loop<ul>
+<li>Take action $a _{t+1} \tilde \pi(s _{t+1})$</li>
+<li>Observe $(r _{t+1}, s _{t+2})$</li>
+<li>Update Q given $(s_t, a_t, r_t, s _{t+1}, a _{t+1})$<ul><li>$Q(s_t, a_t) = Q(s_t, a_t) + \alpha(r_t + \gamma max _{a^{‘}}Q(s _{t+1}, a’) - Q(s_t, a_t))$</li></ul>
+</li>
+<li>Perform policy improvement<ul>
+<li>Set $\pi_b$ to be $\epsilon\text{-Greedy}$ with respect to Q</li>
+<li>$\pi(s_t) = argmax_a Q(s_t, a)$ (or random depending on $\epsilon\text{-Greedy}$)</li>
+</ul>
+</li>
+<li>$t = t+1$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Convergence Conditions<ul>
+<li>$Q^*$: Visit $s,a$ infinitely often + same $\alpha$ conditions from SARSA</li>
+<li>$\pi^*$: GLIE</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="maximization-bias">Maximization Bias</h3>
+<ul><li>
+<strong>Maximization Bias:</strong> Bias that occurs when the estimate of a value function is greater than the true value<ul><li>For example:<ul><li>$\hat{V}^{\hat{\pi}} = E[max(\hat{Q}(a_1), \hat{Q}(a_2))] \geq max[E((\hat{Q}(a_1)), E(\hat{Q}(a_2)))] = max[0, 0] = 0 = V^{\pi}$<ul><li>Note: For full context, watch <a href="https://youtu.be/j080VBVGkfQ?feature=shared&t=4464">this slide of the lecture</a>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+<h3 id="double-q-learning">Double Q-Learning</h3>
+<ul>
+<li>Greedy policy with respect to estimated Q values can lead to maximization bias</li>
+<li>Avoid using the max estimate as an estimate of true value</li>
+<li>Use 2 Q functions instead<ul>
+<li>$Q_1(s_1, a)$: Used to select the max action $a^* = \rightarrow argmax_a Q_1(s_1, a)$</li>
+<li>$Q_2(s_2, a^<em>)$: Used to estimate the value of $a^</em>$</li>
+<li>Yields an unbiased estimate: $E[Q_2(s, a^<em>)] = Q(s, a^</em>)$</li>
+</ul>
+</li>
+<li>
+<strong>Algorithm:</strong><ul><li>Loop<ul>
+<li>Select $a_t$ using $\epsilon\text{-Greedy} \pi(s) = argmax_a Q_1(s_t, a) + Q_2(s_t, a)$</li>
+<li>Observe $(r_t, s _{t+1})$</li>
+<li>With 50% probability Update:<ul><li>$Q_1(s_t, a) \leftarrow Q_1(s_t, a_t) + \alpha(r_t + \gamma max _{a^{‘}}Q_1(s _{t+1}, a’) - Q_1(s_t, a_t))$</li></ul>
+</li>
+<li>Else:<ul><li>$Q_2(s_t, a) \leftarrow Q_2(s_t, a_t) + \alpha(r_t + \gamma max _{a^{‘}}Q_2(s _{t+1}, a’) - Q_2(s_t, a_t))$</li></ul>
+</li>
+<li>$t = t+1$</li>
+</ul>
+</li></ul>
+</li>
+</ul></section></main></body>
 </html>
