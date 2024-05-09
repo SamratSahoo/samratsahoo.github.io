@@ -131,7 +131,9 @@ order: 6
 ### Convergence of TD Methods with VFA
 - Value function approximation is not necessarily a contraction (like with bellman operators)
   - This means the value can diverge
+
 **Convergence Guarantees:**
+
 |                         | Tabular | Linear VFA               | Nonlinear VFA |
 | :---------------------- | :------ | :----------------------- | :------------ |
 | **Monte Carlo Control** | ✅       | ✅(might be oscillation)  | ❌             |
