@@ -4,7 +4,7 @@
  <title>samrat's thought space</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <link href="http://localhost:4000/"/>
- <updated>2024-05-07T10:44:24-05:00</updated>
+ <updated>2024-05-09T14:00:05-04:00</updated>
  <id>http://localhost:4000</id>
  <author>
    <name>samrat sahoo</name>
@@ -15,7 +15,7 @@
  <entry>
    <title>a reflection on humanity and tech.</title>
    <link href="http://localhost:4000/2023/08/07/a-reflection-on-humanity-and-tech"/>
-   <updated>2023-08-07T00:00:00-05:00</updated>
+   <updated>2023-08-07T00:00:00-04:00</updated>
    <id>http://localhost:4000/2023/08/07/a-reflection-on-humanity-and-tech</id>
    <content type="html">&lt;p&gt;we live in an imperfect world riddled with all sorts of problems (we are humans after all and being perfect is unreasonable). as a problem solver, I’ve come across the dilemma of the problems I want to solve - mainly working on impactful humanitarian issues or solving intellectually challenging technical problems.&lt;/p&gt;
 
@@ -69,7 +69,7 @@
  <entry>
    <title>two point five.</title>
    <link href="http://localhost:4000/2022/06/11/two-point-five"/>
-   <updated>2022-06-11T00:00:00-05:00</updated>
+   <updated>2022-06-11T00:00:00-04:00</updated>
    <id>http://localhost:4000/2022/06/11/two-point-five</id>
    <content type="html">&lt;p&gt;&lt;em&gt;&lt;strong&gt;disclaimer: while I may be knowledgeable in these fields, I am by no means a professional. this is NOT technical advice&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
 
@@ -77,13 +77,13 @@
 
 &lt;p&gt;most decentralized systems are organized in a graph network type structure where the underlying infrastructure is organized through “nodes” each representing a member of the system. for example the ipfs’s underlying infrastructure can look something like this (this is extremely simplified):&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/06-11-2022-1.jpg&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/img/06-11-2022-1.jpg&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;the really powerful part of this is that it is completely non-discriminatory, censorship resistant, and far more robust than traditional file systems (its really really really hard to take down the entire ipfs). there is no central entity that can stop a user from anywhere in the world regardless of beliefs, status in society, or, quite frankly, any other factor from joining the ipfs network.&lt;/p&gt;
 
 &lt;p&gt;this solves some of the concerns of traditional file systems. for example a web2 based file system could experience an abuse of central authorithy (which actually happens quite frequently in authoritarian governments where censorship of media is common):&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/06-11-2022-2.jpg&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/img/06-11-2022-2.jpg&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;as we can see here, there is a central authority that decides what goes and what doesn’t. web3 solves this issue but at what cost?&lt;/p&gt;
 
@@ -91,7 +91,7 @@
 
 &lt;p&gt;my proposed solution takes the best of the web2 and web3 systems. the idea is that we would preserve the graph network that makes web3 systems so powerful but add a different type of node that hosts a copy of all data uploaded to the graph network. (&lt;em&gt;emphasis on a copy of the data&lt;/em&gt; because in the case that these nodes went down, we would still want to preserve the robust nature of a decentralized system). these new types of nodes would have no extra “power” or authority in the distrubuted file system.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/06-11-2022-3.jpg&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/img/06-11-2022-3.jpg&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;this would ensure the fast access that web2 systems provide with the censorship resistant and non-discriminatory nature of web3 systems. of course these new types of nodes would be entitled to some sort of “reward” for hosting this data but I have not had the chance to fully flesh out the economy of a system like this.&lt;/p&gt;
 
@@ -106,7 +106,7 @@
  <entry>
    <title>anya forger.</title>
    <link href="http://localhost:4000/2022/05/29/anya-forger"/>
-   <updated>2022-05-29T00:00:00-05:00</updated>
+   <updated>2022-05-29T00:00:00-04:00</updated>
    <id>http://localhost:4000/2022/05/29/anya-forger</id>
    <content type="html">&lt;p&gt;&lt;em&gt;&lt;strong&gt;disclaimer: I am not sharing this blog post anywhere so if you are on this page, you clicked on it on your own volition – be prepared for what you are about to read&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
 
@@ -114,7 +114,7 @@
 
 &lt;p&gt;before I start, for those of you that don’t who anya forger is, she is a blessing from the heavens that we don’t deserve. but more so, she has completely brought together the anime community to unanimous agreement on the cutest character ever. for example –&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/05-29-2022-1.jpg&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/img/05-29-2022-1.jpg&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;yes, she is absolutely adorable. adorableness aside – anya (symbollically) embodies what I strive to be in the future. no, not an absolutely adorable anime girl, although I wouldn’t blame people for thinking that. anya is someone who knows how make people happy, how to unite communities, and ultimately leaves the world in a better condition that she found it. and she does this while being completely fictional (although completely real in the hearts of her biggest fans)!&lt;/p&gt;
 

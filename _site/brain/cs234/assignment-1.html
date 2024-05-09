@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet">
+<meta name="generator" content="Jekyll v4.2.2">
+<meta property="og:title" content="assignment 1">
+<meta name="author" content="samrat sahoo">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="Resources: Assignment PDF">
+<meta property="og:description" content="Resources: Assignment PDF">
+<link rel="canonical" href="http://localhost:4000/brain/cs234/assignment-1">
+<meta property="og:url" content="http://localhost:4000/brain/cs234/assignment-1">
+<meta property="og:site_name" content="samrat’s thought space">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2024-05-08T00:00:00-04:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="assignment 1">
+<meta name="twitter:site" content="@samratdotjs">
+<meta name="twitter:creator" content="@samratdotjs"> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"samrat sahoo","url":"https://samratsahoo.com"},"dateModified":"2024-05-08T00:00:00-04:00","datePublished":"2024-05-08T00:00:00-04:00","description":"Resources: Assignment PDF","headline":"assignment 1","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/brain/cs234/assignment-1"},"url":"http://localhost:4000/brain/cs234/assignment-1"}</script><title> assignment 1 - samrat's thought space</title>
+<link rel="shortcut icon" href="/favicon.png">
+<link rel="alternate" type="application/atom+xml" title="samrat's thought space" href="/atom.xml">
+<link rel="alternate" type="application/json" title="samrat's thought space" href="http://localhost:4000/feed.json">
+<link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml">
+<style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:10rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5{line-height:1;margin:1rem 0;font-weight:600}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:60rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}@media print{.no-print,.no-print *{display:none !important}}img.mermaid{max-width:200px}.url{color:#0645AD}*::-moz-selection{color:white;background:#7011dc}*::selection{color:white;background:#7011dc}*{font-family:"Outfit", sans-serif}li>ul{padding-left:1rem}</style>
+<script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"},"svg":{"fontCache":"global"}}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body><main><header aria-hidden="true" class="no-print"> <!--<h1 class="logo">samrat's thought space</h1>--><nav role="navigation" aria-hidden="true"><ul>
+<li><a href="/">writing</a></li>
+<li><a href="/about">about</a></li>
+<li><a href="/search">search</a></li>
+<li><a href="/brain">brain</a></li>
+</ul></nav></header><section class="post"><h2>
+<a href="/brain/cs234" class="url">cs234</a> / assignment 1</h2>
+<p><strong>Resources:</strong></p>
+<ul><li><a href="/assets/files/cs234-assignment1.pdf">Assignment PDF</a></li></ul>
+<p><span style="color:red"><strong>Disclaimer:</strong> My answers may or may not be correct. Please do not rely on these answers as an answer key.</span></p>
+<h1 id="optimal-policy-for-simple-mdp">Optimal Policy for Simple MDP</h1>
+<p>Consider the simple $n$-state MDP shown in Figure 1. Starting from state $s_1$, the agent can move to the right ($a_0$) or left ($a_1$) from any state $s_i$. Actions are deterministic and always succeed (e.g. going left from state $s_2$ goes to state $s_1$, and going left from state $s_1$ transitions to itself). Rewards are given upon taking an action from the state. Taking any action from the goal state $G$ earns a reward of $r= + 1$ and the agent stays in state $G$. Otherwise, each move has zero reward ($r=0$). Assume a discount factor $\gamma &lt; 1$.</p>
+<p><img src="/assets/img/cs234-assignment1-q1-1.png" width="70%"></p>
+<ol>
+<li>
+<p>The optimal action from any state $s_i$ is taking $a_0$ (right) until the agent reaches the goal state $G$. Find the optimal value function for all states $s_i$ and the goal state $G$.</p>
+<p><strong>Answer:</strong> We can apply value iteration to determine the optimal value function for each state</p>
+<ul>
+<li>$V(G) = 1 + \gamma + \gamma^2 + \gamma^3 \dots \gamma^n = \frac{1}{1-\gamma}$</li>
+<li>$V(s_i) = \gamma^{n - i} + \gamma^{n - i + 1} \dots \gamma^{n} = \frac{\gamma^{n - i}}{1- \gamma}$</li>
+</ul>
+</li>
+<li>
+<p>Does the optimal policy depend on the value of the discount factor $\gamma$? Explain your answer.</p>
+<p><strong>Answer:</strong> The optimal policy does not depend on the value of the discount factor when $0 &lt; \gamma &lt; 1$ because this is a finite horizon problem and the relative magnitude of rewards will always be the same. - i.e., we can always “factor out” the discount factor which will result in the same relative magnitudes for non-discounted value and state-value functions. This means that the optimal policy chosen during policy improvement will also be the same</p>
+</li>
+<li>
+<p>Consider adding a constant $c$ to all rewards (i.e. taking any action from states $s_i$ has reward $c$ and any action from the goal state $G$ has reward $1+c$). Find the new optimal value function for all states $s_i$ and the goal state $G$. Does adding a constant reward $c$ change the optimal policy? Explain your answer.</p>
+<p><strong>Answer:</strong> Adding a constant c to each term results in the following value functions:</p>
+<ul>
+<li>$V(G) = (1 + c) + \gamma(1+c) + \gamma^2(1+c) \dots = \frac{1+c}{1 - \gamma}$</li>
+<li>$V(s_i) = \gamma^{n - i}(1+c) + \gamma^{n - i+1}(1+c) \dots + \gamma^{n}(1+c) = \frac{ \gamma^{n - i}(1+c)}{1-\gamma}$</li>
+</ul>
+<p>This does not change the optimal policy since the relative magnitudes of the value functions continue to be the same with the addition of a constant.</p>
+</li>
+<li>
+<p>After adding a constant $c$ to all rewards now consider scaling all the rewards by a constant $a$ (i.e. $r_{new} = a(c+ r_{old})$). Find the new optimal value function for all states $s_i$ and the goal state $G$. Does that change the optimal policy? Explain your answer, If yes, give an example of $a$ and $c$ that changes the optimal policy. <strong>Answer:</strong> Adding a constant c to each term and then scaling by r results in the following value functions:</p>
+<ul>
+<li>$V(G) = a(1 + c) + \gamma(1+c) + \gamma^2a(1+c) \dots = \frac{a(1+c)}{1 - \gamma}$</li>
+<li>$V(s_i) = \gamma^{n - i}a(1+c) + \gamma^{n - i+1}a(1+c) \dots + \gamma^{n}a(1+c) = \frac{ \gamma^{n - i}(a)(1+c)}{1-\gamma}$</li>
+</ul>
+<p>If a is positive, then the optimal policy does not change because its analgous to just increasing the old reward and the constant added which results in the same policy.</p>
+<p>If a is zero, then any policy is the optimal policy because the value function will be zero for all states.</p>
+<p>If a is negative, then the policy would change because the rewards are inverted and therefore the optimal policy would be to always go left. For example if c = 1 and a = -1 then the rewards are negative and become larger as you get closer to state G.</p>
+</li>
+</ol>
+<h1 id="running-time-of-value-iteration">Running Time of Value Iteration</h1>
+<p>In this problem we construct an example to bound the number of steps it will take to find the optimal policy using value iteration. Consider the infinite MDP with discount factor $\gamma &lt; 1$ illustrated in Figure 2. It consists of 3 states, and rewards are given upon taking an action from the state. From state $s_0$, action $a_1$ has zero immediate reward and causes a deterministic transition to state $s_1$ where there is reward $+1$ for every time step afterwards (regardless of action). From state $s_0$, action $a_2$ causes a deterministic transition to state $s_2$ with immediate reward of $\gamma^2/(1-\gamma)$ but state $s_2$ has zero reward for every time step afterwards (regardless of action).</p>
+<p><img src="/assets/img/cs234-assignment1-q2-1.png" width="50%"></p>
+<ol>
+<li>
+<p>What is the total discounted return ($\sum_{t=0}^{\infty}\gamma^t r_t$) of taking action $a_1$ from state $s_0$ at time step $t=0$?</p>
+<p><strong>Answer:</strong> We know the discounted return is the immediate reward + the discounted sum of future rewards. Therefore we get the following as our discounted return: $0 + \gamma + \gamma^2 \dots = \frac{\gamma}{1-\gamma}$</p>
+</li>
+<li>
+<p>What is the total discounted return ($\sum_{t=0}^{\infty}\gamma^t r_t$) of taking action $a_2$ from state $s_0$ at time step $t=0$? What is the optimal action?</p>
+<p><strong>Answer:</strong> Similar to what we did in part 1, we get the following for our discounted return: $\frac{\gamma^2}{1-\gamma} + 0 + 0 \dots = \frac{\gamma^2}{1-\gamma}$</p>
+</li>
+<li>
+<p>Assume we initialize value of each state to zero, (i.e. at iteration $n=0$, $\forall s: V_{n=0}(s) = 0$). Show that value iteration continues to choose the sub-optimal action until iteration $n^*$ where,</p>
+<p>$$n^* \geq \frac{\log(1-\gamma)}{\log\gamma} \geq \frac{1}{2} \log (\frac{1}{1-\gamma})\frac{1}{1-\gamma}$$</p>
+<p>Thus, value iteration has a running time that grows faster than $1/(1-\gamma)$. (You just need to show the first inequality)</p>
+<p><strong>Answer:</strong></p>
+</li>
+</ol>
+<h1 id="approximating-the-optimal-value-function">Approximating the Optimal Value Function</h1>
+<p>Consider a finite MDP $M=\langle S, A, T, R, \gamma \rangle$, where $S$ is the state space, $A$ action space, $T$ transition probabilities, $R$ reward function and $\gamma$ the discount factor. Define $Q^\ast$ to be the optimal state-action value $Q^\ast(s,a) = Q_{\pi^\ast}(s,a)$ where $\pi^\ast$ is the optimal policy. Assume we have an estimate $\tilde{Q}$ of $Q^\ast$, and $\tilde{Q}$ is bounded by $l_{\infty}$ norm as follows:</p>
+<p>$$\vert\vert\tilde{Q} - Q^\ast\vert\vert _{\infty} \leq \varepsilon$$</p>
+<p>Where $\vert\vert x\vert\vert_{\infty} = max_{s,a} |x(s,a)|$.<br> Assume that we are following the greedy policy with respect to $\tilde{Q}$, $\pi(s) = argmax_{a\in \mathcal{A}} \tilde{Q}(s,a)$. We want to show that the following holds:</p>
+<p>$$\label{eq:Q3} V_{\pi}(s) \geq V^*(s) - \frac{2\varepsilon}{1-\gamma}$$</p>
+<p>Where $V_{\pi}(s)$ is the value function of the greedy policy $\pi$ and $V^*(s)=max _{a \in A} Q^\ast(s,a)$ is the optimal value function. This shows that if we compute an approximately optimal state-action value function and then extract the greedy policy for that approximate state-action value function, the resulting policy still does well in the real MDP.</p>
+<ol>
+<li>
+<p>Let $\pi^*$ be the optimal policy, $V^\ast$ the optimal value function and as defined above $\pi(s) = argmax _{a\in A} \tilde{Q}(s,a)$. Show the following bound holds for all states $s \in S$.</p>
+<p>$$V^\ast(s) - Q^\ast(s, \pi(s)) \leq 2 \varepsilon$$</p>
+</li>
+<li><p>Using the results of part 1, prove that $V_{\pi}(s) \geq V^*(s) - \frac{2\varepsilon}{1-\gamma}$.</p></li>
+</ol>
+<p>Now we show that this bound is tight. Consider the 2-state MDP illustrated in figure 3. State $s_1$ has two actions, "$stay$" self transition with reward 0 and "$go$" that goes to state $s_2$ with reward $2\varepsilon$. State $s_2$ transitions to itself with reward $2\varepsilon$ for every time step afterwards.</p>
+<p><img src="/assets/img/cs234-assignment1-q3-1.png" width="50%"></p>
+<ol>
+<li><p>Compute the optimal value fucntion $V^\ast(s)$ for each state and the optimal state-action value function $Q^\ast(s,a)$ for state $s_1$ and each action.</p></li>
+<li><p>Show that there exists an approximate state-action value function $\tilde{Q}$ with $\varepsilon$ error (measured with $l_{\infty}$ norm), such that $V_{\pi}(s_1) - V^*(s_1) = - \frac{2\varepsilon}{1-\gamma}$, where $\pi(s) = argmax_{a \in A} \tilde{Q}(s,a)$. (You may need to define a consistent tie break rule)</p></li>
+</ol>
+<h1 id="frozen-lake-mdp">Frozen Lake MDP</h1>
+<p>Now you will implement value iteration and policy iteration for the Frozen Lake environment from <a href='"https://gym.openai.com/envs/FrozenLake-v0"'>OpenAI Gym</a>. We have provided custom versions of this environment in the starter code.</p>
+<ol>
+<li><p><strong>(coding)</strong> Read through <code>vi_and_pi.py</code> and implement <code>policy_evaluation</code>, <code>policy_improvement</code> and <code>policy_iteration</code>. The stopping tolerance (defined as $\max_s |V_{old}(s) - V_{new}(s)|$) is tol = $10^{-3}$ . Use $\gamma = 0.9$. Return the optimal value function and the optimal policy.</p></li>
+<li><p><strong>(coding)</strong> Implement <code>value_iteration</code> in <code>vi_and_pi.py</code>. The stopping tolerance is tol = $10^{-3}$ . Use $\gamma = 0.9$. Return the optimal value function and the optimal policy.</p></li>
+<li>
+<p><strong>(written)</strong> Run both methods on the Deterministic-4x4-FrozenLake-v0 and</p>
+<p>Stochastic-4x4-FrozenLake-v0 environments. In the second environment, the dynamics of the world are stochastic. How does stochasticity affect the number of iterations required, and the resulting policy?</p>
+</li>
+</ol></section></main></body>
+</html>

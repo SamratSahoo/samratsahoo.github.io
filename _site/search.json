@@ -6,7 +6,7 @@
       "url"         : "/2023/08/07/a-reflection-on-humanity-and-tech",
       "category"    : "",
       "tags"        : "tech, philosophy, humans",
-      "date"        : "2023-08-07 00:00:00 -0500"
+      "date"        : "2023-08-07 00:00:00 -0400"
     },
   
     {
@@ -15,7 +15,7 @@
       "url"         : "/2022/06/11/two-point-five",
       "category"    : "",
       "tags"        : "web3, tech, stuff i think is big brain",
-      "date"        : "2022-06-11 00:00:00 -0500"
+      "date"        : "2022-06-11 00:00:00 -0400"
     },
   
     {
@@ -24,7 +24,7 @@
       "url"         : "/2022/05/29/anya-forger",
       "category"    : "",
       "tags"        : "anime, random fun to keep me occupied, philosophy",
-      "date"        : "2022-05-29 00:00:00 -0500"
+      "date"        : "2022-05-29 00:00:00 -0400"
     }
   ,
 
@@ -32,43 +32,49 @@
     {
       "title"       : "background lecture 1 - markov decision processes reinforcement learning",
       "url"         : "/brain/cs234/markov-decision-processes-reinforcement-learning",
-      "date"        : "2024-05-01 00:00:00 -0500"
+      "date"        : "2024-05-01 00:00:00 -0400"
     },
   
     {
       "title"       : "background lecture 0 - markov decision processes value iteration",
       "url"         : "/brain/cs234/markov-decision-processes-value-iteration",
-      "date"        : "2024-05-01 00:00:00 -0500"
+      "date"        : "2024-05-01 00:00:00 -0400"
     },
   
     {
       "title"       : "lecture 2 - given a model of the world",
       "url"         : "/brain/cs234/given-a-model-of-the-world",
-      "date"        : "2024-05-02 00:00:00 -0500"
+      "date"        : "2024-05-02 00:00:00 -0400"
     },
   
     {
       "title"       : "lecture 1 - introduction to reinforcement learning",
       "url"         : "/brain/cs234/introduction-to-reinforcement-learning",
-      "date"        : "2024-05-02 00:00:00 -0500"
+      "date"        : "2024-05-02 00:00:00 -0400"
     },
   
     {
       "title"       : "lecture 3 - model free policy evaluation",
       "url"         : "/brain/cs234/model-free-policy-evaluation",
-      "date"        : "2024-05-03 00:00:00 -0500"
+      "date"        : "2024-05-03 00:00:00 -0400"
     },
   
     {
       "title"       : "lecture 4 - model free control",
       "url"         : "/brain/cs234/model-free-control",
-      "date"        : "2024-05-05 00:00:00 -0500"
+      "date"        : "2024-05-05 00:00:00 -0400"
     },
   
     {
       "title"       : "lecture 5 - value function approximation",
       "url"         : "/brain/cs234/value-function-approximation",
-      "date"        : "2024-05-07 00:00:00 -0500"
+      "date"        : "2024-05-07 00:00:00 -0400"
+    },
+  
+    {
+      "title"       : "assignment 1",
+      "url"         : "/brain/cs234/assignment-1",
+      "date"        : "2024-05-08 00:00:00 -0400"
     }
   
 ]

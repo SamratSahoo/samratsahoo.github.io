@@ -12,13 +12,13 @@ the other day I was fangirling over the potential of web3 (as usual -- if you fo
 
 most decentralized systems are organized in a graph network type structure where the underlying infrastructure is organized through "nodes" each representing a member of the system. for example the ipfs's underlying infrastructure can look something like this (this is extremely simplified):
 
-<img src="/06-11-2022-1.jpg" width="70%"  />
+<img src="/assets/img/06-11-2022-1.jpg" width="70%"  />
 
 the really powerful part of this is that it is completely non-discriminatory, censorship resistant, and far more robust than traditional file systems (its really really really hard to take down the entire ipfs). there is no central entity that can stop a user from anywhere in the world regardless of beliefs, status in society, or, quite frankly, any other factor from joining the ipfs network.
 
 this solves some of the concerns of traditional file systems. for example a web2 based file system could experience an abuse of central authorithy (which actually happens quite frequently in authoritarian governments where censorship of media is common):
 
-<img src="/06-11-2022-2.jpg" width="70%"  />
+<img src="/assets/img/06-11-2022-2.jpg" width="70%"  />
 
 as we can see here, there is a central authority that decides what goes and what doesn't. web3 solves this issue but at what cost?
 
@@ -26,7 +26,7 @@ this brings me to the what I believe is the biggest shortcoming of decentralized
 
 my proposed solution takes the best of the web2 and web3 systems. the idea is that we would preserve the graph network that makes web3 systems so powerful but add a different type of node that hosts a copy of all data uploaded to the graph network. (_emphasis on a copy of the data_ because in the case that these nodes went down, we would still want to preserve the robust nature of a decentralized system). these new types of nodes would have no extra "power" or authority in the distrubuted file system.
 
-<img src="/06-11-2022-3.jpg" width="70%"  />
+<img src="/assets/img/06-11-2022-3.jpg" width="70%"  />
 
 this would ensure the fast access that web2 systems provide with the censorship resistant and non-discriminatory nature of web3 systems. of course these new types of nodes would be entitled to some sort of "reward" for hosting this data but I have not had the chance to fully flesh out the economy of a system like this.
 

@@ -109,7 +109,7 @@ $$
 
 ### MDP Control
 - We want to find the optimal policy
-  - $\pi^*(s)  = argmax _{pi} V^{\pi}(s)$
+  - $\pi^*(s)  = argmax _{\pi} V^{\pi}(s)$
   - There exists a unique optimal value function
 - Optimal Policy Characteristics (for infinite horizon MDPs):
   - Deterministic

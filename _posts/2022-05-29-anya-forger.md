@@ -12,7 +12,7 @@ a few weeks ago I made an [nft of anya forger](https://twitter.com/samratdotjs/s
 
 before I start, for those of you that don't who anya forger is, she is a blessing from the heavens that we don't deserve. but more so, she has completely brought together the anime community to unanimous agreement on the cutest character ever. for example --
 
-<img src="/05-29-2022-1.jpg" width="70%"  />
+<img src="/assets/img/05-29-2022-1.jpg" width="70%"  />
 
 yes, she is absolutely adorable. adorableness aside -- anya (symbollically) embodies what I strive to be in the future. no, not an absolutely adorable anime girl, although I wouldn't blame people for thinking that. anya is someone who knows how make people happy, how to unite communities, and ultimately leaves the world in a better condition that she found it. and she does this while being completely fictional (although completely real in the hearts of her biggest fans)!
 
