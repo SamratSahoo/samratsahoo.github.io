@@ -72,9 +72,15 @@
     },
   
     {
-      "title"       : "assignment 1",
-      "url"         : "/brain/cs234/assignment-1",
-      "date"        : "2024-05-08 00:00:00 -0400"
+      "title"       : "lecture 6 - cnns and deep q learning",
+      "url"         : "/brain/cs234/cnns-and-deep-q-learning",
+      "date"        : "2024-05-09 00:00:00 -0400"
+    },
+  
+    {
+      "title"       : "lecture 7 - imitation-learning",
+      "url"         : "/brain/cs234/imitation-learning",
+      "date"        : "2024-05-15 00:00:00 -0400"
     }
   
 ]
