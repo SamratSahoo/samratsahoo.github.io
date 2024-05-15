@@ -113,6 +113,11 @@ graph TD;
 - Similar idea to Double Q Learning but we have one network to selection actions and one network to evaluate actions
   - $w$: Weights for network used to select actions
   - $w^-$: Weights for network used to evaluate actions
+  - $\Delta w = \alpha (r + \gamma \hat{Q}(argmax _{a'} \hat{Q}(s', a'; w); w^-) - \hat{Q}(s, a; w))$
+    - Action Selection: $argmax _{a'} \hat{Q}(s', a'; w)$
+    - Action Evaluation: $\hat{Q}(argmax _{a'} \hat{Q}(s', a'; w); w^-)$
+  - Swap the $w^-$ and $w$ on each timestep which ensures both sets of weights get updated frequently
+  - Avoids maximization bias
 
 ### Prioritized Replay
 - Prioritizing which replay you sample leads to exponential improvements in covergence (if we had a perfect oracle that could tell us the next replay to choose)
@@ -127,3 +132,4 @@ graph TD;
 - Intuition: Features needed for value are not necessarily the features you need to determine the benefit of an action
 - **Advantage Function:** $A^\pi(s, a) = Q^\pi(s,a) - V^\pi(s)$
 - Dueling DQNs seperate the value function and advantage function and estimate them seperately and then recombine them for the Q function
+- Not identifiable $\rightarrow$ given a $Q^\pi$ we cannot decompose it into a unique $A^\pi$ and $V^\pi$

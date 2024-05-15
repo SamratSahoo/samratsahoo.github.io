@@ -157,6 +157,13 @@
 <ul><li>Similar idea to Double Q Learning but we have one network to selection actions and one network to evaluate actions<ul>
 <li>$w$: Weights for network used to select actions</li>
 <li>$w^-$: Weights for network used to evaluate actions</li>
+<li>$\Delta w = \alpha (r + \gamma \hat{Q}(argmax _{a’} \hat{Q}(s’, a’; w); w^-) - \hat{Q}(s, a; w))$<ul>
+<li>Action Selection: $argmax _{a’} \hat{Q}(s’, a’; w)$</li>
+<li>Action Evaluation: $\hat{Q}(argmax _{a’} \hat{Q}(s’, a’; w); w^-)$</li>
+</ul>
+</li>
+<li>Swap the $w^-$ and $w$ on each timestep which ensures both sets of weights get updated frequently</li>
+<li>Avoids maximization bias</li>
 </ul>
 </li></ul>
 <h3 id="prioritized-replay">Prioritized Replay</h3>
@@ -177,5 +184,6 @@
 <li>
 <strong>Advantage Function:</strong> $A^\pi(s, a) = Q^\pi(s,a) - V^\pi(s)$</li>
 <li>Dueling DQNs seperate the value function and advantage function and estimate them seperately and then recombine them for the Q function</li>
+<li>Not identifiable $\rightarrow$ given a $Q^\pi$ we cannot decompose it into a unique $A^\pi$ and $V^\pi$</li>
 </ul></section></main></body>
 </html>
