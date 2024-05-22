@@ -44,9 +44,36 @@ order: 8
   - Problem: Compound Errors
     - Supervised Learning assumed Independent + Identically Distributed (IID) Random Variables and ignores temporal structure
       - Error at time $t$ has probability of $\epsilon \rightarrow E[\text{Total Errors}] \leq \epsilon T$ where T is the total number of time steps
-    - If a different action deviates from the one found in the expert example, then we come across a state space that was likley never seen before $\rightarrow$ compounds to larger errors
+    - If a different action deviates from the one found in the expert example, then we come across a state space that was likely never seen before $\rightarrow$ compounds to larger errors
       - Error at time $t$ has probability of $\epsilon \rightarrow E[\text{Total Errors}] \leq \epsilon(T + (T-1) + (T-2) \dots) \approx \epsilon T^2$
 
 ### DAGGER: Dataset Aggregation
-- 
+- Idea: Get more data from expert along the path taken by the policy computed by behavior cloning
+  - For every state you encounter in a trajectory, you ask the expert
+- **Algorithm:**
+  - Initialize $D \leftarrow \emptyset$, $\hat{\pi}_1$ to any policy
+  - for i = 1 to N
+    - Let $\pi_i = \beta_i\pi^\ast + (1-\beta)\hat{\pi}_i$
+    - Sample T trajectories using $\pi_i$
+    - Get dataset $D_i = \{(s, \pi^\ast(s))\}$ of visited states by $\pi_i$ and actions given by expert
+    - Aggregate datasets: $D \leftarrow D \cup D_i$
+    - Train classifier $\hat{\pi} _{i+1}$ on $D$
+  - Return best $\hat{\pi}_i$ during validation
 
+### Feature Based Reward Function
+- Given a state space, action space, and transition model
+- Not given a reward function
+- There exists a set of teacher demonstrations $(s_0, a_0, s_1, a_1 \dots)$ based on the teacher's policy
+- We want to infer the reward function 
+  - Teacher's policy should be optimal because we cannot infer anything when its not optimal (i.e., random behavior)
+  - There can be multiple reward functions (not unique)
+
+### Linear Feature Reward Inverse RL
+- Rewards can be linear over the features: $R(s) = w^Tx(s)$ where $w \in \mathbb{R}^n ,  x: S \rightarrow \mathbb{R}^n$
+  - We want to identify the weights given a set of demonstrations
+  - Value Function for a policy: $V^\pi = \mathbb{E}[\sum _{t=0}^\infty \gamma^t R(s_t)] = \mathbb{E}[\sum _{t=0}^\infty \gamma^t w^T x(s_t) \vert \pi]$
+    - $=  w^T \mathbb{E}[\sum _{t=0}^\infty \gamma^t x(s_t) \vert \pi] =  w^T \mu(\pi)$
+      - $\mu(\pi)(s)$: discounted weighted frequnecy of state features under policy $\pi$
+
+### Apprenticeship Learning
+- 

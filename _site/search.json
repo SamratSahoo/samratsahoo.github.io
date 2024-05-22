@@ -81,6 +81,30 @@
       "title"       : "lecture 7 - imitation learning",
       "url"         : "/brain/cs234/imitation-learning",
       "date"        : "2024-05-15 00:00:00 -0400"
+    },
+  
+    {
+      "title"       : "array basics",
+      "url"         : "/brain/numpy/array-basics",
+      "date"        : "2024-05-17 00:00:00 -0400"
+    },
+  
+    {
+      "title"       : "creating arrays",
+      "url"         : "/brain/numpy/creating-arrays",
+      "date"        : "2024-05-21 00:00:00 -0400"
+    },
+  
+    {
+      "title"       : "indexing 1d arrays",
+      "url"         : "/brain/numpy/indexing-1d-arrays",
+      "date"        : "2024-05-21 00:00:00 -0400"
+    },
+  
+    {
+      "title"       : "indexing multidimensional arrays",
+      "url"         : "/brain/numpy/indexing-multidimensional-arrays",
+      "date"        : "2024-05-21 00:00:00 -0400"
     }
   
 ]
