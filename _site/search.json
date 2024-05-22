@@ -84,27 +84,93 @@
     },
   
     {
-      "title"       : "array basics",
+      "title"       : "lecture 1 - array basics",
       "url"         : "/brain/numpy/array-basics",
       "date"        : "2024-05-17 00:00:00 -0400"
     },
   
     {
-      "title"       : "creating arrays",
+      "title"       : "lecture 2 - creating arrays",
       "url"         : "/brain/numpy/creating-arrays",
       "date"        : "2024-05-21 00:00:00 -0400"
     },
   
     {
-      "title"       : "indexing 1d arrays",
+      "title"       : "lecture 3 - indexing 1d arrays",
       "url"         : "/brain/numpy/indexing-1d-arrays",
       "date"        : "2024-05-21 00:00:00 -0400"
     },
   
     {
-      "title"       : "indexing multidimensional arrays",
+      "title"       : "lecture 4 - indexing multidimensional arrays",
       "url"         : "/brain/numpy/indexing-multidimensional-arrays",
       "date"        : "2024-05-21 00:00:00 -0400"
+    },
+  
+    {
+      "title"       : "lecture 5 - basic math for arrays",
+      "url"         : "/brain/numpy/basic-math-for-arrays",
+      "date"        : "2024-05-22 00:00:00 -0400"
+    },
+  
+    {
+      "title"       : "lecture 9 - boolean indexing",
+      "url"         : "/brain/numpy/boolean-indexing",
+      "date"        : "2024-05-22 00:00:00 -0400"
+    },
+  
+    {
+      "title"       : "lecture 6 - broadcasting",
+      "url"         : "/brain/numpy/broadcasting",
+      "date"        : "2024-05-22 00:00:00 -0400"
+    },
+  
+    {
+      "title"       : "challenge 3 - gold miner",
+      "url"         : "/brain/numpy/challenge-gold-miner",
+      "date"        : "2024-05-22 00:00:00 -0400"
+    },
+  
+    {
+      "title"       : "challenge 1 - high school reunion",
+      "url"         : "/brain/numpy/challenge-high-school-reunion",
+      "date"        : "2024-05-22 00:00:00 -0400"
+    },
+  
+    {
+      "title"       : "challenge 2 - nola",
+      "url"         : "/brain/numpy/challenge-nola",
+      "date"        : "2024-05-22 00:00:00 -0400"
+    },
+  
+    {
+      "title"       : "challenge 4 - roux",
+      "url"         : "/brain/numpy/challenge-roux",
+      "date"        : "2024-05-22 00:00:00 -0400"
+    },
+  
+    {
+      "title"       : "lecture 11 - infinity",
+      "url"         : "/brain/numpy/infinity",
+      "date"        : "2024-05-22 00:00:00 -0400"
+    },
+  
+    {
+      "title"       : "lecture 10 - nan",
+      "url"         : "/brain/numpy/nan",
+      "date"        : "2024-05-22 00:00:00 -0400"
+    },
+  
+    {
+      "title"       : "lecture 7 - newaxis",
+      "url"         : "/brain/numpy/newaxis",
+      "date"        : "2024-05-22 00:00:00 -0400"
+    },
+  
+    {
+      "title"       : "lecture 8 - reshape",
+      "url"         : "/brain/numpy/reshape",
+      "date"        : "2024-05-22 00:00:00 -0400"
     }
   
 ]

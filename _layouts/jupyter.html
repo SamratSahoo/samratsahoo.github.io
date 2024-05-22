@@ -6,7 +6,6 @@ layout: default
     integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script>
     $(function () {
-        $("#includedContent").load("{{ site.url }}{{ site.baseurl }}/assets/jupyter/{{page.notebook}}.html");
 
         const iframe = document.querySelector('iframe');
         iframe.addEventListener('load', function () {
@@ -21,8 +20,7 @@ layout: default
 <section class="post">
     <h2><a href="/brain/{{page.course}}" class="url">{{page.course}}</a> / {{ page.title }}</h2>
     {{ content }}
-    <iframe src="{{ site.url }}{{ site.baseurl }}/assets/jupyter/{{page.notebook}}.html" frameborder="0"
+    <iframe src="{{ site.url }}{{ site.baseurl }}/assets/jupyter-html/{{page.notebook}}.html" frameborder="0"
         style="overflow:hidden;width:100%;">
-        <!-- <div id="includedContent" /> -->
     </iframe>
 </section>
