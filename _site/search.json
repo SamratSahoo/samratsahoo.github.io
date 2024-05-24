@@ -174,8 +174,38 @@
     },
   
     {
+      "title"       : "lecture 15 - any and all",
+      "url"         : "/brain/numpy/any-all",
+      "date"        : "2024-05-23 00:00:00 -0400"
+    },
+  
+    {
+      "title"       : "challenge 9 - big fish",
+      "url"         : "/brain/numpy/challenge-big-fish",
+      "date"        : "2024-05-23 00:00:00 -0400"
+    },
+  
+    {
+      "title"       : "challenge 11 - defraud the investors",
+      "url"         : "/brain/numpy/challenge-defraud-the-investors",
+      "date"        : "2024-05-23 00:00:00 -0400"
+    },
+  
+    {
       "title"       : "challenge 5 - love distance",
       "url"         : "/brain/numpy/challenge-love-distance",
+      "date"        : "2024-05-23 00:00:00 -0400"
+    },
+  
+    {
+      "title"       : "challenge 8 - movie ratings",
+      "url"         : "/brain/numpy/challenge-movie-ratings",
+      "date"        : "2024-05-23 00:00:00 -0400"
+    },
+  
+    {
+      "title"       : "challenge 12 - pixel artist",
+      "url"         : "/brain/numpy/challenge-pixel-artist",
       "date"        : "2024-05-23 00:00:00 -0400"
     },
   
@@ -192,8 +222,44 @@
     },
   
     {
+      "title"       : "challenge 10 - taco truck",
+      "url"         : "/brain/numpy/challenge-taco-truck",
+      "date"        : "2024-05-23 00:00:00 -0400"
+    },
+  
+    {
+      "title"       : "lecture 16 - concatenate",
+      "url"         : "/brain/numpy/concatenate",
+      "date"        : "2024-05-23 00:00:00 -0400"
+    },
+  
+    {
+      "title"       : "lecture 14 - math functions",
+      "url"         : "/brain/numpy/math-functions",
+      "date"        : "2024-05-23 00:00:00 -0400"
+    },
+  
+    {
       "title"       : "lecture 12 - random",
       "url"         : "/brain/numpy/random",
+      "date"        : "2024-05-23 00:00:00 -0400"
+    },
+  
+    {
+      "title"       : "lecture 18 - sorting",
+      "url"         : "/brain/numpy/sorting",
+      "date"        : "2024-05-23 00:00:00 -0400"
+    },
+  
+    {
+      "title"       : "lecture 17 - stacking",
+      "url"         : "/brain/numpy/stacking",
+      "date"        : "2024-05-23 00:00:00 -0400"
+    },
+  
+    {
+      "title"       : "lecture 19 - unique",
+      "url"         : "/brain/numpy/unique",
       "date"        : "2024-05-23 00:00:00 -0400"
     },
   
