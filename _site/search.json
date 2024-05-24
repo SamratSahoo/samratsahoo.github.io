@@ -171,6 +171,36 @@
       "title"       : "lecture 8 - reshape",
       "url"         : "/brain/numpy/reshape",
       "date"        : "2024-05-22 00:00:00 -0400"
+    },
+  
+    {
+      "title"       : "challenge 5 - love distance",
+      "url"         : "/brain/numpy/challenge-love-distance",
+      "date"        : "2024-05-23 00:00:00 -0400"
+    },
+  
+    {
+      "title"       : "challenge 7 - professor prick",
+      "url"         : "/brain/numpy/challenge-professor-prick",
+      "date"        : "2024-05-23 00:00:00 -0400"
+    },
+  
+    {
+      "title"       : "challenge 6 - pscyho parent",
+      "url"         : "/brain/numpy/challenge-psycho-parent",
+      "date"        : "2024-05-23 00:00:00 -0400"
+    },
+  
+    {
+      "title"       : "lecture 12 - random",
+      "url"         : "/brain/numpy/random",
+      "date"        : "2024-05-23 00:00:00 -0400"
+    },
+  
+    {
+      "title"       : "lecture 13 - where",
+      "url"         : "/brain/numpy/where",
+      "date"        : "2024-05-23 00:00:00 -0400"
     }
   
 ]
