@@ -267,6 +267,42 @@
       "title"       : "lecture 13 - where",
       "url"         : "/brain/numpy/where",
       "date"        : "2024-05-23 00:00:00 -0400"
+    },
+  
+    {
+      "title"       : "lecture 20 - advanced array indexing",
+      "url"         : "/brain/numpy/advanced-array-indexing",
+      "date"        : "2024-05-24 00:00:00 -0400"
+    },
+  
+    {
+      "title"       : "challenge 15 - game of doors",
+      "url"         : "/brain/numpy/challenge-game-of-doors",
+      "date"        : "2024-05-24 00:00:00 -0400"
+    },
+  
+    {
+      "title"       : "challenge 16 - peanut butter",
+      "url"         : "/brain/numpy/challenge-peanut-butter",
+      "date"        : "2024-05-24 00:00:00 -0400"
+    },
+  
+    {
+      "title"       : "challenge 13 - population verification",
+      "url"         : "/brain/numpy/challenge-population-verification",
+      "date"        : "2024-05-24 00:00:00 -0400"
+    },
+  
+    {
+      "title"       : "challenge 14 - prime locations",
+      "url"         : "/brain/numpy/challenge-prime-locations",
+      "date"        : "2024-05-24 00:00:00 -0400"
+    },
+  
+    {
+      "title"       : "lecture 21 - view vs copy",
+      "url"         : "/brain/numpy/view-copy",
+      "date"        : "2024-05-24 00:00:00 -0400"
     }
   
 ]
