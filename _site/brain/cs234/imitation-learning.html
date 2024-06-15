@@ -128,5 +128,33 @@
 </ul>
 </li></ul>
 <h3 id="apprenticeship-learning">Apprenticeship Learning</h3>
-<ul><li></ul></section></main></body>
+<ul>
+<li>$V^\ast = \mathbb{E}[\sum _{t=0}^\infty \gamma^t R^\ast(s_t) \vert \pi^\ast] \geq V^\pi = \mathbb{E}[\sum _{t=0}^\infty \gamma^t R^\ast(s_t) \vert \pi]$<ul><li>Therefore we can find weights such that $w ^{\ast T} \mu(\pi^\ast) \geq w ^{\ast T} \mu(\pi) \forall \pi \neq \pi^\ast$</li></ul>
+</li>
+<li>
+<strong>Feature Matching:</strong><ul>
+<li>We want to find a reward function that the expert policy outperforms all other policies</li>
+<li>For a policy to perform as well as the expert, it suffices we have a policy where its discounted sum of feature expectations match the expert policy<ul>
+<li>$\vert\vert \mu(\pi) - \mu(\pi^\ast) \vert \vert \leq \epsilon$</li>
+<li>$\vert w^T\mu(\pi) - w^T\mu(\pi^\ast) \vert \leq \epsilon$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Algorithm:</strong><ul>
+<li>Assume: $R(s) = w^T x(s)$</li>
+<li>Initialize policy: $\pi_0$</li>
+<li>For $i = 0, 1, 2 \dots$<ul>
+<li>Find a reward function such that the teacher maximally outperforms all previous controllers<ul><li>$argmax_w max_\gamma s.t. w^T\mu(\pi^\ast) \geq w^T\mu(\pi) + \gamma \forall \pi$</li></ul>
+</li>
+<li>s.t. $\vert \vert w \vert \vert \leq 1$</li>
+<li>Find optimal control policy $\pi_i$ for the current $w$</li>
+<li>Exit if $\gamma \leq \epsilon / 2$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Ambiguity: Infinite number of reward and policies; which one should we pick?</li>
+</ul></section></main></body>
 </html>

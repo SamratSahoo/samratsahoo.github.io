@@ -76,4 +76,20 @@ order: 8
       - $\mu(\pi)(s)$: discounted weighted frequnecy of state features under policy $\pi$
 
 ### Apprenticeship Learning
-- 
+- $V^\ast = \mathbb{E}[\sum _{t=0}^\infty \gamma^t R^\ast(s_t) \vert \pi^\ast] \geq V^\pi =  \mathbb{E}[\sum _{t=0}^\infty \gamma^t R^\ast(s_t) \vert \pi]$
+  - Therefore we can find weights such that $w ^{\ast T} \mu(\pi^\ast) \geq w ^{\ast T} \mu(\pi) \forall \pi \neq \pi^\ast$
+- **Feature Matching:**
+  - We want to find a reward function that the expert policy outperforms all other policies
+  - For a policy to perform as well as the expert, it suffices we have a policy where its discounted sum of feature expectations match the expert policy
+    - $\vert\vert \mu(\pi) - \mu(\pi^\ast) \vert \vert \leq \epsilon$
+    - $\vert w^T\mu(\pi) - w^T\mu(\pi^\ast) \vert \leq \epsilon$ 
+- **Algorithm:**
+  - Assume: $R(s) = w^T x(s)$
+  - Initialize policy: $\pi_0$
+  - For $i = 0, 1, 2 \dots$
+    - Find a reward function such that the teacher maximally outperforms all previous controllers
+      - $argmax_w max_\gamma s.t. w^T\mu(\pi^\ast) \geq w^T\mu(\pi) + \gamma \forall \pi$
+    - s.t. $\vert \vert w \vert \vert \leq 1$
+    - Find optimal control policy $\pi_i$ for the current $w$
+    - Exit if $\gamma \leq \epsilon / 2$ 
+- Ambiguity: Infinite number of reward and policies; which one should we pick?
