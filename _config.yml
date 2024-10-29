@@ -74,6 +74,9 @@ collections:
   pages:
     output: true
     permalink: /:name
+  research:
+    output: true
+    permalink: /:year/:month/:day/:slug
   posts:
     output: true
     permalink: /:year/:month/:day/:slug

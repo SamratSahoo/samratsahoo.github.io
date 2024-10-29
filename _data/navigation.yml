@@ -1,8 +1,10 @@
 links:
-  - title: writing
+  - title: research
     url: /
   - title: about
     url: /about
+  - title: writing
+    url: /writing
   - title: search
     url: /search
   - title: brain
