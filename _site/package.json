@@ -1,6 +1,0 @@
-{
-    "scripts": {
-        "dev": "bundle exec jekyll serve --livereload",
-        "start": "bundle exec jekyll serve"
-    }
-}

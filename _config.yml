@@ -82,6 +82,9 @@ collections:
     permalink: /:year/:month/:day/:slug
   brain:
     output: true
+  readings:
+    output: true
+    permalink: /:year/:month/:day/:slug
   lectures:
     output: true
 
@@ -105,3 +108,8 @@ defaults:
       type: "brain"
     values:
       layout: "brain"
+  - scope:
+      path: ""
+      type: "readings"
+    values:
+      layout: "reading"
