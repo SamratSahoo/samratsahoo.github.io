@@ -9,5 +9,5 @@ links:
     url: /reading
   - title: search
     url: /search
-  - title: brain
-    url: /brain
+  # - title: brain
+  #   url: /brain
