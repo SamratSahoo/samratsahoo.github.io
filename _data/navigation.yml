@@ -3,10 +3,10 @@ links:
     url: /
   - title: about
     url: /about
-  - title: writing
-    url: /writing
   - title: reading
     url: /reading
+  - title: writing
+    url: /writing
   - title: search
     url: /search
   # - title: brain

@@ -6,7 +6,7 @@ layout: default
 <section class="posts">
     {{content }}
     <ul>
-        {% for reading in site.readings %}
+        {% for reading in site.readings reversed %}
         <li><a href="{{ site.baseurl }}{{ reading.url }}">{{ reading.title }}</a><time
                 datetime="{{ post.date | date_to_xmlschema }}">{{ reading.date | date: "%m-%d-%Y" }}</time></li>
         {% endfor %}

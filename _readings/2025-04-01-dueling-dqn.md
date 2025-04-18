@@ -37,7 +37,7 @@ tags: [research]
   * Can be used in many classical RL algorithms like SARSA or DDQN  
   * Design  
     * One stream outputs a scalar: $V(s; \theta, \beta)$  
-    * Other stream outputs a $|A|$-dimensional vector: $A(s, a, \theta, \alpha)$   
+    * Other stream outputs a $\vert A\vert$-dimensional vector: $A(s, a, \theta, \alpha)$   
       * $\theta$: parameters of convolutional layers  
       * $\beta$: parameters of value function layers  
       * $\alpha$: parameters of advantage function layers  
@@ -46,7 +46,7 @@ tags: [research]
       * V might not be a good estimator for state-value  
       * A might not be a good estimator for advantage  
     * Q value function is unidentifiable: Cannot decompose A and V from Q  
-      * We can force the advantage estimator to have 0 advantage at chosen action → last module of network implements: $Q(s, a; \theta, \alpha,\beta) = V(s;\theta,\beta) + A(s, a; \theta\alpha) - max_{a' \in |A|}A(s, a';\theta, \alpha)$  
+      * We can force the advantage estimator to have 0 advantage at chosen action → last module of network implements: $Q(s, a; \theta, \alpha,\beta) = V(s;\theta,\beta) + A(s, a; \theta\alpha) - max_{a' \in \vert A\vert}A(s, a';\theta, \alpha)$  
       * By doing this, we can make sure that Q = V when the optimal action is chosen (via identifability)   
       * Alternatively, you can subtract the average advantage → losing semantics of Q and V but stabalizes optimization  
         * Advantages only need to change as fast as mean  

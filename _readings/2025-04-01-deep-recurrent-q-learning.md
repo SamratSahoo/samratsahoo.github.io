@@ -23,8 +23,8 @@ tags: [research]
   * **Partial Observability**  
     * Sensations received by agent are only partial glimpses of underlying system state  
     * Vanilla DQNs can’t decipher underlying system state of a POMDP given an observation  
-      * $Q(o, a | \theta) \neq Q(s, a | \theta)$  
-    * Recurrency helps narrow the gap $Q(o, a | \theta) \rightarrow Q(s, a | \theta)$ using sequences of observations.  
+      * $Q(o, a \vert \theta) \neq Q(s, a \vert \theta)$  
+    * Recurrency helps narrow the gap $Q(o, a \vert \theta) \rightarrow Q(s, a \vert \theta)$ using sequences of observations.  
 * **DRQN Architecture**  
   * Take DQN, replace the first convolutional layer with a recurrent LSTM  
   * Each frame is convolved first and then passed through the LSTM through time  
