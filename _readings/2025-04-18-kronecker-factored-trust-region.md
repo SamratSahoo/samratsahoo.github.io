@@ -66,12 +66,12 @@ tags: [research]
                 * Can define a joint distribution: $p(a,v \vert s) = \pi (a \vert s)p(v \vert s)$ and construct fisher information matrix with respect to this
                 * Apply K-FAC for approximation and apply updates
     * **Step-size Selection and trust-region optimization**
-        * Usually natural gradient uses SGD like updates: $\theta = \theta - \nu F^{-1}\nabla _{\theta}L$
+        * Usually natural gradient uses SGD like updates: $\theta = \theta - \eta F^{-1}\nabla _{\theta}L$
             * Can result in large updates, causing premature convergence to deterministic policy
         * Trust Region Approach
             * Update scaled down to modify policy distribution by at most a specified amount
-            * Step size: $\nu = min(\nu _{max}, \sqrt{\frac{2 \delta}{\Delta \theta^T F \Delta \theta}})$
-            * learning rate $\nu _{max}, trust region radius \delta$ are hyperparameters
+            * Step size: $\eta = min(\eta _{max}, \sqrt{\frac{2 \delta}{\Delta \theta^T F \Delta \theta}})$
+            * learning rate $\eta _{max}, trust region radius \delta$ are hyperparameters
 * **Experiments**
     * **Discrete Control**
         * ACKTR signficantly outperforms A2C and TRPO in terms of sample efficiency
