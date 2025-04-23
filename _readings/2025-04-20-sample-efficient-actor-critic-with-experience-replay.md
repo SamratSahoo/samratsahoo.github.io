@@ -1,0 +1,107 @@
+---
+layout: post
+title: Sample Efficient Actor-Critic with Experience Replay
+description: A paper about actor critic methods with experience replay
+summary: A paper about actor critic methods with experience replay
+tags: [research]
+---
+
+# Resources
+- [Paper](https://arxiv.org/abs/1611.01224)
+
+* **Introduction**
+    * Experience replay has helped with reducing sample correlation which improves sample efficiency in Deep Q Learning
+    * Deterministic policies of Deep Q Learning prevent it from being used in adversarial scenarios
+    * Finding greedy action with respect to Q function is costly for large action spaces
+    * We need actor critic methods for both discrete and continuous action spaces
+    * Introduces ACER: Actor Critic with Experience Replay
+    * Innovations of ACER
+        * Truncated Importance Sampling with Bias Correction
+        * Stochastic Dueling Architectures
+        * Efficient Trust Region Policy Optimization
+* **Background and Problem Setup**
+    * Goal: Maximize expected discounted return
+    * Inspired from VPG gradient approximation
+    * Use k-step returns to trade-off bias and variance (From A3C)
+    * ACER: Off policy counterpart of A3C
+        * Uses single neural network to estimate policy + value function
+* **Discrete Actor Critic with Experience Replay**
+    * Controlling variance and stability for off-policy estimators (i.e., experience replay) is extremely hard
+    * Importance weighted policy gradient: $\hat{g}^{imp} = (\Pi _{t=0}^k \rho _t)\sum _{t=0}^k (\sum _{i=0}^k \gamma^i r _{t+i}) \nabla _\theta \log \pi _\theta(a_t \vert x_t)$
+        * Where $\rho _t$ is the importance weight 
+        * Unbiased but suffers from unbounded weights
+        * Can be truncated but will suffer from bias
+        * Use marginal value functions over limiting distribution: $g^{marg} = \mathbb{E} _{x _t \sim \beta, a _t \sum \mu}[\rho _t \nabla _\theta \log \pi _\theta (a _t \vert x _t) Q^{\pi}(x _t, a _t)]$
+            * $\beta(x) = \lim _{t \rightarrow \infty} P(x _t = x \vert x _0, \mu)$ is the limiting distribution
+            * $\mu$ is the behavior policy
+            * Avoids having to compute the gradient for the whole trajectory (no longer a product of importance weights - only uses marginal importance weight)
+                * Lowers the variance
+            * Estimate $Q^{\pi}$ using lambda-returns: $R _t^{\lambda} = r_t + (1-\lambda)\gamma V(x _{t+1}) + \lambda \gamma \rho _{t+1} R^\lambda _{t+1}$
+                * Smaller $\lambda$ means smaller returns
+    * **Multi-Step Estimation of the State-Action Value Function**
+        * Use the retrace estimator: $Q^{ret}(x _t, a _t) = r_t + \gamma \bar{\rho} _{t+1}[Q^{ret}(x _{t+1}, a _{t+1}) - Q(x _{t+1}, a _{t+1})] + \gamma V(x _{t+1})$
+            $\bar{\rho} _t = min(\rho _t, c)$: the truncated importance weight
+            * Off policy algorithm with low variance and convergence guarantees in tabular settings
+            * Depends on bootstrapped estimate of $Q$: use two-headed network that outputs the policy and the estimated Q value
+                * Vector outputted for Q value (discrete action space)
+                * $V$ can be found via the expectation across actions of $Q$
+            * ACER depends on $Q^{ret}$ to estimate $Q^{\pi}$. Retrace uses multistep returns to reduce bias
+            * Use MSE Loss between critic ($Q _{\theta _{v}}$) and $Q^{ret}$ to learn the critic
+    * **Importance Weight Truncation with Bias Correction**
+        * Marginal importance weights can become large, causing instability
+        * Introduce correction via a decomposition: $g^{marg} = \mathbb{E} _{x_t}[ \mathbb{E} _{a_t}[ \bar{\rho}_t \nabla _{\theta} \log \pi _{\theta}(a_t \vert x_t) Q^\pi(x_t, a_t)] + \mathbb{E} _{a \sim \pi} ([ \frac{\rho_t(a) - c}{\rho_t(a)}] _{+} \nabla _{\theta} \log \pi _{\theta}(a \vert x_t) Q^\pi(x_t, a))]$
+            * First term with clipped importance weight ensures bounded variance
+            * The second term (correction term) ensures estimate is unbiased
+            * $c$ is the threshold for which the correction term goes into effect - else it just becomes 0
+                * The correction term is weighted by $[ \frac{\rho_t(a) - c}{\rho_t(a)}] _{+}$ (at most 1)
+                * In this scenario, truncated term is weighted by at most $c$
+            * Truncation with bias correction trick: $g^{marg} = \mathbb{E} _{x_t}[ \mathbb{E} _{a_t}[ \bar{\rho}_t \nabla _{\theta} \log \pi _{\theta}(a_t \vert x_t) Q^{ret}(x_t, a_t)] + \mathbb{E} _{a \sim \pi} ([ \frac{\rho_t(a) - c}{\rho_t(a)}] _{+} \nabla _{\theta} \log \pi _{\theta}(a \vert x_t) Q _{\theta _{v}}(x_t, a))]$
+                * Expectations approximated via sampling trajectories
+        * Off-policy ACER Gradient (with baseline): $\hat{g}^{acer} _t = \bar{\rho}_t \nabla _{\theta} \log \pi _{\theta}(a_t \vert x_t) Q^{ret}(x_t, a_t) - V _{\theta _{v}} (x_t) + \mathbb{E} _{a \sim \pi} ([ \frac{\rho_t(a) - c}{\rho_t(a)}] _{+} \nabla _{\theta} \log \pi _{\theta}(a \vert x_t) (Q _{\theta _{v}}(x_t, a) - V _{\theta _{v}} (x_t)))$
+            * $c = 0$: Actor critic update entirely based on Q value estimates
+            * $c = \infty$: Off-policy policy gradient update up to use of retrace 
+    * **Efficient Trust Region Policy Optimization**
+        * Can't use small learning rates because updates can still be large
+        * TRPO good but is computationally expensive
+        * Average policy network: A running average of past policies; force updated policy to not deviate far from this average
+            * Policy follows distribution, $f$ and neural net that generates distribution statistics, $\phi _\theta(x)$
+            * Let $\phi _{\theta_a}(x)$ be the average policy
+            * Soft updates to policy: $\theta _a = \alpha \theta _a + (1 - \alpha)\theta$
+            * ACER gradient with respect to $\phi$: $\hat{g}^{acer} _t = \bar{\rho}_t \nabla _{\phi _\theta (x_t)} \log f(a_t \vert \phi _\theta (x)) Q^{ret}(x_t, a_t) - V _{\theta _{v}} (x_t) + \mathbb{E} _{a \sim \pi} ([ \frac{\rho_t(a) - c}{\rho_t(a)}] _{+} \nabla _{\phi _\theta (x_t)} \log f (a \vert \phi _\theta (x)) (Q _{\theta _{v}}(x_t, a) - V _{\theta _{v}} (x_t)))$
+        * Trust region Update:
+            * Linear KL divergence constraint: $minimize \frac{1}{2}\vert\vert \hat{g}^{acer}_t -z \vert\vert^2_2$ subject to $\nabla _{\phi _\theta(x_t)} D _{KL}[f(\cdot \vert \phi _{\phi _{\theta _a}(x_t)})\vert\vert f(\cdot \vert \phi _{\phi _\theta(x_t)})]^T z \leq \delta$
+                * Linear constraint means we can solve it using KKT conditions: $z^* = \hat{g}^{acer} _t - max(0, \frac{k^T\hat{g}^{acer} _t -\delta}{\vert\vert k \vert\vert^2_2}k)$
+        * Trust region step done on statistics space of $f$ instead of policy parameters to avoid an extra backprop step
+        * ACER has off-policy and on-policy components
+            * Can control number of on-policy vs off-policy updates via the replay ratio
+        * On-policy ACER is just A3C with Q baselines and trust region optimization used
+    * **Results on Atari**
+        * Single algorithm + hyperparameters to play atari games
+        * Using replay signifcantly increases data efficiency
+            * Higher replay ratio = accumulates average reward faster (but with diminishing returns)
+        * ACER matches performance of best DQNs
+        * ACER Off policy is more efficient than on-policy (A3C)
+        * Similar amount of wall clock training time for ACERs
+* **Continuous Actor Critic with Experience Replay**
+    * **Policy Evaluation**
+        * To compute the $V _{\theta_v}$ given $Q _{\theta_v}$, we would need to integrate over the action space; this is intractable
+            * We could use importance sampling but has high variance
+        * Stochastic Dueling Networks: Estimates $Q^\pi$ and $V^\pi$ off-policy while maintaing consistency between estimates
+            * Outputs stochastic $\tilde{Q _{\theta_v}}$ of $Q^\pi$ 
+            * Ouputs deterministic $V _{\theta_v}$ of $V^\pi$
+                * Follows equation: $\tilde{Q _{\theta_v}}(x_t, a_t) \sim V _{\theta_v}(x_t) + A _{\theta_v}(x_t, a_t) - \frac{1}{n}\sum _{i=1}^n A _{\theta_v}(x_t, u_i) \text{ where } u_i \sim \pi _\theta(\cdot \vert x_t)$
+            * Target for estimating $V^\pi$: $V^{target}(x_t) = min(1, \frac{\pi(a_t \vert x_t)}{\mu(a_t \vert x_t)})(Q^{ret}(x_t, a_t) - (Q _{\theta_v}(x_t, a_t))) + V _{\theta_v}(x_t)$
+                * Can raise the importance sampling weight to the power of $\frac{1}{d}$ for faster learning
+    * **Trust Region Updating**
+        * Continuous action space ACER gradient: $\begin{multline} \hat{g}^{acer} _t = \mathbb{E} _{x_t}[\mathbb{E} _{a_t}[\bar{\rho}_t \nabla _{\phi _\theta (x_t)} \log f(a_t \vert \phi _\theta (x)) (Q^{opc}(x_t, a_t) - \\ V _{\theta _{v}} (x_t)) + \mathbb{E} _{a \sim \pi} ([ \frac{\rho_t(a) - c}{\rho_t(a)}] _{+} (\tilde{Q} _{\theta _{v}}(x_t, a') - V _{\theta _{v}} (x_t))\nabla _{\phi _\theta (x_t)} \log f(a'_t \vert \phi _\theta (x)))]]\end{multline}$
+            * $Q^{opc}$ is $Q^{ret}$ with the truncated importance ratio set to 1
+            * Using monte carlo sampling, we can estimate the expectations
+* **Results on Mujoco**
+    * ACER for continuous domains is entirely off-policy
+    * ACER outperforms A3C and truncated importance sampling baselines significantly
+    * Trust region optimization results in huge improvements over baselines (especially in continuous domains)
+    * **Ablation**
+        * Conducts an ablation study where they remove Retrace / $Q(\lambda)$ off-policy correction, SDNs, trust regions, and trucation with bias correction
+            * SDNs + trust regions critical; massive deterioration of performance without them
+            * Trucation with bias correction didn't alter results much
+                * Although helps in very high dimensional settings (where variance is much higher)
