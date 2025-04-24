@@ -8,7 +8,7 @@ tags: [anime, random fun to keep me occupied, philosophy]
 
 _**disclaimer: I am not sharing this blog post anywhere so if you are on this page, you clicked on it on your own volition -- be prepared for what you are about to read**_
 
-a few weeks ago I made an [nft of anya forger](https://twitter.com/samratdotjs/status/1513709396752175104) on the blockchain (granted it was on a test network but hey an nft is still an nft). today I double down on my commitment to why I believe anya may be the best anime character to ever exist -- let me explain.
+a few weeks ago I made an nft of anya forger on the blockchain (granted it was on a test network but hey an nft is still an nft). today I double down on my commitment to why I believe anya may be the best anime character to ever exist -- let me explain.
 
 before I start, for those of you that don't who anya forger is, she is a blessing from the heavens that we don't deserve. but more so, she has completely brought together the anime community to unanimous agreement on the cutest character ever. for example --
 
