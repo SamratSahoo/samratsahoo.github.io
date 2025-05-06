@@ -1,8 +1,8 @@
 links:
-  - title: research
-    url: /
   - title: about
-    url: /about
+    url: /
+  - title: research
+    url: /research
   - title: reading
     url: /reading
   - title: writing

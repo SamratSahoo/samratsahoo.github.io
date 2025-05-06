@@ -1,23 +1,24 @@
 ---
 layout: page
-title: Hi, I'm Samrat 👋
+title: Hi, I'm Samrat
 ---
 
-**Professional Introduction:** I love using computing to build new paradigms to solve the world's most pressing humanitarian issues. Reinforcement learning, blockchains, distributed systems, robotics, and economics are all fields that excite me! In my free time, you'll find me leading [Bits of Good](https://bitsofgood.org/), where I help nonprofits amplify their impact through computing.
+**Professional Introduction:** Hello! I'm Samrat, a recent graduate from the Georgia Institute of Technology, where I studied computer science with concentrations in artificial intelligence and low-level systems. This fall, I'll be pursuing a Master's in Computer Science at Stanford University, focusing on artificial intelligence. I'm especially interested in research, particularly in reinforcement learning and its applications. In the past, my interests have spanned blockchains, federated learning, and economics.
+
+If you'd like to learn more about my past experience, you can find my resume [here](https://samratsahoo.com/Resume_Samrat_Sahoo.pdf).
 
  <u><b>I’m currently working on:<b/><u/>
-- Retirement Portfolio Optimization Using Deep Reinforcement Learning
+- Guiding Reinforcement Learning Exploration using Exploration Critique Networks 
 
 <u><b>Projects I've Finished<b/><u/>
 - [Scatter Protocol](https://github.com/gtfintechlab/scatter-protocol): An Incentivized and Trustless Protocol for Decentralized Federated Learning - Accepted to IEEE International Conference on Blockchain
 - [Roboflow Python Package](https://github.com/roboflow/roboflow-python): Interface with Roboflow API in Python -- my most popular project with 300,000+ monthly downloads! 
 - [Bits of Good Analytics Platform](https://github.com/GTBitsOfGood/bog-analytics/): The unified analytics platform for Bits of Good
-- [Healing4Heroes](https://github.com/GTBitsOfGood/Healing4Heroes): Accelerating Training for Post-Traumatic Stress Disorder Service Animals
 
-<u><b>Socials<b/><u/>
+<u><b>Reach out to me:<b/><u/>
 - Github: [https://github.com/SamratSahoo](https://github.com/SamratSahoo)
 - LinkedIn: [https://www.linkedin.com/in/samratsahoo/](https://www.linkedin.com/in/samratsahoo/)
-- Email: samratsahoo (at) gatech (dot) edu
+- Email: samrat (at) stanford (dot) edu
 
 <br/>
 <details>
