@@ -6,8 +6,9 @@ summary: A paper about dual stream dqns, one for advantages and one for value fu
 tags: [research]
 ---
 
-# Resources
-- [Paper](https://arxiv.org/abs/1507.06527)
+* **Resources**
+    - [Paper](https://arxiv.org/abs/1507.06527)
+<br><br/>
 
 * **Introduction**  
   * Complementary approach - can be used with pre-existing algorithms  

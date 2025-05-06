@@ -6,8 +6,9 @@ summary: A paper that explores using deep reinforcement learning to play atari
 tags: [research]
 ---
 
-# Resources
-- [Paper](https://arxiv.org/abs/1312.5602)
+* **Resources**
+    - [Paper](https://arxiv.org/abs/1312.5602)
+<br><br/>
 
 * **Introduction**  
   * Controlling agents with high dimensional sensory inputs is difficult  

@@ -6,8 +6,9 @@ summary: A paper about mitigating maximization bias using double q learning
 tags: [research]
 ---
 
-# Resources
-- [Paper](https://arxiv.org/abs/1509.06461)
+* **Resources**
+    - [Paper](https://arxiv.org/abs/1509.06461)
+<br><br/>
 
 * **Introduction**  
   * Q learning learns unrealistically high action-values due to maximization step  

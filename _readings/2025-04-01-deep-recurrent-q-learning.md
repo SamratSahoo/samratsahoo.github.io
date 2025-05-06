@@ -6,8 +6,9 @@ summary: A paper that explores recurrent networks for q-learning
 tags: [research]
 ---
 
-# Resources
-- [Paper](https://arxiv.org/abs/1507.06527)
+* **Resources**
+    - [Paper](https://arxiv.org/abs/1507.06527)
+<br><br/>
 
 * **Introduction**  
   * Limitation of DQNs is that they learn a mapping from a limited number of past states (i.e., 4 states in atari)  

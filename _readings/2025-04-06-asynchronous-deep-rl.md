@@ -6,8 +6,9 @@ summary: A paper about asynchronous parallel RL environments and modified algori
 tags: [research]
 ---
 
-# Resources
-- [Paper](https://arxiv.org/abs/1602.01783)
+* **Resources**
+    - [Paper](https://arxiv.org/abs/1602.01783)
+<br><br/>
 
 * **Introduction**  
   * Online RL algorithms thought to be unstable because of non-stationary data → updates highly correlated → use experience replay  

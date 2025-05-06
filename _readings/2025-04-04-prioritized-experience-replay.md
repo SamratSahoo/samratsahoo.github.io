@@ -6,8 +6,9 @@ summary: A paper about prioritizing experience in replay buffers
 tags: [research]
 ---
 
-# Resources
-- [Paper](https://arxiv.org/abs/1511.05952)
+* **Resources**
+    - [Paper](https://arxiv.org/abs/1511.05952)
+<br><br/>
 
 * **Introduction**  
   * Without experience replay, we get temporally correlated updates  

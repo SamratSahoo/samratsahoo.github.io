@@ -6,8 +6,9 @@ summary: A paper that explores generalizing locomotion tasks with dynamic enviro
 tags: [research]
 ---
 
-# Resources
-- [Paper](https://arxiv.org/abs/1707.02286)
+* **Resources**
+    - [Paper](https://arxiv.org/abs/1707.02286)
+<br><br/>
 
 * **Introduction**
     * In continuous control tasks, like locomotion, we need to carefully handcraft the reward function
