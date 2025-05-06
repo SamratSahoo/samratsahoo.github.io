@@ -54,7 +54,7 @@ jekyll-spaceship:
   mathjax-processor:
     src:
       - https://polyfill.io/v3/polyfill.min.js?features=es6
-      - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+      - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js
     config:
       tex:
         inlineMath:
@@ -65,6 +65,20 @@ jekyll-spaceship:
           - ['\[','\]']
       svg:
         fontCache: 'global'
+        scale: 1.0
+        minScale: 0.5
+        mtextInheritFont: true
+        merrorInheritFont: true
+        mathmlSpacing: false
+        skipAttributes: {}
+        exFactor: 0.5
+      chtml:
+        scale: 1.0
+        minScale: 0.5
+        matchFontHeight: true
+        mtextFont: 'serif'
+        linebreaks:
+          automatic: false
     optimize: # optimization on building stage to check and add mathjax scripts
       enabled: true # value `false` for adding to all pages
       include: []   # include patterns for math expressions checking (regexp)
