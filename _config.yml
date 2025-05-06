@@ -33,7 +33,6 @@ plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
   - jekyll-spaceship
-  - jekyll-redirect-from
 
 jekyll-spaceship:
   # default enabled processors
