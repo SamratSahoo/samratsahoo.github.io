@@ -1,10 +1,10 @@
 links:
   - title: about
     url: /
-  - title: research
-    url: /research
   - title: reading
     url: /reading
+  - title: research
+    url: /research
   - title: writing
     url: /writing
   - title: search
