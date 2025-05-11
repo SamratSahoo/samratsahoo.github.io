@@ -3,6 +3,7 @@ layout: post
 title: Deep Reinforcement Learning with Double Q-learning
 description: A paper about mitigating maximization bias using double q learning
 summary: A paper about mitigating maximization bias using double q learning
+category: reading
 tags: [research]
 ---
 

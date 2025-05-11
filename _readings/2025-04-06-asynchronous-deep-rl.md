@@ -3,6 +3,7 @@ layout: post
 title: Asynchronous Methods for Deep Reinforcement Learning
 description: A paper about asynchronous parallel RL environments and modified algorithms
 summary: A paper about asynchronous parallel RL environments and modified algorithms
+category: reading
 tags: [research]
 ---
 

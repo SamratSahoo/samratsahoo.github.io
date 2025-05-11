@@ -3,6 +3,7 @@ layout: post
 title: On Micro-Kernel Construction
 description: A paper about microkernels
 summary: microkernels
+category: reading
 tags: [research]
 ---
 

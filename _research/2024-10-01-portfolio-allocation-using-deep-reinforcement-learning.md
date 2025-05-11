@@ -3,6 +3,7 @@ layout: post
 title: Retirement Portfolio Allocation Using Deep Reinforcement Learning
 description: Building robust deep reinforcement learning models for portfolio allocation problems 
 summary: A DRL approach for retirement portfolio allocation
+category: research
 tags: [research]
 ---
 

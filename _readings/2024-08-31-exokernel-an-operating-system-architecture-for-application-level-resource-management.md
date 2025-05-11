@@ -3,6 +3,7 @@ layout: post
 title: Exokernel - An Operating System Architecture for Application-Level Resource Management
 description: A paper about exokernels
 summary: exokernels
+category: reading
 tags: [research]
 ---
 

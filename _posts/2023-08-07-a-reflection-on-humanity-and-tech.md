@@ -3,6 +3,7 @@ layout: post
 title: a reflection on humanity and tech.
 description: humanity x tech -> the duo the world never knew it needed
 summary: debating if I should serve humanity and maximize impact or work on cool tech and achieve technical excellence
+category: writing
 tags: [tech, philosophy, humans]
 ---
 

@@ -3,6 +3,7 @@ layout: post
 title: Action-dependent Control Variates for Policy Optimization via Stein’s Identity
 description: A paper about stein control variates
 summary: A paper about stein control variates
+category: reading
 tags: [research]
 ---
 

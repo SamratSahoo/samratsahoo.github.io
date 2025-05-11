@@ -3,6 +3,7 @@ layout: post
 title: Deep Recurrent Q-Learning for Partially Observable MDPs
 description: A paper that explores recurrent networks for q-learning
 summary: A paper that explores recurrent networks for q-learning
+category: reading
 tags: [research]
 ---
 

@@ -3,6 +3,7 @@ layout: post
 title: Extensibility, Safety, and Performance in the SPIN Operating System
 description: A paper about SPIN OS
 summary: SPIN OS
+category: reading
 tags: [research]
 ---
 

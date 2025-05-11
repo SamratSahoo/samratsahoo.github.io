@@ -3,7 +3,21 @@
       <nav role="navigation" aria-hidden="true">
 <ul>
    {% for item in site.data.navigation.links %}
-      <li><a href="{{ item.url }}" {% if item.url == page.url %} class="active"{% endif %}>{{ item.title }}</a></li>
+      {% assign section = item.url | remove_first: '/' %}
+      {% if section == '' %}
+        {% assign section = 'about' %}
+      {% endif %}
+      
+      {% assign is_active = false %}
+      {% if item.url == page.url %}
+        {% assign is_active = true %}
+      {% elsif section == page.category %}
+        {% assign is_active = true %}
+      {% elsif page.url contains item.url and item.url != '/' %}
+        {% assign is_active = true %}
+      {% endif %}
+      
+      <li><a href="{{ item.url }}" {% if is_active %} class="active"{% endif %}>{{ item.title }}</a></li>
    {% endfor %}
 </ul>
 </nav>

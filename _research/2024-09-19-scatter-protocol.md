@@ -3,6 +3,7 @@ layout: post
 title: Scatter Protocol
 description: An Incentivized and Trustless Protocol for Decentralized Federated Learning 
 summary: A decentralized protocol for federated learning, backed by cryptocurrency
+category: research
 tags: [research]
 ---
 

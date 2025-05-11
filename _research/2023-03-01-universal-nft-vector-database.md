@@ -3,6 +3,7 @@ layout: post
 title: Universal NFT Vector Database
 description: A vector database to track identical NFTs
 summary: A research paper that outlines the system architecture for a vector database to track identical NFTs
+category: research
 tags: [research]
 ---
 

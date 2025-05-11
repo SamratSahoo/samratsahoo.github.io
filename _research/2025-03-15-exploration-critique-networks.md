@@ -3,6 +3,7 @@ layout: post
 title: Exploration Critique Networks
 description: Using cross attention between recent and past state transitions to guide exploration  
 summary: Using cross attention between recent and past state transitions to guide exploration
+category: research
 tags: [research]
 ---
 

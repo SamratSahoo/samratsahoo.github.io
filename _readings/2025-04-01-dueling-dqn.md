@@ -3,6 +3,7 @@ layout: post
 title: Dueling Network Architectures for Deep Reinforcement Learning
 description: A paper about dual stream dqns, one for advantages and one for value functions
 summary: A paper about dual stream dqns, one for advantages and one for value functions
+category: reading
 tags: [research]
 ---
 

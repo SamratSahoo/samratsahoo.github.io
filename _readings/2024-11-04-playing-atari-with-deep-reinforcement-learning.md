@@ -3,6 +3,7 @@ layout: post
 title: Playing Atari With Deep Reinforcement Learning
 description: A paper that explores using deep reinforcement learning to play atari
 summary: A paper that explores using deep reinforcement learning to play atari
+category: reading
 tags: [research]
 ---
 

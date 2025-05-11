@@ -3,6 +3,7 @@ layout: post
 title: Prioritized Experience Replay
 description: A paper about prioritizing experience in replay buffers
 summary: A paper about prioritizing experience in replay buffers
+category: reading
 tags: [research]
 ---
 

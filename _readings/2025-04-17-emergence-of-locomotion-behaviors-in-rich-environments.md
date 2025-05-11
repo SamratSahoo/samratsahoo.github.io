@@ -3,6 +3,7 @@ layout: post
 title: Emergence of Locomotion Behaviours in Rich Environments
 description: A paper that explores generalizing locomotion tasks with dynamic environments
 summary: A paper that explores generalizing locomotion tasks with dynamic environments
+category: reading
 tags: [research]
 ---
 

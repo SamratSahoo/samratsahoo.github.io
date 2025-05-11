@@ -3,6 +3,7 @@ layout: post
 title: anya forger.
 description: anya >>> every anime character
 summary: I made an nft of anya a few weeks ago. now I double down on my commitment to why she is the best anime character ever
+category: writing
 tags: [anime, random fun to keep me occupied, philosophy]
 ---
 

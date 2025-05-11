@@ -3,6 +3,7 @@ layout: post
 title: two point five.
 description: the average of two and three is two point five.
 summary: sometimes I have genius thoughts -- today I propose an internet architecture that combines web2 and web3 architecture
+category: writing
 tags: [web3, tech, stuff i think is big brain]
 ---
 
