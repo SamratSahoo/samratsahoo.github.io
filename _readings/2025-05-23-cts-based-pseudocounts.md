@@ -92,7 +92,7 @@ tags: [research]
     * Relative rate of change plays role in ratio of pseudo to empirical counts
         * Density model update: $\rho_n(x) = (1 - \alpha_n)\rho _{n-1}(x) + \alpha_n \mathbb{I}(x_n = x)$
         * When $\alpha_n = \frac{1}{n}$, this update rule turns into empirical distribution
-        * For $n^{-\fracP{2}{3}}$, it turns into a stochastic approximation
+        * For $n^{-\frac{2}{3}}$, it turns into a stochastic approximation
             * $\lim _{n \rightarrow \infty} \rho_n(x) = \mu(x)$
             * $\lim _{n \rightarrow \infty} \frac{\rho_n'(x) - \rho_n(x)}{\mu_n'(x) - \mu(x)} = \infty$ because $\mu_n'(x) - \mu(x) = \frac{1}{n}(1 - \mu_n'(x))$
                 * We should require $\rho$ to converge at $\Theta(1/n)$ rate for comparisons to be meaningful

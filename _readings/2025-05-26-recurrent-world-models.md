@@ -8,6 +8,10 @@ category: reading
 tags: [research]
 ---
 
+* **Resources**
+    - [Paper](https://arxiv.org/abs/1809.01999)
+<br><br/>
+
 * **Introduction**
     * Humans develop mental model based on perception
         * Predict future sensory data based on actions
