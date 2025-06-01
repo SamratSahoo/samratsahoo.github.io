@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet">
+<meta name="generator" content="Jekyll v4.2.2">
+<meta property="og:title" content="Deep Reinforcement Learning with Double Q-learning">
+<meta name="author" content="samrat sahoo">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="A paper about mitigating maximization bias using double q learning">
+<meta property="og:description" content="A paper about mitigating maximization bias using double q learning">
+<link rel="canonical" href="https://samratsahoo.com/2025/04/03/double-dqn">
+<meta property="og:url" content="https://samratsahoo.com/2025/04/03/double-dqn">
+<meta property="og:site_name" content="samrat’s thought space">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2025-04-03T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="Deep Reinforcement Learning with Double Q-learning">
+<meta name="twitter:site" content="@samratdotjs">
+<meta name="twitter:creator" content="@samratdotjs"> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"samrat sahoo","url":"https://samratsahoo.com"},"dateModified":"2025-04-03T00:00:00+00:00","datePublished":"2025-04-03T00:00:00+00:00","description":"A paper about mitigating maximization bias using double q learning","headline":"Deep Reinforcement Learning with Double Q-learning","mainEntityOfPage":{"@type":"WebPage","@id":"https://samratsahoo.com/2025/04/03/double-dqn"},"url":"https://samratsahoo.com/2025/04/03/double-dqn"}</script><title> Deep Reinforcement Learning with Double Q-learning - samrat's thought space</title>
+<link rel="shortcut icon" href="/favicon.webp">
+<link rel="alternate" type="application/atom+xml" title="samrat's thought space" href="/atom.xml">
+<link rel="alternate" type="application/json" title="samrat's thought space" href="https://samratsahoo.com/feed.json">
+<link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml">
+<style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:10rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5{line-height:1;margin:1rem 0;font-weight:600}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:60rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}@media print{.no-print,.no-print *{display:none !important}}img.mermaid{max-width:200px}.url{color:#0645AD}*::-moz-selection{color:white;background:#7011dc}*::selection{color:white;background:#7011dc}*{font-family:"Outfit", sans-serif}li>ul{padding-left:1rem}</style>
+<script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"},"svg":{"fontCache":"global","scale":1.0,"minScale":0.5,"mtextInheritFont":true,"merrorInheritFont":true,"mathmlSpacing":false,"skipAttributes":{},"exFactor":0.5},"chtml":{"scale":1.0,"minScale":0.5,"matchFontHeight":true,"mtextFont":"serif","linebreaks":{"automatic":false}}}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js"></script>
+</head>
+<body><main><header aria-hidden="true" class="no-print"> <!--<h1 class="logo">samrat's thought space</h1>--><nav role="navigation" aria-hidden="true"><ul>
+<li><a href="/">about</a></li>
+<li><a href="/reading" class="active">reading</a></li>
+<li><a href="/research">research</a></li>
+<li><a href="/writing">writing</a></li>
+<li><a href="/search">search</a></li>
+</ul></nav></header><section class="post"><h2>Deep Reinforcement Learning with Double Q-learning</h2>
+<ul>
+<li>
+<strong>Resources</strong><ul><li>
+<a href="https://arxiv.org/abs/1509.06461">Paper</a> <br><br>
+</li></ul>
+</li>
+<li>
+<strong>Introduction</strong><ul>
+<li>Q learning learns unrealistically high action-values due to maximization step<ul><li>Even though approximations are imprecise during learning, overestimations become far more common</li></ul>
+</li>
+<li>Uniform overestimation in theory is fine → policy stays the same<ul><li>Overoptimism can usually be used as an exploration technique too</li></ul>
+</li>
+<li>If overoptimism isn’t unique, can impact policy negatively</li>
+<li>Double DQN: more accurate value estimates + higher scores on games</li>
+</ul>
+</li>
+<li>
+<strong>Background</strong><ul>
+<li>
+<strong>Deep Q Networks</strong><ul><li>Main contributions: Target network + experience replay</li></ul>
+</li>
+<li>
+<strong>Double Q Learning</strong><ul>
+<li>Max operator in Q learning and DQN both use select and evaluate actions → leads to overestimation</li>
+<li>Decouple evaluation from selection<ul>
+<li>Two Q value networks</li>
+<li>One network used to select greedy action</li>
+<li>Another network used to estimate Q value for state and action</li>
+<li>Roles of network switched symmetrically to ensure both networks get updated weights</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Overoptimism due to overestimation errors</strong><ul>
+<li>If action values contain random errors uniformly distributed in $[-\epsilon, \epsilon]$ then target overestimated by $\gamma\epsilon\frac{m-1}{m+1}$ where $m$ is the number of actions</li>
+<li>Noise from environment can lead to overestimations</li>
+<li>Theorem:<ul>
+<li>Let $\sum_a Q_t(s,a) - V_{*} = 0$ but $\frac{1}{m}\sum_a (Q_t(s,a) - V_{*})^2 = C &gt; 0$</li>
+<li>Then we know $max_a Q_t(s,a) \geq V_{*}(s) + \sqrt{\frac{C}{m-1}}$</li>
+<li>Shows that even if on average value estimates are correct, estimation errors of any source can drive estimates up away from true optimal values</li>
+<li>Under this theorem, lower bound decreases with more actions but empirically lower bound increases with more actions</li>
+</ul>
+</li>
+<li>Found that overestimations occur even when samples of true action values exist at certain states<ul>
+<li>With bootstrapping, these estimations deteriorate even more</li>
+<li>In practice, overestimation is not uniform</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Double DQN</strong><ul>
+<li>Decompose max operation into action selection and evaluation</li>
+<li>Extend the way DQN works<ul>
+<li>Use online network to evaluate greedy policy</li>
+<li>Use target network to estimate value</li>
+<li>Target for TD methods: $Y_t^{DoubleDQN} = R_{t+1} + \gamma Q(S_{t+1}, argmax_a Q(S_{t+1}, a; \theta_t); \theta_t^-)$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Empirical Results</strong><ul>
+<li>
+<strong>Results on Overoptimism</strong><ul>
+<li>With DQN, values were vastly overoptimistic</li>
+<li>DDQN much closer to true value → better policies<ul><li>Learning is more stable with DDQN</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Quality of the learned policies</strong><ul>
+<li>Overestimation doesn’t necessarily mean bad policies → however, we usually get better learning stability without it</li>
+<li>Evaluated by randomizing start position with 30 No op actions</li>
+<li>DDQN generally improves massively on most games</li>
+</ul>
+</li>
+<li>
+<strong>Robustness to Human Starts</strong><ul>
+<li>With deterministic games, agent could memorize sequences without needing to generalize</li>
+<li>Starting randomly ensured generalization of policy</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Discussion</strong><ul>
+<li>Q-learning is overoptimistic</li>
+<li>Overestimations are more common and severe in practice</li>
+<li>Double Q learning reduces this overestimation</li>
+<li>DDQN is a deep learning approach to double Q learning</li>
+<li>DDQN finds better policies</li>
+</ul>
+</li>
+</ul>
+<span class="meta"><time datetime="2025-04-03T00:00:00+00:00">April 3, 2025</time> · <a href="/tags/research">research</a></span></section></main></body>
+</html>
