@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet">
+<meta name="generator" content="Jekyll v4.2.2">
+<meta property="og:title" content="Curiosity-driven Exploration by Self-supervised Prediction">
+<meta name="author" content="samrat sahoo">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="A paper about icm">
+<meta property="og:description" content="A paper about icm">
+<link rel="canonical" href="https://samratsahoo.com/2025/05/31/icm">
+<meta property="og:url" content="https://samratsahoo.com/2025/05/31/icm">
+<meta property="og:site_name" content="samrat’s thought space">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2025-05-31T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="Curiosity-driven Exploration by Self-supervised Prediction">
+<meta name="twitter:site" content="@samratdotjs">
+<meta name="twitter:creator" content="@samratdotjs"> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"samrat sahoo","url":"https://samratsahoo.com"},"dateModified":"2025-05-31T00:00:00+00:00","datePublished":"2025-05-31T00:00:00+00:00","description":"A paper about icm","headline":"Curiosity-driven Exploration by Self-supervised Prediction","mainEntityOfPage":{"@type":"WebPage","@id":"https://samratsahoo.com/2025/05/31/icm"},"url":"https://samratsahoo.com/2025/05/31/icm"}</script><title> Curiosity-driven Exploration by Self-supervised Prediction - samrat's thought space</title>
+<link rel="shortcut icon" href="/favicon.webp">
+<link rel="alternate" type="application/atom+xml" title="samrat's thought space" href="/atom.xml">
+<link rel="alternate" type="application/json" title="samrat's thought space" href="https://samratsahoo.com/feed.json">
+<link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml">
+<style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:10rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5{line-height:1;margin:1rem 0;font-weight:600}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:60rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}@media print{.no-print,.no-print *{display:none !important}}img.mermaid{max-width:200px}.url{color:#0645AD}*::-moz-selection{color:white;background:#7011dc}*::selection{color:white;background:#7011dc}*{font-family:"Outfit", sans-serif}li>ul{padding-left:1rem}</style>
+<script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"},"svg":{"fontCache":"global","scale":1.0,"minScale":0.5,"mtextInheritFont":true,"merrorInheritFont":true,"mathmlSpacing":false,"skipAttributes":{},"exFactor":0.5},"chtml":{"scale":1.0,"minScale":0.5,"matchFontHeight":true,"mtextFont":"serif","linebreaks":{"automatic":false}}}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js"></script>
+</head>
+<body><main><header aria-hidden="true" class="no-print"> <!--<h1 class="logo">samrat's thought space</h1>--><nav role="navigation" aria-hidden="true"><ul>
+<li><a href="/">about</a></li>
+<li><a href="/reading" class="active">reading</a></li>
+<li><a href="/research">research</a></li>
+<li><a href="/writing">writing</a></li>
+<li><a href="/search">search</a></li>
+</ul></nav></header><section class="post"><h2>Curiosity-driven Exploration by Self-supervised Prediction</h2>
+<ul>
+<li>
+<strong>Resources</strong><ul><li>
+<a href="https://arxiv.org/abs/1705.05363">Paper</a> <br><br>
+</li></ul>
+</li>
+<li>
+<strong>Introduction</strong><ul>
+<li>Random exploration for sparse rewards only really works well for small environments</li>
+<li>Curiosity: Learning new skills that may be useful for pursuing rewards later</li>
+<li>Classes of intrinsic rewards:<ul>
+<li>Encourage agent to explore novel states</li>
+<li>Encourage agent to take action that reduce uncertainty (by predicting consequences of actions)</li>
+</ul>
+</li>
+<li>Measuring novelty requires building dynamics model<ul>
+<li>Hard in high dimensional state spaces (i.e., images)</li>
+<li>Hard to deal with stochasticity</li>
+<li>Another issue is dealing with states that are visually distinct but functionally similar</li>
+</ul>
+</li>
+<li>Key insight of ICM: predict changes to environment that are a consequence of the action; ignore everything else<ul>
+<li>Transform raw states to latent state</li>
+<li>Predict agent’s action given current and next state<ul><li>Since we predict action, network has no incentive to include factors of variation not induced by the action</li></ul>
+</li>
+<li>Train forward dynamics model; predict next state given current state and action<ul><li>Prediction error acts as intrinsic reward</li></ul>
+</li>
+</ul>
+</li>
+<li>Curiosity<ul>
+<li>Helps explore environment for new knowledge</li>
+<li>Helps learn skills for future scenarios</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Curiosity-Driven Exploration</strong><ul>
+<li>Two subsystems<ul>
+<li>Reward generator that outputs curiosity driven reward signal</li>
+<li>Policy that outputs sequence of actions to maximize reward signal<ul><li>Maximize rewards $r_t = r^i_t + r^e_t$ (sum of extrinsic and intrinsic rewards)</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Prediction error as curiosity reward</strong><ul>
+<li>Predicting pixels is both difficult and may not be the right objective<ul>
+<li>I.e., inherent changes in environment not caused by action will cause prediction error to stay high</li>
+<li>Parts of state space can’t be modeled<ul><li>Agent is unaware of this and can fall into artifical curiosity trap, stalling exploration</li></ul>
+</li>
+</ul>
+</li>
+<li>Things that can change environment<ul>
+<li>Controllable factors</li>
+<li>Uncontrollable factors that can impact agent</li>
+<li>Uncontrollable factors that cannot impact agent</li>
+<li>Good feature space should model first 2</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Self-supervised prediction for exploration</strong><ul>
+<li>2 sub-modules for deep neural network<ul>
+<li>One that encodes $s_t$ into feature $\phi(s_t)$</li>
+<li>One that takes $\phi(s_t), \phi(s _{t+1})$ and predicts $a_t$</li>
+</ul>
+</li>
+<li>Optimize $min _{\theta_I} L_I(\hat{a_t}, a_t)$<ul><li>Inverse dynamics model: $\hat{a_t} = g(s_t, s _{t+1}; \theta_I)$</li></ul>
+</li>
+<li>Train another network that predicts $\phi(s _{t+1})$ given $\phi(s_t), a_t$<ul>
+<li>Forward dynamics model: $\hat{\phi}(s _{t+1}) = f(\phi(s_t), a_t; \theta_F)$</li>
+<li>Loss: $L_F(\phi(s_t), \hat{\phi}(s _{t+1})) = \frac{1}{2}\vert \vert \hat{\phi}(s _{t+1}) - \phi(s _{t+1}) \vert \vert^2_2$</li>
+<li>Intrinsic reward: $r^i_t = \frac{\eta}{2}\vert \vert \hat{\phi}(s _{t+1}) - \phi(s _{t+1}) \vert \vert^2_2$<ul><li>$\eta$: Scaling factor</li></ul>
+</li>
+</ul>
+</li>
+<li>Intrinsic curiosity Module:<ul>
+<li>Inverse model learns feature space</li>
+<li>Forward model makes prediction in feature space</li>
+</ul>
+</li>
+<li>Overall optimization problem<ul><li>$min _{\theta_P, \theta_I, \theta_F}[- \lambda \mathbb{E} _{\phi(s_t; \theta_P)}[\sum_t r_t] + (1 - \beta)L_I + \beta L_F]$<ul>
+<li>$\beta$: Scalar that weighs inverse model loss against forward model loss</li>
+<li>$\lambda$: Weights importance of policy gradient loss vs importance of learning intrinsic reward</li>
+</ul>
+</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Experimental Setup</strong><ul>
+<li>Environments: VizDoom game and super mario brothers</li>
+<li>Training details:<ul>
+<li>Visual inputs</li>
+<li>Preprocessed to 42x42 and grayscale</li>
+<li>Concatenate 4 frames together a time for temporal details</li>
+<li>Use action repeat during training but not inference</li>
+<li>A3C algorithm with 20 workers</li>
+</ul>
+</li>
+<li>A3C Architecture<ul>
+<li>4 convolutional layers</li>
+<li>Exponential linear unit after each convolution</li>
+<li>LSTM after convolution</li>
+<li>2 linear layers to predict value and action from LSTM representation</li>
+</ul>
+</li>
+<li>ICM Architecture<ul>
+<li>Inverse Model<ul>
+<li>4 convolution layers</li>
+<li>Exponential linear unit after each convolution</li>
+<li>Current and next state feature vectors concatenated for single representation</li>
+<li>2 Fully connected layers predict to predict actions</li>
+</ul>
+</li>
+<li>Forward Model<ul>
+<li>Concatenate $a_t$ and $\phi(s_t)$</li>
+<li>2 fully connected layers</li>
+<li>$\beta = 0.2, \lambda = 0.1$ for overall optimization equation</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Baseline Methods<ul>
+<li>ICM + A3C</li>
+<li>A3C with $\epsilon$-greedy exploration</li>
+<li>ICM-pixels + A3C (ICM without the inverse model)<ul>
+<li>Remove inverse model and add deconvolutions to forward model</li>
+<li>Doesn’t learn invariant embeddings for uncontrollable parts</li>
+<li>Represents information gain based on direct observations</li>
+</ul>
+</li>
+<li>VIME + TRPO</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Experiments</strong><ul>
+<li>
+<strong>Sparse Extrinsic Reward Setting</strong><ul>
+<li>Vary the distance between spawn and goal (chances of reaching goal is lower, reward is sparser)<ul>
+<li>Dense: Agent spawned randomly in any possible location uniformly<ul><li>Not hard and goal can be reached with $\epsilon$-greedy</li></ul>
+</li>
+<li>Sparse + Very Sparse: Spawn in rooms 270 - 350 steps away from goal<ul>
+<li>Requires long directed sequence of actions</li>
+<li>A3C degrades with sparser rewards</li>
+<li>Curious A3C agents are better in all cases + learn faster, indicating more efficient exploration</li>
+<li>ICM Pixels not as good because its hard to learn pixel-prediction models as number of textures increases</li>
+<li>In sparse, only baseline A3C fails</li>
+<li>In very sparse, A3C and ICM-pixels fail</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Uncontrollable Dynamics<ul>
+<li>Augment state with white noise area</li>
+<li>ICM Pixel fails here but ICM succeeds</li>
+</ul>
+</li>
+<li>Comparison to TRPO-VIME<ul>
+<li>TRPO-VIME has better sample efficiency</li>
+<li>ICM has better convergence rates and accuracy</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>No Reward Setting</strong><ul>
+<li>ICM performs well even in the absence of extrinsic reward</li>
+<li>VizDoom: Coverage during Exploration<ul><li>Able to learn to navigate corridors, walk between rooms, explore rooms</li></ul>
+</li>
+<li>Mario: Learning to play with no rewards<ul>
+<li>Learns to cross over 30% of level-1</li>
+<li>Discovers behaviors like killing / dodging enemies</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Generalization to Novel Scenarios</strong><ul>
+<li>To determine generalization, train no reward exploratory behavior in 1 scenario and evaluate as follows:<ul>
+<li>Apply learned policy as-is to new scenario</li>
+<li>Adapt policy by fine tuning curiosity</li>
+<li>Adapt policy to maximize extrinsic reward</li>
+</ul>
+</li>
+<li>Evaluate as is<ul>
+<li>No reward policy generalizes well on other levels despite having different structures</li>
+<li>Similar global appearance</li>
+</ul>
+</li>
+<li>Fine tuning with curiosity only<ul>
+<li>No reward policy from level 1 can adapt to level 2 with some fine-tuning of the policy<ul><li>Training a policy from scratch actually leads to worse results<ul><li>Level 2 is harder so learning skills is harder $\rightarrow$ starting with level 1 is a form of curriculum learning</li></ul>
+</li></ul>
+</li>
+<li>Fine tuning level 1 policy to level 3 deteroriates performance<ul><li>Get across a certain point in level 3 is very hard $\rightarrow$ curiosity blockade<ul><li>0 intrinsic reward, policy degenerates so it stops exploring (analogous to boredom)</li></ul>
+</li></ul>
+</li>
+</ul>
+</li>
+<li>Fine tuning with extrinsic rewards<ul><li>ICM pre-trained with only curisoity and then fine tuned with external rewards learns faster + achieves higher reward than ICM trained from scratch</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Discussion</strong><ul><li>Future research: use learned exploration behavior as a low level policy in more complex system</li></ul>
+</li>
+</ul>
+<span class="meta"><time datetime="2025-05-31T00:00:00+00:00">May 31, 2025</time> · <a href="/tags/research">research</a></span></section></main></body>
+</html>
