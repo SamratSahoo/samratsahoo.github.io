@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet">
+<meta name="generator" content="Jekyll v4.2.2">
+<meta property="og:title" content="lecture 7 - imitation learning">
+<meta name="author" content="samrat sahoo">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="Resources: Lecture Video">
+<meta property="og:description" content="Resources: Lecture Video">
+<link rel="canonical" href="https://samratsahoo.com/brain/cs234/imitation-learning">
+<meta property="og:url" content="https://samratsahoo.com/brain/cs234/imitation-learning">
+<meta property="og:site_name" content="samrat’s thought space">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2024-05-15T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="lecture 7 - imitation learning">
+<meta name="twitter:site" content="@samratdotjs">
+<meta name="twitter:creator" content="@samratdotjs"> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"samrat sahoo","url":"https://samratsahoo.com"},"dateModified":"2024-05-15T00:00:00+00:00","datePublished":"2024-05-15T00:00:00+00:00","description":"Resources: Lecture Video","headline":"lecture 7 - imitation learning","mainEntityOfPage":{"@type":"WebPage","@id":"https://samratsahoo.com/brain/cs234/imitation-learning"},"url":"https://samratsahoo.com/brain/cs234/imitation-learning"}</script><title> lecture 7 - imitation learning - samrat's thought space</title>
+<link rel="shortcut icon" href="/favicon.webp">
+<link rel="alternate" type="application/atom+xml" title="samrat's thought space" href="/atom.xml">
+<link rel="alternate" type="application/json" title="samrat's thought space" href="https://samratsahoo.com/feed.json">
+<link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml">
+<style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:10rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5{line-height:1;margin:1rem 0;font-weight:600}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:60rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}@media print{.no-print,.no-print *{display:none !important}}img.mermaid{max-width:200px}.url{color:#0645AD}*::-moz-selection{color:white;background:#7011dc}*::selection{color:white;background:#7011dc}*{font-family:"Outfit", sans-serif}li>ul{padding-left:1rem}</style>
+<script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"},"svg":{"fontCache":"global","scale":1.0,"minScale":0.5,"mtextInheritFont":true,"merrorInheritFont":true,"mathmlSpacing":false,"skipAttributes":{},"exFactor":0.5},"chtml":{"scale":1.0,"minScale":0.5,"matchFontHeight":true,"mtextFont":"serif","linebreaks":{"automatic":false}}}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js"></script>
+</head>
+<body><main><header aria-hidden="true" class="no-print"> <!--<h1 class="logo">samrat's thought space</h1>--><nav role="navigation" aria-hidden="true"><ul>
+<li><a href="/">about</a></li>
+<li><a href="/reading">reading</a></li>
+<li><a href="/research">research</a></li>
+<li><a href="/writing">writing</a></li>
+<li><a href="/search">search</a></li>
+</ul></nav></header><section class="post"><h2>
+<a href="/brain/cs234" class="url">cs234</a> / lecture 7 - imitation learning</h2>
+<p><strong>Resources:</strong></p>
+<ul><li><a href="https://youtu.be/V7CY68zH6ps?feature=shared">Lecture Video</a></li></ul>
+<h3 id="generalization-and-efficiency">Generalization and Efficiency</h3>
+<ul>
+<li>For learning in a generic MDP, it requires a large number of samples to learn a good policy $\rightarrow$ generally infeasible.</li>
+<li>Alternative: Use structure + additional knowledge to constrain and speed up reinforcement learning</li>
+<li>Reinforcement Learning: Policies guided by rewards<ul>
+<li>Pros: Simple and cheap form of supervision</li>
+<li>Cons: High sample complexity</li>
+<li>Good for simulations where data is easy and parallelization is easy</li>
+<li>Bad when actions are slow, expensive/intolerable to fail, and want to be safe</li>
+</ul>
+</li>
+</ul>
+<h3 id="reward-shaping">Reward Shaping</h3>
+<ul><li>Rewards that are dense in time closely guide the agent<ul>
+<li>Can either manually design them (brittle)</li>
+<li>Specify them through demonstrations</li>
+</ul>
+</li></ul>
+<h3 id="learning-from-demonstrations">Learning from Demonstrations</h3>
+<ul>
+<li>Types of Learning from Demonstrations: Inverse RL, Imitation Learning</li>
+<li>Expert Provides a set of demonstration trajectories (sequences of states and actions)<ul><li>Useful when its easier for an expert to demonstrate the desired behavior rather than specifying a reward function to generate the behavior or desired policy directly</li></ul>
+</li>
+<li>
+<strong>Problem Setup:</strong><ul>
+<li>Input:<ul>
+<li>State Space, Action Space</li>
+<li>Transition Model</li>
+<li>No Reward Function</li>
+<li>Set of one or more teacher’s demonstrations $(s_0, a_0, s_1, \dots) \rightarrow$ actions from teacher’s policy, $\pi^\ast$</li>
+</ul>
+</li>
+<li>Behavioral Cloning: Can we directly learn the teacher’s policy using supervised learning</li>
+<li>Inverse RL: Can we recover the reward function</li>
+<li>Apprenticeship Learning via Inverse RL: Can we use R to generate a good policy</li>
+</ul>
+</li>
+</ul>
+<h3 id="behavioral-cloning">Behavioral Cloning</h3>
+<ul><li>Formulate the problem as a standard machine learning problem<ul>
+<li>Fix a policy class: neural nets, decision trees, etc.</li>
+<li>Estimate the policy from training examples $(s_0, a_0),(s_1, a_1), \dots$</li>
+<li>Problem: Compound Errors<ul>
+<li>Supervised Learning assumed Independent + Identically Distributed (IID) Random Variables and ignores temporal structure<ul><li>Error at time $t$ has probability of $\epsilon \rightarrow E[\text{Total Errors}] \leq \epsilon T$ where T is the total number of time steps</li></ul>
+</li>
+<li>If a different action deviates from the one found in the expert example, then we come across a state space that was likely never seen before $\rightarrow$ compounds to larger errors<ul><li>Error at time $t$ has probability of $\epsilon \rightarrow E[\text{Total Errors}] \leq \epsilon(T + (T-1) + (T-2) \dots) \approx \epsilon T^2$</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li></ul>
+<h3 id="dagger-dataset-aggregation">DAGGER: Dataset Aggregation</h3>
+<ul>
+<li>Idea: Get more data from expert along the path taken by the policy computed by behavior cloning<ul><li>For every state you encounter in a trajectory, you ask the expert</li></ul>
+</li>
+<li>
+<strong>Algorithm:</strong><ul>
+<li>Initialize $D \leftarrow \emptyset$, $\hat{\pi}_1$ to any policy</li>
+<li>for i = 1 to N<ul>
+<li>Let $\pi_i = \beta_i\pi^\ast + (1-\beta)\hat{\pi}_i$</li>
+<li>Sample T trajectories using $\pi_i$</li>
+<li>Get dataset $D_i = {(s, \pi^\ast(s))}$ of visited states by $\pi_i$ and actions given by expert</li>
+<li>Aggregate datasets: $D \leftarrow D \cup D_i$</li>
+<li>Train classifier $\hat{\pi} _{i+1}$ on $D$</li>
+</ul>
+</li>
+<li>Return best $\hat{\pi}_i$ during validation</li>
+</ul>
+</li>
+</ul>
+<h3 id="feature-based-reward-function">Feature Based Reward Function</h3>
+<ul>
+<li>Given a state space, action space, and transition model</li>
+<li>Not given a reward function</li>
+<li>There exists a set of teacher demonstrations $(s_0, a_0, s_1, a_1 \dots)$ based on the teacher’s policy</li>
+<li>We want to infer the reward function<ul>
+<li>Teacher’s policy should be optimal because we cannot infer anything when its not optimal (i.e., random behavior)</li>
+<li>There can be multiple reward functions (not unique)</li>
+</ul>
+</li>
+</ul>
+<h3 id="linear-feature-reward-inverse-rl">Linear Feature Reward Inverse RL</h3>
+<ul><li>Rewards can be linear over the features: $R(s) = w^Tx(s)$ where $w \in \mathbb{R}^n , x: S \rightarrow \mathbb{R}^n$<ul>
+<li>We want to identify the weights given a set of demonstrations</li>
+<li>Value Function for a policy: $V^\pi = \mathbb{E}[\sum _{t=0}^\infty \gamma^t R(s_t)] = \mathbb{E}[\sum _{t=0}^\infty \gamma^t w^T x(s_t) \vert \pi]$<ul><li>$= w^T \mathbb{E}[\sum _{t=0}^\infty \gamma^t x(s_t) \vert \pi] = w^T \mu(\pi)$<ul><li>$\mu(\pi)(s)$: discounted weighted frequnecy of state features under policy $\pi$</li></ul>
+</li></ul>
+</li>
+</ul>
+</li></ul>
+<h3 id="apprenticeship-learning">Apprenticeship Learning</h3>
+<ul>
+<li>$V^\ast = \mathbb{E}[\sum _{t=0}^\infty \gamma^t R^\ast(s_t) \vert \pi^\ast] \geq V^\pi = \mathbb{E}[\sum _{t=0}^\infty \gamma^t R^\ast(s_t) \vert \pi]$<ul><li>Therefore we can find weights such that $w ^{\ast T} \mu(\pi^\ast) \geq w ^{\ast T} \mu(\pi) \forall \pi \neq \pi^\ast$</li></ul>
+</li>
+<li>
+<strong>Feature Matching:</strong><ul>
+<li>We want to find a reward function that the expert policy outperforms all other policies</li>
+<li>For a policy to perform as well as the expert, it suffices we have a policy where its discounted sum of feature expectations match the expert policy<ul>
+<li>$\vert\vert \mu(\pi) - \mu(\pi^\ast) \vert \vert \leq \epsilon$</li>
+<li>$\vert w^T\mu(\pi) - w^T\mu(\pi^\ast) \vert \leq \epsilon$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Algorithm:</strong><ul>
+<li>Assume: $R(s) = w^T x(s)$</li>
+<li>Initialize policy: $\pi_0$</li>
+<li>For $i = 0, 1, 2 \dots$<ul>
+<li>Find a reward function such that the teacher maximally outperforms all previous controllers<ul><li>$argmax_w max_\gamma s.t. w^T\mu(\pi^\ast) \geq w^T\mu(\pi) + \gamma \forall \pi$</li></ul>
+</li>
+<li>s.t. $\vert \vert w \vert \vert \leq 1$</li>
+<li>Find optimal control policy $\pi_i$ for the current $w$</li>
+<li>Exit if $\gamma \leq \epsilon / 2$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Ambiguity: Infinite number of reward and policies; which one should we pick?</li>
+</ul></section></main></body>
+</html>
