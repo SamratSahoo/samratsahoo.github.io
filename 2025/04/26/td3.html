@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet">
+<meta name="generator" content="Jekyll v4.2.2">
+<meta property="og:title" content="Addressing Function Approximation Error in Actor-Critic Methods">
+<meta name="author" content="samrat sahoo">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="A paper about the twin delayed deep deterministic policy gradient algorithm">
+<meta property="og:description" content="A paper about the twin delayed deep deterministic policy gradient algorithm">
+<link rel="canonical" href="https://samratsahoo.com/2025/04/26/td3">
+<meta property="og:url" content="https://samratsahoo.com/2025/04/26/td3">
+<meta property="og:site_name" content="samrat’s thought space">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2025-04-26T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="Addressing Function Approximation Error in Actor-Critic Methods">
+<meta name="twitter:site" content="@samratdotjs">
+<meta name="twitter:creator" content="@samratdotjs"> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"samrat sahoo","url":"https://samratsahoo.com"},"dateModified":"2025-04-26T00:00:00+00:00","datePublished":"2025-04-26T00:00:00+00:00","description":"A paper about the twin delayed deep deterministic policy gradient algorithm","headline":"Addressing Function Approximation Error in Actor-Critic Methods","mainEntityOfPage":{"@type":"WebPage","@id":"https://samratsahoo.com/2025/04/26/td3"},"url":"https://samratsahoo.com/2025/04/26/td3"}</script><title> Addressing Function Approximation Error in Actor-Critic Methods - samrat's thought space</title>
+<link rel="shortcut icon" href="/favicon.webp">
+<link rel="alternate" type="application/atom+xml" title="samrat's thought space" href="/atom.xml">
+<link rel="alternate" type="application/json" title="samrat's thought space" href="https://samratsahoo.com/feed.json">
+<link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml">
+<style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:10rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5{line-height:1;margin:1rem 0;font-weight:600}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:60rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}@media print{.no-print,.no-print *{display:none !important}}img.mermaid{max-width:200px}.url{color:#0645AD}*::-moz-selection{color:white;background:#7011dc}*::selection{color:white;background:#7011dc}*{font-family:"Outfit", sans-serif}li>ul{padding-left:1rem}</style>
+<script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"},"svg":{"fontCache":"global","scale":1.0,"minScale":0.5,"mtextInheritFont":true,"merrorInheritFont":true,"mathmlSpacing":false,"skipAttributes":{},"exFactor":0.5},"chtml":{"scale":1.0,"minScale":0.5,"matchFontHeight":true,"mtextFont":"serif","linebreaks":{"automatic":false}}}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js"></script>
+</head>
+<body><main><header aria-hidden="true" class="no-print"> <!--<h1 class="logo">samrat's thought space</h1>--><nav role="navigation" aria-hidden="true"><ul>
+<li><a href="/">about</a></li>
+<li><a href="/reading" class="active">reading</a></li>
+<li><a href="/research">research</a></li>
+<li><a href="/writing">writing</a></li>
+<li><a href="/search">search</a></li>
+</ul></nav></header><section class="post"><h2>Addressing Function Approximation Error in Actor-Critic Methods</h2>
+<ul>
+<li>
+<strong>Resources</strong><ul><li>
+<a href="https://arxiv.org/pdf/1802.09477">Paper</a> <br><br>
+</li></ul>
+</li>
+<li>
+<strong>Introduction</strong><ul>
+<li>Discrete action space function approximators result in overestimation<ul><li>Similar issues in actor-critic</li></ul>
+</li>
+<li>Overestimation is caused by noisy value estimates in function approximation + using bootstrapping in TD learning<ul><li>Accumulates error over time</li></ul>
+</li>
+<li>With double DQN, we use a seperate target value function for estimation<ul><li>Slow changing policies (critics get updated more frequently) in actor-critic cause current and target value estimates to be too similar</li></ul>
+</li>
+<li>Older variant of double q learning trains 2 critics independently<ul><li>Less bias but higher variance = overestimations in future values</li></ul>
+</li>
+<li>Use a clipped double Q learning which uses the idea that a value estimate suffering from overestimation can be a upper bound for the true value<ul><li>Favors underestimations which don’t get propagated (policies avoid underestimations)</li></ul>
+</li>
+<li>To address noise variance, use target networks</li>
+<li>To address coupling of policy and value networks, delay policy updates until value has converged</li>
+<li>Include SARSA update regularization for variance reduction</li>
+<li>Twin Delayed Deep Deterministic Policy Gradient: Actor Critic Algorithm that considers function approximation errors in policy and value updates</li>
+</ul>
+</li>
+<li>
+<strong>Background</strong><ul>
+<li>Consider a standard reinforcement learning setting</li>
+<li>In actor-critc, we can use the deterministic policy gradient theorem for the actor: $\nabla _\phi J(\phi) = \mathbb{E} _{s \sim p _\pi}[\nabla_a Q^\pi (s,a) \vert _{a = \pi(s)} \nabla _\phi \pi _{\phi} (s)]$</li>
+<li>In Q Learning, update the value function using TD learning</li>
+<li>Update weights either using soft updates every step or hard update every k steps</li>
+<li>Make your training off-policy using experience replay</li>
+</ul>
+</li>
+<li>
+<strong>Overestimation Bias</strong><ul>
+<li>In Q learning, we take a maximum over all actions<ul>
+<li>If there is error in the Q function estimates, then maximum of the estimate will be greater than the true maximum</li>
+<li>This means even if the expected error is 0, there can still be overestimation</li>
+</ul>
+</li>
+<li>
+<strong>Overestimation Bias in Actor-Critic</strong><ul>
+<li>Because we know that the gradient direction is a local maximizer, the approximate $\pi _{approx}$ is bounded below an approximate $\pi _{true}$: $\mathbb{E}[Q _\theta(s, \pi _{approx}(s))] \geq \mathbb{E}[Q _\theta(s, \pi _{true}(s))]$<ul><li>To the critic, it looked like the policy improved</li></ul>
+</li>
+<li>However, due to overestimation bias, the policy might have not improved. The relationship between the true values may look something like this: $\mathbb{E}[Q _\pi(s, \pi _{approx}(s))] \leq \mathbb{E}[Q _\pi(s, \pi _{true}(s))]$<ul><li>To your environment, it looks like your policy didn’t improve</li></ul>
+</li>
+<li>Because of this, we get overestimation: $\mathbb{E}[Q _\theta(s, \pi _{approx}(s))] \geq \mathbb{E}[Q _\pi(s, \pi _{approx}(s))]$</li>
+</ul>
+</li>
+<li>
+<strong>Clipped Double Q-Learning for Actor-Critic</strong><ul>
+<li>In double DQN, use target network for value estimate and policy from current network<ul>
+<li>Analogously, in actor-critic we could use current policy instead of target policy to learn target for critics</li>
+<li>However, policies are too slow changing in actor-critic</li>
+</ul>
+</li>
+<li>Instead use Double Q learning formulation with two critics and two actors<ul>
+<li>$y_1 = r + \gamma Q _{\theta_2’}(s’, \pi _{\phi _1(s’)})$</li>
+<li>$y_2 = r + \gamma Q _{\theta_1’}(s’, \pi _{\phi _2(s’)})$</li>
+<li>Less overestimation than DDPG but doesn’t eliminate overestimation<ul>
+<li>Avoids bias from policy update because $\pi _{\phi_1}$ optimizes with respect to $Q _{\theta_1}$ with an independent estimate of target update of $Q _{\theta_1}$</li>
+<li>Critics not independent - Uses opposite critic for target values<ul>
+<li>Some states have larger Q values in critic 1 than 2</li>
+<li>$Q _{\theta_1}$ will generally overestimate values; in certain areas of state space, overestimation becomes exaggerated</li>
+<li>To avoid this overestimation, take minimum between two estimates to get target update</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Clipped double Q-learning Target Update: $y_1 = r + \gamma min _{i =1, 2} Q _{\theta_i’}(s’, \pi _{\phi _1(s’)})$<ul>
+<li>Target doesn’t introduce additional overestimation in Q learning</li>
+<li>Induces underestimation bias but is preferable because it doesn’t propagate to policy</li>
+<li>Minimum operator also provides higher value to states with lower variance estimation error</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Addressing Variance</strong><ul>
+<li>
+<strong>Accumulating Error</strong><ul>
+<li>When training the value function via function approximation, there is residual TD error ($\delta(s,a)$)<ul><li>$Q _\theta (s,a) = r + \gamma \mathbb{E}[Q _\theta (s’,a’)] - \delta(s,a)$</li></ul>
+</li>
+<li>Value estimate approximates to expected return minus discounted sum of future TD error<ul>
+<li>$Q _\theta (s,a) = \mathbb{E} _{s_i \sim p _\pi, a_i \sim \pi}[\sum _{i = t}^T \gamma^{i - t}(r_i - \delta _i)]$</li>
+<li>Variance proportional to future reward + estimation error</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Target Networks and Delayed Policy Updates</strong><ul>
+<li>Target networks provide stable targets<ul>
+<li>Prevents residual error accumulation</li>
+<li>Also prevents divergence when learning a policy</li>
+</ul>
+</li>
+<li>Actor Critic Methods Failure<ul>
+<li>Policies update with high variance value estimate</li>
+<li>Value estimate overestimation –&gt; divergence –&gt; Poor policy</li>
+</ul>
+</li>
+<li>Instead, delay policy updates until value error is as small as possible<ul>
+<li>Update policy network after $d$ updates to critics</li>
+<li>Ensure TD error is small as possible by updating target networks slowly</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Target Policy Smoothing Regularization</strong><ul>
+<li>Deterministic policies may overfit at narrow peaks in the value estimate</li>
+<li>Critics susceptible to inaccuracies from function approximation, increasing variance<ul><li>Reduce variance via regularization</li></ul>
+</li>
+<li>Fit the value around a small area around target action<ul>
+<li>$y = r + \mathbb{E} _\epsilon [Q _{\theta’}(s’, \pi _{\phi’}(s’) + \epsilon)]$</li>
+<li>Smoothes the value estimate by bootstrapping around similar state-action value estimates</li>
+<li>Approximate expectation by adding noise to target policy + averaging over minibatches<ul>
+<li>$y = r + \gamma Q _{\theta’}(s’, \pi _{\phi’}(s’) + \epsilon)$</li>
+<li>$\epsilon \sim clip(\mathcal{N}(0, \sigma), -c, c)$</li>
+<li>Clipping keeps the target action close to original action</li>
+<li>Analogous to expected SARSA</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Experiments</strong><ul>
+<li>
+<strong>Evaluation</strong><ul><li>For Mujoco tasks, TD3 matches or outperforms DDPG, PPO, TRPO, ACKTR, and SAC</li></ul>
+</li>
+<li>
+<strong>Ablation Studies</strong><ul>
+<li>Addition of a single component provides insignificant improvement in most cases</li>
+<li>Combination of all outperforms other algorithms</li>
+<li>Actor is trained for half the steps but deplayed policy updates improves performance and reduces training time</li>
+<li>Actor Critic Variants of Double Q learning and Double DQN reduced overestimation bias less than clipped double Q learning<ul><li>Reducing overestimations is an effective way to improve performance</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<span class="meta"><time datetime="2025-04-26T00:00:00+00:00">April 26, 2025</time> · <a href="/tags/research">research</a></span></section></main></body>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet">
+<meta name="generator" content="Jekyll v4.2.2">
+<meta property="og:title" content="VIME: Variational Information Maximizing Exploration">
+<meta name="author" content="samrat sahoo">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="A paper about vime">
+<meta property="og:description" content="A paper about vime">
+<link rel="canonical" href="https://samratsahoo.com/2025/05/22/vime">
+<meta property="og:url" content="https://samratsahoo.com/2025/05/22/vime">
+<meta property="og:site_name" content="samrat’s thought space">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2025-05-22T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="VIME: Variational Information Maximizing Exploration">
+<meta name="twitter:site" content="@samratdotjs">
+<meta name="twitter:creator" content="@samratdotjs"> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"samrat sahoo","url":"https://samratsahoo.com"},"dateModified":"2025-05-22T00:00:00+00:00","datePublished":"2025-05-22T00:00:00+00:00","description":"A paper about vime","headline":"VIME: Variational Information Maximizing Exploration","mainEntityOfPage":{"@type":"WebPage","@id":"https://samratsahoo.com/2025/05/22/vime"},"url":"https://samratsahoo.com/2025/05/22/vime"}</script><title> VIME: Variational Information Maximizing Exploration - samrat's thought space</title>
+<link rel="shortcut icon" href="/favicon.webp">
+<link rel="alternate" type="application/atom+xml" title="samrat's thought space" href="/atom.xml">
+<link rel="alternate" type="application/json" title="samrat's thought space" href="https://samratsahoo.com/feed.json">
+<link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml">
+<style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:10rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5{line-height:1;margin:1rem 0;font-weight:600}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:60rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}@media print{.no-print,.no-print *{display:none !important}}img.mermaid{max-width:200px}.url{color:#0645AD}*::-moz-selection{color:white;background:#7011dc}*::selection{color:white;background:#7011dc}*{font-family:"Outfit", sans-serif}li>ul{padding-left:1rem}</style>
+<script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"},"svg":{"fontCache":"global","scale":1.0,"minScale":0.5,"mtextInheritFont":true,"merrorInheritFont":true,"mathmlSpacing":false,"skipAttributes":{},"exFactor":0.5},"chtml":{"scale":1.0,"minScale":0.5,"matchFontHeight":true,"mtextFont":"serif","linebreaks":{"automatic":false}}}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js"></script>
+</head>
+<body><main><header aria-hidden="true" class="no-print"> <!--<h1 class="logo">samrat's thought space</h1>--><nav role="navigation" aria-hidden="true"><ul>
+<li><a href="/">about</a></li>
+<li><a href="/reading" class="active">reading</a></li>
+<li><a href="/research">research</a></li>
+<li><a href="/writing">writing</a></li>
+<li><a href="/search">search</a></li>
+</ul></nav></header><section class="post"><h2>VIME: Variational Information Maximizing Exploration</h2>
+<ul>
+<li>
+<strong>Resources</strong><ul><li>
+<a href="https://arxiv.org/abs/1605.09674">Paper</a> <br><br>
+</li></ul>
+</li>
+<li>
+<strong>Introduction</strong><ul>
+<li>One way to explore is to generate trajectories that give maximum information about the environment<ul><li>Can be done via Bayesian RL / PAC-MDP on small environments</li></ul>
+</li>
+<li>Can use heuristic exploration<ul>
+<li>Epsilon Greedy</li>
+<li>Boltzmann Exploration</li>
+<li>Usually rely on random walk behavior (inefficient)<ul><li>Training time = exponential in number of states</li></ul>
+</li>
+</ul>
+</li>
+<li>VIME is a curiosity driven exploration strategy<ul>
+<li>Uses information gain on agent’s belief about dynamics model</li>
+<li>Agent takes actions that result in states seeming suprising</li>
+<li>Use a bayesian neural net to understand environment dynamics</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Methodology</strong><ul>
+<li>
+<strong>Preliminaries</strong><ul><li>Assume standard MDP RL setting with a stochastic policy ($\pi _\alpha$)<ul><li>Discounted return: $\mu(\pi _\alpha)$</li></ul>
+</li></ul>
+</li>
+<li>
+<strong>Curiosity</strong><ul>
+<li>Seeks out state-action regions that are unexplored</li>
+<li>Agent models environment dynamics via model $p(s _{t+1} \vert s_t, a_t; \theta)$ paramterized by a random variable $\Theta$ where $\theta \in \Theta$<ul>
+<li>Maintains distribution over dynamic models</li>
+<li>$\theta$ maintained in bayesian manner</li>
+</ul>
+</li>
+<li>Agent should take actions that maximize the reduction in uncertainty about dynamics<ul>
+<li>Maximizing sum of reduction in entropy: $\sum_t (H(\Theta \vert \xi_t, a_t) - H(\Theta \vert S _{t+1}, \xi_t, a_t))$<ul><li>$\xi_t$ is the history at time $t$</li></ul>
+</li>
+<li>Each term in the sum is the mutual information between $S _{t+1}$ and $\Theta$<ul>
+<li>Agent should take actions that lead to states that are maximally informative about dynamics model</li>
+<li>Information Gain: $I(S _{t+1}; \Theta \vert \xi_t, a_t) = \mathbb{E} _{s _{t+1} \sim, \mathcal{P}(\cdot \vert \xi_t, a_t)}[D _{KL}(p(\theta \vert \xi_t, a_t, s _{t+1}) \vert \vert p(\theta \vert \xi_t))]$<ul>
+<li>Divergence between new belief and old one of dynamics model</li>
+<li>If we can calculate the posterior, we can optimize this directly (not usually possible)<ul><li>Instead, use RL and create an intrinsic reward of information gain along trajectory (captures suprise)</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>New Reward: $r’(s_t, a_t, s _{t+1}) = r(s_t, a_t) +\eta D _{KL}(p(\theta \vert \xi_t, a_t, s _{t+1}) \vert \vert p(\theta \vert \xi_t))$<ul><li>$\eta$: Hyperparameter that controls urge to explore</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Variational Bayes</strong><ul><li>In bayesian setting, we can derive posterior with bayes rule<ul>
+<li>$p(\theta \vert \xi_t, a_t, s _{t+1}) = \frac{p(\theta \vert \xi_t)p(s _{t+1} \vert \xi_t, a_t,; \theta) }{p(s _{t+1} \vert \xi_t, a_t)}$<ul>
+<li>Actions do not influence beliefs about environment: $p(\theta \vert \xi_t, a_t) = p(\theta \vert \xi_t)$</li>
+<li>Denominator computed through integral: $p(s _{t+1} \vert \xi_t, a_t) = \int _{\Theta} p(s _{t+1} \vert \xi_t, a_t; \theta) p(\theta \vert \xi_t) d\theta$<ul><li>Intractable to compute</li></ul>
+</li>
+</ul>
+</li>
+<li>Use variational inference to compute denominator<ul>
+<li>We approximate posterior ($p(\theta \vert \mathcal{D})$) for dataset $\mathcal{D}$ via an alternative distribution $q(\theta; \phi)$<ul><li>Minimize KL: $D _{KL}(q(\theta; \phi) \vert \vert p(\theta \vert \mathcal{D}))$<ul><li>Done through maximizing variational lower bound: $L[q(\theta;\phi), \mathcal{D}] = \mathbb{E} _{\theta \sim q(\cdot; \phi)}[\log p(\mathcal{D} \vert \theta)] - D _{KL}[q(\theta; \phi) \vert \vert p(\theta)]$</li></ul>
+</li></ul>
+</li>
+<li>Uses approximation, new reward function: $r’(s_t, a_t, s _{t+1}) = r(s_t, a_t) +\eta D _{KL}(q(\theta; \phi _{t+1}) \vert \vert q(\theta \vert \phi_t))$</li>
+<li>To parameterize dynamics model, use bayesian neural nets<ul><li>Parameterized with a fully factorized gaussian</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li></ul>
+</li>
+<li>
+<strong>Compression</strong><ul>
+<li>Agent curiosity can be equated with compression improvement: $C(\xi_t; \phi _{t-1}) - C(\xi_t; \phi_t)$ where $C(\xi, \phi)$ is description length of $\xi$ using a model, $\phi$</li>
+<li>Compression can be expressed as negative variational lower bound<ul>
+<li>$L[q(\theta;\phi_t), \xi_t] - L[q(\theta;\phi _{t-1}), \xi_t]$</li>
+<li>Using formula for variational lower bound, we can express compression as: $(\log p(\xi_t) - D _{KL}[q(\theta; \phi_t) \vert \vert p(\theta \vert \xi_t)]) - (\log p(\xi_t) - D _{KL}[q(\theta; \phi _{t+1}) \vert \vert p(\theta \vert \xi_t)])$<ul><li>KL becomes 0 when the approximation equals the posterior<ul><li>Compression improvement comes down to optimizing KL from posterior given $\xi _{t-1}$ to posterior given $\xi_t$<ul><li>Reverse KL of information gain: $D _{KL}(p(\theta \vert \xi_t) \vert \vert p(\theta \vert \xi_t, a_t, s _{t+1}))$</li></ul>
+</li></ul>
+</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Implementation</strong><ul>
+<li>BNN weight distribution based on fully factorized gaussian: $q(\theta; \phi) = \prod _{i=1}^{\vert \Theta \vert} \mathcal{N}(\theta_i \vert \mu_i; \sigma_i^2)$<ul>
+<li>$\phi = \mu, \sigma$</li>
+<li>Standard deviation parameter paramterized as $\sigma = \log(1 + e^\rho)$</li>
+</ul>
+</li>
+<li>To train the BNN, second term of variational lower bound optimizd through sampling and computing $\mathbb{E} _{\theta \sim q(\cdot;\phi)}[\log p(\mathcal{D} \vert \theta)]$<ul><li>Use stochastic gradient variational bayes or bayes by backprop for optimizing variational lower bound</li></ul>
+</li>
+<li>Use local reparameterization trick<ul><li>Sample neuron pre-activations instead of weights</li></ul>
+</li>
+<li>Sample from replay buffer to optimize variational lower bound (prevents temporal correlation, destabalizes learning, iid samples, diminishes posterior approximation error)</li>
+<li>To compute posterior distribution of the dynamics model can be computed: $\phi’ = argmin _{\phi}[\ell(q(\theta; \phi), s_t)]$<ul>
+<li>$\ell(q(\theta; \phi), s_t) = D _{KL}[q(\theta; \phi) \vert \vert q(\theta; \phi _{t-1})] - \mathbb{E} _{\theta \sim q(\cdot; \phi)}[\log p(s_t \vert \xi_t, a_t; \theta)]$</li>
+<li>Used to compute intrinsic reward</li>
+<li>Use second-order step for gradient approximation: $\nabla \phi = H^{-1}(\ell)\nabla _{\phi} \ell(q(\theta; \phi), s_t)$<ul><li>$H$ is the hessian of $\ell$</li></ul>
+</li>
+</ul>
+</li>
+<li>KL from posterior to prior has simple form<ul><li>$D _{KL}[q(\theta; \phi) \vert \vert q(\theta; \phi’)] = \frac{1}{2}\sum _{i=1}^{\vert \Theta \vert}((\frac{\sigma_i}{\sigma_i’})^2 + 2\log \sigma’_1 - 2 \log \sigma_i + \frac{(\mu_i’ - \mu_u)^2}{\sigma_i^2}) - \frac{\vert\Theta\vert}{2}$</li></ul>
+</li>
+<li>We can approximate the Hessian<ul>
+<li>With respect to $\mu$: $\frac{\partial^2 \ell _{KL}}{\partial \mu_i^2} = \frac{1}{\log^2(1 + e^{\rho_i})}$</li>
+<li>With respect to $\rho_i$ (used for standard deviation): $\frac{\partial^2 \ell _{KL}}{\partial \rho_i^2} = \frac{2e^{2\rho_i}}{(1 + e^{\rho_i})^2} \frac{1}{\log^2(1 + e^{\rho_i})}$</li>
+</ul>
+</li>
+<li>Can also approximate KL via second-order taylor expansion<ul><li>$D _{KL}[q(\theta; \phi + \lambda \nabla \phi) \vert \vert q(\theta; \phi)] \approx \frac{1}{2}\lambda^2 \nabla _{\phi} \ell^T H^{-1}(\ell _{KL})\nabla _{\phi}\ell$</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Experiments</strong><ul>
+<li>Testing sparse rewards, whether reward shaping guides agent toward goal, and how $\eta$ trades off exploration with exploitation</li>
+<li>Sparse Rewards:<ul>
+<li>VIME intrinsic reward compared to gaussian control noise and $\ell^2$ BNN error as reward</li>
+<li>Use TRPO as algorithm</li>
+<li>Naive exploration is terrible</li>
+<li>$\ell^2$ does not perform well either</li>
+<li>VIME performs well even in the absence of rewards</li>
+</ul>
+</li>
+<li>In non-sparse reward settings, VIME achieves performance gains over heuristic exploration (faster convergence + prevents converging to local optima)<ul><li>Gaussian noise to rewards did not improve baseline</li></ul>
+</li>
+<li>Using gaussian control noise acts as random walk behavior</li>
+<li>Too high of $\eta$ leads to prioritizing exploration over getting additional external reward</li>
+<li>Too low $\eta$ reduces method to baseline algorithm</li>
+</ul>
+</li>
+</ul>
+<span class="meta"><time datetime="2025-05-22T00:00:00+00:00">May 22, 2025</time> · <a href="/tags/research">research</a></span></section></main></body>
+</html>
