@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet">
+<meta name="generator" content="Jekyll v4.2.2">
+<meta property="og:title" content="Soft Actor-Critic: Off-Policy Maximum Entropy Deep Reinforcement Learning with a Stochastic Actor">
+<meta name="author" content="samrat sahoo">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="A paper about the soft actor critic algorithm">
+<meta property="og:description" content="A paper about the soft actor critic algorithm">
+<link rel="canonical" href="https://samratsahoo.com/2025/04/23/sac">
+<meta property="og:url" content="https://samratsahoo.com/2025/04/23/sac">
+<meta property="og:site_name" content="samrat’s thought space">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2025-04-23T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="Soft Actor-Critic: Off-Policy Maximum Entropy Deep Reinforcement Learning with a Stochastic Actor">
+<meta name="twitter:site" content="@samratdotjs">
+<meta name="twitter:creator" content="@samratdotjs"> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"samrat sahoo","url":"https://samratsahoo.com"},"dateModified":"2025-04-23T00:00:00+00:00","datePublished":"2025-04-23T00:00:00+00:00","description":"A paper about the soft actor critic algorithm","headline":"Soft Actor-Critic: Off-Policy Maximum Entropy Deep Reinforcement Learning with a Stochastic Actor","mainEntityOfPage":{"@type":"WebPage","@id":"https://samratsahoo.com/2025/04/23/sac"},"url":"https://samratsahoo.com/2025/04/23/sac"}</script><title> Soft Actor-Critic: Off-Policy Maximum Entropy Deep Reinforcement Learning with a Stochastic Actor - samrat's thought space</title>
+<link rel="shortcut icon" href="/favicon.webp">
+<link rel="alternate" type="application/atom+xml" title="samrat's thought space" href="/atom.xml">
+<link rel="alternate" type="application/json" title="samrat's thought space" href="https://samratsahoo.com/feed.json">
+<link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml">
+<style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:10rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5{line-height:1;margin:1rem 0;font-weight:600}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:60rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}@media print{.no-print,.no-print *{display:none !important}}img.mermaid{max-width:200px}.url{color:#0645AD}*::-moz-selection{color:white;background:#7011dc}*::selection{color:white;background:#7011dc}*{font-family:"Outfit", sans-serif}li>ul{padding-left:1rem}</style>
+<script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"},"svg":{"fontCache":"global","scale":1.0,"minScale":0.5,"mtextInheritFont":true,"merrorInheritFont":true,"mathmlSpacing":false,"skipAttributes":{},"exFactor":0.5},"chtml":{"scale":1.0,"minScale":0.5,"matchFontHeight":true,"mtextFont":"serif","linebreaks":{"automatic":false}}}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js"></script>
+</head>
+<body><main><header aria-hidden="true" class="no-print"> <!--<h1 class="logo">samrat's thought space</h1>--><nav role="navigation" aria-hidden="true"><ul>
+<li><a href="/">about</a></li>
+<li><a href="/reading" class="active">reading</a></li>
+<li><a href="/research">research</a></li>
+<li><a href="/writing">writing</a></li>
+<li><a href="/search">search</a></li>
+</ul></nav></header><section class="post"><h2>Soft Actor-Critic: Off-Policy Maximum Entropy Deep Reinforcement Learning with a Stochastic Actor</h2>
+<ul>
+<li>
+<strong>Resources</strong><ul><li>
+<a href="https://arxiv.org/abs/1801.01290">Paper</a> <br><br>
+</li></ul>
+</li>
+<li>
+<strong>Introduction</strong><ul>
+<li>Two major challenges:<ul>
+<li>Model free RL methods have expensive sample complexity<ul>
+<li>New samples needed at each gradient step</li>
+<li>Off-policy reuse past experience<ul>
+<li>Not practical with conventional policy gradient</li>
+<li>Practical with Q learning but hard to combine both with continuous action/state spaces and neural nets</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Methods are brittle with respect to their hyperparameters (i.e., learning rates, exploration rates, etc.)<ul><li>DDPG does combine Q learning and experience replay but is hyperparameter sensitive</li></ul>
+</li>
+</ul>
+</li>
+<li>Maximum entropy framework<ul>
+<li>Augments maximum reward RL with entropy maximization</li>
+<li>Alters RL objective but original objective can be recovered through temperature parameter</li>
+<li>Finds diverse experiences; helps exploration</li>
+</ul>
+</li>
+<li>Prior maximum entropy algorithms<ul>
+<li>On-policy: suffer from poor sample complexity</li>
+<li>Off-policy: require approximate inference procedures in continuous action spaces</li>
+</ul>
+</li>
+<li>Soft Actor-Critic (SAC)<ul>
+<li>Sample-efficient and stable learning</li>
+<li>Avoids approximate inference (i.e., like in soft Q learning)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Related Work</strong><ul>
+<li>3 Ingredients to SAC Algorithm:<ul>
+<li>Actor Critic architecture with seperate policy + critic networks</li>
+<li>Off-policy formulation for data reuse and efficiency</li>
+<li>Entropy maximization for stability and exploration</li>
+</ul>
+</li>
+<li>Actor critic<ul>
+<li>Policy Iteration: Rotates between policy evaluation and policy improvement</li>
+<li>Built on policy gradient for actor</li>
+<li>Some use entropy regularization</li>
+</ul>
+</li>
+<li>DDPG hard to stabalize + brittle to hyperparameters<ul>
+<li>Interplay between Q function and deterministic actor</li>
+<li>SAC uses stochastic actor</li>
+</ul>
+</li>
+<li>Prior Maximum Entropy RL<ul>
+<li>Soft Q learning uses actor as a sampler for learning Q value function<ul><li>Convergence depends on how well the actor estimates the posterior</li></ul>
+</li>
+<li>Usually maximum entropy RL methods don’t exceed SOTA off-policy RL methods</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Preliminaries</strong><ul>
+<li>
+<strong>Notation</strong><ul>
+<li>Follow standard MDP notation</li>
+<li>State marginal (how frequently a state is visited under $\pi$): $\rho _\pi(s_t)$</li>
+<li>State-action marginal (how frequently a state-action pair occurs under $\pi$): $\rho _\pi(s_t, a_t)$</li>
+</ul>
+</li>
+<li>
+<strong>Maximum Entropy Reinforcement Learning</strong><ul>
+<li>Augment the expected sum of rewards with expected entropy<ul>
+<li>$J(\pi) = \sum^T _{t=0} \mathbb{E} _{(s_t, a_t) \sim \rho _\pi}[r(s_t, a_t) + \alpha H(\pi (\cdot \vert s_t))]$</li>
+<li>$\alpha$: Temperature - denotes the importance of entropy vs reward (controls stochasticity)<ul><li>Set it equal to 0 for getting original objective</li></ul>
+</li>
+</ul>
+</li>
+<li>Incentivized to explore more while giving up on unpromising avenues</li>
+<li>Captures multiple modes of near optimal behavior<ul><li>Equally attractive actions = equal probability to take those</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>From Soft Policy Iteration to Soft Actor-Critic</strong><ul>
+<li>
+<strong>Derivation of Soft Policy Iteration</strong><ul>
+<li>We want to compute a policy for the maximum entropy objective<ul>
+<li>Policy Evaluation:<ul>
+<li>We can repeatedly apply the bellman backup: $\tau^{\pi} Q(s _t, a _t) = r(s _t, a _t) + \gamma \mathbb{E} _{s _{t+1} \sim p}[V(s _{t+1})]$</li>
+<li>Soft state value function: $V(s_t) = \mathbb{E} _{a_t \sim \pi}[Q(s_t, a_t) - \log \pi (a_t \vert s_t)]$</li>
+<li>Lemma 1 (Soft Policy Evaluation): Applying the bellman backup repeatedly on $Q^k$ will cause $Q^k$ to converge tot he soft Q-value function of $\pi$</li>
+</ul>
+</li>
+<li>Policy Improvement:<ul>
+<li>Update policy towards exponential of new Q value function</li>
+<li>For tractable policies, we restrict $\pi \in \Pi$ (i.e., where $\Pi$ is a family of parameterized policies)</li>
+<li>Update is argmin of the KL divergence between family of policies and normalized projection of a distribution of Q values<ul>
+<li>$\pi _{new} = argmin _{\pi’ \in \Pi} D _{KL}(\pi’ (\cdot \vert s_t)\vert\vert \frac{exp(Q^{\pi _{old}}(s_t, \cdot))}{Z^{\pi _{old}}}(s_t))$</li>
+<li>We can ignore the normalization term (doesn’t contribute to gradient and is intractable)</li>
+</ul>
+</li>
+<li>Lemma 2 (Soft Policy Improvement): Q value of new policy is greater than or equal to than Q value of old policy for all state-action pairs.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>In SAC we use neural nets for Q value functions for continuous domains</li>
+<li>Soft Policy Iteration: Repeated application of evaluation and iteration converge to an optimal policy<ul><li>Running evaluation and improvement until convergence = too computationally expensive for continuous case</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Soft Actor-Critic</strong><ul>
+<li>Use a state value function, $V _{\psi}(s_t)$, soft Q function, $Q _\theta(s_t, a_t)$, and tractable policy, $\pi _\phi (a_t \vert s_t)$<ul>
+<li>Policy outputs a mean and covariance</li>
+<li>State-value function can be estimated from sampling a single example from the policy</li>
+<li>However, having a seperate estimator stabalizes training + is convenient to train in parallel with other networks</li>
+</ul>
+</li>
+<li>Soft value function objective is mean residual error: $J_V(\psi) = \mathbb{E} _{s_t \sim D}[\frac{1}{2} (V _{\psi}(s_t) - \mathbb{E} _{a_t \sim \pi _\phi}[Q _\theta(s_t, a_t) - \log \pi _\phi(a_t \vert s_t)])^2]$<ul><li>Can estimate gradient: $\nabla _{\psi} J_V(\psi) = \nabla _{\psi} V _{\psi}(s_t) (V _{\psi}(s_t) - Q _\theta(s_t, a_t) + \log \pi _\phi(a_t \vert s_t))$</li></ul>
+</li>
+<li>Soft Q function minimize the bellman residual: $J_Q(\theta) = \mathbb{E} _{(s_t, a_t) \sim D}[\frac{1}{2}(Q _{\theta} (s_t, a_t) - \hat{Q}(s_t, a_t))^2]$<ul>
+<li>$\hat{Q}(s_t, a_t) = r(s_t, a_t) + \gamma \mathbb{E} _{s _{t+1} \sim p}[V _{\psi}(s _{t+1})]$</li>
+<li>Gradients: $\nabla _{\theta} J_Q(\theta) = \nabla _{\theta} Q _{\theta}(s_t, a_t) ( Q _{\theta}(s_t, a_t) - r(s_t, a_t) - \gamma V _{\psi}(s _{t+1}))$<ul><li>Weights of $V$ can be an exponentially moving average to stabalize training or can periodically do a hard update on weights</li></ul>
+</li>
+</ul>
+</li>
+<li>Policy network minimizes expected KL divergence: $J(\phi) = D _{KL}(\pi _{\phi} (\cdot \vert s_t)\vert\vert \frac{exp(Q _{\theta}(s_t, \cdot))}{Z _{\theta}(s_t)})$<ul><li>Because our target density is the Q function, we can reparameterize it for a lower variance<ul>
+<li>$a_t = f _{\phi}(\epsilon_t ; s_t)$<ul><li>$\epsilon_t$ is random noise sampled from a fixed distribution</li></ul>
+</li>
+<li>New policy objective: $J _{\pi}(\phi) = \mathbb{E} _{s_t \sim D, \epsilon_t \sim \mathcal{N}}[\log \pi _{\phi}(f _{\phi}(\epsilon_t ; s_t) \vert s_t) - Q _{\theta}(s_t, f _\phi (\epsilon_t ; s_t))]$<ul><li>Gradient: $\hat{\nabla} _\phi J _\pi (\phi) = \nabla _\phi \log \pi _\phi (a_t \vert s_t) + (\nabla _{a_t} \log \pi _\phi (a_t \vert s_t) - \nabla a_t Q(s_t, a_t))\nabla _\phi f _\phi(\epsilon_t ; s_t)$</li></ul>
+</li>
+</ul>
+</li></ul>
+</li>
+<li>Uses 2 Q functions to mitigate maximization bias</li>
+<li>Collect experience and update function approximators off-policy with replay buffer</li>
+<li>Usually take single step followed up multiple gradient steps</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Experiments</strong><ul>
+<li>
+<strong>Comparative Evaluation</strong><ul>
+<li>SAC performs comparably to baseline methods (PPO, TD3, DDPG, SQL) on easier tasks and outperforms them significantly on harder ones</li>
+<li>SAC learns faster than PPO because PPO needs large batch sizes for complex tasks</li>
+<li>SQL can learn all tasks but has worse asymptotic performance compared to SAC</li>
+<li>SAC is SOTA for sample efficiency and final performance</li>
+</ul>
+</li>
+<li>
+<strong>Ablation Study</strong><ul>
+<li>Stochastic vs Deterministic Policy: SAC has more consistent performance compared to the deterministic variant of it (stochasticity stabalizes learning)</li>
+<li>Policy Evaluation: For evaluation, its better to make the final policy deterministic</li>
+<li>Reward Scale: SAC is sensitive to reward scale; it plays a role in the temperature<ul>
+<li>Small Rewards: Cannot exploit reward signal; degrades performance</li>
+<li>Large Rewards: Learns quickly at first but then policy becomes near deterministic</li>
+<li>Only hyperparameter that requires fine-tuning</li>
+</ul>
+</li>
+<li>Target Network Update: Large update rate causes instability and small ones cause slower training<ul><li>Can also copy over weights periodically - better to take more gradient steps in between each environment step but also increases computational cost</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<span class="meta"><time datetime="2025-04-23T00:00:00+00:00">April 23, 2025</time> · <a href="/tags/research">research</a></span></section></main></body>
+</html>
