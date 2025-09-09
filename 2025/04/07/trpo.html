@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet">
+<meta name="generator" content="Jekyll v4.2.2">
+<meta property="og:title" content="Trust Region Policy Optimization">
+<meta name="author" content="samrat sahoo">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="A paper about trust region constrained policy gradients">
+<meta property="og:description" content="A paper about trust region constrained policy gradients">
+<link rel="canonical" href="https://samratsahoo.com/2025/04/07/trpo">
+<meta property="og:url" content="https://samratsahoo.com/2025/04/07/trpo">
+<meta property="og:site_name" content="samrat’s thought space">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2025-04-07T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="Trust Region Policy Optimization">
+<meta name="twitter:site" content="@samratdotjs">
+<meta name="twitter:creator" content="@samratdotjs"> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"samrat sahoo","url":"https://samratsahoo.com"},"dateModified":"2025-04-07T00:00:00+00:00","datePublished":"2025-04-07T00:00:00+00:00","description":"A paper about trust region constrained policy gradients","headline":"Trust Region Policy Optimization","mainEntityOfPage":{"@type":"WebPage","@id":"https://samratsahoo.com/2025/04/07/trpo"},"url":"https://samratsahoo.com/2025/04/07/trpo"}</script><title> Trust Region Policy Optimization - samrat's thought space</title>
+<link rel="shortcut icon" href="/favicon.webp">
+<link rel="alternate" type="application/atom+xml" title="samrat's thought space" href="/atom.xml">
+<link rel="alternate" type="application/json" title="samrat's thought space" href="https://samratsahoo.com/feed.json">
+<link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml">
+<style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:10rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5{line-height:1;margin:1rem 0;font-weight:600}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:60rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}@media print{.no-print,.no-print *{display:none !important}}img.mermaid{max-width:200px}.url{color:#0645AD}*::-moz-selection{color:white;background:#7011dc}*::selection{color:white;background:#7011dc}*{font-family:"Outfit", sans-serif}li>ul{padding-left:1rem}</style>
+<script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"},"svg":{"fontCache":"global","scale":1.0,"minScale":0.5,"mtextInheritFont":true,"merrorInheritFont":true,"mathmlSpacing":false,"skipAttributes":{},"exFactor":0.5},"chtml":{"scale":1.0,"minScale":0.5,"matchFontHeight":true,"mtextFont":"serif","linebreaks":{"automatic":false}}}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js"></script>
+</head>
+<body><main><header aria-hidden="true" class="no-print"> <!--<h1 class="logo">samrat's thought space</h1>--><nav role="navigation" aria-hidden="true"><ul>
+<li><a href="/">about</a></li>
+<li><a href="/reading" class="active">reading</a></li>
+<li><a href="/research">research</a></li>
+<li><a href="/writing">writing</a></li>
+<li><a href="/search">search</a></li>
+</ul></nav></header><section class="post"><h2>Trust Region Policy Optimization</h2>
+<ul>
+<li>
+<strong>Resources</strong><ul><li>
+<a href="https://arxiv.org/abs/1502.05477">Paper</a> <br><br>
+</li></ul>
+</li>
+<li>
+<strong>Introduction</strong><ul>
+<li>3 categories of policy optimization<ul>
+<li>Policy Iteration</li>
+<li>Policy Gradient</li>
+<li>Derivative Free<ul>
+<li>Treat return as black box optimized by policy parameters</li>
+<li>Usually preferred because simple to implement + good results</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Gradient-based optimization has been good for supervised learning but less so for RL</li>
+<li>Minimizing surrogate objective = guarantees policy improvement</li>
+<li>TRPO Variants<ul>
+<li>Single Path: Applied in model-free setting</li>
+<li>Vine: Requires restoring system to specific state → only possible in simulation</li>
+</ul>
+</li>
+<li>TRPO is scalable to systems with thousands or millions of parameters</li>
+</ul>
+</li>
+<li>
+<strong>Preliminaries</strong><ul>
+<li>Use standard definitions of policy, state and action value functions, and advantage functions.</li>
+<li>Expected return of another policy $\tilde{\pi}$ in terms of advantage over $\pi$, accumulated over timesteps<ul>
+<li>$\eta(\tilde{\pi}) = \eta(\pi) + \mathbb{E}_{s_0, a_0, \dots \sim \tilde{\pi}}[\sum_{t=0}^\infty \gamma^t A_\pi(s_t, a_t)]$</li>
+<li>Equivalent to $\eta(\pi) + \sum_s \rho_{\tilde{\pi}}(s) \sum_a \tilde{\pi}(a\vert s)A_\pi(s,a)$<ul>
+<li>Implies any policy update that has a non-negative expected advantage at every state is guaranteed to increase or leave it constant</li>
+<li>Classical tabular RL follows this because it uses argmax</li>
+</ul>
+</li>
+<li>With function approximation, some states have negative expected advantage. Also dependency on $\rho_{\tilde{\pi}}(s)$ makes it hard to optimize<ul><li>Instead use: $L_\pi(\tilde{\pi}) = \eta(\pi) + \sum_s \rho_\pi(s) \sum_a \tilde{\pi}(a\vert s)A_\pi(s, a)$<ul><li>Where this uses current instead of next policy visitation frequency (easier to optimize)</li></ul>
+</li></ul>
+</li>
+<li>If $\pi_\theta(a\vert s)$ is differentiable<ul>
+<li>$L_{\pi\theta_{old}} = \eta(\pi_{\theta_0})$</li>
+<li>$\nabla_{\theta_0}L_{\pi\theta_{old}} = \nabla_{\theta_0}\eta(\pi_{\theta_0})$<ul><li>For a small step $\pi_{\theta_0} \rightarrow \tilde{\pi}$ that improves $L_{\pi\theta_{old}}$ will also improve $\eta$<ul><li>We don’t know how small of a step to take, though</li></ul>
+</li></ul>
+</li>
+</ul>
+</li>
+<li>Conservative Policy Iterations<ul>
+<li>Provides lower bounds on improvement of $\eta$</li>
+<li>Let $\pi’ = argmax L_{\pi_{old}}(\pi’)$</li>
+<li>New Policy: $\pi_{new}(a\vert s) = (1-\alpha)\pi_{old}(a\vert s) + \alpha \pi’(a\vert s)$</li>
+<li>Lower Bound Improvement: $\eta(\pi_{new}) \geq L_{\pi_{old}}(\pi_{new}) - \frac{2\epsilon\gamma}{(1-\gamma)^2}\alpha^2$<ul><li>$\epsilon = max_s \vert\mathbb{E}_{a \sim \pi’(a\vert s)}[A_\pi(s,a)]\vert$</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Monotonic Improvement Guarantee for General Stochastic Policies</strong><ul>
+<li>Conservative policy iteration uses a mixture policy (between old and argmax policy)<ul>
+<li>We can extend this to general stochastic policies with a distance measure between $\pi$ and $\tilde{\pi}$ and changing $\epsilon$</li>
+<li>Uses total variation divergence as distance measure: $D_{max_{TV}}(\pi, \tilde{\pi}) = max_s D_{TV}(\pi(\cdot \vert s) \vert\vert \tilde{\pi}(\cdot \vert s))$<ul><li>$D_{TV}(p \vert\vert q) = \frac{1}{2}\sum_i \vert p_i - q_i\vert$</li></ul>
+</li>
+<li>Using total variation divergence, we get the following bound:<ul><li>$\eta(\pi_{new}) \geq L_{\pi_{old}}(\pi_{new}) - \frac{4\epsilon\gamma}{(1-\gamma)^2}\alpha^2$<ul><li>$\epsilon = max_{s,a}\vert A_\pi(s,a)\vert$</li></ul>
+</li></ul>
+</li>
+<li>We can also use KL divergence because we know $D_{TV}(p\vert\vert q)^2 \leq D_{KL}(p\vert\vert q)$<ul>
+<li>$\eta(\tilde{\pi}) \geq L_\pi(\tilde{\pi}) - CD_{max_{KL}}(\pi, \tilde{\pi})$ where $C = \frac{4\epsilon\gamma}{(1-\gamma)^2}$</li>
+<li>Guaranteed to produce monotonically non-decreasing policies when we maximize $L_\pi(\tilde{\pi}) - CD_{max_{KL}}(\pi, \tilde{\pi})$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>This is a minimization-maximization algorithm</li>
+<li>TRPO uses a KL divergence constraint instead of a penalty to allow large updates</li>
+</ul>
+</li>
+<li>
+<strong>Optimization of Parameterized Policies</strong><ul>
+<li>If we follow the maximation objective: $maximize_\theta [L_{\theta_{old}}(\theta) - CD^{max}_{KL}(\theta_{old}, \theta)]$<ul>
+<li>Guaranteed to improve true objective $\eta$</li>
+<li>However step sizes would be very small</li>
+</ul>
+</li>
+<li>Instead we can use a KL divergence (trust region) constraint between new and old policies<ul>
+<li>$maximize L_{\theta_{old}}(\theta)$ subject to $D_{KL}^{max}(\theta_{old}, \theta) \leq \delta$</li>
+<li>In practice, we use heuristic approximation: $\bar{D}^\rho_{KL}(\theta_1, \theta_2) = \mathbb{E}_{s \sim \rho}[D_{KL}(\pi_{\theta_1}) (\cdot \vert s)\vert\vert \pi_{\theta_1})(\cdot \vert s))]$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Sample-Based Estimation of the Objective and Constraint</strong><ul>
+<li>We need to approximate the objective and constraint using monte carlo simulations</li>
+<li>Original optimization problem: $maximize_\theta \sum_s \rho_{\theta_{old}}(s)\sum_a \pi_\theta(a\vert s)A_{\theta_{old}}(s,a)$ subject to $\bar{D}_{KL}^{\rho_{\theta_{old}}}(\theta_{old}, \theta) \leq \delta$<ul>
+<li>Replace $\sum_s \rho_{\theta_{old}}(s)$ with expectation<ul><li>Replace expectation with sample averages</li></ul>
+</li>
+<li>Replace advantages with $Q_{old}$ values<ul><li>Replace with empirical estimate</li></ul>
+</li>
+<li>Replace sum over actions with importance sampling ratio $\frac{\pi_theta(a\vert s_n)}{q(a\vert s_n)}$ where $q$ is the sampling distribution</li>
+<li>Two sampling schemes: single path and vine</li>
+</ul>
+</li>
+<li>
+<strong>Single Path</strong><ul>
+<li>Collect sequence of states by sampling $s_0 \sim \rho_0$ and then simulating a policy</li>
+<li>$q(a\vert s) = \pi_{\theta_{old}}$</li>
+<li>$Q_{old}$ computed at each state-action pair by taking the discounted sum of future rewards</li>
+</ul>
+</li>
+<li>
+<strong>Vine</strong><ul>
+<li>Sample $s_0 \sim \rho_0$ and then simulating a policy, $\pi_{\theta_i}$</li>
+<li>Generate a number of trajectories</li>
+<li>Choose a subset N of states known as the rollout set</li>
+<li>For each state in the rollout set, sample K actions from$q(\cdot \vert s_n)$ → $q(\cdot \vert s_n) = \pi(\cdot \vert s_n)$ works well in practice</li>
+<li>Estimate $\hat{Q}_{\theta_i}(s_n, a_{n,k})$ by doing a small rollout</li>
+<li>For finite action space<ul><li>$L_n(\theta) = \sum_{k=1}^K \pi_\theta(a_k \vert s_n)\hat{Q}(s_n, a_k)$</li></ul>
+</li>
+<li>For continuous action space, we can estimate using importance sampling and normalize it:<ul>
+<li>$L_n(\theta) = \frac{\sum_{k=1}^K\frac{\pi_\theta(a_{n,k}\vert s_n)}{\pi_{\theta_{old}}(a_{n,k}\vert s_n)}\hat{Q}(s_n, a_k))}{\sum_{k=1}^K\frac{\pi_\theta(a_{n,k}\vert s_n)}{\pi_{\theta_{old}}(a_{n,k}\vert s_n)}}$</li>
+<li>Removes need for baselines (gradient unchanged)</li>
+</ul>
+</li>
+<li>Vine results in much lower variance than single path given same number of Q-value samples<ul><li>But requires more calls to simulator</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Practical Algorithm</strong><ul>
+<li>Use single path or vine to collect set of state-action pairs + Q value estimates</li>
+<li>Construct estimated objective + constraint</li>
+<li>Approximately solve to update parameters<ul>
+<li>Use conjugate gradient with line search</li>
+<li>Compute fisher information matrix by analytically computing hessian on KL divergence<ul><li>Removes need to store dense hessian or policy gradients for batch of trajectories</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Connections with Prior Work</strong><ul>
+<li>Natural policy gradient sets the step size as a hyperparameter<ul><li>TRPO forces the constraint size at each step<ul><li>Improves the performance significantly</li></ul>
+</li></ul>
+</li>
+<li>We can get the standard policy gradient update using an L2 constraint instead of KL</li>
+<li>Relative entropy policy search constrains $p(s,a)$ whereas TRPO constrains $p(s\vert A)$</li>
+<li>KL Divergence has been used to ensure policy does not stray away from regions where dynamics model is valid</li>
+</ul>
+</li>
+<li>
+<strong>Experiments</strong><ul>
+<li>
+<strong>Simulated Robotic Locomotion</strong><ul>
+<li>Tested on swimmer, hopper, and walker</li>
+<li>TRPO had the best solutions on all problems relative to natural policy gradient</li>
+<li>KL divergence way better way to choose step sizes instead of a fixed penalty</li>
+<li>TRPO learned all policies with simple rewards + minimal prior knowledge</li>
+</ul>
+</li>
+<li>
+<strong>Playing Games from Images</strong><ul>
+<li>Only outperformed previous methods on some games but achieved reasonable scores</li>
+<li>TRPO was not made for these tasks, but its performance demonstrates generalization</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<span class="meta"><time datetime="2025-04-07T00:00:00+00:00">April 7, 2025</time> · <a href="/tags/research">research</a></span></section></main></body>
+</html>
