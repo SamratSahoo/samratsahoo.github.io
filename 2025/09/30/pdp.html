@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet">
+<meta name="generator" content="Jekyll v4.2.2">
+<meta property="og:title" content="PDP: Physics-Based Character Animation via Diffusion Policy">
+<meta name="author" content="samrat sahoo">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="A paper about using diffusion for character animation">
+<meta property="og:description" content="A paper about using diffusion for character animation">
+<link rel="canonical" href="https://samratsahoo.com/2025/09/30/pdp">
+<meta property="og:url" content="https://samratsahoo.com/2025/09/30/pdp">
+<meta property="og:site_name" content="samrat’s thought space">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2025-09-30T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="PDP: Physics-Based Character Animation via Diffusion Policy">
+<meta name="twitter:site" content="@samratdotjs">
+<meta name="twitter:creator" content="@samratdotjs"> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"samrat sahoo","url":"https://samratsahoo.com"},"dateModified":"2025-09-30T00:00:00+00:00","datePublished":"2025-09-30T00:00:00+00:00","description":"A paper about using diffusion for character animation","headline":"PDP: Physics-Based Character Animation via Diffusion Policy","mainEntityOfPage":{"@type":"WebPage","@id":"https://samratsahoo.com/2025/09/30/pdp"},"url":"https://samratsahoo.com/2025/09/30/pdp"}</script><title> PDP: Physics-Based Character Animation via Diffusion Policy - samrat's thought space</title>
+<link rel="shortcut icon" href="/favicon.webp">
+<link rel="alternate" type="application/atom+xml" title="samrat's thought space" href="/atom.xml">
+<link rel="alternate" type="application/json" title="samrat's thought space" href="https://samratsahoo.com/feed.json">
+<link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml">
+<style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:10rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5{line-height:1;margin:1rem 0;font-weight:600}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:60rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}@media print{.no-print,.no-print *{display:none !important}}img.mermaid{max-width:200px}.url{color:#0645AD}*::-moz-selection{color:white;background:#7011dc}*::selection{color:white;background:#7011dc}*{font-family:"Outfit", sans-serif}li>ul{padding-left:1rem}</style>
+<script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"},"svg":{"fontCache":"global","scale":1.0,"minScale":0.5,"mtextInheritFont":true,"merrorInheritFont":true,"mathmlSpacing":false,"skipAttributes":{},"exFactor":0.5},"chtml":{"scale":1.0,"minScale":0.5,"matchFontHeight":true,"mtextFont":"serif","linebreaks":{"automatic":false}}}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js"></script>
+</head>
+<body><main><header aria-hidden="true" class="no-print"> <!--<h1 class="logo">samrat's thought space</h1>--><nav role="navigation" aria-hidden="true"><ul>
+<li><a href="/">about</a></li>
+<li><a href="/reading" class="active">reading</a></li>
+<li><a href="/research">research</a></li>
+<li><a href="/writing">writing</a></li>
+<li><a href="/search">search</a></li>
+</ul></nav></header><section class="post"><h2>PDP: Physics-Based Character Animation via Diffusion Policy</h2>
+<ul>
+<li>
+<strong>Resources</strong><ul><li>
+<a href="https://arxiv.org/abs/2406.00960">Paper</a> <br><br>
+</li></ul>
+</li>
+<li>
+<strong>Introduction</strong><ul>
+<li>Generating agents that can traverse and interact with the environment can be solved via RL or behavioral cloning</li>
+<li>Conditional VAEs and GANs can capture humanoid skills<ul>
+<li>VAEs suffer with trade-off between diversity and robustness</li>
+<li>GANs can suffer from mode collapse</li>
+</ul>
+</li>
+<li>Diffusion models unexplored in high frequency control domains</li>
+<li>Behavioral cloning with diffusion is ineffective due to compounding errors in high frequency or under-actuated tasks</li>
+<li>PDP: Uses diffusion policies with large scale motion datasets to learn diverse multimodal motor skills<ul>
+<li>Uses expert RL policies to gather valid sequences of observations and actions to overcome domain shift sensitivity</li>
+<li>Key Insight: RL policies provide optimal trajectories + corrective actions from suboptimal states</li>
+<li>We can train with noisy states + clean actions for a more robust policy</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Methods</strong><ul>
+<li>3 Stages<ul>
+<li>Train a set of expert policies specialized in a small task but completing wide variety of motion tracking tasks</li>
+<li>Generate state-action trajectories from policies stochastically to build noisy-state, clean-action trajectories</li>
+<li>Train diffusion model via behavioral cloning</li>
+</ul>
+</li>
+<li>
+<strong>Expert Policy Training</strong><ul>
+<li>Train an RL policy for a set of tasks</li>
+<li>If the set of tasks is large, a singular policy can be difficult to learn</li>
+<li>Seperate the tasks into subsets and train seperate policies for each one</li>
+</ul>
+</li>
+<li>
+<strong>Stochastic Data Collection</strong><ul>
+<li>For each task, generate a dataset by rolling out each policy<ul><li>Use a noisy version of the optimal action from expert policy</li></ul>
+</li>
+<li>Combine the datasets together<ul><li>Note: Clean action stored in dataset but noisy action used for rollout.<ul>
+<li>Clean action acts as a corrective action</li>
+<li>Creates a noise band around the clean trajectories (similar to DASS)</li>
+<li>They expand the noise band by generating short recovery episodes by initializing the character with random root position and orientations</li>
+</ul>
+</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Behavioral Cloning with Diffusion Policy</strong><ul>
+<li>
+<strong>Diffusion Model</strong><ul>
+<li>Action distribution conditioned on observations</li>
+<li>Uses denoising diffusion probabilistic models</li>
+<li>Denoising process learned by noise-prediction network: $\epsilon _{\theta}(A_t^k, O_t, \tau_t,k)$<ul>
+<li>$A_t^k$: Action sequence sampled from dataset</li>
+<li>$k$: Diffusion step</li>
+<li>Conditioned on $O_t$</li>
+<li>$\tau$: task / goal</li>
+<li>$\theta$: Model parameters</li>
+</ul>
+</li>
+<li>Sampling occurs through stochastic langevin dynamics (starts from pure noise)<ul><li>$A^{k-1}_t = \alpha (A^k_t - \gamma \epsilon _{\theta}(A_t^k, O_t, \tau_t,k) + \mathcal{N}(0, \sigma^2, I))$<ul><li>$\gamma, \alpha, \sigma$: Tunable hyperparamters</li></ul>
+</li></ul>
+</li>
+<li>Noise prediction model learned in self-supervised manner<ul><li>$\mathcal{L} = MSE(\epsilon^k, \epsilon _{\theta}(A_t^0 + \epsilon^k, O_t, \tau_t, k))$</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Model Architecture</strong><ul>
+<li>Use a similar architecture to time-series transformer diffusion architecture</li>
+<li>For locomotion control + motion tracking, task information in observation</li>
+<li>For text to motion, text is encoded with CLIP and then passed through an MLP<ul>
+<li>Observation also passed through an MLP</li>
+<li>Diffusion step embedded into same space and added to text embedding</li>
+<li>Result fed through a Feature-wise Linear Modulation (FiLM) layer (learned scale + shift)</li>
+<li>Diffusion embedding concatenated with FiLM result; produces conditioning (input for transformer encoder)</li>
+<li>Transformer decoder takes embedding of noisy action sequence + encoder result and predicts noise applied to action</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Experiments</strong><ul>
+<li>3 Applications:<ul>
+<li>Locomotion control under large perturbations</li>
+<li>Universal motion tracking</li>
+<li>Physics Based Text to motion synthesis</li>
+</ul>
+</li>
+<li>
+<strong>Perturbation Recovery</strong><ul>
+<li>Train a single diffusion policy that is capable of capturing wide range of human responses to perturbations</li>
+<li>Dataset: recovery motions of humans being physically pushed while walking on a treadmill</li>
+<li>Experimental Details: 25 joint skeletal model<ul>
+<li>Environment simulated in MuJoCo</li>
+<li>Observations = center of mass positions, linear velocities, and body rotations</li>
+<li>During training agent receives same perturbation as human did in dataset</li>
+<li>After training RL policies, collect new observations<ul><li>Include binary signal for whether human is being perturbed<ul><li>Helps diffusion policy differentiate between recovery and walking</li></ul>
+</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Universal Motion Tracking</strong><ul>
+<li>Train a single diffusion policy capable of controlling a character to track a reference motion under physics simulation</li>
+<li>Dataset: Subset of AMASS Dataset (exclude infeasible motions)</li>
+<li>Experimetnal Details: Reference motion includes linear position, 6D rotation of each joint, linear + angular velocities<ul><li>Prediction horizon is 4 observations and 1 action</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Text-to-Motion</strong><ul>
+<li>Generate motions conditioned on natural language prompt</li>
+<li>Dataset: KIT dataset + annotations from HumanML3D<ul><li>Task vector generated through passing text through CLIP</li></ul>
+</li>
+<li>Experimental Details: Use joint position, joint velocity, joint rotation, and joint rotational velocities</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Results</strong><ul>
+<li>
+<strong>Sampling Strategy</strong><ul>
+<li>Clean-state clean-action = lowest performance<ul><li>Success rates: 3.36% for perturbation and 68.8% for tracking</li></ul>
+</li>
+<li>Noisy-state noisy-action = Success rates: 66.9% for perturbation and 64.5% for tracking</li>
+<li>Noisy-state clean-action = Success rates: 100% for perturbation and 93.5% for tracking</li>
+</ul>
+</li>
+<li>
+<strong>Perturbation Recovery</strong><ul>
+<li>Compare PDP to C-VAE (generative) and MLP (deterministic)</li>
+<li>
+<strong>Robustness</strong><ul>
+<li>Perturbations are either in-distribution (ID) or out-of-distribution (OOD)</li>
+<li>All 3 models handle ID perturbations</li>
+<li>With OOD, PDP (96.3%) and C-VAE (91.3%) have good performance</li>
+<li>2 Hyperparameters:<ul>
+<li>Noise level: 0 noise performs badly – increasing this improves performance until a certain level of noise</li>
+<li>Action Prediction Horizon: Lower horizons = better performance</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Foot Placement Correctness</strong><ul>
+<li>Measure how far apart foot positions are from policy compared to closes ground truth</li>
+<li>$FPC = \frac{1}{N}\sum _{i=1}^N (min _{j \in 1,2, \dots, M} \sqrt{(x_i - \bar{x}_j)^2 + (y_i - \bar{y}_j)^2})$<ul><li>FPC is much lower for PDP than C-VAE</li></ul>
+</li>
+<li>C-VAE fails to capture multimodality as well; favors one mode while PDP favors both modes<ul><li>C-VAE has a trade off in capturing multimodality and having more variance in foot placement</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Motion Tracking</strong><ul>
+<li>PDP achieves 96.4% success rate on AMASS</li>
+<li>Using an MLP outperforms PDP - diffusion for motion tracking does not have clear benefits</li>
+</ul>
+</li>
+<li>
+<strong>Text-to-Motion</strong><ul>
+<li>PDP can follow diverse text commands</li>
+<li>Cannot do composite text prompts because it lacks necessary memory of initial action</li>
+<li>PDP (57.1%) outperforms MLP (11.9%)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Discussion</strong><ul>
+<li>MLPs which cannot capture multimodality lack robustness to OOD perturbations</li>
+<li>C-VAE Posterior Collapse: Tuning $\beta$ in C-VAE is hard<ul><li>Increasing it forces the latent distribution to align to a normal distribution and cause the model disregard latent vector; causes it to function like an MLP</li></ul>
+</li>
+<li>PDP and MLP Tracking Task: PDP can train a model through supervised learning and exceed performance of hierarchal RL policies<ul><li>Can use the local experts to fine tune on a seperate dataset<ul><li>Using RL, you would need to control many low level controllers or even train a whole new policy</li></ul>
+</li></ul>
+</li>
+<li>Text2Motion Challenges<ul>
+<li>Does not perform at the same level as kinematic motion generation</li>
+<li>Must balance motion and maintaining equilibrium<ul><li>Losing balance = disrupts motion with corrective steps</li></ul>
+</li>
+<li>2 distinct motions can be close in kinematic space; achieving them can be signficantly different in skill space</li>
+</ul>
+</li>
+<li>Limitations<ul>
+<li>Speed of denoising process (K times longer than MLP)</li>
+<li>Predicting multiple actions dilutes importance of immediate action</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<span class="meta"><time datetime="2025-09-30T00:00:00+00:00">September 30, 2025</time> · <a href="/tags/research">research</a></span></section></main></body>
+</html>
