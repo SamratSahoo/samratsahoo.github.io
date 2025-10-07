@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet">
+<meta name="generator" content="Jekyll v4.2.2">
+<meta property="og:title" content="EX2: Exploration with Exemplar Models for Deep Reinforcement Learning">
+<meta name="author" content="samrat sahoo">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="A paper about ex2">
+<meta property="og:description" content="A paper about ex2">
+<link rel="canonical" href="https://samratsahoo.com/2025/05/30/ex2">
+<meta property="og:url" content="https://samratsahoo.com/2025/05/30/ex2">
+<meta property="og:site_name" content="samrat’s thought space">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2025-05-30T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="EX2: Exploration with Exemplar Models for Deep Reinforcement Learning">
+<meta name="twitter:site" content="@samratdotjs">
+<meta name="twitter:creator" content="@samratdotjs"> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"samrat sahoo","url":"https://samratsahoo.com"},"dateModified":"2025-05-30T00:00:00+00:00","datePublished":"2025-05-30T00:00:00+00:00","description":"A paper about ex2","headline":"EX2: Exploration with Exemplar Models for Deep Reinforcement Learning","mainEntityOfPage":{"@type":"WebPage","@id":"https://samratsahoo.com/2025/05/30/ex2"},"url":"https://samratsahoo.com/2025/05/30/ex2"}</script><title> EX2: Exploration with Exemplar Models for Deep Reinforcement Learning - samrat's thought space</title>
+<link rel="shortcut icon" href="/favicon.webp">
+<link rel="alternate" type="application/atom+xml" title="samrat's thought space" href="/atom.xml">
+<link rel="alternate" type="application/json" title="samrat's thought space" href="https://samratsahoo.com/feed.json">
+<link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml">
+<style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:10rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5{line-height:1;margin:1rem 0;font-weight:600}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:60rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}@media print{.no-print,.no-print *{display:none !important}}img.mermaid{max-width:200px}.url{color:#0645AD}*::-moz-selection{color:white;background:#7011dc}*::selection{color:white;background:#7011dc}*{font-family:"Outfit", sans-serif}li>ul{padding-left:1rem}</style>
+<script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"},"svg":{"fontCache":"global","scale":1.0,"minScale":0.5,"mtextInheritFont":true,"merrorInheritFont":true,"mathmlSpacing":false,"skipAttributes":{},"exFactor":0.5},"chtml":{"scale":1.0,"minScale":0.5,"matchFontHeight":true,"mtextFont":"serif","linebreaks":{"automatic":false}}}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js"></script>
+</head>
+<body><main><header aria-hidden="true" class="no-print"> <!--<h1 class="logo">samrat's thought space</h1>--><nav role="navigation" aria-hidden="true"><ul>
+<li><a href="/">about</a></li>
+<li><a href="/reading" class="active">reading</a></li>
+<li><a href="/research">research</a></li>
+<li><a href="/writing">writing</a></li>
+<li><a href="/search">search</a></li>
+</ul></nav></header><section class="post"><h2>EX2: Exploration with Exemplar Models for Deep Reinforcement Learning</h2>
+<ul>
+<li>
+<strong>Resources</strong><ul><li>
+<a href="https://arxiv.org/abs/1703.01260">Paper</a> <br><br>
+</li></ul>
+</li>
+<li>
+<strong>Introduction</strong><ul>
+<li>Exploration is hard with sparse reward signals</li>
+<li>$\epsilon$-greedy and gaussian noise are undirected (don’t explicitly seek for interesting states)</li>
+<li>Estimate novelty by predicting future states or state densities</li>
+<li>Count based approaches have shown speedups</li>
+<li>Generating + predicting states in high dimensions is difficult</li>
+<li>EX2 uses a discriminator to distinguish between a given state from other states seen previously<ul>
+<li>Easy to distinguish = likely to be novelty</li>
+<li>Exemplar Models: model that distinguishes a state from all other observed states</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Preliminaries</strong><ul>
+<li>Assume standard MDP + RL setting</li>
+<li>In discrete state settings, we can give exploration bonuses based on counts</li>
+<li>In continuous state settings, we give exploration bonuses by generatively learning a probability density and estimating pseudo-counts</li>
+</ul>
+</li>
+<li>
+<strong>Exemplar Models and Density Estimation</strong><ul>
+<li>
+<strong>Exemplar Models</strong><ul>
+<li>Dataset: $X = (x_1 \dots x_n)$</li>
+<li>Exemplar model has $n$ classifiers / discriminators, $(D _{x_1} \dots D _{x_n})$<ul><li>Avoid $n$ classifiers by using a single exemplar-conditioned network</li></ul>
+</li>
+<li>$D _{x^\ast}(X) : \chi \rightarrow [0,1]$: discriminator associated with exemplar $x^\ast$</li>
+<li>$P _{\chi}(x)$: Data distribution</li>
+<li>Each discriminator receives balanced Dataset<ul><li>Half of the dataset consists of exemplar $x^\ast$ and other half from $P _{\chi}(x)$</li></ul>
+</li>
+<li>Discriminator models bernoulli distribution<ul><li>$D _{x^\ast}(X) = P(x = x^\ast \vert x)$ via maximum likelihood<ul>
+<li>$x = x^\ast$ is noisy (data similar / identical to $x^\ast$ or can occur in $P _{\chi}(x)$)</li>
+<li>Cross entropy objective: $D <em>{x^\ast} = argmax _{D \in \mathcal{D}}(E _{\delta _{x^\ast}}[\log D(x)] + E _{P</em>\chi}[\log 1 - D(x)])$</li>
+</ul>
+</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Exemplar Models as Implicit Density Estimation</strong><ul>
+<li>Optimal discriminator satisfies:<ul>
+<li>$D _{x^\ast}(x) = \frac{\delta _{x^\ast}(x)}{\delta _{x^\ast}(x) + P _{\chi}(x)}$</li>
+<li>$D _{x^\ast}(x^\ast) = \frac{1}{1 + _{x^\ast}(x) + P _{\chi}(x)}$</li>
+</ul>
+</li>
+<li>If a discriminator is optimal, we can find probability of datapoint by evaluating discriminator at exemplar<ul>
+<li>$P _\chi(x^\ast) = \frac{1 - D _{x^\ast}(x)}{D _{x^\ast}(x)}$</li>
+<li>For continuous domains, we can’t recover $P _{\chi}(x)$ because $\delta _{x^\ast}(x) \rightarrow \infty$ and $D(x) \rightarrow 1$<ul>
+<li>Smooth the delta by adding noise ($q$)</li>
+<li>When noise is added: $P _\chi (x^\ast) \propto \frac{1 - D _{x^\ast}(x)}{D _{x^\ast}(x)}$<ul>
+<li>Proportionality holds as long a convolution $(\delta \ast q)(x^\ast)$ is same for all $x^\ast$</li>
+<li>Reward bonus invariant to normalization so proportionality is sufficient</li>
+</ul>
+</li>
+<li>In practice, we add noise to background distribution<ul><li>$D _{x^\ast}(x) = = \frac{(\delta \ast q)(x)}{(\delta \ast q)(x) + (P _{\chi} \ast q)(x^\ast)}$</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Latent Space Smoothing with Noisy Discriminators</strong><ul>
+<li>Adding noise to high dimensions does not produce meaningful new states<ul><li>Instead inject it into latent Space</li></ul>
+</li>
+<li>Train an encoder: $q(z \vert x)$</li>
+<li>Train a latent space classifier: $p(y \vert z) = D(z)^y(1 - D(z))^{1- y}$<ul>
+<li>y = 1 if $x = x^\ast$ else 0</li>
+<li>Regularlize noise against a prior $\tilde{p}(z) = \frac{1}{2}\delta _{x^\ast}(x) + \frac{1}{2} P _{\chi}(x)$</li>
+</ul>
+</li>
+<li>Maximizing objective: $max _{p _{y \vert z}, q _{z \vert x}} \mathbb{E} _{\tilde{p}}[\mathbb{E} _{q _{z \vert x}}[\log p(y \vert z)] - D _{KL}(q (z \vert x)\vert \vert p(z))]$<ul>
+<li>Maximize classifcation accuracy while transmit minimal info through latent space</li>
+<li>Captures factors of variation in $x$ that are most informative to distinguish points</li>
+</ul>
+</li>
+<li>Let the following:<ul>
+<li>Marginal positive density over latent space: $q(z \vert y = 1) = \int_x \delta _{x^\ast}(x) q(z \vert x)dx$</li>
+<li>Marginal negative density overt latent space: $q(z \vert y = 0) = \int_x p _{\chi}(x) q(z \vert x)dx$</li>
+<li>Optimal discriminator satisfies $p(y = 1 \vert z) = D(z) = \frac{q(z \vert y =1)}{q(z \vert y =1) + q(z \vert y = 0)}$</li>
+<li>Optimal encoder satisfies $q(z \vert x) \propto D(z)^{y _{soft}(x)}(1 - D(z))^{1 - y _{soft}(x)}p(z)$<ul><li>Average label of x: $y _{soft}(x) = p(y = 1 \vert x) = \frac{\delta _{x^\ast}(x)}{\delta _{x^\ast}(x) + p _{\chi}(x)}$</li></ul>
+</li>
+<li>Recover a density: $D(x) = \mathbb{E}_q [D(z)]$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Smoothing from Suboptimal Discriminators</strong><ul><li>With a suboptimal discriminator, second source of density smoothing = discriminator has difficultly distinguishing between 2 states<ul><li>Adding noise is not necessarily needed</li></ul>
+</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>$EX^2$: Exploration with Exemplar Models</strong><ul>
+<li>To generate samples from $P(s)$, sample the replay buffer</li>
+<li>Exemplars = states we want to score<ul>
+<li>Offline setting: states in current batch of trajectories</li>
+<li>Online setting: train discriminator on states as we receive them</li>
+</ul>
+</li>
+<li>Augment reward with novelty of the state<ul><li>$R’(s,a) = R(s,a) + \beta f(D _{s}(s))$<ul><li>$\beta$ is a hyperparamter to tune magnitude of bonus</li></ul>
+</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Model Architecture</strong><ul>
+<li>
+<strong>Amortized Multi-Exemplar Model</strong><ul>
+<li>Instead of a seperate classifier for each exemplar, use a single model conditioned on exemplar</li>
+<li>Condition latent space discriminator on encoded exemplar from $q(z^\ast \vert x^\ast)$</li>
+<li>Don’t need to train discriminators from scratch every iteration + provides generalization</li>
+</ul>
+</li>
+<li>
+<strong>K-Exemplar Model</strong><ul>
+<li>We can interpolate between 1 model for all exemplars (K = 1) and 1 model for each exemplar (K = number of states)</li>
+<li>Batch adjacent states into same discriminator<ul><li>Form of temporal regularization (adjacent states are similar)</li></ul>
+</li>
+<li>Share majority of layers in each discriminator<ul><li>Final linear layer is all that varies</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Relationship to Generative Adverserial Networks (GANs)</strong><ul>
+<li>Policy = generator of a GANs</li>
+<li>Exemplar model = discriminator of GAN</li>
+<li>In EX2, generator is rewarded for helping the discriminator rather than fooling it<ul>
+<li>Competing with the progression of time</li>
+<li>As novel state becomes visited frequently, replay buffer saturated with that state</li>
+<li>Forces policy to find new states</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Experimental Evaluation</strong><ul>
+<li>Compare K-exemplar and amortized to standard random exploration, kernel density estimation with RBF kernels, VIME, and hash based methods</li>
+<li>Continuous Control:<ul>
+<li>Even on medium dimensional tasks, implicit density estimation approach works well</li>
+<li>EX2, VIME, and hasing outperform regular TRPO and KDE on SwimmerGather</li>
+<li>Amortized EX2 outperforms all other methods on HalfCheetah</li>
+</ul>
+</li>
+<li>Image-Based Control:<ul>
+<li>EX2 generates coherent exploration behavior even at high dimensional visual environments</li>
+<li>On most challenging task, EX2 exceeds all other exploration techniques</li>
+<li>Indicates explicit density estimators are good for simple/clean images but struggle with complex + egocentric observations</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<span class="meta"><time datetime="2025-05-30T00:00:00+00:00">May 30, 2025</time> · <a href="/tags/research">research</a></span></section></main></body>
+</html>
