@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet">
+<meta name="generator" content="Jekyll v4.2.2">
+<meta property="og:title" content="Deep Recurrent Q-Learning for Partially Observable MDPs">
+<meta name="author" content="samrat sahoo">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="A paper that explores recurrent networks for q-learning">
+<meta property="og:description" content="A paper that explores recurrent networks for q-learning">
+<link rel="canonical" href="https://samratsahoo.com/2025/04/01/deep-recurrent-q-learning">
+<meta property="og:url" content="https://samratsahoo.com/2025/04/01/deep-recurrent-q-learning">
+<meta property="og:site_name" content="samrat’s thought space">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2025-04-01T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="Deep Recurrent Q-Learning for Partially Observable MDPs">
+<meta name="twitter:site" content="@samratdotjs">
+<meta name="twitter:creator" content="@samratdotjs"> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"samrat sahoo","url":"https://samratsahoo.com"},"dateModified":"2025-04-01T00:00:00+00:00","datePublished":"2025-04-01T00:00:00+00:00","description":"A paper that explores recurrent networks for q-learning","headline":"Deep Recurrent Q-Learning for Partially Observable MDPs","mainEntityOfPage":{"@type":"WebPage","@id":"https://samratsahoo.com/2025/04/01/deep-recurrent-q-learning"},"url":"https://samratsahoo.com/2025/04/01/deep-recurrent-q-learning"}</script><title> Deep Recurrent Q-Learning for Partially Observable MDPs - samrat's thought space</title>
+<link rel="shortcut icon" href="/favicon.webp">
+<link rel="alternate" type="application/atom+xml" title="samrat's thought space" href="/atom.xml">
+<link rel="alternate" type="application/json" title="samrat's thought space" href="https://samratsahoo.com/feed.json">
+<link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml">
+<style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:10rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5{line-height:1;margin:1rem 0;font-weight:600}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:60rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}@media print{.no-print,.no-print *{display:none !important}}img.mermaid{max-width:200px}.url{color:#0645AD}*::-moz-selection{color:white;background:#7011dc}*::selection{color:white;background:#7011dc}*{font-family:"Outfit", sans-serif}li>ul{padding-left:1rem}</style>
+<script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"},"svg":{"fontCache":"global","scale":1.0,"minScale":0.5,"mtextInheritFont":true,"merrorInheritFont":true,"mathmlSpacing":false,"skipAttributes":{},"exFactor":0.5},"chtml":{"scale":1.0,"minScale":0.5,"matchFontHeight":true,"mtextFont":"serif","linebreaks":{"automatic":false}}}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js"></script>
+</head>
+<body><main><header aria-hidden="true" class="no-print"> <!--<h1 class="logo">samrat's thought space</h1>--><nav role="navigation" aria-hidden="true"><ul>
+<li><a href="/">about</a></li>
+<li><a href="/reading" class="active">reading</a></li>
+<li><a href="/research">research</a></li>
+<li><a href="/writing">writing</a></li>
+<li><a href="/search">search</a></li>
+</ul></nav></header><section class="post"><h2>Deep Recurrent Q-Learning for Partially Observable MDPs</h2>
+<ul>
+<li>
+<strong>Resources</strong><ul><li>
+<a href="https://arxiv.org/abs/1507.06527">Paper</a> <br><br>
+</li></ul>
+</li>
+<li>
+<strong>Introduction</strong><ul>
+<li>Limitation of DQNs is that they learn a mapping from a limited number of past states (i.e., 4 states in atari)</li>
+<li>Need to remember mapping from more distant states<ul>
+<li>Future states + reward depend on more than just input to DQN</li>
+<li>MDP becomes POMDP</li>
+</ul>
+</li>
+<li>Real-world tasks have noisy state due to partial observability<ul><li>I.e., one image doesn’t tell you velocity of ball, only position</li></ul>
+</li>
+<li>DQN performance declines with incomplete state observations<ul><li>We can use Deep recurrent Q network: combines LSTM + Deep Q Networks</li></ul>
+</li>
+<li>
+<strong>Deep Q Learning</strong><ul><li>Avoids feedback loops (achieves stability) through 1) experience replay 2) separate target network and 3) adaptive learning rates</li></ul>
+</li>
+<li>
+<strong>Partial Observability</strong><ul>
+<li>Sensations received by agent are only partial glimpses of underlying system state</li>
+<li>Vanilla DQNs can’t decipher underlying system state of a POMDP given an observation<ul><li>$Q(o, a \vert \theta) \neq Q(s, a \vert \theta)$</li></ul>
+</li>
+<li>Recurrency helps narrow the gap $Q(o, a \vert \theta) \rightarrow Q(s, a \vert \theta)$ using sequences of observations.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>DRQN Architecture</strong><ul>
+<li>Take DQN, replace the first convolutional layer with a recurrent LSTM</li>
+<li>Each frame is convolved first and then passed through the LSTM through time</li>
+</ul>
+</li>
+<li>
+<strong>Stable Recurrent Updates</strong><ul>
+<li>Bootstrapped Sequential Updates: Episodes selected randomly from replay memory. Updates begin at beginning of episode until conclusion<ul>
+<li>Targets generated by target Q network</li>
+<li>Advantage: Carry hidden state forward from beginning of episode</li>
+<li>Disadvantage: Violates DQN random sample policy</li>
+</ul>
+</li>
+<li>Bootstrapped Random Updates: Episodes selected randomly from replay memory. Updates start at random parts of epsiode and unroll (backward call) for set number of timesteps<ul>
+<li>Targets generated by target Q network</li>
+<li>Advantage: Follows DQN random sample policy</li>
+<li>Disadvantage: Hidden state must be zeroed → harder to learn longer time scales than unroll amount</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Atari Games: MDP or POMDP</strong><ul><li>Regular DQN used 4 frames for observations → enough to represent it as an MDP instead of POMDP</li></ul>
+</li>
+<li>
+<strong>Flickering Atari Games</strong><ul>
+<li>To test on POMDP, modify atari such that at each timestep there is a 50% chance of frame being obscured.</li>
+<li>Need to integrate information across frames to estimate variables</li>
+<li>DRQN performs well even with one input per timestep<ul><li>LSTM can integrate noisy single frame info through time to detect high level pong events</li></ul>
+</li>
+<li>DRQN with 1 frame per time-step is equivalent to DQN with 10 frames stacked</li>
+</ul>
+</li>
+<li>
+<strong>Evaluation on Standard Atari Games</strong><ul><li>TLDR: DRQN does roughly as good as DQN - outperforms on some and much worse on others</li></ul>
+</li>
+<li>
+<strong>MDP to POMDP Generalization</strong><ul><li>DRQN and DQN captured on game without flickering<ul><li>When transferring policy to flickering game, DRQN retains more of its performance than DQN</li></ul>
+</li></ul>
+</li>
+<li>
+<strong>Discussion &amp; Conclusion</strong><ul>
+<li>DRQN integrates information across time</li>
+<li>DRQN trained on partial observability generalizes policies to complete observability and vice versa</li>
+<li>No systematic benefit with using recurrency (DRQN) vs stacking frames (DQN)</li>
+</ul>
+</li>
+</ul>
+<span class="meta"><time datetime="2025-04-01T00:00:00+00:00">April 1, 2025</time> · <a href="/tags/research">research</a></span></section></main></body>
+</html>

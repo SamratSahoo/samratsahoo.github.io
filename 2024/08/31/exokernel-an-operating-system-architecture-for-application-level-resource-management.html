@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet">
+<meta name="generator" content="Jekyll v4.2.2">
+<meta property="og:title" content="Exokernel - An Operating System Architecture for Application-Level Resource Management">
+<meta name="author" content="samrat sahoo">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="A paper about exokernels">
+<meta property="og:description" content="A paper about exokernels">
+<link rel="canonical" href="https://samratsahoo.com/2024/08/31/exokernel-an-operating-system-architecture-for-application-level-resource-management">
+<meta property="og:url" content="https://samratsahoo.com/2024/08/31/exokernel-an-operating-system-architecture-for-application-level-resource-management">
+<meta property="og:site_name" content="samrat’s thought space">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2024-08-31T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="Exokernel - An Operating System Architecture for Application-Level Resource Management">
+<meta name="twitter:site" content="@samratdotjs">
+<meta name="twitter:creator" content="@samratdotjs"> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"samrat sahoo","url":"https://samratsahoo.com"},"dateModified":"2024-08-31T00:00:00+00:00","datePublished":"2024-08-31T00:00:00+00:00","description":"A paper about exokernels","headline":"Exokernel - An Operating System Architecture for Application-Level Resource Management","mainEntityOfPage":{"@type":"WebPage","@id":"https://samratsahoo.com/2024/08/31/exokernel-an-operating-system-architecture-for-application-level-resource-management"},"url":"https://samratsahoo.com/2024/08/31/exokernel-an-operating-system-architecture-for-application-level-resource-management"}</script><title> Exokernel - An Operating System Architecture for Application-Level Resource Management - samrat's thought space</title>
+<link rel="shortcut icon" href="/favicon.webp">
+<link rel="alternate" type="application/atom+xml" title="samrat's thought space" href="/atom.xml">
+<link rel="alternate" type="application/json" title="samrat's thought space" href="https://samratsahoo.com/feed.json">
+<link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml">
+<style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:10rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5{line-height:1;margin:1rem 0;font-weight:600}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:60rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}@media print{.no-print,.no-print *{display:none !important}}img.mermaid{max-width:200px}.url{color:#0645AD}*::-moz-selection{color:white;background:#7011dc}*::selection{color:white;background:#7011dc}*{font-family:"Outfit", sans-serif}li>ul{padding-left:1rem}</style>
+</head>
+<body><main><header aria-hidden="true" class="no-print"> <!--<h1 class="logo">samrat's thought space</h1>--><nav role="navigation" aria-hidden="true"><ul>
+<li><a href="/">about</a></li>
+<li><a href="/reading" class="active">reading</a></li>
+<li><a href="/research">research</a></li>
+<li><a href="/writing">writing</a></li>
+<li><a href="/search">search</a></li>
+</ul></nav></header><section class="post"><h2>Exokernel - An Operating System Architecture for Application-Level Resource Management</h2>
+<ul>
+<li>Exposes physical resource management to applications for their specific purposes → leads to significant performance improvements relative to monolithic Kernel<ul>
+<li>Securely multiplexes hardware resources to untrusted application-level libraries (Library Operating Systems)</li>
+<li>Separates protection from management</li>
+<li>Protections Include:<ul>
+<li>Secure Bindings: Apps bind to machine resources securely</li>
+<li>Resource Revocation: Apps participate in a resource revocation protocol</li>
+<li>Abort Protocol: Kernel can break bindings of uncooperative apps by force</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Motivation</strong><ul>
+<li>Cost of Performance: Applications that do not need specific features are required to pay substantial overhead costs<ul><li>There is no way to abstract resources such that it works well for all applications (i.e., there are tradeoffs like sparse vs dense address spaces, read vs write intensive apps, etc.)</li></ul>
+</li>
+<li>Limited Functionality: Hide Information from applications which prevents apps from implementing their own abstractions</li>
+<li>Secure multiplexing of resources can be simply done through tables that track ownership</li>
+<li>Simple kernel allows it to easily adapt new requirements while being lightweight</li>
+<li>Library Operating Systems can be simpler and more specialized than Kernel implementations<ul><li>Library OS can also trust the application because Kernel does not need to trust the Library OS (i.e., only app impacted by malicious Library OS not exokernel)</li></ul>
+</li>
+<li>Kernel crossings are fewer because most of the OS runs in user address space</li>
+<li>Standard interfaces in OSes are easily portable</li>
+<li>An application can freely replace Library OS without special privledges</li>
+<li>Backward compatibility is possible through:<ul>
+<li>Binary emulation of OS + application</li>
+<li>Implementation of hardware abstractions on exokernel</li>
+<li>Implementation of OS abstractions on exokernel</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Exokernel Design</strong><ul>
+<li>
+<strong>Design Principles</strong><ul>
+<li>
+<strong>Securely Expose Hardware:</strong><ul>
+<li>Resources should be finely subdivided</li>
+<li>Exokernel should avoid resource management except when required for protection</li>
+<li>Export system calls that allow Library OSes to implement OS abstractions</li>
+</ul>
+</li>
+<li>
+<strong>Expose Allocation</strong><ul>
+<li>Allow Library OSes to request for physical pages</li>
+<li>No implicit allocation should occur; Library OS should be involved in every allocation decision</li>
+</ul>
+</li>
+<li>
+<strong>Expose Names</strong><ul>
+<li>Export physical names to avoid layers of indirection</li>
+<li>Should export book keeping data structures (i.e., freelists, TLB, disk arm positions, etc.) so apps can tailor requests based on resources</li>
+</ul>
+</li>
+<li>
+<strong>Expose Revocation</strong><ul><li>Allows well behaved Library OSes to perform efficient resource management and lets them choose which instance of a resource to relinquish</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Policy</strong><ul>
+<li>Exokernel needs to determine a policy to arbitrate competing Library OSes</li>
+<li>Can implement traditional resource partition strategies by granting or revoking access to resources</li>
+</ul>
+</li>
+<li>
+<strong>Secure Bindings</strong><ul>
+<li>Decouples authorization from the actual use of the resource</li>
+<li>Protection checks expressed as simple kernel operations that can be done quickly</li>
+<li>Authorization only occurs at bind time → decouples management and protection</li>
+<li>When a resource is used, it can be accessed without needing to understand what is being accessed<ul>
+<li>Bind Time: Understand + Authorize (setup rules)</li>
+<li>Access Time: Access + Protect (enforce rules)</li>
+</ul>
+</li>
+<li>Secure bindings implemented through three mechanisms:<ul>
+<li>Hardware Mechanisms: Secure bindings can be embedded as low level protection operations so accesses don’t need to check high-level authorization details everytime</li>
+<li>Software Caching: Used to cache frequently used secure bindings</li>
+<li>Downloading Application Code: Apps can provide code that kernels execute when a certain resource is accessed → reduces context switches + immediate execution of application code</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Multiplexing Physical Memory</strong><ul>
+<li>Exokernel creates a secure binding when a library OS allocates a physical memory page<ul>
+<li>Exokernel will present access requests to library OS for security</li>
+<li>Exokernel uses TLB (either hardware or software) / page table to cache virtual to physical mappings</li>
+</ul>
+</li>
+<li>Protecting resources directly → allows apps to grant access rights to other apps without exokernel</li>
+<li>Breaking a secure binding = flushing the TLB mappings</li>
+</ul>
+</li>
+<li>
+<strong>Multiplexing Network</strong><ul>
+<li>Packet filters allow the OS to demultiplex different network packets<ul>
+<li>These are just secure bindings downloaded into the Kernel<ul><li>Kernel does protection checks to make sure it is safe</li></ul>
+</li>
+<li>It’s possible some packet filters can accept packets not belonging to them → use a central server install filters<ul><li>Not an issue on trusted systems</li></ul>
+</li>
+</ul>
+</li>
+<li>CInan also use hardware mechanisms if available to demultiplex</li>
+<li>Outgoing messages → copy message from app to transmit buffer (and these can be mapped to application space)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Downloading Code</strong><ul>
+<li>Downloading code reduces kernel crossings</li>
+<li>Allows downloaded code to be executed even when not scheduled</li>
+<li>Application Safe Handlers: Process messages on reception → reduces latency because you don’t need to wait until a application is scheduled to process its packets</li>
+</ul>
+</li>
+<li>
+<strong>Visible Resource Revocation</strong><ul>
+<li>Invisible Revocation: OS allocates and deallocates physical memory without informing user → lower latency because no communication with app</li>
+<li>Visible Revocation: Informs apps about revocations → used by the exokernel</li>
+<li>
+<strong>Revocation and Physical Naming</strong><ul>
+<li>Relocation: Applications need to rename physical names in page tables, caches, etc. during deallocation</li>
+<li>When kernel deallocates, resource lists should be updated by the Library OS</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>The Abort Protocol</strong><ul>
+<li>Kernel needs to be able to take resources from Library OSes by force when Library OS doesn’t respond satisfactorily.<ul><li>Second stage of revocation where if certain constraint isn’t met to return resources, kernel forces revocation</li></ul>
+</li>
+<li>Repossession Vector: records when exokernel takes resource from library operating system<ul>
+<li>Library OS gets repossession exception to remap resources</li>
+<li>Library OS can allocate some memory to record vital information → these pages are guaranteed not to be repossessed<ul><li>If these need to be repossessed, then Library OS will get a notification from kernel to use swap memory</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Aegis</strong><ul>
+<li>Uses primitive operations to encapsulate privileged instructions + doesn’t alter application visible registers</li>
+<li>
+<strong>Processor Time Slices:</strong><ul>
+<li>CPU Allocation is done similar to how memory allocation is</li>
+<li>Round Robin styled time slots</li>
+<li>Compute heavy apps can schedule contiguous areas</li>
+<li>Position tells when the time slice will be run</li>
+<li>Uses timer interrupts to denote start and end of time slice</li>
+<li>Achieves fairness by bounding context-switching time</li>
+</ul>
+</li>
+<li>
+<strong>Processor Environments:</strong><ul><li>Four events delivered by Aegis<ul>
+<li>Exception context: contains PC value + pointer to memory for saving registers when an exception occurs</li>
+<li>Interrupt context: PC values + register save region<ul><li>Timer interrupts: status register + start/end PC values</li></ul>
+</li>
+<li>Protected entry context: PC values for control transfers</li>
+<li>Addressing context: Guaranteed mappings of virtual to physical addresses → used for bootstrapping OS data structures.<ul><li>Also includes address space identifier, a status register, and a tag needed to switch environments</li></ul>
+</li>
+</ul>
+</li></ul>
+</li>
+<li>
+<strong>Exception Handling in Aegis</strong><ul>
+<li>Step 1: Saves three scratch register in register save area</li>
+<li>Step 2: Load exception PC + cause of exception</li>
+<li>Step 3: Indirect jump to application-specific PC with appropriate permissions set</li>
+<li>All execution state must be saved in user accessible memory → allows user reconstruction</li>
+</ul>
+</li>
+<li>
+<strong>Address Translations</strong><ul>
+<li>Aegis uses guaranteed mappings to allow application to easily allocate space for things like TLB, exception handlers, etc.</li>
+<li>Guaranteed Mappings segment application virtual address space into two parts:<ul><li>First segment = normal application data + code</li></ul>
+</li>
+<li>On TLB miss:<ul>
+<li>Step 1:<ul>
+<li>If virtual address in first segment → exception to application</li>
+<li>If virtual address in second segment → if it is guaranteed mapping → installs the TLB entry and continues, else, forward to application</li>
+</ul>
+</li>
+<li>Step 2:<ul>
+<li>Application looks up virtual address in page table</li>
+<li>If access not allowed, raises exception</li>
+<li>Else constructs appropriate TLB entry</li>
+</ul>
+</li>
+<li>Step 3:<ul><li>Checks if capability corresponds to access rights requested by application<ul>
+<li>if it does mapping is installed in TLB and returns control</li>
+<li>Else throws an error</li>
+</ul>
+</li></ul>
+</li>
+<li>Step 4: Applications clean up and resume execution</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Protected Control Transfers</strong><ul>
+<li>IPC Abstraction</li>
+<li>Changes the PC value to an agreed value in the callee and donated current time slice to the callee environment + installs callee’s processor context</li>
+<li>Synchronous: Donates current and all future instantiations of the time slice</li>
+<li>Asynchronous: Donates only the remainder of the current time slice</li>
+<li>Ensures atomicity + persistence of application visible registers</li>
+</ul>
+</li>
+<li>
+<strong>Dynamic Packet Filter</strong><ul><li>Dynamic Code Generation: Creation of executable code at runtime<ul>
+<li>Allows DPF to eliminate interpretation overhead by compiling packet filters to executable at installation time</li>
+<li>Filter constants optimize the generated code</li>
+</ul>
+</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>ExOS</strong><ul>
+<li>
+<strong>IPC Abstractions</strong><ul>
+<li>Uses the same protected control transfer mechanism used in Aegis</li>
+<li>Ultrix (monolithic OS) can only emulate apps on pre-existing abstractions so significantly slower than ExOS</li>
+</ul>
+</li>
+<li>
+<strong>Application level Virtual Memory</strong><ul>
+<li>Limitations: No swapping and page tables are linear vectors (requires binary search to find translation)</li>
+<li>Flexible support for aliasing, sharing, disabling, per-page caching, specific page allocation, DMA</li>
+</ul>
+</li>
+<li>
+<strong>Application-Specific Safe Handlers</strong><ul>
+<li>We cannot map network buffers to application space safely</li>
+<li>ASH allow you to run code when a context switch is impractical → decouples latency critical operations (i.e., message reply) from process scheduling</li>
+<li>ASH are untrusted → made safe through code inspection, sandboxing, and execution on arrival</li>
+<li>Four abilities of ASH<ul>
+<li>Control where messages are copied in memory</li>
+<li>Dynamic integrated layer processing → integrate data manipulators (i.e., checksum) into data transfer engine</li>
+<li>Message initiation for low latency message replies</li>
+<li>Control initiation → can perform control operations at message reception time</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Extensibility with ExOS</strong><ul>
+<li>
+<strong>Extensible RPC</strong><ul><li>Implemented a version of LRPC that trusts the server to save and restore callee registers → Improved performance by a factor of 2</li></ul>
+</li>
+<li>
+<strong>Extensible Page Table Structures</strong><ul><li>Inverted page tables → used in apps with sparse address spaces</li></ul>
+</li>
+<li>
+<strong>Extensible Schedulers</strong><ul><li>Implemented stride scheduling → uses the proportion of time slice to determine which process to schedule</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+<span class="meta"><time datetime="2024-08-31T00:00:00+00:00">August 31, 2024</time> · <a href="/tags/research">research</a></span></section></main></body>
+</html>

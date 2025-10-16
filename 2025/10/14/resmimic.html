@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet">
+<meta name="generator" content="Jekyll v4.2.2">
+<meta property="og:title" content="ResMimic: From General Motion Tracking to Humanoid Whole-body Loco-Manipulation via Residual Learning">
+<meta name="author" content="samrat sahoo">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="A paper about a residual learning framework for humanoid control">
+<meta property="og:description" content="A paper about a residual learning framework for humanoid control">
+<link rel="canonical" href="https://samratsahoo.com/2025/10/14/resmimic">
+<meta property="og:url" content="https://samratsahoo.com/2025/10/14/resmimic">
+<meta property="og:site_name" content="samrat’s thought space">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2025-10-14T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="ResMimic: From General Motion Tracking to Humanoid Whole-body Loco-Manipulation via Residual Learning">
+<meta name="twitter:site" content="@samratdotjs">
+<meta name="twitter:creator" content="@samratdotjs"> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"samrat sahoo","url":"https://samratsahoo.com"},"dateModified":"2025-10-14T00:00:00+00:00","datePublished":"2025-10-14T00:00:00+00:00","description":"A paper about a residual learning framework for humanoid control","headline":"ResMimic: From General Motion Tracking to Humanoid Whole-body Loco-Manipulation via Residual Learning","mainEntityOfPage":{"@type":"WebPage","@id":"https://samratsahoo.com/2025/10/14/resmimic"},"url":"https://samratsahoo.com/2025/10/14/resmimic"}</script><title> ResMimic: From General Motion Tracking to Humanoid Whole-body Loco-Manipulation via Residual Learning - samrat's thought space</title>
+<link rel="shortcut icon" href="/favicon.webp">
+<link rel="alternate" type="application/atom+xml" title="samrat's thought space" href="/atom.xml">
+<link rel="alternate" type="application/json" title="samrat's thought space" href="https://samratsahoo.com/feed.json">
+<link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml">
+<style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:10rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5{line-height:1;margin:1rem 0;font-weight:600}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:60rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}@media print{.no-print,.no-print *{display:none !important}}img.mermaid{max-width:200px}.url{color:#0645AD}*::-moz-selection{color:white;background:#7011dc}*::selection{color:white;background:#7011dc}*{font-family:"Outfit", sans-serif}li>ul{padding-left:1rem}</style>
+<script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"},"svg":{"fontCache":"global","scale":1.0,"minScale":0.5,"mtextInheritFont":true,"merrorInheritFont":true,"mathmlSpacing":false,"skipAttributes":{},"exFactor":0.5},"chtml":{"scale":1.0,"minScale":0.5,"matchFontHeight":true,"mtextFont":"serif","linebreaks":{"automatic":false}}}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js"></script>
+</head>
+<body><main><header aria-hidden="true" class="no-print"> <!--<h1 class="logo">samrat's thought space</h1>--><nav role="navigation" aria-hidden="true"><ul>
+<li><a href="/">about</a></li>
+<li><a href="/reading" class="active">reading</a></li>
+<li><a href="/research">research</a></li>
+<li><a href="/writing">writing</a></li>
+<li><a href="/search">search</a></li>
+</ul></nav></header><section class="post"><h2>ResMimic: From General Motion Tracking to Humanoid Whole-body Loco-Manipulation via Residual Learning</h2>
+<ul>
+<li>
+<strong>Resources</strong><ul><li>
+<a href="https://arxiv.org/abs/2510.05070">Paper</a> <br><br>
+</li></ul>
+</li>
+<li>
+<strong>Introduction</strong><ul>
+<li>Precise + expressive humanoid locomotion is hard<ul><li>Requires rich whole body contact data that isn’t available at scale</li></ul>
+</li>
+<li>Direct imitation of humans is attractive<ul><li>Contact locations + relative object poses in human demonstrations fail to translate</li></ul>
+</li>
+<li>General motion tracking (GMT) policies trained on human datasets are unaware of objects</li>
+<li>Humanoid loco-manipulation appraoches rely on task specific designs; limits scalability and generalization</li>
+<li>Robotic foundation models are powerful but pretrain-finetune for humanoids has been largely unexplored</li>
+<li>Key Insight<ul>
+<li>Diverse human motions can be pretrained via GMT</li>
+<li>Object centric loco-manipulation requires task-specific corrections</li>
+<li>Whole body motions have shared attributes</li>
+<li>Fine grained object interaction requires adaptation</li>
+</ul>
+</li>
+<li>New Approach: Stable motion prior augmented with lightweight task-specific adjustments</li>
+<li>ResMimic<ul>
+<li>First stage: Train GMT policy on motion capture data to serve as a prior for human motions</li>
+<li>Second stage: Train a task-specific residual policy to condition on object reference trajectory<ul><li>Outputs corrective actions that refine GMT + enable precise object manipulation</li></ul>
+</li>
+<li>Decoupling stages alleviates need for task specific rewards + has better data efficiency</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Method</strong><ul>
+<li>Problem is framed as goal-conditioned reinforcement learning problem with an MDP structure</li>
+<li>State ($s \in \mathcal{S}$)<ul>
+<li>Robot proprioception ($s_r^t$)</li>
+<li>Object state ($s_o^t$)</li>
+<li>Motion goal state ($\hat{s}_t^r$)</li>
+<li>Object goal state ($\hat{s}_t^o$)</li>
+</ul>
+</li>
+<li>Action<ul><li>Target joint angles executed through PD controller</li></ul>
+</li>
+<li>
+<strong>Two-Stage Residual Learning</strong><ul>
+<li>General motion tracking policy ($\pi _{GMT}$)<ul>
+<li>Uses robot proprioception + reference motion to get coarse action</li>
+<li>$a_t^{gmt} = \pi _{GMT}(s_r^t, \hat{s}_t^r)$</li>
+<li>Maximizes a motion tracking reward ($r_t^m$)</li>
+</ul>
+</li>
+<li>Residual Refinement<ul>
+<li>Train efficient and precise residual policy per task</li>
+<li>$\pi _{Res}(s_r^t, s_o^t,\hat{s}_t^r, \hat{s}_t^o) = \Delta a_t^{res}$</li>
+<li>Maximizes combined motion and object reward ($r_t^m$ and $r_t^o$)</li>
+</ul>
+</li>
+<li>Trained with PPO</li>
+</ul>
+</li>
+<li>
+<strong>General Motion Tracking Policy</strong><ul>
+<li>Dataset: Use popular Mocap datasets like AMASS, OMOMO<ul><li>Apply kinematics based retargeting to transfer human motions to humanoid reference motion</li></ul>
+</li>
+<li>Training<ul>
+<li>Proprioceptive observation: $s_t^r = [\theta_t, \omega_t, q_t, \dot q_t, a_t^{hist}] _{t-10:t}$<ul>
+<li>$\theta$: Root orientation</li>
+<li>$\omega$: Root angular velocity</li>
+<li>$q_t$: Joint positions</li>
+<li>$\dot q_t$: Joint positions</li>
+<li>$a_t^{hist}$: recent action history</li>
+</ul>
+</li>
+<li>Reference motion: $\hat{s}_t^r = [\hat{p}_t, \hat{\theta_t}, \hat{q}_t] _{t-10:t+10}$<ul>
+<li>$\hat{p}_t$: reference root translation</li>
+<li>$\hat{\theta_t}$: reference root orientation</li>
+<li>$\hat{q}_t$: reference joint position</li>
+<li>Use future reference motion to plan for upcoming targets</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Reward and Domain Randomization<ul>
+<li>Motion tracking reward ($r_t^m$) is sum of task rewards, penalty terms, and regularization term</li>
+<li>Use domain randomization for better sim2real</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Residual Refinement Policy</strong><ul>
+<li>Use retargeted reference motions of humanoid and object to train residual policy ($\{ (\hat{s}_t^r, \hat{s}_t^o)\} _{t=1}^T$)</li>
+<li>Training<ul>
+<li>Use PPO</li>
+<li>Takes in $(s_r^t, s_o^t,\hat{s}_t^r, \hat{s}_t^o)$ and outputs residual action, $\Delta a_t^{res}$</li>
+</ul>
+</li>
+<li>Network Initialization<ul><li>Initialize the final layer of the PPO actor using xavier uniform initialization with a small gain<ul><li>Ensures initial outputs are close to 0</li></ul>
+</li></ul>
+</li>
+<li>Virtual Object Force Curriculum<ul>
+<li>Residual framework fails when reference motions are noisy or objects are heavy<ul>
+<li>Usually occurs from penetration from kinematic retargeting</li>
+<li>Instability when handling large object masses</li>
+</ul>
+</li>
+<li>Use a curriculum that stabilizes training by driving object toward reference trajectory<ul><li>PD Controllers apply virtual force + torque<ul>
+<li>$\mathcal{F}_t = k_p(\hat{p}_t^o - p_t^o - k_dv_t^o)$</li>
+<li>$\mathcal{T}_t = k_p(\hat{\theta}_t^o \ominus \theta_t^o) - k_d\omega_t^o$</li>
+</ul>
+</li></ul>
+</li>
+</ul>
+</li>
+<li>Reward and Early Termination<ul>
+<li>Decoupling motion tracking and object interaction allows them to avoid tuning weights</li>
+<li>Instead, use motion reward + domain randomization from GMT, and introduce two additional terms<ul>
+<li>$r^o_t$: Object tracking reward; encourages task completion</li>
+<li>$r^c_t$: Contact tracking reward; gives explicit guidance on body-object contact</li>
+</ul>
+</li>
+<li>Object tracking reward:<ul>
+<li>Sample N points from object mesh surface and compute point cloud difference betweeen current and reference states</li>
+<li>$r^o_ = exp(\lambda_o \sum _{i=1}^N \vert \vert P[i]_t - \hat{P}[i]_t \vert \vert_2)t$</li>
+</ul>
+</li>
+<li>Contact reward:<ul>
+<li>Discretize contact locations into links (excluding feet since they are usually on the ground)</li>
+<li>Oracle contact information: $\hat{c}_t[i] 1(\vert \vert \hat{d}_t[i] \vert \vert) &lt; \sigma_c$<ul><li>$1(\cdot)$ is indicator function</li></ul>
+</li>
+<li>$r^c_t = \sum_i \hat{c}_t[i] \cdot exp(- \frac{\lambda}{f_t[i]})$<ul><li>$f_t[i]$: contact force at link $i$</li></ul>
+</li>
+</ul>
+</li>
+<li>Early termination:<ul>
+<li>Object mesh deviates beyond certain threshold: $\vert \vert P_t - \hat{P}_t \vert \vert_2$</li>
+<li>Required object-body contact lost for more than 10 frames</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Experiments</strong><ul>
+<li>Questions<ul>
+<li>Can GMT without task specific training accomplish diverse loco-manipulation tasks</li>
+<li>Does initializing from pretrained GMT improve training efficiency + final performance relative to training from scratch</li>
+<li>Is residual learning more effective than fine-tuning when adapting GMT to loco-manipulation</li>
+<li>Can ResMimic achieve robust control in real world</li>
+</ul>
+</li>
+<li>
+<strong>Experiment Setup</strong><ul>
+<li>Tasks<ul>
+<li>Kneel on 1 knee and lift a box</li>
+<li>Carry a box onto the back</li>
+<li>Squat + lift box with arms and torso</li>
+<li>Lift up a chair</li>
+</ul>
+</li>
+<li>Evaluation<ul>
+<li>Training iterations until convergence</li>
+<li>Object tracking error<ul><li>$E_o = \frac{1}{T} \sum _{t=1}^T \sum _{i=1}^N \vert \vert P[i]_t - \hat{P}[i]_t \vert \vert_2$</li></ul>
+</li>
+<li>Motion tracking error<ul><li>$E_m = \frac{1}{T} \sum _{t=1}^T \sum _{i=1}^N \vert \vert p[i]_t - \hat{p}[i]_t \vert \vert_2$</li></ul>
+</li>
+<li>Joint tracking error<ul><li>$E_j = \frac{1}{T} \sum _{t=1}^T \vert \vert q_t - \hat{q}_t \vert \vert_2$</li></ul>
+</li>
+<li>Task success rate<ul><li>Success if $E_o$ is below predefined threshold + robot is balanced</li></ul>
+</li>
+</ul>
+</li>
+<li>Baselines<ul>
+<li>Base Policy: GMT policy follows human reference motion without object information</li>
+<li>Train from scratch: RL policy trained to track human motion + object trajectories without GMT</li>
+<li>Bae policy + fine tune: Base policy fine tuned to track human motion + object trajectory</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Sim-to-Sim Evaluation</strong><ul>
+<li>GMT cannot do complete loco-manipulation but provides strong initialization (10% success rate vs 92.5% for ResMimic)</li>
+<li>Using GMT as a base policy improves training efficiency + effectiveness</li>
+<li>Residual learning outperforms direct fine-tuning<ul>
+<li>Fine tuning cannot incorporate additional object inputs since GMT is based on human motion data</li>
+<li>Fine-tuning overwrites generalization of GMT</li>
+<li>Lack of explicit object state prevents learning robust behaviors</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Real-world Evaluation</strong><ul><li>In the real world, ResMimic results in:<ul>
+<li>Expressive carrying motions</li>
+<li>Humanoid interaction beyond manipulation</li>
+<li>Heavy payload carrying with whole-body contact</li>
+<li>Generalization to irregular heavy objects</li>
+<li>Can manipulate objects from random poses, autonomously perform consecutive loco-manipulation tasks, and react to external perturbations</li>
+</ul>
+</li></ul>
+</li>
+<li>
+<strong>Ablation Studies</strong><ul>
+<li>Effect of virtual object controller<ul><li>Stabalizes early stage training by applying curriculum based forces to guide object toward reference trajectory</li></ul>
+</li>
+<li>Effect of contact reward<ul><li>Explicit guidance on leveraging whole body strategies</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<span class="meta"><time datetime="2025-10-14T00:00:00+00:00">October 14, 2025</time> · <a href="/tags/research">research</a></span></section></main></body>
+</html>

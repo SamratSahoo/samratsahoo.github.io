@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet">
+<meta name="generator" content="Jekyll v4.2.2">
+<meta property="og:title" content="Distributional Reinforcement Learning with Quantile Regression">
+<meta name="author" content="samrat sahoo">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="A paper about distributional reinforcement learning with quantile regression">
+<meta property="og:description" content="A paper about distributional reinforcement learning with quantile regression">
+<link rel="canonical" href="https://samratsahoo.com/2025/05/05/qr-dqn">
+<meta property="og:url" content="https://samratsahoo.com/2025/05/05/qr-dqn">
+<meta property="og:site_name" content="samrat’s thought space">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2025-05-05T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="Distributional Reinforcement Learning with Quantile Regression">
+<meta name="twitter:site" content="@samratdotjs">
+<meta name="twitter:creator" content="@samratdotjs"> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"samrat sahoo","url":"https://samratsahoo.com"},"dateModified":"2025-05-05T00:00:00+00:00","datePublished":"2025-05-05T00:00:00+00:00","description":"A paper about distributional reinforcement learning with quantile regression","headline":"Distributional Reinforcement Learning with Quantile Regression","mainEntityOfPage":{"@type":"WebPage","@id":"https://samratsahoo.com/2025/05/05/qr-dqn"},"url":"https://samratsahoo.com/2025/05/05/qr-dqn"}</script><title> Distributional Reinforcement Learning with Quantile Regression - samrat's thought space</title>
+<link rel="shortcut icon" href="/favicon.webp">
+<link rel="alternate" type="application/atom+xml" title="samrat's thought space" href="/atom.xml">
+<link rel="alternate" type="application/json" title="samrat's thought space" href="https://samratsahoo.com/feed.json">
+<link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml">
+<style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:10rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5{line-height:1;margin:1rem 0;font-weight:600}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:60rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}@media print{.no-print,.no-print *{display:none !important}}img.mermaid{max-width:200px}.url{color:#0645AD}*::-moz-selection{color:white;background:#7011dc}*::selection{color:white;background:#7011dc}*{font-family:"Outfit", sans-serif}li>ul{padding-left:1rem}</style>
+<script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"},"svg":{"fontCache":"global","scale":1.0,"minScale":0.5,"mtextInheritFont":true,"merrorInheritFont":true,"mathmlSpacing":false,"skipAttributes":{},"exFactor":0.5},"chtml":{"scale":1.0,"minScale":0.5,"matchFontHeight":true,"mtextFont":"serif","linebreaks":{"automatic":false}}}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js"></script>
+</head>
+<body><main><header aria-hidden="true" class="no-print"> <!--<h1 class="logo">samrat's thought space</h1>--><nav role="navigation" aria-hidden="true"><ul>
+<li><a href="/">about</a></li>
+<li><a href="/reading" class="active">reading</a></li>
+<li><a href="/research">research</a></li>
+<li><a href="/writing">writing</a></li>
+<li><a href="/search">search</a></li>
+</ul></nav></header><section class="post"><h2>Distributional Reinforcement Learning with Quantile Regression</h2>
+<ul>
+<li>
+<strong>Resources</strong><ul><li>
+<a href="https://arxiv.org/abs/1710.10044">Paper</a> <br><br>
+</li></ul>
+</li>
+<li>
+<strong>Introduction</strong><ul>
+<li>In classical distributional RL (C51 algorithm), we could not use wasserstein metric between probability distributions<ul>
+<li>Cannot minimize using SGD</li>
+<li>C51 instead used a projection with a KL divergence minimization</li>
+</ul>
+</li>
+<li>However, we can do distributional RL with Wasserstein metric<ul>
+<li>C51 uses $N$ fixed locations for distribution supports and adjusts probabibilties<ul><li>Instead, assign fixed uniform probabibilties with adjustable locations</li></ul>
+</li>
+<li>Quantile regression for adjusting locations</li>
+</ul>
+</li>
+<li>They use smoothened version of quantile regression (Huber quantile regression) to beat C51</li>
+</ul>
+</li>
+<li>
+<strong>Distributional RL</strong><ul>
+<li>Assume standard distributional RL setting (see <a href="https://samratsahoo.com/2025/04/27/c51">C51 paper notes</a>)</li>
+<li>Value function = mean of value distribution<ul><li>Value function = expectation of value distribution over all intrinsic randomness (randomness in MDP)</li></ul>
+</li>
+<li>Bellman operator: $\mathcal{T}^\pi Q(x,a) = \mathbb{E}[R(x,a)] + \gamma \mathbb{E} _{P, \pi} [Q(x’, a’)]$<ul>
+<li>Distributional Bellman operator: $\mathcal{T}^\pi Z(x,a) \stackrel{D}{=} R(x,a) + \gamma P^\pi Z(x,a)$</li>
+<li>C51 models $Z^\pi (x,a)$ using discrete distribution on fixed locations ($z_1 \leq \dots \leq z_N$)<ul>
+<li>Parameters: probabilities of each location</li>
+<li>Projects $\mathcal{T}^\pi Z$ onto finite element support + minimizes KL</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>The Wasserstein Metric</strong><ul><li>p-Wasserstein metric between U and Y: $W_p(U, Y) = (\int_0^1 \vert F^{-1}(\omega - G^{-1}(\omega)) \vert^p d\omega)^{\frac{1}{p}}$<ul><li>Where $F^-1$ is the inverse CDF</li></ul>
+</li></ul>
+</li>
+<li>
+<strong>Convergence of Distributional Bellman Operator</strong><ul>
+<li>Maximal form of the wasserstein metric: $\bar{d_p}(Z_1, Z_2) = sup W_p (Z_1(x,a), Z_2(x,a))$<ul><li>Z_1, Z_2 are two action-value distributions</li></ul>
+</li>
+<li>Distributional bellman operator is a contraction in $\bar{d_p}$<ul>
+<li>$\bar{d_p}(\mathcal{T}^\pi Z_1, \mathcal{T}^\pi Z_2) \leq \gamma \bar{d_p}(Z_1, Z_2)$</li>
+<li>Tells us minimizing wasserstein distance is useful for learning distributions - but this is not possible<ul><li>Because we train with SARSA transitions, we use samples<ul><li>Minimum of expected sample loss is different from of true wasserstein loss</li></ul>
+</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Approximately Minimizing Wasserstein</strong><ul>
+<li>Instead of fixed locations on parameterized probabibilities, we can use fixed probabilities with variable locations<ul><li>New probabilities: $q_i = 1/N$</li></ul>
+</li>
+<li>We want to estimate quantiles of target distribution<ul>
+<li>$Z_Q$: space of quantile distributions for $N$</li>
+<li>CDF denoted by $\mathcal{T}_i = \frac{i}{N}$</li>
+<li>Create a parameteric model that maps state-action pairs to uniform probability distribution<ul><li>$Z_\theta (x,a) = \frac{1}{N} \sum _{i=1}^N \delta _{\theta _{i(x,a)}}$<ul><li>$\delta_z$ is a dirac at $z$</li></ul>
+</li></ul>
+</li>
+</ul>
+</li>
+<li>Parameterizing quantile:<ul>
+<li>No restrictions on prespecified bounds on support (more accuracy)</li>
+<li>No projection step needed</li>
+<li>We can minimize wasserstein loss without biased gradients (with quantile regression)</li>
+</ul>
+</li>
+<li>
+<strong>The Quantile Approximation</strong><ul>
+<li>Bellman update projected onto parameterized quantile distribution = contraction</li>
+<li>Quantile Projection<ul>
+<li>We want to project a value distribution $Z \in \mathcal{Z}$ onto $\mathcal{Z}_Q$<ul><li>$\Pi _{W_1} Z = argmin _{Z _{\theta} \in Z_Q} W_1(Z, Z _{\theta})$</li></ul>
+</li>
+<li>1-Wasserstein distance: $W_1(Y, U) = \sum _{i=1}^N \int _{\mathcal{T} _{i-1}}^\mathcal{T} \vert F_Y^{-1}(\omega) - \theta_i \vert d\omega$</li>
+<li>For a given interval, we want to find the $\theta$ that minimizes: $\int _{\mathcal{T}}^{\mathcal{T}^{‘}} \vert F_Y^{-1}(\omega) - \theta \vert d\omega$<ul><li>The minimizer of this is the median of the interval: $F_Y(\theta) = \frac{\mathcal{T} + \mathcal{T}’}{2} \Rightarrow \theta = F_Y^{-1}(\frac{\mathcal{T} + \mathcal{T}’}{2})$</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Quantile Regression</strong><ul>
+<li>Quantile parameterization leads to biased gradients</li>
+<li>We can get unbiased approximations of the quantile function using quantile regression<ul><li>Quantile Regression Loss: $\mathcal{L}^\tau _{QR}(\theta) = \mathbb{E} _{\hat{Z} \sim Z}[\rho _{\tau}(\hat{Z} - \theta)]$ where $\rho _\tau = u(\tau - \delta _{u &lt; 0}) \forall u \in \mathbb{R}$<ul>
+<li>Penalizes overestimation of quantiles by $\tau$ and underestimation by $1 - \tau$</li>
+<li>We want to find $\theta_1 \dots \theta_N$ that minimizes: $\sum _{i=1}^N \mathbb{E} _{\hat{Z} \sim Z}[\rho _{\tau}(\hat{Z} - \theta_i)]$<ul><li>Do this through SGD</li></ul>
+</li>
+</ul>
+</li></ul>
+</li>
+<li>Quantile Huber Loss:<ul>
+<li>Quantile regression loss not smooth at 0; as $u^+ \rightarrow 0$, gradient stays constant</li>
+<li>Quantile Huber Loss acts as asymmetric squared loss around 0 in interval $[-\mathcal{K}, \mathcal{K}]$ and reverts back to original loss outside of it</li>
+<li>Huber Loss: $\begin{multline}\begin{cases} \frac{1}{2}u^2 \text{ if } \vert u \vert \leq \mathcal{K} \\ \mathcal{K}(\vert u \vert - \frac{1}{2}\mathcal{K}) \text{ otherwise }\end{cases}\end{multline}$</li>
+<li>Quantile Huber Loss: $\rho^\mathcal{K} _\mathcal{T}(u) = \vert \mathcal{T} - \delta _{u &lt; 0}\vert \mathcal{L} _\mathcal{K}(u)$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Combining Projection and Bellman Update</strong><ul><li>The quantile projection guarantees a non-expansion in $\infty$-wasserstein distance<ul>
+<li>$\bar{d} _\infty(\Pi _{W_1}\mathcal{T}^\pi Z_1, \Pi _{W_1}\mathcal{T}^\pi Z_2) \leq \bar{d} _\infty(Z_1, Z_2)$</li>
+<li>Repeated application of $\Pi _{W_1}\mathcal{T}^\pi$ leads to a fixed point solution</li>
+<li>Because $\bar{d}_p \leq \bar{d} _\infty$, convergence occurs for all $1 \leq p \leq \infty$</li>
+</ul>
+</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Distributional RL using Quantile Regression</strong><ul>
+<li>Approximate value distribution using quantile midpoints</li>
+<li>
+<strong>Quantile Regression Temporal Difference Learning</strong><ul>
+<li>Standard TD update: $V(x) \leftarrow V(x) + \alpha(r + \gamma V(x’) - V(x))$</li>
+<li>Quantile Regression TD Update: $\theta_i(x) \leftarrow \theta_i(x) + \alpha(\hat{\mathcal{T}}_i - \delta _{r + \gamma z’ &lt; \theta_i(x)})$<ul>
+<li>$z’ \sim Z _\theta$</li>
+<li>$\hat{\mathcal{T}}_i$: midpoint of quantile</li>
+<li>$Z _\theta$ quantile distribution</li>
+<li>$\theta_i(x)$ estimated value of quantile function in state x ($F^{-1} _{Z^\pi(x)}(\hat{\mathcal{T}}_i)$)</li>
+<li>We should draw many samples $z’ \sim Z _\theta$ to minimize the expected update</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Quantile Regression DQN</strong><ul>
+<li>Bellman Optimality Operator: $\mathcal{T} Q(x,a) = \mathbb{E}[R(x,a)] + \gamma \mathbb{E} _{x’ \sim P}[max _{a’}Q(x’,a’)]$</li>
+<li>Distributional Bellman Operator: $\mathcal{T} Z(x,a) = R(x,a) + \gamma Z(x’,a’)$<ul><li>$a’ = argmax _{a’} \mathbb{E} _{z \sim Z(x’,a’)}[z]$</li></ul>
+</li>
+<li>Three modifications to DQN algorithm<ul>
+<li>Change output layer of DQN output layer to be size $\vert A \vert \times N$<ul><li>N is number of quantile targets (atoms)</li></ul>
+</li>
+<li>Replace L1 loss with quantile huber loss</li>
+<li>Replace RMSProp with Adam</li>
+</ul>
+</li>
+<li>Because we are setting quantile targets, QR-DQN can expand/contract arbitrarily as needed</li>
+<li>Higher N = able to estimate lower + higher quantiles of distribution + distinguish low probability events</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Experimental Results</strong><ul>
+<li>Value Distribution Approximation Error: Quantile regression TD minimizes the 1-wasserstein distance and converges correctly despite the approximation errors</li>
+<li>
+<strong>Evaluation on Atari 2600</strong><ul>
+<li>Best Agent Performance: QR-DQN outperforms all previous agents in mean and median human-normalized score</li>
+<li>Online performance:<ul>
+<li>Early in learning, most algorithms perform worse than a random policy</li>
+<li>QRTD has similar sample complexity as prioritized experience replay (but better final performance)</li>
+<li>On a small subset of games, it reaches less than 10% of human performance</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<span class="meta"><time datetime="2025-05-05T00:00:00+00:00">May 5, 2025</time> · <a href="/tags/research">research</a></span></section></main></body>
+</html>
