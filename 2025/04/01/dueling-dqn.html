@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet">
+<meta name="generator" content="Jekyll v4.2.2">
+<meta property="og:title" content="Dueling Network Architectures for Deep Reinforcement Learning">
+<meta name="author" content="samrat sahoo">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="A paper about dual stream dqns, one for advantages and one for value functions">
+<meta property="og:description" content="A paper about dual stream dqns, one for advantages and one for value functions">
+<link rel="canonical" href="https://samratsahoo.com/2025/04/01/dueling-dqn">
+<meta property="og:url" content="https://samratsahoo.com/2025/04/01/dueling-dqn">
+<meta property="og:site_name" content="samrat’s thought space">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2025-04-01T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="Dueling Network Architectures for Deep Reinforcement Learning">
+<meta name="twitter:site" content="@samratdotjs">
+<meta name="twitter:creator" content="@samratdotjs"> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"samrat sahoo","url":"https://samratsahoo.com"},"dateModified":"2025-04-01T00:00:00+00:00","datePublished":"2025-04-01T00:00:00+00:00","description":"A paper about dual stream dqns, one for advantages and one for value functions","headline":"Dueling Network Architectures for Deep Reinforcement Learning","mainEntityOfPage":{"@type":"WebPage","@id":"https://samratsahoo.com/2025/04/01/dueling-dqn"},"url":"https://samratsahoo.com/2025/04/01/dueling-dqn"}</script><title> Dueling Network Architectures for Deep Reinforcement Learning - samrat's thought space</title>
+<link rel="shortcut icon" href="/favicon.webp">
+<link rel="alternate" type="application/atom+xml" title="samrat's thought space" href="/atom.xml">
+<link rel="alternate" type="application/json" title="samrat's thought space" href="https://samratsahoo.com/feed.json">
+<link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml">
+<style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:10rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5{line-height:1;margin:1rem 0;font-weight:600}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:60rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}@media print{.no-print,.no-print *{display:none !important}}img.mermaid{max-width:200px}.url{color:#0645AD}*::-moz-selection{color:white;background:#7011dc}*::selection{color:white;background:#7011dc}*{font-family:"Outfit", sans-serif}li>ul{padding-left:1rem}</style>
+<script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"},"svg":{"fontCache":"global","scale":1.0,"minScale":0.5,"mtextInheritFont":true,"merrorInheritFont":true,"mathmlSpacing":false,"skipAttributes":{},"exFactor":0.5},"chtml":{"scale":1.0,"minScale":0.5,"matchFontHeight":true,"mtextFont":"serif","linebreaks":{"automatic":false}}}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js"></script>
+</head>
+<body><main><header aria-hidden="true" class="no-print"> <!--<h1 class="logo">samrat's thought space</h1>--><nav role="navigation" aria-hidden="true"><ul>
+<li><a href="/">about</a></li>
+<li><a href="/reading" class="active">reading</a></li>
+<li><a href="/research">research</a></li>
+<li><a href="/writing">writing</a></li>
+<li><a href="/search">search</a></li>
+</ul></nav></header><section class="post"><h2>Dueling Network Architectures for Deep Reinforcement Learning</h2>
+<ul>
+<li>
+<strong>Resources</strong><ul><li>
+<a href="https://arxiv.org/abs/1507.06527">Paper</a> <br><br>
+</li></ul>
+</li>
+<li>
+<strong>Introduction</strong><ul>
+<li>Complementary approach - can be used with pre-existing algorithms</li>
+<li>Dueling Architecture<ul>
+<li>Separates state-value and state-dependent action advantages into two streams (one network) → ultimately still outputs a Q-value function</li>
+<li>Shares a common convolution module</li>
+</ul>
+</li>
+<li>Dueling architecture learns which states are valuable without having to learn effect of action for each state<ul><li>Good when actions don’t impact the environment in relevant way</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Background</strong><ul>
+<li>Advantage function: $A^\pi(s,a) = Q^\pi(s,a) - V^\pi(s)$<ul>
+<li>Expectation of advantage is 0</li>
+<li>Obtains the relative importance of each action</li>
+</ul>
+</li>
+<li>
+<strong>Deep Q Networks</strong><ul>
+<li>Use a separate target network that gets updates every n iterations</li>
+<li>Replay buffer for data efficiency</li>
+</ul>
+</li>
+<li>
+<strong>Double Deep Q Networks</strong><ul>
+<li>DQN faces over-optimism bias because of max operator to select and evaluate action</li>
+<li>DDQN target is: $y_i^{DDQN} = r + \gamma Q(s’, argmax_{a’}Q(s’, a’; \theta_i); \theta^-)$</li>
+</ul>
+</li>
+<li>
+<strong>Prioritized Replay</strong><ul>
+<li>Prioritized Replay increases replay probability based on experience with high expected learning progress (proxy of absolute TD error)</li>
+<li>Leads to faster learning and better quality final policies</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>The Dueling Network Architecture</strong><ul>
+<li>Key insight: in many states, unnecessary to estimate value of action choice whereas in others its paramount to know which action to take</li>
+<li>In bootstrapping, estimation of state values is important for every state</li>
+<li>Two streams, one for advantage and one for value function<ul><li>Combined to produce estimate of Q-value</li></ul>
+</li>
+<li>Can be used in many classical RL algorithms like SARSA or DDQN</li>
+<li>Design<ul>
+<li>One stream outputs a scalar: $V(s; \theta, \beta)$</li>
+<li>Other stream outputs a $\vert A\vert$-dimensional vector: $A(s, a, \theta, \alpha)$<ul>
+<li>$\theta$: parameters of convolutional layers</li>
+<li>$\beta$: parameters of value function layers</li>
+<li>$\alpha$: parameters of advantage function layers</li>
+</ul>
+</li>
+<li>We cannot use definition of advantage to compute Q-value: $Q(s, a; \theta, \alpha,\beta) = V(s;\theta,\beta) + A(s, a; \theta\alpha)$<ul>
+<li>Q is a paramterized estimate of true Q value function</li>
+<li>V might not be a good estimator for state-value</li>
+<li>A might not be a good estimator for advantage</li>
+</ul>
+</li>
+<li>Q value function is unidentifiable: Cannot decompose A and V from Q<ul>
+<li>We can force the advantage estimator to have 0 advantage at chosen action → last module of network implements: $Q(s, a; \theta, \alpha,\beta) = V(s;\theta,\beta) + A(s, a; \theta\alpha) - max_{a’ \in \vert A\vert}A(s, a’;\theta, \alpha)$</li>
+<li>By doing this, we can make sure that Q = V when the optimal action is chosen (via identifability)</li>
+<li>Alternatively, you can subtract the average advantage → losing semantics of Q and V but stabalizes optimization<ul>
+<li>Advantages only need to change as fast as mean</li>
+<li>Does not change the relative rank of A → preserves greedy policy based on Q-values</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Experiments</strong><ul>
+<li>
+<strong>Policy Evaluation</strong><ul>
+<li>Use temporal difference learning with expected SARSA but don’t modify behavior policy</li>
+<li>Epsilon greedy policy</li>
+<li>Architecture<ul>
+<li>3 layer MLP with 50 hidden units</li>
+<li>Each stream with 2 layers with 25 hidden units</li>
+</ul>
+</li>
+<li>With 5 actions, both architectures converge at same speed</li>
+<li>With more actions, dueling does better<ul><li>V stream learns general value function shared across many similar actions at S → faster convergence</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>General Atari Game Playing</strong><ul>
+<li>Architecture:<ul>
+<li>Shared: 3 convolutional layers, 2 fully connected layers</li>
+<li>Streams: 1 fully connected layer with 512 units<ul>
+<li>Final layer for V: single unit output</li>
+<li>Final layer for A: outputs as many units as actions possible</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Training:<ul>
+<li>Rescale gradient by $\frac{1}{\sqrt(2)}$</li>
+<li>Clip gradients to have norm less than 10</li>
+</ul>
+</li>
+<li>To test effects of dueling, train DDQN with clipped gradients</li>
+<li>Dueling does better than clipped DDQN and regular DDQN</li>
+</ul>
+</li>
+<li>Robustness to Human Starts: Agent performs well simply remembering sequences of actions (because Atari is deterministic)<ul><li>Even with human starts, duel outperforms clipped DDQN</li></ul>
+</li>
+<li>Combined with prioritized experience replay<ul><li>Gradient clipping and prioritized replay have adverse interactions (PER samples have high TD error)<ul><li>Fixed with retuning of learning rate</li></ul>
+</li></ul>
+</li>
+<li>Saliency Maps: Compute the magnitude of the jacobians of A and V with respect to the inputs<ul><li>Shows where each stream of the network interacts with the input frames</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Discussion</strong><ul>
+<li>Dueling architecture learns state-value function efficiently<ul>
+<li>Each Q value update results in a V value update</li>
+<li>Better approximation of V → needed for TD methods</li>
+</ul>
+</li>
+<li>Differences in Q across states small relative to magnitude of Q<ul>
+<li>Small updates = cause reordering in actions → greedy policy switches abruptly</li>
+<li>Dueling architecture with separate stream can counter these effects</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<span class="meta"><time datetime="2025-04-01T00:00:00+00:00">April 1, 2025</time> · <a href="/tags/research">research</a></span></section></main></body>
+</html>

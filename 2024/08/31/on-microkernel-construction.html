@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet">
+<meta name="generator" content="Jekyll v4.2.2">
+<meta property="og:title" content="On Micro-Kernel Construction">
+<meta name="author" content="samrat sahoo">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="A paper about microkernels">
+<meta property="og:description" content="A paper about microkernels">
+<link rel="canonical" href="https://samratsahoo.com/2024/08/31/on-microkernel-construction">
+<meta property="og:url" content="https://samratsahoo.com/2024/08/31/on-microkernel-construction">
+<meta property="og:site_name" content="samrat’s thought space">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2024-08-31T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="On Micro-Kernel Construction">
+<meta name="twitter:site" content="@samratdotjs">
+<meta name="twitter:creator" content="@samratdotjs"> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"samrat sahoo","url":"https://samratsahoo.com"},"dateModified":"2024-08-31T00:00:00+00:00","datePublished":"2024-08-31T00:00:00+00:00","description":"A paper about microkernels","headline":"On Micro-Kernel Construction","mainEntityOfPage":{"@type":"WebPage","@id":"https://samratsahoo.com/2024/08/31/on-microkernel-construction"},"url":"https://samratsahoo.com/2024/08/31/on-microkernel-construction"}</script><title> On Micro-Kernel Construction - samrat's thought space</title>
+<link rel="shortcut icon" href="/favicon.webp">
+<link rel="alternate" type="application/atom+xml" title="samrat's thought space" href="/atom.xml">
+<link rel="alternate" type="application/json" title="samrat's thought space" href="https://samratsahoo.com/feed.json">
+<link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml">
+<style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:10rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5{line-height:1;margin:1rem 0;font-weight:600}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:60rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}@media print{.no-print,.no-print *{display:none !important}}img.mermaid{max-width:200px}.url{color:#0645AD}*::-moz-selection{color:white;background:#7011dc}*::selection{color:white;background:#7011dc}*{font-family:"Outfit", sans-serif}li>ul{padding-left:1rem}</style>
+</head>
+<body><main><header aria-hidden="true" class="no-print"> <!--<h1 class="logo">samrat's thought space</h1>--><nav role="navigation" aria-hidden="true"><ul>
+<li><a href="/">about</a></li>
+<li><a href="/reading" class="active">reading</a></li>
+<li><a href="/research">research</a></li>
+<li><a href="/writing">writing</a></li>
+<li><a href="/search">search</a></li>
+</ul></nav></header><section class="post"><h2>On Micro-Kernel Construction</h2>
+<ul>
+<li>Advantages of Microkernel:<ul>
+<li>Modular System Structure</li>
+<li>Server malfunctions are isolated</li>
+<li>More flexible + tailorable; different strategies + APIs implemented can coexist</li>
+</ul>
+</li>
+<li>Assumptions + Requirements<ul>
+<li>Support interactive, untrusted applications (deal w/protections)</li>
+<li>Page-based virtual memory scheme</li>
+<li>Subsystems implemented cannot be corrupted by other subsystems</li>
+<li>Secure communications channels between subsystems must exist</li>
+</ul>
+</li>
+<li>Micro-Kernel Concepts<ul>
+<li>
+<strong>Address Spaces:</strong> A mapping which associates each virtual page to a physical page frame or marks it inaccessible<ul>
+<li>Implemented by TLB + Page Tables</li>
+<li>Initially, there is one address space representing all of physical memory</li>
+<li>Create more address spaces → three operations<ul>
+<li>Grant: Transfer ownership of page(s) from one space to another</li>
+<li>Map: Share ownership of page(s) with another space</li>
+<li>Flush: Remove ownership of page(s) from other spaces</li>
+</ul>
+</li>
+<li>Memory management outside of kernel; Grant, Map, and Flush inside of Kernel<ul>
+<li>Memory managers + pagers require Grant, Map, and Flush</li>
+<li>Can extend these operations to have more fine-grained operations</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>I/O</strong><ul>
+<li>Address space is an abstraction for memory-mapped I/O</li>
+<li>Port-based I/O is also supported, but control depends on the processor</li>
+<li>Controlling I/O rights is done by memory managers + pagers</li>
+</ul>
+</li>
+<li>
+<strong>Threads and IPC</strong><ul>
+<li>
+<strong>Thread:</strong> An activity executing inside an address space<ul>
+<li>Has registers describing instruction pointer, stack pointer, state information, etc.</li>
+<li>Also includes information about its current address space<ul><li>Switching address spaces must be done by the Kernel (to avoid corruption)</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Interprocess Communication (IPC):</strong> cross-address-space communication (transferring messages across threads by the micro-kernel)<ul>
+<li>Sender: decides to send info + its contents</li>
+<li>Receiver: decides if its willing to receive info + interprets it</li>
+<li>Remote Procedure Calls (RPC) is based on message based IPC</li>
+</ul>
+</li>
+<li>
+<strong>Supervised IPC:</strong> Some architectures need to see memory + communication → done through communication channels<ul><li>Does not burden the micro-kernel</li></ul>
+</li>
+<li>
+<strong>Interrupts:</strong> Hardware is treated as a set of threads which sends empty messages with only a sender id<ul>
+<li>Receiving threads determine if the message is an interrupt and which interrupt</li>
+<li>Transforming interrupts into messages done by kernel</li>
+<li>Interrupt handling not done in Kernel</li>
+<li>Kernel executes any required privileged instructions implicitly to release interrupt handlers (if needed)<ul><li>Drivers can usually do this on the user level</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Unique Identifiers:</strong> Micro-kernel provides unique ids for threads / tasks / communication channels for efficient local communication</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Flexibility (Applications)<ul>
+<li>
+<strong>Memory Manager:</strong> You can have co-existing memory managers managing different parts of the initial address space</li>
+<li>
+<strong>Pager:</strong> Can implement paged virtual memory or database mappings to address spaces using Grant, Map, Flush<ul><li>Can have multiple layers of pagers. User-supplied pagers can control user-level pages.</li></ul>
+</li>
+<li>
+<strong>Multimedia Resource Allocation:</strong> Need to be able to allocate memory with predictable execution times → can do this with user-level memory managers / pagers</li>
+<li>
+<strong>Device Driver:</strong> Accesses memory mapped I/O + reads hardware interrupts → similar to any other user-level process (nothing special required in micro-kernel)</li>
+<li>
+<strong>Second-Level Cache + TLB:</strong> Can be implemented with a pager which applies a cache dependent policy → usually as a user-level server</li>
+<li>
+<strong>Remote Communication:</strong> Implemented by communication servers that translate local messages to external protocols + vice versa. Uses communication drivers to access communication hardware. Can also implement a pager if sharing address space / buffers is required.</li>
+<li>
+<strong>Unix Server:</strong> Systems calls implemented as IPC. Server acts as pager + shares memory for communicating with all its clients</li>
+<li>
+<strong>Limitations:</strong> Cannot implement processor architecture, registers, first-level caches, first-level TLBs</li>
+</ul>
+</li>
+<li>
+<strong>Performance, Facts, and Rumors</strong><ul>
+<li>
+<strong>Switching Overhead</strong><ul>
+<li>
+<strong>Kernel-User Switches:</strong> Prior studies show that there is a non-trivial cost with switching<ul>
+<li>Most of this is Kernel overhead in executing instructions or cache/TLB misses</li>
+<li>L3 Kernel minimizes this overhead using kernel stack / thread + persistent user processes<ul><li>Entering + leaving kernel mode can be a bit flip and costs can be internalized with kernel-specific registers for stack pointer, etc. → same as an indirect call + return</li></ul>
+</li>
+<li>TLDR: Switches are costly on some processors but can be improved 6 to 10 times with appropriate micro-kernel construction</li>
+</ul>
+</li>
+<li>
+<strong>Address Space Switches</strong><ul>
+<li>Tagged TLBs: TLB includes address space id (and does not to be flushed) → no performance implications if the TLB can fit all the entries</li>
+<li>Untagged TLBs: Need to flush TLB entries + load new TLB entries → becomes critical especially if using fully TLB<ul>
+<li>Processors use segment registers which offer additional address translation → no longer need TLB flush</li>
+<li>Other processors that don’t use segment registers -- usually doesn’t matter because, in practice, memory used is usually small so switching between address spaces is fast. Costs of switching between larger areas is unavoidable (inherent to how memory works)</li>
+</ul>
+</li>
+<li>TLDR: Properly constructed address space switches not expensive + Expensive context switches happen because of implementation</li>
+</ul>
+</li>
+<li>
+<strong>Thread Switches and IPC</strong><ul>
+<li>RPC is fast and primarily influenced by processor architecture</li>
+<li>IPC can implemented to be fast (not an issue)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Memory Effects</strong><ul>
+<li>When comparing Ultrix (monolithic kernel) and the Mach Micro-kernel, there was significant overhead with the memory cycle overhead per instruction</li>
+<li>This is primarily caused by increased cache misses for Mach<ul>
+<li>Increased cache misses due to cache consumption by the system (Mach + Emulation Library + Unix Server)</li>
+<li>Cache consumption primarily caused due to micro-kernel → happens because of very frequently used micro-kernel operations from high working set operations used infrequently<ul>
+<li>Large cache working sets not a feature of micro-kernel</li>
+<li>TLDR: Micro-kernel memory system degradation not substantiated → properly constructed kernels avoid this</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Non-Portability</strong><ul>
+<li>Portability allowed on <em>small hardware</em>-dependent layer, independent of machine → resulting kernels could be ported to new machines<ul><li>Prevents performance gains + flexibility</li></ul>
+</li>
+<li>Issues:<ul>
+<li>Micro-kernel can’t take advantage of hardware</li>
+<li>Cannot take precautions to avoid performance problems of specific hardware</li>
+<li>Additional layer = higher costs</li>
+</ul>
+</li>
+<li>Micro-kernels are hardware dependent</li>
+<li>
+<strong>Compatible Processors (486 + Pentium)</strong><ul>
+<li>
+<strong>User Address Space Implementation:</strong> Segment register works better on Pentium but traditional address translation works better on 486 → need to implement a user-address-space multiplexer for address space switching, IPC, etc.</li>
+<li>
+<strong>IPC Implementation:</strong> Restructure thread control block to align with smaller memory boundaries so that there is a lower probability two blocks will compete for the same spot in a cache<ul><li>Side effect of impacting UIDs → new system cannot fully replace old system</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Incompatible Processors</strong><ul><li>Processors with different ISA, registers, exception handling, cache/TLB architecture, protection, and memory models will require different types of micro-kernels (i.e., hardware dependent)<ul><li>Micro-kernels form a link between the micro-kernel abstractions and bare processor</li></ul>
+</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Synthesis, Spin, DP-Mach, Panda, Cache, and Exo-Kernel</strong><ul>
+<li>
+<strong>Synthesis:</strong> Had a kernel integrated compiler to generate kernel code at runtime → no longer works because of degraded cache performance</li>
+<li>
+<strong>Spin:</strong> User supplied algorithms are used (i.e., system calls) → compiler ensures that kernel + user integrity is not violated<ul>
+<li>Reduces kernel and address space switches</li>
+<li>Kernel performance may be impacted by larger kernel stacks + costs of safety guarantees result in micro-kernel overhead</li>
+</ul>
+</li>
+<li>
+<strong>Utah Mach:</strong> Performance gains by changing Mach IPC to migrating RPC (thread migration between address spaces)</li>
+<li>
+<strong>DP-Mach:</strong> Multiple domains of protection within one user address space + protected inter-domain calls (specialized but still slower than RPC)</li>
+<li>
+<strong>Panda:</strong> Delegates as much as possible to user space using protection domain and virtual processor → kernel handles only interrupts and exceptions</li>
+<li>
+<strong>Cache Kernel:</strong> Caches kernels, threads, address spaces, mappings → never works with a complete set but rather a dynamically selected subset of address spaces</li>
+<li>
+<strong>Exokernel:</strong> Provides limited set of primitives to processes (instead of abstractions) and is architecture dependent. Partially integrates device drivers.</li>
+</ul>
+</li>
+</ul>
+<span class="meta"><time datetime="2024-08-31T00:00:00+00:00">August 31, 2024</time> · <a href="/tags/research">research</a></span></section></main></body>
+</html>

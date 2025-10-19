@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet">
+<meta name="generator" content="Jekyll v4.2.2">
+<meta property="og:title" content="A Distributional Perspective on Reinforcement Learning">
+<meta name="author" content="samrat sahoo">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="A paper about distributional reinforcement learning">
+<meta property="og:description" content="A paper about distributional reinforcement learning">
+<link rel="canonical" href="https://samratsahoo.com/2025/04/27/c51">
+<meta property="og:url" content="https://samratsahoo.com/2025/04/27/c51">
+<meta property="og:site_name" content="samrat’s thought space">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2025-04-27T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="A Distributional Perspective on Reinforcement Learning">
+<meta name="twitter:site" content="@samratdotjs">
+<meta name="twitter:creator" content="@samratdotjs"> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"samrat sahoo","url":"https://samratsahoo.com"},"dateModified":"2025-04-27T00:00:00+00:00","datePublished":"2025-04-27T00:00:00+00:00","description":"A paper about distributional reinforcement learning","headline":"A Distributional Perspective on Reinforcement Learning","mainEntityOfPage":{"@type":"WebPage","@id":"https://samratsahoo.com/2025/04/27/c51"},"url":"https://samratsahoo.com/2025/04/27/c51"}</script><title> A Distributional Perspective on Reinforcement Learning - samrat's thought space</title>
+<link rel="shortcut icon" href="/favicon.webp">
+<link rel="alternate" type="application/atom+xml" title="samrat's thought space" href="/atom.xml">
+<link rel="alternate" type="application/json" title="samrat's thought space" href="https://samratsahoo.com/feed.json">
+<link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml">
+<style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:10rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5{line-height:1;margin:1rem 0;font-weight:600}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:60rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}@media print{.no-print,.no-print *{display:none !important}}img.mermaid{max-width:200px}.url{color:#0645AD}*::-moz-selection{color:white;background:#7011dc}*::selection{color:white;background:#7011dc}*{font-family:"Outfit", sans-serif}li>ul{padding-left:1rem}</style>
+<script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"},"svg":{"fontCache":"global","scale":1.0,"minScale":0.5,"mtextInheritFont":true,"merrorInheritFont":true,"mathmlSpacing":false,"skipAttributes":{},"exFactor":0.5},"chtml":{"scale":1.0,"minScale":0.5,"matchFontHeight":true,"mtextFont":"serif","linebreaks":{"automatic":false}}}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js"></script>
+</head>
+<body><main><header aria-hidden="true" class="no-print"> <!--<h1 class="logo">samrat's thought space</h1>--><nav role="navigation" aria-hidden="true"><ul>
+<li><a href="/">about</a></li>
+<li><a href="/reading" class="active">reading</a></li>
+<li><a href="/research">research</a></li>
+<li><a href="/writing">writing</a></li>
+<li><a href="/search">search</a></li>
+</ul></nav></header><section class="post"><h2>A Distributional Perspective on Reinforcement Learning</h2>
+<ul>
+<li>
+<strong>Resources</strong><ul><li>
+<a href="https://arxiv.org/abs/1707.06887">Paper</a> <br><br>
+</li></ul>
+</li>
+<li>
+<strong>Introduction</strong><ul>
+<li>Bellman’s equation tells us the expected reward + outcome of a random transition</li>
+<li>In distributional RL, we want the random return Z who’s expectation is Q:<ul><li>Distributional Bellman Equation: $Z(x,a) \stackrel{D}{=} R(x, a) + \gamma Z(X’, A’)$<ul><li>Three random variables:<ul>
+<li>$R$: Reward</li>
+<li>$(X’, A’)$: Next State Action</li>
+<li>$Z(X’, A’)$: Random return (value distribution)</li>
+</ul>
+</li></ul>
+</li></ul>
+</li>
+<li>Bellman operator is a contraction in regular policy evaluation (guarantees convergence)<ul>
+<li>This is not the case with distributional RL</li>
+<li>The metric we use to measure distance between distributions matters (i.e., KL, total variation, kolmogorov distance)</li>
+</ul>
+</li>
+<li>There is instability in distributional RL<ul><li>While the bellman operator is a contraction in the expectation, it is not over any metric of distributions<ul><li>Want to learn algorithms that model the effects of nonstationary policies</li></ul>
+</li></ul>
+</li>
+<li>Learning distributions leads to more stable training</li>
+</ul>
+</li>
+<li>
+<strong>Setting</strong><ul>
+<li>Assume standard MDP setting</li>
+<li>Policy maps from a state to a probability distribution over actions</li>
+<li>
+<strong>Bellman’s Equations</strong><ul>
+<li>$Z^\pi$: Sum of discounted rewards along agent’s trajectory of interactions with environment</li>
+<li>$Q^\pi$: expectation of $Z^\pi$<ul>
+<li>$Q^\pi(x,a) = \mathbb{E}[Z^\pi(x,a)] = \mathbb{E}[\sum _{t=0}^\infty \gamma^t R(x_t, a_t)]$</li>
+<li>Bellman Operator: $\tau^\pi Q^\pi(x,a) =\mathbb{E}[R(x,a)] + \mathbb{E} _{P, \pi}[Q^\pi(x’, a’)]$</li>
+<li>Bellman Optimality Operator: $TQ^*(x,a) = \mathbb{E}[R(x,a)] + \gamma \mathbb{E}_P [max _{a’ \in A} Q(x’, a’)]$<ul><li>Both are contractive operators</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>The Distributional Bellman Operators</strong><ul>
+<li>
+<strong>Distributional Equations</strong><ul>
+<li>$\Omega$: Space of all possible outcomes of an experiment</li>
+<li>$F_U(y) = Pr (U \leq y)$ and $F^{-1}_U(q)$ be the inverse CDF</li>
+</ul>
+</li>
+<li>
+<strong>The Wasserstein Metric</strong><ul>
+<li>Wasserstein Distance: $d_P(F,G) = inf _{U,V}\vert\vert U - V\vert\vert _p = \vert\vert F^{-1}(\mathcal{U} - G^{-1}(\mathcal{U})) \vert\vert_p$<ul>
+<li>inf: Infinum (greatest lower bound)</li>
+<li>Where F and G are the CDFs over U and V</li>
+<li>$\mathcal{U}$ is the uniform distribution over $[0,1]$</li>
+<li>If $p &lt; \infty$, $d_P(F,G) = (\int_0^1 \vert F^{-1}(\mathcal{u} - G^{-1}(\mathcal{u})) \vert^p du)^{\frac{1}{p}}$</li>
+</ul>
+</li>
+<li>Properties of $d_p$: Given a scalar $a$ and random variable $A$ independent of $U,V$<ul>
+<li>$d_p(aU, aV) \leq \vert a \vert d_p(U, V)$</li>
+<li>$d_p(A + U, A + V) \leq d_p(U, V)$</li>
+<li>$d_p(AU, AV) \leq \vert\vert A \vert\vert _p d_p(U, V)$</li>
+</ul>
+</li>
+<li>Partition Lemma: Let $A_1, A_2, \dots$ be partitions of $\Omega$<ul><li>$d_p(U, V) \leq \sum_i d_p(A_iU, A_iV)$</li></ul>
+</li>
+<li>Lemma 2 $\bar{d}_p$ is a metric over value distributions:<ul><li>If $\mathcal{Z}$ is the space of value distributions with $Z_1, Z_2 \in \mathcal{Z}$, maximal form of wasserstein metric:<ul><li>$\bar{d}_p (Z_1, Z_2)= sup _{x,a} d_p(Z_1(x,a), Z_2(x,a))$<ul><li>sup: Supremum (smallest upper bound)</li></ul>
+</li></ul>
+</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Policy Evaluation</strong><ul>
+<li>Characterize $Z^\pi$ as intrinsic randomness of agent’s interactions with environment</li>
+<li>Transition Operator: $P^\pi Z(x,a) = Z(X’, A’)$</li>
+<li>Distributional Bellman Operator: $\tau^\pi Z(x,a) = R(x,a) + \gamma P^\pi Z(x,a)$<ul>
+<li>Randomness from reward</li>
+<li>Randomness from transition</li>
+<li>Randomness from next-state value distribution</li>
+</ul>
+</li>
+<li>
+<strong>Contraction in $\bar{d}_p$</strong><ul><li>We expect $\tau^\pi$ to be a contraction operator on $\bar{d}_p$<ul>
+<li>We expect limiting expectation of $Z_k$ to converge exponentially quickly to $Q^\pi$ (along wiht all moments)</li>
+<li>Lemma 3: $\tau^\pi$ is a $\gamma-contraction$ in $\bar{d}_p$<ul>
+<li>Implies $\tau^\pi$ has a unique fixed point</li>
+<li>$Z_k$ converges to $Z^\pi$ in $\bar{d}_p$ for $1 \leq p \leq \infty$</li>
+</ul>
+</li>
+<li>Not all distributional metrics are equal; KL divergence, total variational distance, and Kolmogorov distance do not contract</li>
+</ul>
+</li></ul>
+</li>
+<li>
+<strong>Contraction in Centered Moments</strong><ul>
+<li>Coupling: $C(\omega) = U(\omega) - V(\omega)$</li>
+<li>We see that $d_2^2(U, V) \leq \mathbb{E}[(U-V)^2] = \mathbb{V}(C) + (\mathbb{E} C)^2$<ul>
+<li>We cannot use $d_2$ to bound variance differences like $\vert \mathbb{V}(\tau^\pi Z(x,a)) - \mathbb{V}(\tau^\pi Z(x,a)) \vert$</li>
+<li>However, $\tau^\pi$ is a contraction in variance (but not for higher centered moments, $p &gt; 2$)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Control</strong><ul>
+<li>Control Setting: Seek a policy $\pi$ that maximizes value + find an optimal value distribution<ul>
+<li>There are many optimal value distributions</li>
+<li>Bellman operator does converge to set of optimal value distributions<ul>
+<li>Does not cause a contraction between distributions</li>
+<li>Is more unstable due to greedy updates</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Let $\Pi^*$ be the set of optimal policies<ul>
+<li>Optimal Value Distribution: Value distribution of an optimal policy<ul><li>Set of all optimal value distributions: $\mathcal{Z}^* = Z^\pi : \pi^* \in \Pi^*$</li></ul>
+</li>
+<li>Greedy Policy: $\pi$ for $Z \in \mathcal{Z}$ maximizes expectation of Z<ul><li>Set of all greedy policies: $\mathcal{G}_Z = \pi : \sum_a \pi (a \vert x) \mathbb{E}Z(x,a) = max _{a’ \in A} Z(x,a)$</li></ul>
+</li>
+</ul>
+</li>
+<li>Distributional Bellman Operator: Any operator, $\tau$, which implements greedy selection: $\tau Z = \tau^\pi Z$ for $\pi \in \mathcal{G}_Z$</li>
+<li>Behavior of $\mathbb{E} Z_k$: $\vert \vert \mathbb{E} \tau Z_1 - \mathbb{E} \tau Z_2 \vert \vert _\infty \leq \vert \vert \mathbb{E} Z_1 - \mathbb{E} Z_2 \vert \vert _\infty$<ul>
+<li>Particularly, $\mathbb{E} Z_k \rightarrow Q^*$ exponentially quickly</li>
+<li>Convergence to set $\mathcal{Z}^*$ not assured but best we can hope for is convergence to set of nonstationary optimal value distributions<ul><li>Nonstationary Optimal Value Distributions: value distribution corresponding to set of optimal policies ($\mathcal{Z}^{**}$)</li></ul>
+</li>
+</ul>
+</li>
+<li>Convergence in control setting: If greedy policies are totally ordered and the state + action space is finite, you can get a unique fixed point $Z^* \in \mathcal{Z}^*$<ul><li>The expectation of $Z_k$ converges to $Q^*$ but the distribution not necessarily well behaved</li></ul>
+</li>
+<li>Distribution not well behaved means<ul>
+<li>$\tau$ is not a contraction (the distributions can go further apart first before going closer together)</li>
+<li>Not all optimality operators have a fixed point (i.e., operator can alternate between actions that are tied)</li>
+<li>Existence of a fixed point for an operator, $\tau$, is insufficient to guarantee convergence</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Approximate Distributional Learning</strong><ul>
+<li>
+<strong>Parameteric Distribution</strong><ul><li>Model the value distribution via discrete distribution parameterized by $N, V _{MIN}, V _{MAX}$ with a support of { $z_i = V _{MIN} + i \Delta z : 0 \leq i &lt; N$ } where $\Delta z = \frac{V _{MAX} - V _{MIN}}{N-1}$<ul><li>Parameteric model for probabilities: $Z _{\theta}(x,a) = z_i$ with probabilities $p_i(x,a) = \frac{e^{\theta _i(x,a)}}{\sum_j e^{\theta _j(x,a)}}$</li></ul>
+</li></ul>
+</li>
+<li>
+<strong>Projected Bellman Update</strong><ul>
+<li>Problem: Bellman update ($\tau Z _{\theta}$) and parameterization ($Z _{\theta}$) have disjoint supports<ul><li>We cannot minimize wasserstein loss because we are restricted to learning from sample transitions</li></ul>
+</li>
+<li>Solution: Categorical Algorithm<ul>
+<li>Instead project bellman update $\hat{\tau} Z _{\theta}$ onto support of $Z _\theta$</li>
+<li>Compute bellman update for each transition ( $\hat{\tau} Z _{\theta} = r + \gamma z_j$) for each $z_j$<ul>
+<li>Distribute its probability $p_j(x’, \pi(x’))$ to neighbors $\hat{\tau _{z_j}}$</li>
+<li>i-th component of projected update: $(\Phi \hat{\tau} Z_\theta (x,a))_i = \sum _{j=0}^{N-1} [1 - \frac{\vert [\hat{\tau _{z_j}}] _{V _{MIN}}^{V _{MAX}} - z_i\vert}{\Delta z}] _0^1 p_j(x’, \pi(x’))$</li>
+</ul>
+</li>
+<li>Sample loss is cross entropy term of KL divergence between $(\Phi \hat{\tau} Z _{\tilde{\theta}} (x,a))$ and $Z _\theta (x,a)$</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Evaluation on Atari 2600 Games</strong><ul>
+<li>Use a DQN architecture that outputs atom probabilities instead of action values<ul>
+<li>Replace MSE Loss with KL Loss for distributional RL</li>
+<li>Simple $\epsilon$-greedy policy over expected action values</li>
+</ul>
+</li>
+<li>Safe actions have similar probabilities whereas unfavorable actions have 0 probabibility<ul>
+<li>Seperates low value losing events from high value survival events</li>
+<li>Doesn’t combine these events into a singular expectation</li>
+</ul>
+</li>
+<li>Distributions generally close to gaussians</li>
+<li>
+<strong>Varying Number of Atoms</strong><ul>
+<li>Too few atoms leads to poor performance</li>
+<li>At 51 atoms, categorical DQN outperforms DQN on all games</li>
+<li>Agent is able to pick up on intrinsic stochasticity in its predictions</li>
+</ul>
+</li>
+<li>
+<strong>State-of-the-art Results</strong><ul>
+<li>C51: The 51 atom agent</li>
+<li>C51 compared to SOTA algorithms surpasses by a large margin in a number of the games<ul><li>Particularly good in sparse reward scenarios</li></ul>
+</li>
+<li>C51 also outperforms DQN in far fewer training steps on 45/57 games</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Discussion</strong><ul><li>
+<strong>Why does learning a distribution matter?</strong><ul><li>Learning distributions matter because of approximations:<ul>
+<li>Reduced Chattering:<ul>
+<li>Bellman optimality operator is unstable + combined with function approximation means no convergence guarantees</li>
+<li>Categorical algorithm avoids this by averaging different distributions</li>
+</ul>
+</li>
+<li>State Aliasing:<ul>
+<li>State aliasing occurs when two different states are indistinguishable to the agent</li>
+<li>Modeling a distribution provides a more stable learning target</li>
+</ul>
+</li>
+<li>Richer Predictions:<ul><li>Distribution will tell us the probability the return will take on certain value</li></ul>
+</li>
+<li>Inductive Bias:<ul><li>We can impose assumptions about the domain<ul>
+<li>I.e., we bounded support of the distribution between $[V _{MIN}, V _{MAX}]$<ul><li>Suprisingly clipping values in DQN degrades performance</li></ul>
+</li>
+<li>I.e., we can interpret the discount factor as a probabibility</li>
+</ul>
+</li></ul>
+</li>
+<li>Optimization:<ul>
+<li>KL divergence between categorical distributions is easy to minimize</li>
+<li>KL betweeen continuous distributions had worse results (KL insensitive to values of outcomes)<ul><li>Metric closer to wasserstein should yield even better results</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li></ul>
+</li></ul>
+</li>
+</ul>
+<span class="meta"><time datetime="2025-04-27T00:00:00+00:00">April 27, 2025</time> · <a href="/tags/research">research</a></span></section></main></body>
+</html>

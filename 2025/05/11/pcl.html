@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet">
+<meta name="generator" content="Jekyll v4.2.2">
+<meta property="og:title" content="Bridging the Gap Between Value and Policy Based Reinforcement Learning">
+<meta name="author" content="samrat sahoo">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="A paper about path consistency learning">
+<meta property="og:description" content="A paper about path consistency learning">
+<link rel="canonical" href="https://samratsahoo.com/2025/05/11/pcl">
+<meta property="og:url" content="https://samratsahoo.com/2025/05/11/pcl">
+<meta property="og:site_name" content="samrat’s thought space">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2025-05-11T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="Bridging the Gap Between Value and Policy Based Reinforcement Learning">
+<meta name="twitter:site" content="@samratdotjs">
+<meta name="twitter:creator" content="@samratdotjs"> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"samrat sahoo","url":"https://samratsahoo.com"},"dateModified":"2025-05-11T00:00:00+00:00","datePublished":"2025-05-11T00:00:00+00:00","description":"A paper about path consistency learning","headline":"Bridging the Gap Between Value and Policy Based Reinforcement Learning","mainEntityOfPage":{"@type":"WebPage","@id":"https://samratsahoo.com/2025/05/11/pcl"},"url":"https://samratsahoo.com/2025/05/11/pcl"}</script><title> Bridging the Gap Between Value and Policy Based Reinforcement Learning - samrat's thought space</title>
+<link rel="shortcut icon" href="/favicon.webp">
+<link rel="alternate" type="application/atom+xml" title="samrat's thought space" href="/atom.xml">
+<link rel="alternate" type="application/json" title="samrat's thought space" href="https://samratsahoo.com/feed.json">
+<link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml">
+<style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:10rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5{line-height:1;margin:1rem 0;font-weight:600}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:60rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}@media print{.no-print,.no-print *{display:none !important}}img.mermaid{max-width:200px}.url{color:#0645AD}*::-moz-selection{color:white;background:#7011dc}*::selection{color:white;background:#7011dc}*{font-family:"Outfit", sans-serif}li>ul{padding-left:1rem}</style>
+<script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"},"svg":{"fontCache":"global","scale":1.0,"minScale":0.5,"mtextInheritFont":true,"merrorInheritFont":true,"mathmlSpacing":false,"skipAttributes":{},"exFactor":0.5},"chtml":{"scale":1.0,"minScale":0.5,"matchFontHeight":true,"mtextFont":"serif","linebreaks":{"automatic":false}}}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js"></script>
+</head>
+<body><main><header aria-hidden="true" class="no-print"> <!--<h1 class="logo">samrat's thought space</h1>--><nav role="navigation" aria-hidden="true"><ul>
+<li><a href="/">about</a></li>
+<li><a href="/reading" class="active">reading</a></li>
+<li><a href="/research">research</a></li>
+<li><a href="/writing">writing</a></li>
+<li><a href="/search">search</a></li>
+</ul></nav></header><section class="post"><h2>Bridging the Gap Between Value and Policy Based Reinforcement Learning</h2>
+<ul>
+<li>
+<strong>Resources</strong><ul><li>
+<a href="https://arxiv.org/abs/1702.08892">Paper</a> <br><br>
+</li></ul>
+</li>
+<li>
+<strong>Introduction</strong><ul>
+<li>Challenge: How do we combine advantages of value and policy based RL while mitigating shortcomings</li>
+<li>Policy Based RL<ul>
+<li>Stable under function approximation (given a small learning rate)</li>
+<li>Sample inefficient</li>
+<li>High variance gradients</li>
+</ul>
+</li>
+<li>Actor Critic Methods<ul><li>Reduce variance at the cost of some bias</li></ul>
+</li>
+<li>On-policy learning still very inefficient<ul>
+<li>Either need to use on-policy data</li>
+<li>Or need to update slow enough to avoid bias</li>
+<li>Importance correction not sufficient</li>
+</ul>
+</li>
+<li>Off-policy learning<ul>
+<li>Can learn from any trajectory sampled from same environment</li>
+<li>More sample efficient</li>
+<li>Require extensive hyperparameter tuning (not stable otherwise)</li>
+</ul>
+</li>
+<li>Ideal: Combine unbiasedness + stability of on-policy with data efficiency of off-policy<ul><li>Previous approaches exist but don’t resolve theoretical difficulty of off-policy learning with function approximation</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Notation &amp; Background</strong><ul>
+<li>Assume a stochastic policy over finite actions: $\pi _\theta(a \vert s)$</li>
+<li>Assume deterministic state dynamics (for simplicity)</li>
+<li>Assume standard reinforcement learning setting</li>
+<li>Hard-max bellman temporal consistency: $V^\circ(s) = O _{ER}(s, \pi^\circ) = max_a (r(s,a) + \gamma V^\circ(s’))$<ul>
+<li>In terms of optimal action values $Q^\circ(s,a) = r(s,a) + \gamma max _{a’}Q^\circ(s’,a’)$</li>
+<li>The $\circ$ represents optimal</li>
+<li>Optimal policy, $\pi^\circ$, becomes a one-hot vector</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Softmax Temporal Consistency</strong><ul>
+<li>Softmax temporal consistency comes from augmenting reward with a discounted entropy regularizer, encouraging exploration</li>
+<li>$O _{ENT}(s, \pi) = O _{ER} (s, \pi) + \tau \mathbb{H}(s, \pi)$<ul>
+<li>$\tau$: User specified temperature to control degree of regularization</li>
+<li>$\mathbb{H}(s, \pi) = \sum_a \pi(a \vert s)[- \log \pi(a \vert s) + \gamma \mathbb{H}(s’, \pi)]$<ul><li>$O _{ENT}(s, \pi) = \sum_a \pi(s \vert s)[r(s,a) - \tau \log \pi(a \vert s) + \gamma O _{ENT}(s’, \pi)]$</li></ul>
+</li>
+</ul>
+</li>
+<li>Soft value function: $V^* (s) = max_\pi O _{ENT}(s, \pi)$<ul>
+<li>Let $\pi^*(a \vert s)$ be the optimal policy that maximizes $O _{ENT}$<ul><li>This is no longer a one-hot vector because of the entropy term</li></ul>
+</li>
+<li>Policy takes form of Boltzmann distribution: $\pi^*(a \vert s) \propto exp(\frac{r(s,a) + \gamma V^{\ast}(s)}{\tau})$<ul><li>Substitute policy with boltzmann distribution form to get softmax backup: $V^*(s) = O _{ENT}(s, \pi^\ast) = \tau \log \sum_a exp((r(s,a) + \gamma V^\ast(s’))/ \tau)$<ul><li>In terms of Q values: $Q^\ast(s,a) = r(s,a) + \gamma \tau \log \sum _{a’} exp(Q^\ast(s’,a’)/ \tau)$</li></ul>
+</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Consistency Between Optimal Value &amp; Policy</strong><ul>
+<li>$exp(V^\ast(s) / \tau)$ is a noramlization factor for $\pi^\ast(a \vert s)$: $\pi^\ast(a \vert s) = \frac{exp((r(s,a) + \gamma V^\ast(s’))/ \tau)}{exp(V^\ast(s) / \tau)}$</li>
+<li>Theorem 1 - (1-step) Temporal Consistency Property: $V^\ast (s) - \gamma V^\ast(s’) = r(s,a) - \tau \log \pi^\ast(a \vert s)$<ul>
+<li>Can be extended to multiple steps</li>
+<li>Can also express $\pi^\ast(a \vert s) = exp((Q^\ast(s,a) - V^\ast(s)) / \tau)$</li>
+</ul>
+</li>
+<li>Corollary 2 - (Extended) Temporal Consistency Property: $V^\ast (s) - \gamma^{t-1} V^\ast(s’) = \sum _{i=1}^{t-1}[r(s_i,a_i) - \tau \log \pi^\ast(a_i \vert s_i)]$</li>
+<li>Theorem 3: If a policy $\pi(a \vert s)$ and value function $V(s)$ satisfy the consistency property for all states and actions, then $\pi(a \vert s)$, $V(s)$ are optimal</li>
+</ul>
+</li>
+<li>
+<strong>Path Consistency Learning (PCL)</strong><ul>
+<li>Soft consistency for trajectory of length d, $s _{i:i+d}$, policy $\pi _\theta$, and value function $V _{\phi}$<ul>
+<li>$C(s _{i:i+d}, \theta, \phi) = - V _{\phi}(s_i) + \gamma^d V _\phi(s _{i+d}) + \sum _{j=0}^{d-1} \gamma^j [r(s _{i+j}, a _{i+j}) - \tau \log \pi _\theta (a _{i+j} \vert s _{i+j})]$</li>
+<li>Find $\phi, \theta$ so that $C(s _{i:i+d}, \theta, \phi)$ is as close to 0 as possible for all subtrajectories $s _{i:i+d}$</li>
+</ul>
+</li>
+<li>Path Consistency Learning (PCL): Minimize squared soft consistency over subtrajectories, $E$<ul>
+<li>Objective Function: $O _{PCL}(\theta, \phi) = \sum _{s _{i:i+d} \in E} = \frac{1}{2}C(s _{i:i+d}, \theta, \phi)$</li>
+<li>Update Rules:<ul>
+<li>$\Delta \theta = \eta _\pi C(s _{i:i+d}, \theta, \phi) \sum _{j=0}^{d-1} \gamma^j \nabla _\theta \log \pi _\theta (a _{i+g} \vert s _{i+j})$</li>
+<li>$\Delta \phi = \eta _v C(s _{i:i+d}, \theta, \phi) \nabla _{\phi} V _{\phi}(s_i) - \gamma^d \nabla _{\phi}V _{\phi}(s _{i +d})$</li>
+<li>$\eta _{\pi}, \eta_v$ are the learning rates</li>
+</ul>
+</li>
+<li>Can apply PCL updates both on-policy and off-policy</li>
+<li>In stochastic settings, the inconsistency objective is a biased estimate of the true squared inconsistency</li>
+</ul>
+</li>
+<li>
+<strong>Unified Path Consistency Learning (Unified PCL)</strong><ul>
+<li>Normal PCL maintains seperate models for policy and state value approximation</li>
+<li>We can express soft consistency errors with only Q values, parameterized by $\rho$ ($Q _\rho$)<ul>
+<li>$V _\rho (s) = \tau \log \sum_a exp(Q _\rho (s,a) / \tau)$</li>
+<li>$\pi _\rho (a\vert s) = exp((Q _\rho (s,a) - V _\rho(s))/\tau)$</li>
+</ul>
+</li>
+<li>Combines actor and policy into single model<ul>
+<li>In practice, its better to apply updates to $\rho$ from $V _\rho$ and $\pi _\rho$ using different learning rates</li>
+<li>Update rule: $\Delta \rho = \eta _\pi C(s _{i:i+d}, \rho) \sum _{j=0}^{d-1} \gamma^j \nabla _\rho \log \pi _\rho (a _{i+g} \vert s _{i+j}) + \eta _v C(s _{i:i+d}, \rho) \nabla _{\rho} V _{\rho}(s_i) - \gamma^d \nabla _{\rho}V _{\rho}(s _{i +d})$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Connections to Actor-Critic and Q-learning</strong><ul>
+<li>Advantage actor critic (A2C) exploits value function to reduce variance<ul>
+<li>Updates in A2C<ul>
+<li>Policy: $\nabla \theta = \eta _\pi \mathbb{E} _{s _{i:i+d} \vert \theta}[A(s _{i:i+d}, \phi) \nabla _{\theta} \log \pi _{\theta}(a_i \vert s_i)]$</li>
+<li>Critic: $\nabla \phi = \eta _v \mathbb{E} _{s _{i:i+d} \vert \theta}[A(s _{i:i+d}, \phi) \nabla _{\phi} V _{\phi}(s_i)]$</li>
+<li>Very similar to PCL updates!</li>
+</ul>
+</li>
+<li>In PCL, if we take $\tau \rightarrow 0$, we get a variation of A2C<ul><li>PCL can be thought of as a generalization of A2C</li></ul>
+</li>
+<li>A2C is restricted to on-policy data; PCL can do on or off-policy data</li>
+</ul>
+</li>
+<li>Relation to hard-max temporal consistency algorithms<ul>
+<li>When $d = 1$ (i.e., SARSA), Unified PCL becomes a form of soft Q learning (degree of softness determined by $\tau$)</li>
+<li>PCL generalizes Q learning</li>
+<li>Q learning is restricted to single step consistencies because rewards after non-optimal action do not related to hard max Q value<ul><li>PCL can do multistep backups</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Experiments</strong><ul>
+<li>Compare PCL, Unified PCL to A3C, double Q learning with PER</li>
+<li>PCL consistently beats the baselines<ul><li>Unified model is competitive with PCL</li></ul>
+</li>
+<li>PCL also trained with expert trajectories</li>
+<li>
+<strong>Results</strong><ul>
+<li>For simple tasks, PCL and A3C do roughly the same<ul><li>More noticeable gaps in harder tasks</li></ul>
+</li>
+<li>Prioritized DQN is worse than PCL in all tasks</li>
+<li>Using a unified model is slgihtly detrimental on simpler tasks but on difficult ones its competitive or better than PCL</li>
+<li>Using a small number of expert trajectories with PCL signficantly improves agent performance</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<span class="meta"><time datetime="2025-05-11T00:00:00+00:00">May 11, 2025</time> · <a href="/tags/research">research</a></span></section></main></body>
+</html>

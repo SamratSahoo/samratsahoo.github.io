@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet">
+<meta name="generator" content="Jekyll v4.2.2">
+<meta property="og:title" content="Reinforcement Learning with Unsupervised Auxiliary Tasks">
+<meta name="author" content="samrat sahoo">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="A paper about the unreal algorithm">
+<meta property="og:description" content="A paper about the unreal algorithm">
+<link rel="canonical" href="https://samratsahoo.com/2025/06/13/unreal">
+<meta property="og:url" content="https://samratsahoo.com/2025/06/13/unreal">
+<meta property="og:site_name" content="samrat’s thought space">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2025-06-13T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="Reinforcement Learning with Unsupervised Auxiliary Tasks">
+<meta name="twitter:site" content="@samratdotjs">
+<meta name="twitter:creator" content="@samratdotjs"> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"samrat sahoo","url":"https://samratsahoo.com"},"dateModified":"2025-06-13T00:00:00+00:00","datePublished":"2025-06-13T00:00:00+00:00","description":"A paper about the unreal algorithm","headline":"Reinforcement Learning with Unsupervised Auxiliary Tasks","mainEntityOfPage":{"@type":"WebPage","@id":"https://samratsahoo.com/2025/06/13/unreal"},"url":"https://samratsahoo.com/2025/06/13/unreal"}</script><title> Reinforcement Learning with Unsupervised Auxiliary Tasks - samrat's thought space</title>
+<link rel="shortcut icon" href="/favicon.webp">
+<link rel="alternate" type="application/atom+xml" title="samrat's thought space" href="/atom.xml">
+<link rel="alternate" type="application/json" title="samrat's thought space" href="https://samratsahoo.com/feed.json">
+<link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml">
+<style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:10rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5{line-height:1;margin:1rem 0;font-weight:600}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:60rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}@media print{.no-print,.no-print *{display:none !important}}img.mermaid{max-width:200px}.url{color:#0645AD}*::-moz-selection{color:white;background:#7011dc}*::selection{color:white;background:#7011dc}*{font-family:"Outfit", sans-serif}li>ul{padding-left:1rem}</style>
+<script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"},"svg":{"fontCache":"global","scale":1.0,"minScale":0.5,"mtextInheritFont":true,"merrorInheritFont":true,"mathmlSpacing":false,"skipAttributes":{},"exFactor":0.5},"chtml":{"scale":1.0,"minScale":0.5,"matchFontHeight":true,"mtextFont":"serif","linebreaks":{"automatic":false}}}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js"></script>
+</head>
+<body><main><header aria-hidden="true" class="no-print"> <!--<h1 class="logo">samrat's thought space</h1>--><nav role="navigation" aria-hidden="true"><ul>
+<li><a href="/">about</a></li>
+<li><a href="/reading" class="active">reading</a></li>
+<li><a href="/research">research</a></li>
+<li><a href="/writing">writing</a></li>
+<li><a href="/search">search</a></li>
+</ul></nav></header><section class="post"><h2>Reinforcement Learning with Unsupervised Auxiliary Tasks</h2>
+<ul>
+<li>
+<strong>Resources</strong><ul><li>
+<a href="https://arxiv.org/abs/1611.05397">Paper</a> <br><br>
+</li></ul>
+</li>
+<li>
+<strong>Introduction</strong><ul>
+<li>Agents live in sensorimotor stream<ul><li>We can make agents predict and control the stream</li></ul>
+</li>
+<li>In sparse reward settings, extrinsic reward rarely observed<ul>
+<li>Sensorimotor streams have other learning targets</li>
+<li>Unsupervised learning = reconstruct learning targets for useful representation</li>
+<li>This paper = predict + control features of sensorimotor stream as pseudo-rewards<ul><li>Tasks aligned with long-term goals</li></ul>
+</li>
+</ul>
+</li>
+<li>Architecture uses RL to find optimal value function + policy for various pseudo-rewards<ul>
+<li>Makes auxiliary predictions to focus agent on certain aspects of task<ul><li>Predict cumulative extrinsic reward and extrinsic reward</li></ul>
+</li>
+<li>Use experience replay for more efficient learning</li>
+<li>Auxiliary prediction and control share CNN + LSTM representation</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Background</strong><ul>
+<li>Assume standard RL setting</li>
+<li>Value based RL methods = minimize MSE of Q value function</li>
+<li>Policy gradient methods maximize reward using the gradient: $\mathbb{E}[\frac{\partial}{\partial \theta}\log \pi(a \vert s) (Q(s,a) - V(s))]$<ul><li>A3C approximates $V(s, \theta), \pi(a \vert s, \theta)$<ul>
+<li>Uses entropy regularization</li>
+<li>$\mathcal{L} _{A3C} = \mathcal{L} _{VR} + \mathcal{\pi} - \mathbb{E} _{s \sim \pi}[\alpha H(\pi(s, \cdot, \theta))]$</li>
+<li>Use an LSTM to jointly approixmates policy and value function</li>
+</ul>
+</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Auxiliary Tasks for Reinforcement Learning</strong><ul>
+<li>
+<strong>Auxiliary Control Tasks</strong><ul>
+<li>Auxiliary Control Tasks: Additional pseudo-reward functions in the environment agent interacts with<ul><li>$r^{(c)}: \mathcal{S} x \mathcal{A} \rightarrow \mathbb{R}$</li></ul>
+</li>
+<li>Set of auxiliary control tasks $\mathcal{C}$</li>
+<li>For $c \in \mathcal{C}$, we want to find: $argmax _{\theta} \mathbb{E} _{\pi}[R _{1:\infty}] + \lambda_c \sum _{c \in \mathcal{C}}\mathbb{E} _{\pi_c}[R^{(c)} _{1:\infty}]$<ul>
+<li>$R^{(c)} _{1:\infty}$: discounted return for $r^{(c)}$</li>
+<li>$\theta$: Shared parameters across $\pi, \pi^{(c)}$<ul><li>Sharing ensures balancing performance across global reward and auxiliary tasks</li></ul>
+</li>
+</ul>
+</li>
+<li>To efficiently learn many pseudo-rewards in parallel, use off-policy Q learning</li>
+<li>Types of auxiliary reward functions<ul>
+<li>Pixel Control: Changes in perceptual stream = important events. Train a policy that maximizes pixel change</li>
+<li>Feature Control: Networks extract high level features. Use activation of hidden units as auxiliary reward. Train seperate policy to maximize the hidden units activated in a layer</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Auxiliary Reward Tasks</strong><ul>
+<li>Agent also needs to maximize global reward stream<ul><li>Needs to recognize states that lead to high reward + value<ul><li>However sparse reward environments make this difficult</li></ul>
+</li></ul>
+</li>
+<li>Want to remove sparsity while keeping policy unbiased</li>
+<li>Reward Prediction: Require agent to predict reward attained in a subsequent unseen frame<ul><li>Helps shape features of the agent $\rightarrow$ biased reward predictor + feature shaper but not policy or value function</li></ul>
+</li>
+<li>Train reward prediction on $S _{\tau} = (s _{\tau - k}, s _{\tau - k + 1}, \dots, s _{\tau -1})$ to predict $r _{\tau}$<ul>
+<li>Sample $S _{\tau}$ in skewed manner to over-represent rewarding events</li>
+<li>Zero rewards and non-zero rewards equally represented ($P(r _{\tau} \neq 0) = 0.5$)</li>
+<li>Use different architecture from policy network<ul><li>Concatenate stack of states after encoded from CNN<ul>
+<li>Focuses on immediate reward prediction instead of long term returns via looking at immediate predecessor states instead of entire history</li>
+<li>These features shared with LSTM</li>
+</ul>
+</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Experience Replay</strong><ul>
+<li>Uses prioritized replay with oversampling rewarding states</li>
+<li>Also do value function replay: Does off-policy regression for value function from replay buffer<ul>
+<li>Randomly varies truncation window for returns (i.e., uses random n for n-step returns)</li>
+<li>No oversampling for this</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>UNREAL Agent</strong><ul>
+<li>Primary policy traiend with A3C<ul>
+<li>Updated online using policy gradients</li>
+<li>Uses LSTM to encode history</li>
+</ul>
+</li>
+<li>Auxiliary tasks trained via replay<ul>
+<li>Trained off-policy with Q-learning</li>
+<li>Simple feed forward architecture</li>
+</ul>
+</li>
+<li>Unreal Loss: $\mathcal{L} _{UNREAL}(\theta) = \mathcal{L} _{A3C} + \lambda _{VR}\mathcal{L} _{VR} + \lambda _{PC} \sum_c \mathcal{L}_Q^{(c)} + \lambda _{RP} \mathcal{L} _{RP}$<ul>
+<li>$\mathcal{L} _{A3C}$: A3C loss, minimized on-policy</li>
+<li>$\mathcal{L} _{VR}$: Value loss, minimized off-policy with replay buffer</li>
+<li>$\mathcal{L} _{PC}$: Auxiliary control loss, minimized off-policy with replay buffer with n-step q-learning</li>
+<li>$\mathcal{L} _{RP}$: Reward loss, minimized off-policy with rebalanced replay buffer</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Experiments</strong><ul>
+<li>Use A3C CNN-LSTM agent + ablate variants that have auxiliary outputs + losses to base agent</li>
+<li>
+<strong>Labyrinth Results</strong><ul>
+<li>Tested with a static and random goal scenarios (fixed map)<ul>
+<li>Random Goal: Optimal policy = find goal location at start of each episode and return to it as fast as possible (using long-term knowledge)</li>
+<li>Static: Don’t need to explore since goal is always the same</li>
+</ul>
+</li>
+<li>Also test against maps that are not fixed<ul><li>Optimal policy repeatedly explores maze and exploits knowledge to return to goal as many times as possible</li></ul>
+</li>
+<li>Also test shooting lasers at bots<ul><li>Tests planning, strategy, fine-control, and robustness to visual complexities</li></ul>
+</li>
+<li>
+<strong>Results</strong><ul>
+<li>UNREAL with all 3 auxiliary tasks achieves twice the performance of A3C</li>
+<li>UNREAL has 10x data efficiency compared to A3C</li>
+<li>Compared with A3C with pixel reconstruction loss, A3C with immediate auxiliary reward prediction, and A3C with feature control<ul>
+<li>Learning to control pixels better than pixel reconstruction<ul><li>Reconstruction better for faster learning earlier on and worse for final scores (puts too much focus on reconstructing irrelevant parts)</li></ul>
+</li>
+<li>Feature control improved performance</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Atari</strong><ul>
+<li>UNREAL surpasses SOTA agents (880% of mean and 250% of median score)</li>
+<li>More robust to hyperparameter settings than A3C</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<span class="meta"><time datetime="2025-06-13T00:00:00+00:00">June 13, 2025</time> · <a href="/tags/research">research</a></span></section></main></body>
+</html>

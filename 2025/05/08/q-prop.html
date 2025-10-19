@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet">
+<meta name="generator" content="Jekyll v4.2.2">
+<meta property="og:title" content="Q-Prop: Sample-Efficient Policy Gradient with An Off-Policy Critic">
+<meta name="author" content="samrat sahoo">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="A paper about the q-prop algorithm">
+<meta property="og:description" content="A paper about the q-prop algorithm">
+<link rel="canonical" href="https://samratsahoo.com/2025/05/08/q-prop">
+<meta property="og:url" content="https://samratsahoo.com/2025/05/08/q-prop">
+<meta property="og:site_name" content="samrat’s thought space">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2025-05-08T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="Q-Prop: Sample-Efficient Policy Gradient with An Off-Policy Critic">
+<meta name="twitter:site" content="@samratdotjs">
+<meta name="twitter:creator" content="@samratdotjs"> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"samrat sahoo","url":"https://samratsahoo.com"},"dateModified":"2025-05-08T00:00:00+00:00","datePublished":"2025-05-08T00:00:00+00:00","description":"A paper about the q-prop algorithm","headline":"Q-Prop: Sample-Efficient Policy Gradient with An Off-Policy Critic","mainEntityOfPage":{"@type":"WebPage","@id":"https://samratsahoo.com/2025/05/08/q-prop"},"url":"https://samratsahoo.com/2025/05/08/q-prop"}</script><title> Q-Prop: Sample-Efficient Policy Gradient with An Off-Policy Critic - samrat's thought space</title>
+<link rel="shortcut icon" href="/favicon.webp">
+<link rel="alternate" type="application/atom+xml" title="samrat's thought space" href="/atom.xml">
+<link rel="alternate" type="application/json" title="samrat's thought space" href="https://samratsahoo.com/feed.json">
+<link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml">
+<style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:10rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5{line-height:1;margin:1rem 0;font-weight:600}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:60rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}@media print{.no-print,.no-print *{display:none !important}}img.mermaid{max-width:200px}.url{color:#0645AD}*::-moz-selection{color:white;background:#7011dc}*::selection{color:white;background:#7011dc}*{font-family:"Outfit", sans-serif}li>ul{padding-left:1rem}</style>
+<script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"},"svg":{"fontCache":"global","scale":1.0,"minScale":0.5,"mtextInheritFont":true,"merrorInheritFont":true,"mathmlSpacing":false,"skipAttributes":{},"exFactor":0.5},"chtml":{"scale":1.0,"minScale":0.5,"matchFontHeight":true,"mtextFont":"serif","linebreaks":{"automatic":false}}}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js"></script>
+</head>
+<body><main><header aria-hidden="true" class="no-print"> <!--<h1 class="logo">samrat's thought space</h1>--><nav role="navigation" aria-hidden="true"><ul>
+<li><a href="/">about</a></li>
+<li><a href="/reading" class="active">reading</a></li>
+<li><a href="/research">research</a></li>
+<li><a href="/writing">writing</a></li>
+<li><a href="/search">search</a></li>
+</ul></nav></header><section class="post"><h2>Q-Prop: Sample-Efficient Policy Gradient with An Off-Policy Critic</h2>
+<ul>
+<li>
+<strong>Resources</strong><ul><li>
+<a href="https://arxiv.org/abs/1611.02247">Paper</a> <br><br>
+</li></ul>
+</li>
+<li>
+<strong>Introduction</strong><ul>
+<li>Problems with using deep neural nets:<ul>
+<li>Hyperparameter sensitivity causes unstable / non-convergent learning</li>
+<li>High sample complexity</li>
+</ul>
+</li>
+<li>Monte carlo policy gradient gives unbiased but high variance estimates of gradient<ul>
+<li>Can constrain policy change</li>
+<li>Can mix value-based back ups</li>
+<li>Still require high number of samples</li>
+<li>Problem with policy gradient methods is they can only use on-policy samples<ul><li>Need to collect more samples after each parameter update</li></ul>
+</li>
+</ul>
+</li>
+<li>Off-policy Q learning and actor critic can use all samples<ul>
+<li>more sample efficient</li>
+<li>Convergence is not guaranteed with non-linear function approximators</li>
+<li>Need extensive hyperparameter tuning</li>
+</ul>
+</li>
+<li>Q-Prop: combines advantages of on-policy policy gradient with efficiency of off-policy learning<ul>
+<li>Reduces variance of gradient estimates without adding bias</li>
+<li>Learns action-value off-policy<ul>
+<li>First order taylor expansion of critic as control variate</li>
+<li>Monte carlo policy gradient term with residuals in advantage approximation</li>
+<li>Uses off-policy critic to reduce varaince or on-policy monte carlo returns to correct for bias in critic gradient</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Background</strong><ul>
+<li>Assume standard RL setting</li>
+<li>Combines strengths of monte carlo policy gradient (i.e., TRPO, REINFORCE) and policy gradient with function approximation (i.e., actor-critic)</li>
+<li>
+<strong>Monte Carlo Policy Gradient Methods</strong><ul>
+<li>Use vanilla policy gradient with baselines (REINFORCE) gradient: $\nabla _{\theta}J(\theta) = \mathbb{E} _{s_t \sim \rho _\pi (\cdot), a_t \sim \pi(\cdot \vert s_t)}[\nabla _\theta \log \pi _\theta (a_t \vert s_t)(R_t - b(s_t))]$<ul><li>Use value function as baseline: $V _\pi(s_t) = \mathbb{E}[R_t] = \mathbb{E} _{\pi _\theta(a_t \vert s_t)}[Q _{\pi(s_t, a_t)}]$ ($R_t - b(s_t) = A _\pi(s_t, a_t)$)</li></ul>
+</li>
+<li>We can use off-policy data with importance sampling with policy gradient to reduce sample complexity<ul><li>Difficult to scale to high dimensions because of degenerating importance weights</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Policy Gradient With Function Approximation</strong><ul>
+<li>Actor-critic methods use a policy evaluation step with TD learning and policy improvement step</li>
+<li>More sample efficient because we use experience replay<ul><li>Biased gradient: $\nabla _\theta J(\theta) \approx \mathbb{E} _{s_t \sim \rho _{\beta} (\cdot)}[\nabla_a Q_w(s_t, a) \vert _{a = \mu _\theta(s_t) \nabla _\theta \mu _\theta(s_t)}]$</li></ul>
+</li>
+<li>Does not rely on high variance REINFORCE gradients</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Q-Prop</strong><ul>
+<li>Unbiased + high variance estimator = monte carlo policy gradient</li>
+<li>Deterministic + biased estimator as control variate for monte carlo policy gradient = policy gradient with function approximation</li>
+<li>
+<strong>Q-Prop Estimator</strong><ul>
+<li>Start with first order taylor expansion of arbitrary function as control variate for policy gradient estimator<ul><li>$\bar{f}(s_t, a_t) = f(s_t, \bar{a_t}) + \nabla_a f(s_t, a) \vert _{a = \bar{a_t}}(a_t - \bar{a_t})$</li></ul>
+</li>
+<li>Denote monte carlo returns from state and action as $\hat{Q}(s_t, a_t)$</li>
+<li>Using $f = Q_w$, $\mu _\theta(s_t) = \mathbb{E} _{\pi _{\theta}(a_t \vert s_t)}[a_t]$ denoting the expected action of a stochastic policy, we get the Q-Prop gradient estimator as:<ul><li>$\nabla _\theta J(\theta) = \mathbb{E} _{\rho _\pi, \pi}[\nabla _\theta \log \pi _\theta (a_t \vert s_t)(\hat{Q}(s_t, a_t) - \bar{Q} _w(s_t, a_t))] + \mathbb{E} _{\rho _\pi}[\nabla_a Q_w(s_t, a) \vert _{a = \mu _\theta(s_t)} \nabla _\theta \mu _\theta (s_t)]$</li></ul>
+</li>
+<li>Using advantages instead of Q values, we can rewrite this estimator:<ul>
+<li>$\nabla _\theta J(\theta) = \mathbb{E} _{\rho _\pi, \pi}[\nabla _\theta \log \pi _\theta (a_t \vert s_t)(\hat{A}(s_t, a_t) - \bar{A} _w(s_t, a_t))] + \mathbb{E} _{\rho _\pi}[\nabla_a Q_w(s_t, a) \vert _{a = \mu _\theta(s_t)} \nabla _\theta \mu _\theta (s_t)]$</li>
+<li>Advantage taylor approximation: $\bar{A}(s_t, a_t) = \nabla_a Q_w (s_t, a) \vert _{a = \mu _\theta(s_t)}(a_t - \mu _\theta(s_t))$</li>
+</ul>
+</li>
+<li>Two main components to estimator:<ul>
+<li>Analytic gradient from critic: $\mathbb{E} _{\rho _\pi}[\nabla_a Q_w(s_t, a) \vert _{a = \mu _\theta(s_t)} \nabla _\theta \mu _\theta (s_t)]$</li>
+<li>Residual gradient from REINFORCE: $ \mathbb{E} _{\rho _\pi, \pi}[\nabla _\theta \log \pi _\theta (a_t \vert s_t)(\hat{A}(s_t, a_t) - \bar{A} _w(s_t, a_t))]$</li>
+</ul>
+</li>
+<li>Q-Prop is effectively actor-critic where critic updated off-policy and actor updated on-policy<ul>
+<li>Inlcudes a REINFORCE correction term so that it remains a monte carlo policy gradient</li>
+<li>Allows you to combine on and off-policy methods</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Control Variate Analysis and Adaptive Q-Prop</strong><ul>
+<li>$\eta(s_t)$: weighing variable that modulates strength of control variate (doesn’t introduce bias)<ul><li>New Estimator: $\nabla _\theta J(\theta) = \mathbb{E} _{\rho _\pi, \pi}[\nabla _\theta \log \pi _\theta (a_t \vert s_t)(\hat{A}(s_t, a_t) - \bar{A} _w(s_t, a_t))] + \mathbb{E} _{\rho _\pi}[\eta(s_t)\nabla_a Q_w(s_t, a) \vert _{a = \mu _\theta(s_t)} \nabla _\theta \mu _\theta (s_t)]$</li></ul>
+</li>
+<li>Varaince: $Var^* = \mathbb{E} _{\rho _\pi}[\sum_m Var _{a_t}(\nabla _{\theta_m} \log \pi _\theta(a_t \vert s_t)(\hat{A}(s_t, a_t) - \eta(s_t)\bar{A} _w(s_t, a_t)))]$<ul>
+<li>m: indices of dimension of $\theta$</li>
+<li>We want to choose $Var^* &lt; Var$ where $Var = \mathbb{E} _{\rho _\pi}[\sum_m Var _{a_t}(\nabla _{\theta_m} \log \pi _\theta(a_t \vert s_t)\hat{A}(s_t, a_t))]$<ul><li>Usually impractical to get multiple action samples from same state<ul>
+<li>Use surrogate measure for variance: $Var = \mathbb{E} _{\rho _\pi}[Var _{a_t}(\hat{A}(s_t, a_t))]$</li>
+<li>Surrogate for state-dependent baselines: $Var^* = \mathbb{E} _{\rho _\pi}[Var _{a_t}(\hat{A}(s_t, a_t) - \eta(s_t)\bar{A}(s_t, a_t))]$<ul><li>$= Var + \mathbb{E} _{\rho _\pi}[-2\eta(s_t)Cov _{a_t}(\hat{A}(s_t, a_t), \bar{A}(s_t, a_t)) + \eta(s_t)^2 Var _{a_t}(\bar{A}(s_t, a_t))]$ (derived with variance expansions)<ul>
+<li>$\mathbb{E} _\pi [\hat{A}(s_t, a_t)]= \mathbb{E} _\pi [\bar{A}(s_t, a_t)] = 0$</li>
+<li>$Cov _{a_t}(\hat{A}, \bar{A}) = \mathbb{E} _\pi [\hat{A}(s_t, a_t)\bar{A}(s_t, a_t)]$</li>
+<li>$Var _{a_t}(\bar{A}) = \mathbb{E} _\pi [\bar{A}(s_t, a_t)^2] = \nabla_a Q_w(s_t, a) \vert^T _{a = \mu _\theta(s_t)} \sum _\theta(s_t) \nabla_a Q_w(s_t, a) \vert _{a = \mu _\theta(s_t)}$<ul>
+<li>$\sum _\theta$ is the covariance matrix for $\pi _\theta$</li>
+<li>$Cov _{a_t}(\hat{A}, \bar{A})$ can be estimate with single action sample</li>
+</ul>
+</li>
+</ul>
+</li></ul>
+</li>
+</ul>
+</li></ul>
+</li>
+</ul>
+</li>
+<li>Adaptive Q-Prop:<ul><li>Maximum reduction in variance occurs when $\eta^*(s_t) = Cov(\hat{A}, \bar{A}) / Var _{a_t}(\bar{A})$<ul><li>Simplified variance; $Var^* = \mathbb{E} _{\rho _\pi}[(1 - \rho _{corr}(\hat{A}, \bar{A})^2)Var _{a_t}(\hat{A})]$<ul>
+<li>$\rho _{corr}$ is the correlation coefficient</li>
+<li>Guarantees variance reduction if $\bar{A}$ is correlated with $\hat{A}$ for any state</li>
+<li>$Q_w$ doesn’t necessarily need to be approximating $Q _\pi$ well for good results<ul><li>Taylor expansion just needs to be correlated with $\hat{A}$</li></ul>
+</li>
+</ul>
+</li></ul>
+</li></ul>
+</li>
+<li>Contrastive and Aggressive Q-Prop:<ul>
+<li>Single sample estimate of $Cov(\hat{A}, \bar{A})$ has high variance</li>
+<li>Conservative Q-Prop:<ul>
+<li>$\eta (s_t) = 1 \text{ if } \hat{Cov}(\hat{A}, \bar{A}) &gt; 0$ else $\eta (s_t) = 0$</li>
+<li>Disables control variate for some samples of states</li>
+<li>Makes sense if $\hat{A}$ and $\bar{A}$ have negative correlation (critic is poor)</li>
+</ul>
+</li>
+<li>Aggresive Q-Prop: $\eta (s_t) = sign(\hat{Cov}(\hat{A}, \bar{A}))$<ul><li>More liberal use of control variate</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Q-Prop Algorithm</strong><ul>
+<li>On each iteration<ul>
+<li>Rolls out stochastic policy to collect on-policy samples</li>
+<li>Adds batch to replay buffer</li>
+<li>Takes few gradient steps on critic</li>
+<li>Computes $\hat{A}, \bar{A}$</li>
+<li>Applies gradient step on $\pi _\theta$</li>
+</ul>
+</li>
+<li>Critic is computed using the same off-policy TD learning found in DDPG (i.e., from replay buffer)</li>
+<li>GAE is used to estimate $\hat{A}$</li>
+<li>Policy update can be done with any method that uses first-order gradients and/or on-policy batch data</li>
+</ul>
+</li>
+<li>
+<strong>Limitations</strong><ul>
+<li>If data collection is fast, compute time bound by critic training<ul><li>If slow, there is sufficient time between updates to fit $Q_w$ well (can be done asynchronously)<ul><li>Compute time will be about the same as TRPO</li></ul>
+</li></ul>
+</li>
+<li>Conservative Q-Prop more robust to bad critics than standard Q-Prop or off-policy actor-critic</li>
+<li>Difficult to know when off-policy critic is reliable (can use stable off-policy algorithms like Retrace($\lambda$))</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Experiments</strong><ul>
+<li>
+<strong>Adaptive Q-Prop</strong><ul>
+<li>Conservative Q-Prop achieves more stable performance than agressive or standard Q-Prop</li>
+<li>All Q-Prop outperform TRPO in terms of sample efficiency</li>
+</ul>
+</li>
+<li>
+<strong>Evaluation Across Algorithms</strong><ul>
+<li>Conservative Q Prop outperforms TRPO and VPG</li>
+<li>Conservative Q prop with VPG is comparable to TRPO</li>
+<li>DDPG is very hyperparameter sensitive but Q prop has monotonic learning behavior comparatively<ul><li>Q Prop can outperform DDPG in more complex domains</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Evaluation Across Domains</strong><ul>
+<li>Q-Prop is more sample efficient than TRPO on humanoids<ul><li>DDPG can’t find a good solution</li></ul>
+</li>
+<li>More stable RL algorithms allow us to avoid looking for hyperparameter regions in unstable algorithms</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<span class="meta"><time datetime="2025-05-08T00:00:00+00:00">May 8, 2025</time> · <a href="/tags/research">research</a></span></section></main></body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet">
+<meta name="generator" content="Jekyll v4.2.2">
+<meta property="og:title" content="Decision Transformer: Reinforcement Learning via Sequence Modeling">
+<meta name="author" content="samrat sahoo">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="A paper about the decision transformer">
+<meta property="og:description" content="A paper about the decision transformer">
+<link rel="canonical" href="https://samratsahoo.com/2025/05/12/decision-transformer">
+<meta property="og:url" content="https://samratsahoo.com/2025/05/12/decision-transformer">
+<meta property="og:site_name" content="samrat’s thought space">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2025-05-12T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="Decision Transformer: Reinforcement Learning via Sequence Modeling">
+<meta name="twitter:site" content="@samratdotjs">
+<meta name="twitter:creator" content="@samratdotjs"> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"samrat sahoo","url":"https://samratsahoo.com"},"dateModified":"2025-05-12T00:00:00+00:00","datePublished":"2025-05-12T00:00:00+00:00","description":"A paper about the decision transformer","headline":"Decision Transformer: Reinforcement Learning via Sequence Modeling","mainEntityOfPage":{"@type":"WebPage","@id":"https://samratsahoo.com/2025/05/12/decision-transformer"},"url":"https://samratsahoo.com/2025/05/12/decision-transformer"}</script><title> Decision Transformer: Reinforcement Learning via Sequence Modeling - samrat's thought space</title>
+<link rel="shortcut icon" href="/favicon.webp">
+<link rel="alternate" type="application/atom+xml" title="samrat's thought space" href="/atom.xml">
+<link rel="alternate" type="application/json" title="samrat's thought space" href="https://samratsahoo.com/feed.json">
+<link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml">
+<style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:10rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5{line-height:1;margin:1rem 0;font-weight:600}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:60rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}@media print{.no-print,.no-print *{display:none !important}}img.mermaid{max-width:200px}.url{color:#0645AD}*::-moz-selection{color:white;background:#7011dc}*::selection{color:white;background:#7011dc}*{font-family:"Outfit", sans-serif}li>ul{padding-left:1rem}</style>
+<script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"},"svg":{"fontCache":"global","scale":1.0,"minScale":0.5,"mtextInheritFont":true,"merrorInheritFont":true,"mathmlSpacing":false,"skipAttributes":{},"exFactor":0.5},"chtml":{"scale":1.0,"minScale":0.5,"matchFontHeight":true,"mtextFont":"serif","linebreaks":{"automatic":false}}}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js"></script>
+</head>
+<body><main><header aria-hidden="true" class="no-print"> <!--<h1 class="logo">samrat's thought space</h1>--><nav role="navigation" aria-hidden="true"><ul>
+<li><a href="/">about</a></li>
+<li><a href="/reading" class="active">reading</a></li>
+<li><a href="/research">research</a></li>
+<li><a href="/writing">writing</a></li>
+<li><a href="/search">search</a></li>
+</ul></nav></header><section class="post"><h2>Decision Transformer: Reinforcement Learning via Sequence Modeling</h2>
+<ul>
+<li>
+<strong>Resources</strong><ul><li>
+<a href="https://arxiv.org/abs/2106.01345">Paper</a> <br><br>
+</li></ul>
+</li>
+<li>
+<strong>Introduction</strong><ul>
+<li>Want to see if modeling joint distribution of sequence of states, actions, and rewards can replace conventional RL</li>
+<li>Instead of using TD learning, train a transformer on a sequence modeling objective<ul>
+<li>Bypass bootstrapping (introduces bias)</li>
+<li>Avoid discounting rewards (which induces short sighted behaviors)</li>
+</ul>
+</li>
+<li>Transformers can do credit assignment via self-attention<ul><li>Better than bellman backups (slow propagation + can be distracted)</li></ul>
+</li>
+<li>Use for offline RL (agents learning from suboptimal data)<ul><li>Difficult due to error propagation and value overestimation</li></ul>
+</li>
+<li>You prompt the transformer with a desired return which will then generate a sequence of actions</li>
+</ul>
+</li>
+<li>
+<strong>Preliminaries</strong><ul>
+<li>
+<strong>Offline Reinforcement Learning</strong><ul>
+<li>Assume standard reinforcement learning setting</li>
+<li>Fixed dataset of trajectory rollouts of arbitrary policies<ul><li>No exploration / feedback collection</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Transformers</strong><ul><li>Standard transformer from attention is all you need</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Method</strong><ul>
+<li>We want the model to generate actions based on future desired returns<ul>
+<li>Feed the model with rewards to go (sum of future rewards): $\hat{R}_t = \sum _{t’ = t}^T r _{t’}$</li>
+<li>Trajectory representation: $\tau = (\hat{R_1}, s_1, a_1, \dots, \hat{R_T}, s_T, a_T)$</li>
+<li>At test time, we specify desired performance (1 for success or 0 for failure) and the starting state of the environment<ul><li>Transformer generates action and we decrement return by achieved reward until episode termination</li></ul>
+</li>
+</ul>
+</li>
+<li>Architecture<ul>
+<li>Feed last $K$ timesteps (total 3K tokens: one for return-to-go, one for state, one for action)</li>
+<li>Learn a linear (or convolutional) layer + normalization for each token type</li>
+<li>Embedding for each time step is learned + added to a token (different from standard positional encoding)</li>
+<li>Tokens fed to GPT to predict actions via autoregressive modeling</li>
+</ul>
+</li>
+<li>Training<ul>
+<li>Sample minibatches of sequence length $K$ from offline data</li>
+<li>Predict $a_t$ for input $s_t$ with cross-entropy (discrete actions) or MSE loss (continuous actions)</li>
+<li>Predicting next state / rewards-to-go didn’t improve performance</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Evaluations on Offline RL Benchmarks</strong><ul>
+<li>Test against TD-learning and imitation learning algorithms</li>
+<li>
+<strong>Atari</strong><ul>
+<li>Compare with Conservative Q learning, Random Expert Mixtures, quatine regression DQN, and behavioral cloning</li>
+<li>Context length, $K = 30$ (except Pong where they use $K = 50$)</li>
+<li>Decision transformer performs comparably to conservative Q learning on 3/4 games and performs at baseline levels for all other algorithms</li>
+</ul>
+</li>
+<li>
+<strong>OpenAI Gym</strong><ul>
+<li>3 different offline datasets<ul>
+<li>Medium: Dataset from policy that achieves 1/3 score of expert policy</li>
+<li>Medium-Replay: Replay buffer of agent trained to performance of medium policy</li>
+<li>Medium-Expert: Medium policy data concatenated with expert policy data</li>
+</ul>
+</li>
+<li>Compare to CQL, BEAR, BRAC, AWR</li>
+<li>Decision transformer achieves the highest scores on most tasks and is competitive with state of the art on other tasks</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Discussion</strong><ul>
+<li>
+<strong>Does Decision Transformer perform behavior cloning on a subset of the data?</strong><ul>
+<li>Percentile Behavior Cloning (PBC): Run behavior cloning on only top X% of timesteps, ordered by episode returns<ul>
+<li>100%: Trains on entire dataset</li>
+<li>0%: Clones only the best trajectory</li>
+<li>Trade off between generalization and specialization</li>
+</ul>
+</li>
+<li>On most environments, decision transformer competitive with best PBC: can train on entire dataset but hone in on subset</li>
+<li>In scenarios with low data, DT outperforms PBC: DT uses all data to improve generalization even if trajectories are dissimilar</li>
+</ul>
+</li>
+<li>
+<strong>How well does Decision Transformer model the distribution of returns?</strong><ul>
+<li>On every task, desired target returns highly correlated with true observed returns<ul><li>On some tasks, trajectories almost perfectly match desired returns</li></ul>
+</li>
+<li>We can prompt DT with higher returns than maximum possible; indicates DT can extrapolate</li>
+</ul>
+</li>
+<li>
+<strong>What is the benefit of using a longer context length?</strong><ul>
+<li>With no context $K = 1$, DT performs terribly</li>
+<li>When representing a distribution of policies, context allows transformer which policy generated the actions</li>
+</ul>
+</li>
+<li>
+<strong>Does Decision Transformer perform effective long-term credit assignment?</strong><ul><li>DT and behavioral cloning can create successful policies in long-term credit assignment problems<ul><li>TD learning fails here because it takes a long time to propagate Q values over long horizons</li></ul>
+</li></ul>
+</li>
+<li>
+<strong>Can transformers be accurate critics in sparse reward settings?</strong><ul>
+<li>Modify DT to output return tokens too<ul><li>First return token not given but predicted by model</li></ul>
+</li>
+<li>Transformer continuously updates reward probabilities based on events during episode<ul><li>Attends to critical events; indicates formation of state-reward associations, enabling accurate value prediction</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Does Decision Transformer perform well in sparse reward settings?</strong><ul>
+<li>TD algorithms require densely populated rewards</li>
+<li>Transformers don’t assume anything about reward density (better performance)</li>
+<li>Delayed returns minimally impact DT</li>
+<li>TD learning collapses in delayed reward scenarios</li>
+<li>Decision transformer and PBC perform well in delayed reward scenarios</li>
+</ul>
+</li>
+<li>
+<strong>Why does Decision Transformer avoid the need for value pessimism or behavior regularization?</strong><ul>
+<li>In TD learning we optimized a learned function<ul><li>Inaccuracies in function approximation can cause failures in policy improvement</li></ul>
+</li>
+<li>DT does not require optimization of learned function and hence doesn’t need regularization or conservatism</li>
+</ul>
+</li>
+<li>
+<strong>How can Decision Transformer benefit online RL regimes?</strong><ul><li>Can act as a model for behavior generation<ul><li>DT can serve as a memorization engine and can model a diverse set of behaviors</li></ul>
+</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+<span class="meta"><time datetime="2025-05-12T00:00:00+00:00">May 12, 2025</time> · <a href="/tags/research">research</a></span></section></main></body>
+</html>

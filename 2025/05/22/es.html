@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet">
+<meta name="generator" content="Jekyll v4.2.2">
+<meta property="og:title" content="Evolution Strategies as a Scalable Alternative to Reinforcement Learning">
+<meta name="author" content="samrat sahoo">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="A paper about evolutionary strategies">
+<meta property="og:description" content="A paper about evolutionary strategies">
+<link rel="canonical" href="https://samratsahoo.com/2025/05/22/es">
+<meta property="og:url" content="https://samratsahoo.com/2025/05/22/es">
+<meta property="og:site_name" content="samrat’s thought space">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2025-05-22T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="Evolution Strategies as a Scalable Alternative to Reinforcement Learning">
+<meta name="twitter:site" content="@samratdotjs">
+<meta name="twitter:creator" content="@samratdotjs"> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"samrat sahoo","url":"https://samratsahoo.com"},"dateModified":"2025-05-22T00:00:00+00:00","datePublished":"2025-05-22T00:00:00+00:00","description":"A paper about evolutionary strategies","headline":"Evolution Strategies as a Scalable Alternative to Reinforcement Learning","mainEntityOfPage":{"@type":"WebPage","@id":"https://samratsahoo.com/2025/05/22/es"},"url":"https://samratsahoo.com/2025/05/22/es"}</script><title> Evolution Strategies as a Scalable Alternative to Reinforcement Learning - samrat's thought space</title>
+<link rel="shortcut icon" href="/favicon.webp">
+<link rel="alternate" type="application/atom+xml" title="samrat's thought space" href="/atom.xml">
+<link rel="alternate" type="application/json" title="samrat's thought space" href="https://samratsahoo.com/feed.json">
+<link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml">
+<style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:10rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5{line-height:1;margin:1rem 0;font-weight:600}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:60rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}@media print{.no-print,.no-print *{display:none !important}}img.mermaid{max-width:200px}.url{color:#0645AD}*::-moz-selection{color:white;background:#7011dc}*::selection{color:white;background:#7011dc}*{font-family:"Outfit", sans-serif}li>ul{padding-left:1rem}</style>
+<script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"},"svg":{"fontCache":"global","scale":1.0,"minScale":0.5,"mtextInheritFont":true,"merrorInheritFont":true,"mathmlSpacing":false,"skipAttributes":{},"exFactor":0.5},"chtml":{"scale":1.0,"minScale":0.5,"matchFontHeight":true,"mtextFont":"serif","linebreaks":{"automatic":false}}}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js"></script>
+</head>
+<body><main><header aria-hidden="true" class="no-print"> <!--<h1 class="logo">samrat's thought space</h1>--><nav role="navigation" aria-hidden="true"><ul>
+<li><a href="/">about</a></li>
+<li><a href="/reading" class="active">reading</a></li>
+<li><a href="/research">research</a></li>
+<li><a href="/writing">writing</a></li>
+<li><a href="/search">search</a></li>
+</ul></nav></header><section class="post"><h2>Evolution Strategies as a Scalable Alternative to Reinforcement Learning</h2>
+<ul>
+<li>
+<strong>Resources</strong><ul><li>
+<a href="https://arxiv.org/abs/1703.03864">Paper</a> <br><br>
+</li></ul>
+</li>
+<li>
+<strong>Introduction</strong><ul>
+<li>Alternative to RL is black-box optimization strategies<ul>
+<li>Direct policy search</li>
+<li>Neuro evolution</li>
+</ul>
+</li>
+<li>Key Findings<ul>
+<li>Virtual batch normalization improves reliability of evolution strategies</li>
+<li>Evolution strategies are parallelizable</li>
+<li>Data efficiency is good - require 3 - 10x more data but decrease in this efficiency was offset with reduction in required computation by 3x</li>
+<li>ES had better exploration than policy gradient methods</li>
+<li>ES are robust to hyperparameters</li>
+</ul>
+</li>
+<li>Properties of black box optimization<ul>
+<li>In difference to distribution of rewards</li>
+<li>No need for backpropagation</li>
+<li>Tolerance to long time horizons</li>
+<li>(Perceived to be) less effective for hard RL problems</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Evolution Strategies</strong><ul>
+<li>Terminology<ul>
+<li>Generation: iteration</li>
+<li>Genotypes: parameter vectors</li>
+<li>Mutation: Perturbation in parameter vectors</li>
+<li>Fitness: Objective function</li>
+</ul>
+</li>
+<li>Highest scoring parameter vectors are recombined to form population for next generation<ul><li>Repeated til convergence</li></ul>
+</li>
+<li>Natural Evolution Strategies (NES):<ul>
+<li>$F$: Objective function</li>
+<li>$\theta$: Parameters</li>
+<li>Population with distribution over parameters $p _{\psi}(\theta)$ maximizes expectation of objective function<ul>
+<li>Population parameterized by $\psi$</li>
+<li>Estimator: $\nabla _\psi \mathbb{E} _{\theta} F(\theta) = \mathbb{E} _{\theta \sim p _{\psi}}[F(\theta)\nabla _{\psi} \log p _{\psi}(\theta)]$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>For RL problems<ul>
+<li>$F(\cdot)$ is stochastic return</li>
+<li>$\theta$ is policy parameters</li>
+</ul>
+</li>
+<li>Instantiate population distribution as isotropic multivariate gaussian $p _{\psi} \sim \mathcal{N}(\psi, \sigma^2 I)$<ul><li>Expected objective in terms of parameter vector: $\mathbb{E} _{\theta \sim p _{\psi}}F(\theta) = \mathbb{E} _{\epsilon \sim N(0,I)} F(\theta + \sigma \epsilon)$</li></ul>
+</li>
+<li>Use stochastic gradient ascent to optimize over $\theta$<ul><li>Gradient: $\nabla _\theta \mathbb{E} _{\epsilon \sim N(0,I)} F(\theta + \sigma \epsilon) = \frac{1}{\sigma} \mathbb{E} _{\epsilon \sim N(0,I)} (F(\theta + \sigma \epsilon)\epsilon)$<ul><li>Approximate with samples</li></ul>
+</li></ul>
+</li>
+<li>Algorithm:<ul>
+<li>Initialize learning rate, standard deviation, initial policy parameters</li>
+<li>For t = 0, 1, 2, $\dots$<ul>
+<li>Sample $\epsilon_1 \dots \epsilon_n \sim N(0,I)$</li>
+<li>Compute returns $F_i = F(\theta + \sigma \epsilon_i)$ for $i = 1 \dots n$</li>
+<li>Set $\theta _{t+1} \leftarrow \theta_t + \alpha \frac{1}{n\sigma}\sum _{i = 1}^n F_i \epsilon_i$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Scaling and parallelizing ES</strong><ul>
+<li>ES works on complete episodes $\rightarrow$ minimal communication between workers</li>
+<li>Each worker only obtains scalar return<ul><li>Synchronizing random seeds between workers before optimizing allows workers to know perturbations of other workers without communication</li></ul>
+</li>
+<li>ES doesn’t require value approximation<ul><li>Doesn’t require value functions to catch up with policy</li></ul>
+</li>
+<li>Algorithm<ul>
+<li>Initialize n workers, n seeds, and initial parameters</li>
+<li>For $t = 0 \dots$<ul>
+<li>For each worker<ul>
+<li>Compute noise</li>
+<li>Compute returns from parameters and noise</li>
+</ul>
+</li>
+<li>Send scalar returns from each worker to every other worker</li>
+<li>For each worker<ul>
+<li>Reconstruct perturbations $\epsilon_j$ using known seeds</li>
+<li>Set $\theta _{t+1} = \theta_t + \alpha \frac{1}{n\sigma}\sum _{j = 1}^n F_j \epsilon_j$</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>In practice instead of reconstructing perturbations, we just sample some gaussian noise<ul><li>With more workers can also perturb a subset of the parameters to reduce computation<ul>
+<li>Perturbation distribution $p _{\psi}$ is a mixture of gaussians</li>
+<li>If only one coordinate changed for each worker then we get finite differences</li>
+</ul>
+</li></ul>
+</li>
+<li>Mirrored Sampling (Anthithetic Sampling): Evaluate pairs of perturbations $\epsilon, -\epsilon$ for noise vector $\epsilon$<ul><li>Results in variance reduction</li></ul>
+</li>
+<li>Fitness Shaping: apply rank transformation to returns before computing parameter update<ul>
+<li>Removes influence of outlier individuals</li>
+<li>Decreases probability of falling into local optima</li>
+</ul>
+</li>
+<li>Apply weight decay</li>
+<li>$\sigma$ is fixed</li>
+<li>Episode-level ES can lead to low CPU utilization; some episodes run much longer than others<ul><li>Truncate episodes at specific length $m$</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>The impact of network parameterization</strong><ul>
+<li>Learning signals in ES come from sampling policy parameters<ul>
+<li>Exploration driven by perturbations</li>
+<li>To improve parameters, some members of population must get better return than others</li>
+</ul>
+</li>
+<li>In Atari environments, perturbed parameters tended to take on one specific action regardless of the state that was given as input<ul><li>Match policy gradient performance by using virtual batch normalization<ul>
+<li>Same as normal batch norm but minibatch for computing normalizing statistics is chosen at the start and fixed</li>
+<li>Makes it more sensitive to input changes at early stages of training; causes policy to take wider variety of actions</li>
+<li>Makes training more expensive</li>
+</ul>
+</li></ul>
+</li>
+<li>In Mujoco environments, discretizing action allowed for more exploration<ul><li>Forced actions to be non-smooth with respect to input + parameter perturbations<ul><li>Caused wider variety of behavior to play out</li></ul>
+</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Smoothing in parameter space versus smoothing in action space</strong><ul>
+<li>RL is hard because of lack of informative gradients of policy performance<ul>
+<li>Due to non-smoothness of environment or policy</li>
+<li>Or have high variance</li>
+</ul>
+</li>
+<li>If we want to solve problems that give return $R(a)$ for sequence of actions, $a = (a_1 \dots a_T)$<ul>
+<li>Objective: $F(\theta) = R(a(\theta))$<ul>
+<li>$F(\theta)$ might be non-smooth</li>
+<li>Cannot solve for $\theta$ via gradient optimization because we don’t have access to underlying state transition function</li>
+</ul>
+</li>
+<li>Need to add noise to make problem smooth<ul>
+<li>Policy gradient does this by sampling from action distribution<ul>
+<li>I.e., discrete actions $\rightarrow$ score $\rightarrow$ softmax probabilities</li>
+<li>Policy gradient objective $F _{PG}(\theta) = \mathbb{E} _{\epsilon}[R(a(\epsilon, \theta))]$ where $\epsilon$ is a noise source</li>
+<li>Gradient: $\nabla _\theta F _{PG}(\theta) = \mathbb{E} _{\epsilon}[R(a(\epsilon, \theta))\nabla _{\theta} \log p(a(\epsilon, \theta); \theta)]$</li>
+</ul>
+</li>
+<li>ES add noise to parameter space via perturbation<ul>
+<li>Perturbed parameter: $\tilde{\theta} = \theta + \zeta$ where $\zeta$ is noise from a gaussian</li>
+<li>Objective: $F _{Es}(\theta) = \mathbb{E} _{\zeta}[R(a(\zeta, \theta))]$</li>
+<li>Gradient: $\nabla _\theta F _{ES}(\theta) = \mathbb{E} _{\zeta}[R(a(\zeta, \theta))\nabla _{\theta} \log p(\tilde{\theta}(a(\zeta, \theta)); \theta)]$</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>When is ES better than policy gradients?</strong><ul>
+<li>$Var[\nabla _\theta F _{PG}(\theta)] \approx Var[R(a)]Var[\nabla _\theta \log p(a; \theta)]$</li>
+<li>$Var[\nabla _\theta F _{ES}(\theta)] \approx Var[R(a)]Var[\nabla _\theta \log p(\tilde{\theta}; \theta)]$<ul>
+<li>Variance of returns will be similar</li>
+<li>Variance of policy gradient estimator grows linearly with episode length<ul>
+<li>In practice effective steps reduced due to discounted rewards (biases gradient if actions have long-lasting effect)</li>
+<li>Alternatively we use value function approximation to reduce steps (also biases gradient)</li>
+</ul>
+</li>
+<li>Variance of ES gradient is independent of episode length<ul><li>Beter for longer episodes</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Problem dimensionality</strong><ul><li>Gradient for ES is just finite differences in high dimensional space<ul>
+<li>$\nabla _\theta \eta(\theta) = \mathbb{E} _{\epsilon \sm N(0, I)}[F(\theta + \sigma \epsilon)\epsilon / \sigma] = \mathbb{E} _{\epsilon \sm N(0, I)}[(F(\theta + \sigma \epsilon) - F(\theta))\epsilon / \sigma]$</li>
+<li>Will scale poorly with number of parameters of $\theta$</li>
+<li>Larger networks will have slightly better results</li>
+</ul>
+</li></ul>
+</li>
+<li>
+<strong>Advantages of not calculating gradients</strong><ul>
+<li>Easy parallelism</li>
+<li>Lower communication overhead in distributed settings</li>
+<li>Deals with sparse and delayed rewards</li>
+<li>Reduced computation + memory usage because we do not need backpropagation</li>
+<li>Do not need to deal with exploding gradients</li>
+<li>Bounded and smooth cost functions</li>
+<li>Can use non-differentiable elements into architecture (i.e., hard attention)</li>
+<li>Good for low precision hardware + low precision arithmetic</li>
+<li>Invaraint to frequency at which agents interacts with environment</li>
+<li>Does not need hierarchy</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Experiments</strong><ul>
+<li>
+<strong>MuJoCo</strong><ul>
+<li>ES benefits from discretizing actions sometimes (continuous hampers exploration happening from perturbations)</li>
+<li>ES matches TRPO performance<ul>
+<li>Solve same environments with less than 10x penalty in sample efficiency (hard environment)</li>
+<li>Easy environments had 3x better sample complexity</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Atari</strong><ul>
+<li>A3C required 1 day for atari game</li>
+<li>With parallelization, ES required 1 hour</li>
+<li>ES performed better in 23 games and worse in 28</li>
+</ul>
+</li>
+<li>
+<strong>Parallelization</strong><ul>
+<li>Solved 3D humanoid in 11 hours (same time as RL approach)</li>
+<li>Distributed across 80 nodes (1440 cores), it takes 10 mins (linear speed up in number of cores)</li>
+</ul>
+</li>
+<li>
+<strong>Invariance to temporal resolution</strong><ul>
+<li>Frame Skip: RL agent decide actions in lower frequency than used in simulator<ul>
+<li>Too high = RL agent doesn’t make decisions at fine enought timeframe</li>
+<li>Too low = length of episode increases too much</li>
+</ul>
+</li>
+<li>ES gradient estimate is invaraint to length of episode</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<span class="meta"><time datetime="2025-05-22T00:00:00+00:00">May 22, 2025</time> · <a href="/tags/research">research</a></span></section></main></body>
+</html>

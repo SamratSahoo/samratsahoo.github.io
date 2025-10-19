@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet">
+<meta name="generator" content="Jekyll v4.2.2">
+<meta property="og:title" content="The Intentional Unintentional Agent: Learning to Solve Many Continuous Control Tasks Simultaneously">
+<meta name="author" content="samrat sahoo">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="A paper about iu agents">
+<meta property="og:description" content="A paper about iu agents">
+<link rel="canonical" href="https://samratsahoo.com/2025/06/29/iu-agent">
+<meta property="og:url" content="https://samratsahoo.com/2025/06/29/iu-agent">
+<meta property="og:site_name" content="samrat’s thought space">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2025-06-29T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="The Intentional Unintentional Agent: Learning to Solve Many Continuous Control Tasks Simultaneously">
+<meta name="twitter:site" content="@samratdotjs">
+<meta name="twitter:creator" content="@samratdotjs"> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"samrat sahoo","url":"https://samratsahoo.com"},"dateModified":"2025-06-29T00:00:00+00:00","datePublished":"2025-06-29T00:00:00+00:00","description":"A paper about iu agents","headline":"The Intentional Unintentional Agent: Learning to Solve Many Continuous Control Tasks Simultaneously","mainEntityOfPage":{"@type":"WebPage","@id":"https://samratsahoo.com/2025/06/29/iu-agent"},"url":"https://samratsahoo.com/2025/06/29/iu-agent"}</script><title> The Intentional Unintentional Agent: Learning to Solve Many Continuous Control Tasks Simultaneously - samrat's thought space</title>
+<link rel="shortcut icon" href="/favicon.webp">
+<link rel="alternate" type="application/atom+xml" title="samrat's thought space" href="/atom.xml">
+<link rel="alternate" type="application/json" title="samrat's thought space" href="https://samratsahoo.com/feed.json">
+<link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml">
+<style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:10rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5{line-height:1;margin:1rem 0;font-weight:600}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:60rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}@media print{.no-print,.no-print *{display:none !important}}img.mermaid{max-width:200px}.url{color:#0645AD}*::-moz-selection{color:white;background:#7011dc}*::selection{color:white;background:#7011dc}*{font-family:"Outfit", sans-serif}li>ul{padding-left:1rem}</style>
+<script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"},"svg":{"fontCache":"global","scale":1.0,"minScale":0.5,"mtextInheritFont":true,"merrorInheritFont":true,"mathmlSpacing":false,"skipAttributes":{},"exFactor":0.5},"chtml":{"scale":1.0,"minScale":0.5,"matchFontHeight":true,"mtextFont":"serif","linebreaks":{"automatic":false}}}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js"></script>
+</head>
+<body><main><header aria-hidden="true" class="no-print"> <!--<h1 class="logo">samrat's thought space</h1>--><nav role="navigation" aria-hidden="true"><ul>
+<li><a href="/">about</a></li>
+<li><a href="/reading" class="active">reading</a></li>
+<li><a href="/research">research</a></li>
+<li><a href="/writing">writing</a></li>
+<li><a href="/search">search</a></li>
+</ul></nav></header><section class="post"><h2>The Intentional Unintentional Agent: Learning to Solve Many Continuous Control Tasks Simultaneously</h2>
+<ul>
+<li>
+<strong>Resources</strong><ul><li>
+<a href="https://arxiv.org/abs/1707.03300">Paper</a> <br><br>
+</li></ul>
+</li>
+<li>
+<strong>Introduction</strong><ul>
+<li>We can use a single stream of experience to learn + perfect many policies</li>
+<li>Use actor-critic architecture with deterministic policy gradients<ul>
+<li>Solve 1 task on-policy while solving other tasks off-policy</li>
+<li>Policies learned unintentionally can be used for intentional policies</li>
+</ul>
+</li>
+<li>Use 2 neural networks<ul>
+<li>Actor has multiple heads representing different policies with shared lower level representation</li>
+<li>Critic has several state-action value functions with a shared representation</li>
+</ul>
+</li>
+<li>Introduces automatic procedure to generate semantic goals for agent</li>
+</ul>
+</li>
+<li>
+<strong>The Intentional Unintentional Agent</strong><ul>
+<li>Vanilla policy gradient theorem = for a stochastic policy<ul>
+<li>Deterministic policy gradient = for a deterministic policy (uses action-value gradients)<ul><li>Cannot use off-policy learning</li></ul>
+</li>
+<li>Deep deterministic policy gradient = enables off-policy learning</li>
+</ul>
+</li>
+<li>Given stream of rewards, $r_t^i$, we maximize: $J(\theta) = \mathbb{E} _{\rho^\beta}[\sum_i Q _{\mu}^i(s, \mu _{\theta}^i(s))]$<ul>
+<li>$\mu _{\theta}^i$: Policy for task $i$</li>
+<li>$\rho^\beta$: stationary distribution of behavior policy ($\beta(a \vert s)$)</li>
+<li>Gradient: $\nabla _{\theta} J(\theta) = \mathbb{E} _{\rho^\beta}[\sum_i \nabla _{\theta} \mu _{\theta}^i(s) \nabla _{a^i}Q _{\mu}^i(s, a^i) \vert _{a^i = \mu^i _{\theta}(s)}]$</li>
+</ul>
+</li>
+<li>Behavior Policy<ul>
+<li>Given by intentional policies</li>
+<li>Input: $s_t$, Output: $a_t$</li>
+<li>$\beta (a \vert s) = \mu^i _{\theta}(s) + Z$<ul>
+<li>$Z$: random variable for exploration</li>
+<li>At the beginning of each episode, intentional task $i$ is selected as behavior<ul><li>Alternatively, can switch tasks when task $i$ is successful in episode</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Actor and Critic Updates:<ul>
+<li>$\delta_j^i = r_j^i + \gamma Q _{w’}^i(s _{j+1}, \mu _{\theta’}^i(s _{j+1})) - Q _{w}^i(s _{j}, a_j)$</li>
+<li>$w \leftarrow w + \alpha _{critic}\sum_j \sum_i \delta_j^i \nabla_w Q^i_w(s_j, a_j)$</li>
+<li>$\theta \leftarrow \theta + \alpha _{actor}\sum_j \sum_i \nabla _{\theta}\mu _{\theta^i}(s_j) \nabla _{a^i}Q_w^i(s_j, a^i) \vert _{a^i = \mu _{\theta}^i(s_j)}$</li>
+<li>$j$: minibatch indices</li>
+<li>$\theta’, w’$: target networks for stability</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Experimental Setup</strong><ul>
+<li>
+<strong>The physical playroom domain</strong><ul>
+<li>N objects in a playroom</li>
+<li>Agent uses a fist to interact with objects and can only move objects via contact</li>
+<li>Includes a goal position</li>
+</ul>
+</li>
+<li>
+<strong>Automatic reward generation with formal language</strong><ul>
+<li>Generate rewards based on properties of the objects</li>
+<li>Property functions: $p: \mathcal{O} \times \mathcal{S} \rightarrow [0,1]$<ul>
+<li>Binary function representing if object ($o \in \mathcal{O}$) satisfies property</li>
+<li>Usually independent of state $\rightarrow$ right as function of objects, $\mathcal{O}$: $p(o)$</li>
+</ul>
+</li>
+<li>Binary relation functions: $p: \mathcal{O} \times \mathcal{O} \times \mathcal{S} \rightarrow [0,1]$<ul>
+<li>Use binary relation functions and property functions to write rewards</li>
+<li>I.e., nearness relation: $r _{red-near-blue}(s) = \sum _{o_1, o_2} p _{red}(o_1) p _{blue}(o_2) b _{near}(o_1, o_2, s)$<ul><li>“Bring red objects near blue object”</li></ul>
+</li>
+</ul>
+</li>
+<li>Can automatically generate many rewards by logically combining operations<ul>
+<li>Based on color of object</li>
+<li>Properties identifying fist and goal</li>
+<li>Near and far relations</li>
+<li>Directional relations</li>
+<li>Can create conjunctions with these</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Results</strong><ul>
+<li>Test ability to maximize $b _{near}(red, blue, s)$ in 3 scenarios<ul>
+<li>No additional tasks (standard DDPG)</li>
+<li>Near and far tasks</li>
+<li>All additional tasks<ul>
+<li>All 18 policies were learned simultaneously</li>
+<li>More tasks helped learn the policy faster</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Also test when additional green cube is added to playroom<ul><li>Slows learning but still completes task</li></ul>
+</li>
+<li>Also test on task spaces of 1, 7, and 43<ul>
+<li>1 task is insufficient for DDPG</li>
+<li>With 7 task, DDPG succeeds</li>
+<li>With large tasks spaces, IU agents struggle<ul><li>Still gains some rewards with 43 tasks (doesn’t completely fail like it did in the 1 task scenario)</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Discussion</strong><ul>
+<li>Behavior policy is based on the hardest tasks<ul><li>Is it worth following a different learning cirricula for behavior policy<ul>
+<li>No - choosing the hardest is the best; behavior policy data is what ends up in the replay buffer</li>
+<li>With simpler tasks, replay buffer fails to explore because trajectories don’t have rich behavior</li>
+</ul>
+</li></ul>
+</li>
+<li>IU agent may still fail if the hardest task is too hard<ul><li>Needs to be solved with hierarchal RL or better understanding of objects + relations</li></ul>
+</li>
+<li>Future work should look at policy re-use too<ul><li>How can we construct controllers based on various policies learned</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+<span class="meta"><time datetime="2025-06-29T00:00:00+00:00">June 29, 2025</time> · <a href="/tags/research">research</a></span></section></main></body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet">
+<meta name="generator" content="Jekyll v4.2.2">
+<meta property="og:title" content="background lecture 1 - markov decision processes reinforcement learning">
+<meta name="author" content="samrat sahoo">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="Note: This was from stanford cs221 and is not part of cs234. I used this to gain some prerequistie knowledge for cs234">
+<meta property="og:description" content="Note: This was from stanford cs221 and is not part of cs234. I used this to gain some prerequistie knowledge for cs234">
+<link rel="canonical" href="https://samratsahoo.com/brain/cs234/markov-decision-processes-reinforcement-learning">
+<meta property="og:url" content="https://samratsahoo.com/brain/cs234/markov-decision-processes-reinforcement-learning">
+<meta property="og:site_name" content="samrat’s thought space">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2024-05-01T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="background lecture 1 - markov decision processes reinforcement learning">
+<meta name="twitter:site" content="@samratdotjs">
+<meta name="twitter:creator" content="@samratdotjs"> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"samrat sahoo","url":"https://samratsahoo.com"},"dateModified":"2024-05-01T00:00:00+00:00","datePublished":"2024-05-01T00:00:00+00:00","description":"Note: This was from stanford cs221 and is not part of cs234. I used this to gain some prerequistie knowledge for cs234","headline":"background lecture 1 - markov decision processes reinforcement learning","mainEntityOfPage":{"@type":"WebPage","@id":"https://samratsahoo.com/brain/cs234/markov-decision-processes-reinforcement-learning"},"url":"https://samratsahoo.com/brain/cs234/markov-decision-processes-reinforcement-learning"}</script><title> background lecture 1 - markov decision processes reinforcement learning - samrat's thought space</title>
+<link rel="shortcut icon" href="/favicon.webp">
+<link rel="alternate" type="application/atom+xml" title="samrat's thought space" href="/atom.xml">
+<link rel="alternate" type="application/json" title="samrat's thought space" href="https://samratsahoo.com/feed.json">
+<link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml">
+<style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:10rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5{line-height:1;margin:1rem 0;font-weight:600}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:60rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}@media print{.no-print,.no-print *{display:none !important}}img.mermaid{max-width:200px}.url{color:#0645AD}*::-moz-selection{color:white;background:#7011dc}*::selection{color:white;background:#7011dc}*{font-family:"Outfit", sans-serif}li>ul{padding-left:1rem}</style>
+<script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"},"svg":{"fontCache":"global","scale":1.0,"minScale":0.5,"mtextInheritFont":true,"merrorInheritFont":true,"mathmlSpacing":false,"skipAttributes":{},"exFactor":0.5},"chtml":{"scale":1.0,"minScale":0.5,"matchFontHeight":true,"mtextFont":"serif","linebreaks":{"automatic":false}}}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js"></script>
+</head>
+<body><main><header aria-hidden="true" class="no-print"> <!--<h1 class="logo">samrat's thought space</h1>--><nav role="navigation" aria-hidden="true"><ul>
+<li><a href="/">about</a></li>
+<li><a href="/reading">reading</a></li>
+<li><a href="/research">research</a></li>
+<li><a href="/writing">writing</a></li>
+<li><a href="/search">search</a></li>
+</ul></nav></header><section class="post"><h2>
+<a href="/brain/cs234" class="url">cs234</a> / background lecture 1 - markov decision processes reinforcement learning</h2>
+<p><em>Note: This was from stanford cs221 and is not part of cs234. I used this to gain some prerequistie knowledge for cs234</em></p>
+<p><strong>Resources:</strong></p>
+<ul><li><a href="https://youtu.be/HpaHTfY52RQ?feature=shared">Lecture Video</a></li></ul>
+<h3 id="vocabulary">Vocabulary</h3>
+<ul>
+<li>Episode: A sequence of states and actions until you hit the end state<blockquote><p>You can look at the utility (discounted sum of rewards) of an episode</p></blockquote>
+</li>
+<li>On-Policy: Estimate the value of data-generating policy</li>
+<li>Off-Policy: Estimate the value of another policy</li>
+</ul>
+<h3 id="markov-decision-processes-and-reinforcement-learning">Markov Decision Processes and Reinforcement Learning</h3>
+<p><strong><em>At its core: reinforcement learning are MDPs without transition probabilities and rewards</em></strong></p>
+<p><u><b>Markov Decision Processes:<b></b><u></u></b></u></p>
+<ul>
+<li>Have a mental model of how the world works</li>
+<li>You find the policy to maximize rewards</li>
+</ul>
+<p><u><b>Reinforcement Learning:<b></b><u></u></b></u></p>
+<ul>
+<li>Don’t know how the world works (we have no MDP for the situation)</li>
+<li>You perform actions in the world to figure out the reward function</li>
+</ul>
+<p><img class="mermaid" src="https://mermaid.ink/svg/eyJjb2RlIjoiZ3JhcGggVEQ7XG5hZ2VudC0tPnxhY3Rpb24gYXxlbnZpcm9ubWVudDtcbmVudmlyb25tZW50LS0-fHJld2FyZCByLCBuZXcgc3RhdGUgcyd8YWdlbnQ7IiwibWVybWFpZCI6eyJ0aGVtZSI6ImRlZmF1bHQifX0"></p>
+<p><strong>Reinforcement Learning Base Algorithm:</strong></p>
+<ul>
+<li>Choose an action $a_t = \pi _{act}(s _{t-1})$</li>
+<li>Receive a reward $r_t$ and observe new state $s_t$</li>
+<li>Update parameters</li>
+</ul>
+<h3 id="model-based-monte-carlo-methods">Model-Based Monte Carlo Methods</h3>
+<p><strong>Core Idea:</strong> estimate the MDP: $T(s, a, s’)$ and reward $R(s, a, s’)$</p>
+<p><strong>Transition Formula:</strong></p>
+<p>$$\hat{T}(s, a, s’) = \frac{\text{# of times (s,a,s’) occurs}}{\text{# of times (s,a) occurs}}$$</p>
+<p><strong>Reward Formula:</strong> $$\hat{R}(s, a, s’) = \text{r in (s, a, r, s’)}$$</p>
+<p>Once we have an estimated MDP, we calculate the policy using value iteration.</p>
+<p><strong>Exploration:</strong> One issue that could arise is that if your policy is non-exhaustive, then it might miss a state. This state may have a large reward and failing to explore it results in a suboptimal policy, To do reinforcement learning, we need to explore the state space. <strong>Solution:</strong> Have your policy, $\pi$ explore explicitly.</p>
+<h3 id="model-free-monte-carlo">Model-Free Monte Carlo</h3>
+<p><strong>Core Idea:</strong> All that matters for prediction is an estimate of $Q _{opt}(s,a)$ so try to estimate $Q _{opt}(s,a)$ directly.</p>
+<p>We know that we can calculate utility as follows: $u = r_t + \gamma \cdot r_{t+1} + \gamma^2 \cdot r_{t+2} \dots$. We can estimate $Q _{\pi}(s,a)$ as follows:</p>
+<p>$$\hat{Q} _{\pi}(s,a) = \text{average of } u_t \text{ where } s _{t-1} = s, a_t = a \text{ where s, a doesn’t occur in the episode}$$ Essentially get the average utility across many episodes where s,a occurs once</p>
+<p>Model-Free is a on-policy approach because we are estimating the value of a specific policy</p>
+<p>Convex Combination Equivalent Formulation for $\hat{Q} _{\pi}(s, a)$:</p>
+<p>For each $s, a, u$</p>
+<p>$$\eta = \frac{1}{1+\text{ updates to (s, a)}}$$ $$\hat{Q} _{\pi}(s, a) = (1 - \eta)\hat{Q} _{\pi}(s, a) + \eta u$$</p>
+<p>Stochastic Gradient Descent Equivalent Formulation for $\hat{Q} _{\pi}(s, a)$:</p>
+<p>$$\hat{Q} _{\pi}(s, a) = \hat{Q} _{\pi}(s, a) - \eta(\hat{Q} _{\pi}(s, a) - u)$$</p>
+<p>$\hat{Q} _{\pi}(s, a) - u$ is the prediction minus the target $\rightarrow$ the implied objective is least sqaures regression which would be $(\hat{Q} _{\pi}(s, a) - u)^2$</p>
+<h3 id="sarsa">SARSA</h3>
+<p>Algorithm: On each (s, a, r, s’, a’): $$\hat{Q} _{\pi}(s, a) = (1 - \eta)\hat{Q} _{\pi}(s, a) + \eta(r + \gamma\hat{Q} _{\pi}(s’, a’))$$</p>
+<p>where $r$ is the data and $\hat{Q} _{\pi}(s’, a’)$ is the estimate</p>
+<p><strong>Bootstrapping:</strong> You use $\hat{Q} _{\pi}$ to estimate $\hat{Q} _{\pi}$ instead of $u$</p>
+<p>Estimating using $u$:</p>
+<ul>
+<li>Based on one path</li>
+<li>Unbiased</li>
+<li>Large Variance</li>
+<li>Need to wait until end to update</li>
+</ul>
+<p>Estimating using $r + \hat{Q} _{\pi}$:</p>
+<ul>
+<li>Based on estimate</li>
+<li>Biased</li>
+<li>Small Variance</li>
+<li>Can update immediately</li>
+</ul>
+<p><em>Model Free Monte Carlo and SARSA only estimate $Q _{\pi}$ not $Q _{opt}$. Use Q-learning to get $Q _{opt}$</em></p>
+<h3 id="q-learning">Q Learning</h3>
+<p><strong>Q-Learning:</strong> Calculates $\hat{Q} _{opt}$ using $\hat{Q} _{opt}$ and $r$. This is an off-policy technique.</p>
+<p>For each $(s, a, r, s’)$</p>
+<p>$$\hat{Q} _{opt}(s, a) = (1 - \eta)\hat{Q} _{opt}(s, a) + \eta(r + \gamma\hat{V} _{opt}(s’))$$ $$\hat{V} _{opt}(s’) = max _{a’ \in Actions(s’)} \hat{Q} _{opt}(s’, a’)$$</p>
+<p>where $\hat{Q} _{opt}(s, a)$ is the prediction and $r + \gamma\hat{V} _{opt}(s’)$ is the target.</p>
+<h3 id="exploration-vs-exploitation">Exploration vs Exploitation</h3>
+<p>Extreme 1: No exploration, all exploitation - choose the action that leads to the highest $\hat{Q} _{opt}$ (too greedy)</p>
+<p>$$\pi _{act}(s) = argmax _{a \in Actions(s)} \hat{Q} _{opt}(s, a)$$</p>
+<p>Extreme 2: No exploitation, all exploration - choose an action randomly. Leads to bad average utility because exploration is not guided</p>
+<p>$$ \pi _{act}(s) = \text{random from Actions(s)}$$</p>
+<h3 id="epsilon-greedy-policy">Epsilon Greedy Policy</h3>
+<p>Balances exploitation and exploration using a parameter, $\epsilon$:</p>
+<ul>
+<li>With probability $1 - \epsilon$, we choose exploitation</li>
+<li>With probability $\epsilon$, we choose exploration</li>
+</ul>
+<p>Problem: Large state spaces are hard to explore</p>
+<p>Stochastic Gradient Descent Update:</p>
+<p>$$\hat{Q} _{\pi}(s, a) = \hat{Q} _{\pi}(s, a) - \eta(\hat{Q} _{\pi}(s, a) - u)$$</p>
+<p><strong>Rote Learning:</strong> Every $\hat{Q} _{\pi}(s, a)$ has a different value (not really learning) $\rightarrow$ doesn’t generalize to unseen states/actions</p>
+<h3 id="function-approximation">Function Approximation</h3>
+<p><strong>Core Idea:</strong> Instead of a lookup table, use a linear regression model with features $\phi(s, a)$ and weights $w$ to generalize to unseen states: $$ \hat{Q} _{opt}(s, a; w) = w \cdot \phi(s, a)$$</p>
+<p><strong>Q-Learning with Function Approximation:</strong></p>
+<p>$$ w = w - \eta(\hat{Q} _{opt}(s, a; w) - (r + \gamma\hat{V} _{opt}(s’)))\phi(s, a)$$</p>
+<p>Where $\hat{Q} _{opt}(s, a; w) - (r + \gamma\hat{V} _{opt}(s’))$ is the prediction minus the target</p>
+<h3 id="miscellaneous">Miscellaneous</h3>
+<ul>
+<li>Partial Feedback: You can only learn about actions you take</li>
+<li>State: Rewards depend on previous state</li>
+<li>Reinforcement Learning: Partial Feedback + State</li>
+<li>Deep RL: Use neural networks to estimate $\hat{Q} _{opt}(s, a)$</li>
+<li>Policy Gradient: Use neural networks to train a policy directly</li>
+</ul></section></main></body>
+</html>

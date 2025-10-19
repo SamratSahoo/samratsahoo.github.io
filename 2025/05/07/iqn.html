@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet">
+<meta name="generator" content="Jekyll v4.2.2">
+<meta property="og:title" content="Implicit Quantile Networks for Distributional Reinforcement Learning">
+<meta name="author" content="samrat sahoo">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="A paper about implicit quantile networks">
+<meta property="og:description" content="A paper about implicit quantile networks">
+<link rel="canonical" href="https://samratsahoo.com/2025/05/07/iqn">
+<meta property="og:url" content="https://samratsahoo.com/2025/05/07/iqn">
+<meta property="og:site_name" content="samrat’s thought space">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2025-05-07T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="Implicit Quantile Networks for Distributional Reinforcement Learning">
+<meta name="twitter:site" content="@samratdotjs">
+<meta name="twitter:creator" content="@samratdotjs"> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"samrat sahoo","url":"https://samratsahoo.com"},"dateModified":"2025-05-07T00:00:00+00:00","datePublished":"2025-05-07T00:00:00+00:00","description":"A paper about implicit quantile networks","headline":"Implicit Quantile Networks for Distributional Reinforcement Learning","mainEntityOfPage":{"@type":"WebPage","@id":"https://samratsahoo.com/2025/05/07/iqn"},"url":"https://samratsahoo.com/2025/05/07/iqn"}</script><title> Implicit Quantile Networks for Distributional Reinforcement Learning - samrat's thought space</title>
+<link rel="shortcut icon" href="/favicon.webp">
+<link rel="alternate" type="application/atom+xml" title="samrat's thought space" href="/atom.xml">
+<link rel="alternate" type="application/json" title="samrat's thought space" href="https://samratsahoo.com/feed.json">
+<link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml">
+<style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:10rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5{line-height:1;margin:1rem 0;font-weight:600}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:60rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}@media print{.no-print,.no-print *{display:none !important}}img.mermaid{max-width:200px}.url{color:#0645AD}*::-moz-selection{color:white;background:#7011dc}*::selection{color:white;background:#7011dc}*{font-family:"Outfit", sans-serif}li>ul{padding-left:1rem}</style>
+<script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"},"svg":{"fontCache":"global","scale":1.0,"minScale":0.5,"mtextInheritFont":true,"merrorInheritFont":true,"mathmlSpacing":false,"skipAttributes":{},"exFactor":0.5},"chtml":{"scale":1.0,"minScale":0.5,"matchFontHeight":true,"mtextFont":"serif","linebreaks":{"automatic":false}}}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js"></script>
+</head>
+<body><main><header aria-hidden="true" class="no-print"> <!--<h1 class="logo">samrat's thought space</h1>--><nav role="navigation" aria-hidden="true"><ul>
+<li><a href="/">about</a></li>
+<li><a href="/reading" class="active">reading</a></li>
+<li><a href="/research">research</a></li>
+<li><a href="/writing">writing</a></li>
+<li><a href="/search">search</a></li>
+</ul></nav></header><section class="post"><h2>Implicit Quantile Networks for Distributional Reinforcement Learning</h2>
+<ul>
+<li>
+<strong>Resources</strong><ul><li>
+<a href="https://arxiv.org/abs/1806.06923">Paper</a> <br><br>
+</li></ul>
+</li>
+<li>
+<strong>Introduction</strong><ul>
+<li>Distributional RL parts: Parameterization of distribution + distance / loss function<ul><li>Categorical DQN / C51: Cross entropy loss + categorical distribution with a Cramer-minimizing projection<ul>
+<li>Assigned probabilities on fixed + discrete set of returns</li>
+<li>QR-DQN: Uniform mixture of adjustable Diracs for quantiles + uses wasserstein loss</li>
+</ul>
+</li></ul>
+</li>
+<li>Implicit Quantile Networks: extends QR-DQN a continuous map of probabilities to returns<ul><li>Distributional generalization of DQNs</li></ul>
+</li>
+<li>Benefits of IQNs<ul>
+<li>Approximation error no longer dictated by number of quantiles $\rightarrow$ dictated by network size + amount of training</li>
+<li>Allows as few or as many samples for updates per update</li>
+<li>Can expand class of policies to take advantage of learnd distribution</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Background</strong><ul>
+<li>
+<strong>Distributional RL</strong><ul><li>Assume standard distributional RL setting (see <a href="https://samratsahoo.com/2025/04/27/c51">C51 paper notes</a>)</li></ul>
+</li>
+<li>
+<strong>p-Wasserstein Metric</strong><ul><li>Expresses distances between distributions in terms of the minimal cost for transporting mass to make the two distributions identical</li></ul>
+</li>
+<li>
+<strong>Quantile Regression for Distributional RL</strong><ul>
+<li>Estimates quantiles and minimizes the wasserstein distance</li>
+<li>Uses quantile regression for minimization</li>
+<li>See <a href="https://samratsahoo.com/2025/05/05/qr-dqn">QR-DQN paper notes</a>
+</li>
+</ul>
+</li>
+<li>
+<strong>Risk in Reinforcement Learning</strong><ul>
+<li>Distributional RL policies were still based on the mean of the return distribution<ul><li>Can we expand our classes of policies using other information on distribution of returns</li></ul>
+</li>
+<li>Risk: Uncertainty over outcomes</li>
+<li>Risk-Sensitive: Policies that depend on more than the mean</li>
+<li>Intrinsic Uncertainty: uncertainty captured by the distribution</li>
+<li>Parametric Uncertainty: uncertainty over the value estimate</li>
+<li>When considering risk, we want our policy to maximize utility, not necessarily return: $\pi(x) = argmax_a \mathbb{E} _{Z(x,a)}[U(z)]$<ul>
+<li>Risk Neutral: Utility function is linear</li>
+<li>Risk Averse: Utility function is concave</li>
+<li>Risk Seeking: Utility function is convex</li>
+</ul>
+</li>
+<li>Distorted Risk Measure:<ul>
+<li>Given 3 random variables: X, Y, Z where X is preferred over Y<ul>
+<li>$\alpha F_X + (1 - \alpha)F_Z \geq \alpha F_Y + (1 - \alpha)F_Z$</li>
+<li>$\alpha F_X^{-1} + (1 - \alpha)F_Z^{-1} \geq \alpha F_Y^{-1} + (1 - \alpha)F_Z^{-1}$</li>
+</ul>
+</li>
+<li>By these axioms, policy will now maximize a distorted expectation for a distortion risk measure, h<ul>
+<li>$\pi(x) = argmax_a \int _{-\infty}^{\infty} z \frac{\partial}{\partial z} (h \circ F _{Z(x,a)})(z)dz$</li>
+<li>$h$: distortion risk measure $\rightarrow$ distorts CDFs of a random variable</li>
+</ul>
+</li>
+<li>Utility and distortion functions are inverses of each other<ul>
+<li>Utility: Behavior invariant to randomness being mixed in</li>
+<li>Distortion: Behavior invariant to convex combinations of outcomes</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Implicit Quantile Networks</strong><ul>
+<li>Implicit Quantile Network: Deterministic parametric distribution trained to reparameterize samples from a base distribution ($\tau$)</li>
+<li>$F_Z^{-1}(\tau)$ where $\tau \sim U(0,1)$: Quantile function for Z $Z _\tau(x,a) \sim Z(x,a)$</li>
+<li>Model the state-action quantile function as mapping from state-action + samples from base distribution to $Z _\tau(x,a)$</li>
+<li>Distortion risk measure: $\beta: [0,1]\rightarrow[0,1]$<ul><li>Distorted expectation of $Z(x,a)$ under $\beta$: $Q _\beta(x,a) = \mathbb{E} _{\tau \sim U([0,1])[Z _\beta(\tau)(x,a)]} = \int_0^1 F_Z^{-1}(\tau)d\beta(\tau)$<ul><li>Any distorted expectation can be represented as weighted sum over quantiles</li></ul>
+</li></ul>
+</li>
+<li>Risk Sensitive Greedy Policy: $\pi _\beta(x) = argmax _{a \in \mathcal{A}}Q _\beta(x,a)$</li>
+<li>TD error for two samples $\tau, \tau’ \sim U([0,1])$<ul><li>$\delta^{\tau, \tau’}_t = r_t + \gamma Z _{\tau’}(x _{t+1},\pi _\beta(x _{t+1}) - Z _{\tau}(x _{t+1},\pi _\beta(x _{t+1}))$</li></ul>
+</li>
+<li>IQN Loss: $\mathcal{L}(x_t, a_t, r_t, x _{t+1}) = \frac{1}{N’} \sum _{i=1}^N \sum _{j=1}^{N’} \rho _{\tau_i}^\mathcal{K}(\delta_t^{\tau_i, \tau_j’})$<ul><li>$N, N’$ are number of IID samples of $\tau, \tau’$</li></ul>
+</li>
+<li>Sample based risk sensitive policy: $\tilde{\pi} _\beta(x) = argmax _{a \in \mathcal{A}} \frac{1}{K} \sum _{k=1}^K Z _{\beta(\tilde{\tau}_k)}(x,a)$<ul>
+<li>Instead of approximating quantile function at $n$ fixed values, its trained over many $\tau$; this means that IQNs are universal function approximators<ul>
+<li>We approximate $Z _\tau(x,a) \approx f(\psi(x), \phi(\tau))_a$ where $f, \psi, \phi$ are function approximators</li>
+<li>Also leads to better generalization + sample complexity</li>
+</ul>
+</li>
+<li>Sample TD errors are decorrelated because action values are a sample mean of the implicit distribution</li>
+</ul>
+</li>
+<li>
+<strong>Implementation</strong><ul>
+<li>$\psi$: $\chi \rightarrow \mathbb{R}^d$ computed by convolutional layers</li>
+<li>$f$: $\mathbb{R}^d \rightarrow \mathbb{R}^{\vert A \vert}$ maps $\psi(x)$ to action-values</li>
+<li>$\phi$: $[0,1] \rightarrow \mathbb{R}^d$ embedding for $\tau$<ul><li>$\phi_j (\tau) = ReLU(\sum _{i=0}^{n-1} cos(\pi i \tau)w _{ij} + b_j)$</li></ul>
+</li>
+<li>$Z _\tau(x,a) \approx f(\psi(x) \odot \phi(\tau))_a$<ul><li>Can be parameterized in other ways too (i.e., concatenation)</li></ul>
+</li>
+<li>Varying $N$ had a dramatic effect on early performance. Varying $N’$ had strong effect on early performance but minimal impact on long-term performance<ul><li>$N = N’ = 1$ is comparable to DQN but long-term performance much better</li></ul>
+</li>
+<li>IQN was not sensitive to number of samples ($K$)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Risk-Sensitive Reinforcement Learning</strong><ul>
+<li>Tested effects of moving $\beta$ away from identity<ul>
+<li>Cumulative Probability Weighting Parameterization (CPW): $CPW(\eta, \tau) = \frac{\tau^\eta}{(\tau^\eta + (1- \tau)^\eta)^{\frac{1}{\eta}}}$<ul>
+<li>For $\eta = 0.71$, it most closely matches human subjects</li>
+<li>As $\tau$ becomes larger it becomes more convex (and vice versa)</li>
+<li>$CPW(0.71)$: Reduces impact of tails of distribution</li>
+</ul>
+</li>
+<li>Standard Normal CDF and its inverse (Wang): $Wang(\eta, \tau) = \Phi(\Phi^{-1}(\tau) +\eta)$<ul>
+<li>Produces risk averse policies for $\eta &lt; 0$</li>
+<li>Gives all $\tau &gt; \eta$ vanishingly small probabilities</li>
+</ul>
+</li>
+<li>Power Formula: $\begin{multline}\begin{cases} \tau^\frac{1}{1 + \vert \eta \vert} \text{ if } \eta \geq 0 \\ 1 - (1 - \tau)^{\frac{1}{1 + \vert \eta \vert}} \text{ otherwise }\end{cases}\end{multline}$<ul>
+<li>$\eta &lt; 0$: Risk averse</li>
+<li>$\eta &gt; 0$: Risk seeking</li>
+</ul>
+</li>
+<li>Conditional value-at-risk (CVaR): $CVaR(\eta, \tau) = \eta \tau$<ul>
+<li>Changes $\tau \sim U([0 ,\eta])$</li>
+<li>IGnores all values $\tau &gt; \eta$</li>
+</ul>
+</li>
+<li>Norm: $Norm(\eta)$<ul>
+<li>Takes $\eta$ samples from $U([0,1])$ and averages them</li>
+<li>$Norm(3)$: reduces impact of tails of distribution</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Evaluation under risk-neutral criterion<ul>
+<li>For some games, there are advantages to risk-averse policies</li>
+<li>CPW performs as good as risk-neutral</li>
+<li>$Wang(1.5)$ performs as good as or worse than risk-neutral</li>
+<li>Both CPW and $Wang(1.5)$ risk-averse perform better than standard IQN</li>
+<li>$CVaR(0.1)$ suffers performance on some games when risk averse</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Full Atari-57 Results</strong><ul>
+<li>Compared to results from <a href="https://samratsahoo.com/2025/04/05/rainbow">rainbow paper</a>, <a href="https://samratsahoo.com/2025/05/05/qr-dqn">QR-DQN</a>, and <a href="https://samratsahoo.com/2025/04/04/prioritized-experience-replay">PER DQN</a>
+</li>
+<li>Risk neutral variant of IQN with $\epsilon$-greedy policy with respect to expectation of state-action return distribution</li>
+<li>IQN achieves QR-DQN performance in half the training frames</li>
+<li>IQN achieves 162% of human normalized score (better than 153% from rainbow)</li>
+<li>IQN outperforms QR-DQN on games where there is still a gap between humans and RL</li>
+</ul>
+</li>
+<li>
+<strong>Discussion</strong><ul>
+<li>Sample based RL convergence results fromc categorical distributional RL needs to be extended to QR-based algorithms</li>
+<li>Contraction results from QR distributional RL needs to extended to IQNs</li>
+<li>Convergence to a fixed point with the bellman operator needs to be shown for distored expectations</li>
+<li>Creating a Rainbow IQN could lead to massive improvements in distributional RL</li>
+</ul>
+</li>
+</ul>
+<span class="meta"><time datetime="2025-05-07T00:00:00+00:00">May 7, 2025</time> · <a href="/tags/research">research</a></span></section></main></body>
+</html>

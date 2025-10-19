@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet">
+<meta name="generator" content="Jekyll v4.2.2">
+<meta property="og:title" content="Variational Intrinsic Control">
+<meta name="author" content="samrat sahoo">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="A paper about vic">
+<meta property="og:description" content="A paper about vic">
+<link rel="canonical" href="https://samratsahoo.com/2025/06/02/vic">
+<meta property="og:url" content="https://samratsahoo.com/2025/06/02/vic">
+<meta property="og:site_name" content="samrat’s thought space">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2025-06-02T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="Variational Intrinsic Control">
+<meta name="twitter:site" content="@samratdotjs">
+<meta name="twitter:creator" content="@samratdotjs"> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"samrat sahoo","url":"https://samratsahoo.com"},"dateModified":"2025-06-02T00:00:00+00:00","datePublished":"2025-06-02T00:00:00+00:00","description":"A paper about vic","headline":"Variational Intrinsic Control","mainEntityOfPage":{"@type":"WebPage","@id":"https://samratsahoo.com/2025/06/02/vic"},"url":"https://samratsahoo.com/2025/06/02/vic"}</script><title> Variational Intrinsic Control - samrat's thought space</title>
+<link rel="shortcut icon" href="/favicon.webp">
+<link rel="alternate" type="application/atom+xml" title="samrat's thought space" href="/atom.xml">
+<link rel="alternate" type="application/json" title="samrat's thought space" href="https://samratsahoo.com/feed.json">
+<link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml">
+<style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:10rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5{line-height:1;margin:1rem 0;font-weight:600}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:60rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}@media print{.no-print,.no-print *{display:none !important}}img.mermaid{max-width:200px}.url{color:#0645AD}*::-moz-selection{color:white;background:#7011dc}*::selection{color:white;background:#7011dc}*{font-family:"Outfit", sans-serif}li>ul{padding-left:1rem}</style>
+<script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"},"svg":{"fontCache":"global","scale":1.0,"minScale":0.5,"mtextInheritFont":true,"merrorInheritFont":true,"mathmlSpacing":false,"skipAttributes":{},"exFactor":0.5},"chtml":{"scale":1.0,"minScale":0.5,"matchFontHeight":true,"mtextFont":"serif","linebreaks":{"automatic":false}}}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js"></script>
+</head>
+<body><main><header aria-hidden="true" class="no-print"> <!--<h1 class="logo">samrat's thought space</h1>--><nav role="navigation" aria-hidden="true"><ul>
+<li><a href="/">about</a></li>
+<li><a href="/reading" class="active">reading</a></li>
+<li><a href="/research">research</a></li>
+<li><a href="/writing">writing</a></li>
+<li><a href="/search">search</a></li>
+</ul></nav></header><section class="post"><h2>Variational Intrinsic Control</h2>
+<ul>
+<li>
+<strong>Resources</strong><ul><li>
+<a href="https://arxiv.org/abs/1611.07507">Paper</a> <br><br>
+</li></ul>
+</li>
+<li>
+<strong>Introduction</strong><ul>
+<li>We want to find what intrinsic options available to agent at a state</li>
+<li>Options: policies with a termination condition<ul>
+<li>Independent of agent’s intentions</li>
+<li>Set of all things that is possible for an agent to achieve</li>
+</ul>
+</li>
+<li>Traditional approach to option learning: Find small set of options for a specific task<ul><li>Makes credit assignment + planning easier over long horizons</li></ul>
+</li>
+<li>Larger sets of options advantageous<ul>
+<li>Number of options still smaller than number of action sequences (since options distinguished by final state)</li>
+<li>We want to learn representational embedding of options (similar options = similar embedding)</li>
+<li>In embedded spaces, planners only needs to choose neighborhood of space</li>
+</ul>
+</li>
+<li>Using function approximators for state + goal embeddings was useful for control + generalization over many goals<ul><li>This paper gives a method to <em>learn</em> goals (options)</li></ul>
+</li>
+<li>Two applications of learning intrinsic options<ul>
+<li>Classical RL: maximize expected reward</li>
+<li>Empowerment: Get to a state with maximal set of options that an agent knows<ul><li>Agent should aim for states where it has most control <em>after learning</em>
+</li></ul>
+</li>
+</ul>
+</li>
+<li>Intrinsic Motivation vs Options<ul>
+<li>Motivation: goal is to predict observations<ul><li>Understands environment via creating a dynamics model; may distract / impair the agent</li></ul>
+</li>
+<li>Options: goal is to control the environment<ul>
+<li>Learns the amount of influence agent has on environment (i.e., how many distinct states it can cause)</li>
+<li>Similar to unsupervised learning but instead of finding representations, it finds policies</li>
+<li>Also estimates amount of control in different states</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Evaluation Metrics<ul>
+<li>Unsupervised learning uses data likelihood: amount of information needed to describe data</li>
+<li>For unsupervised control, use mutual information between options and final states<ul>
+<li>Open loop options: agent decides sequence of actions beforehand and follows them regardless of environment dynamics. Mutual information is between sequence of actions and final states<ul><li>Results in poor performance</li></ul>
+</li>
+<li>Closed loop options: actions conditioned on state</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Intrinsic Control and the Mutual Information Principle</strong><ul>
+<li>Option: Element, $\Omega$ of a space and policy $\pi(a \vert s, \Omega)$<ul>
+<li>$\pi$ has termination action that leads to final state, $s_f$</li>
+<li>$\Omega$ can take finite number of values; each value has a distinct policy</li>
+<li>$\Omega$ can be a binary vector; $2^n$ options</li>
+<li>$\Omega$ can be a real-valued vector; infinite options</li>
+</ul>
+</li>
+<li>Start at $s_0$ and follow an option $\Omega \rightarrow$ stochastic environments + policies means policy is a probability distribution: $p^J(s_f \vert s_0, \Omega)$</li>
+<li>Options that lead to similar states should be the same<ul><li>Group these options together into a probability distribution and sample from it when choosing an option<ul>
+<li>Called the controllability distribution: $p^C(\Omega \vert s_0)$</li>
+<li>Ensures behavior diversity</li>
+</ul>
+</li></ul>
+</li>
+<li>To maximize intrinsic control, choose $\Omega$ that maximizes diversity of final states<ul>
+<li>Entropy of final states: $H(s_f) = -\sum _{s_f} p(s_f \vert s_0) \log p(s_f \vert s_0)$<ul><li>$p(s_f \vert s_0) = \sum _{\Omega}p^J(s_f \vert s_0 \Omega) p^C(\Omega \vert s_0)$<ul><li>Can also be expressed as the information content for a given $\Omega$: $-\log p^J(s_f \vert s_0, \Omega)$</li></ul>
+</li></ul>
+</li>
+<li>Mutual information between options and final states under $p(\Omega, s_f \vert s_0) = p^J(s_f \vert s_0, \Omega)p^C(\Omega \vert s_0)$<ul>
+<li>$I(\Omega, s_f \vert s_0) = H(s_f \vert s_0) - H(s_f \vert s_0, \Omega)$</li>
+<li>$I(\Omega, s_f \vert s_0) = - \sum _{s_f} p(s_f \vert s_0)\log p(s_f \vert s_0) + \sum _{\Omega, s_f}p^J(s_f \vert s_0, \Omega)p^C(\Omega \vert s_0)\log p^J(s_f \vert s_0, \Omega)$</li>
+<li>Reverse Expression: $I(\Omega, s_f \vert s_0) = - \sum _{\Omega} p^C(\Omega \vert s_0)\log p^C(\Omega \vert s_0) + \sum _{\Omega, s_f}p^J(s_f \vert s_0, \Omega)p^C(\Omega \vert s_0)\log p(\Omega \vert s_0, s_f)$<ul>
+<li>First term: maximize set of options (i.e., achieve large entropy)</li>
+<li>Second term: make sure options achieve different goals (can infer option from final state)</li>
+<li>Formulation avoids $p(s_f \vert s_0)$ - requires integration over $\Omega$</li>
+<li>Introduces $p(\Omega \vert s_0, s_f)$ which we get from Bayes rule $p^J(s_f \vert s_0, \Omega)p^C(\Omega \vert s_0)$<ul>
+<li>$p^J(s_f \vert s_0, \Omega)$ inherent to environment</li>
+<li>$p^C(\Omega \vert s_0)$ is what the variational bound provides</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Mutual Information Variational Bound: $I^{VB}(\Omega, s_f \vert s_0) = - \sum _{\Omega} p^C(\Omega \vert s_0)\log p^C(\Omega \vert s_0) + \sum _{\Omega, s_f}p^J(s_f \vert s_0, \Omega)p^C(\Omega \vert s_0)\log q(\Omega \vert s_0, s_f)$<ul>
+<li>$q$: Arbitrary distribution</li>
+<li>$I \geq I^{VB}$: thus maximize $I^{VB}$</li>
+<li>Train parameters of $p^C(\Omega \vert s_0), q(\Omega \vert s_0, s_f), \pi(a \vert s, \Omega)$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Intuition: If mutual information is high, we can easily map an option to a distinct behavior<ul><li>This is like learning a representation!</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Intrinsic Control with Explicit Options</strong><ul>
+<li>Algorithm<ul><li>for episode $1 \dots M$<ul>
+<li>Sample $\Omega \sim p^C(\Omega \vert s_0)$</li>
+<li>Follow policy: $\pi(a \vert \Omega, s)$ until $s_f$</li>
+<li>Regress $q(\Omega \vert s_0, s_f)$ towards $\Omega$<ul><li>Using log likelihood + gradient descent</li></ul>
+</li>
+<li>Compute intrinsic reward $r_I = \log q(\Omega \vert s_0, s_f) - \log p^C(\Omega \vert s_0)$</li>
+<li>Use RL algorithm to update policy to maximize $r_I$</li>
+<li>Reinforce $p^C(\Omega \vert s_0)$ based on $r_I$<ul><li>If intrinsic reward is high, choose option more often</li></ul>
+</li>
+<li>$s_0 = s_f$</li>
+</ul>
+</li></ul>
+</li>
+<li>Tries to choose $\Omega$ that can be inferred from $s_f$ using $q(\Omega \vert s_0, s_f)$<ul><li>Infer option well = other options don’t lead to this state often $\rightarrow$ option intrinsically different from others</li></ul>
+</li>
+<li>On average, $r_I$, is log of number of options an agent has in a state (empowerment)</li>
+<li>$\log p^C(\Omega \vert s_0)$ is approximately negative log of number of options we can choose<ul>
+<li>If $q(\Omega \vert s_0, s_f)$ is large, it defines region of similar options</li>
+<li>Empowerment = number of regions in total region given by $p^C$</li>
+<li>$r_I = \log q - \log p^C$: log ratio of total options ($1 / p^C$) to options in a region ($1 / q$)</li>
+</ul>
+</li>
+<li>Train $p^C$ using policy gradients</li>
+<li>
+<strong>Experiments</strong><ul>
+<li>
+<strong>Grid World</strong><ul>
+<li>Let there be 30 options with the prior distribution over options to be uniform</li>
+<li>Goal: learn a policy that makes the 30 options end up at as many different states as possible</li>
+<li>End of each episode we get $r_I = -\log p + \log q = \log N + \log q$<ul>
+<li>If option is inferred correctly + with confidence, $\log q$ is close to 0, meaning reward will be large</li>
+<li>If not, then $\log q$ will be very negative and small reward</li>
+</ul>
+</li>
+<li>To get large reward, options need to reach substantially distinct states</li>
+<li>With Q learning, we update Q function by using $N \cdot n _{actions}$ values and updating on triplets of experience (N is the number of options)<ul><li>For continuous option spaces, we randomly sample options and do this same process</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Dangerous Grid World</strong><ul>
+<li>Modified grid world with 2 parts:<ul>
+<li>Narrow corridor with open square</li>
+<li>Blue walls</li>
+</ul>
+</li>
+<li>In one sublattice of the grid right and left only move the agent and the other sublattice up and down actions move the agent<ul><li>If it doesn’t pick these actions, it gets stuck in a state for a long time</li></ul>
+</li>
+<li>If the agent doesn’t observe environment, loses info about what sublattice its on and falls into low empowerment state</li>
+<li>If the agent does observe the environment, it knows which sublattice its on and therefore doesn’t fall</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>The Importance of Closed Loop Policies</strong><ul>
+<li>Open Loop: Agent commits to series of actions and blindly follows it irrespective of environment<ul>
+<li>Leads to underestimation of empowerment</li>
+<li>In dangerous grid, the agent tends to stay in corridor because of exponentially increasing probability of being reset as time increases<ul><li>This is a low empowerment state</li></ul>
+</li>
+</ul>
+</li>
+<li>Closed Loop: Action is conditioned on current state<ul><li>In dangerous grid, empowerment grows quadratically with option length</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Advantages and Disadvantages</strong><ul>
+<li>Advantages:<ul>
+<li>Simple</li>
+<li>Closed Loop Policies</li>
+<li>Can be used with function approximation</li>
+<li>Works well with discrete and continuous options spaces</li>
+<li>Model Free</li>
+</ul>
+</li>
+<li>Disadvantages<ul>
+<li>Difficult to make work in practice with function approximation<ul>
+<li>Intrinsic reward is noisy</li>
+<li>Difficult to make work with continuous option spaces</li>
+</ul>
+</li>
+<li>Exploration<ul>
+<li>If agent discovers new state, we want it go there because there might be new options</li>
+<li>When it gets there, $q$ hasn’t learned it yet; inferring incorrect option<ul><li>Causes low reward, discouraging it to go there</li></ul>
+</li>
+<li>It does good job expressing options in familiar regions but fails to push to new state regions</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Intrinsic Control with Implicit Policies</strong><ul>
+<li>To address disadvantages, use action space as option space<ul>
+<li>Controllability prior, $p^C$, merges with the policy: $\pi^p(a_t \vert s_t^p)$<ul><li>$s_t^p$: Internal state computed from $(s _{t-1}^p, x_t, a _{t-1})$</li></ul>
+</li>
+<li>$q = \pi^q(a_t \vert s_t^q)$: infers actions made by $\pi^p$ given the final observation $x_f$</li>
+<li>$r _{I, t} = \log \pi^q(a_t \vert s_t^q) - \log \pi^p(a_t \vert s_t^p)$</li>
+</ul>
+</li>
+<li>Learning $\pi^q$ becomes a supervised learning problem of inferring actions that led to $x_f$<ul>
+<li>Can be done on random policies too because random policies produce variety of final states</li>
+<li>$\pi^p$ selects different possible behaviros based on whether they lead to diverse outcomes<ul><li>As $\pi_p$ chooses diverse behaviors, $\pi_q$ gets more varied training data</li></ul>
+</li>
+</ul>
+</li>
+<li>Algorithm<ul>
+<li>Full Update:<ul>
+<li>Follow $\pi^p$. Gets experience $x_0, a_0 \dots x_f$</li>
+<li>Regress $\pi^q$ towards $a_t$ for each action</li>
+<li>Compute $r_I$</li>
+<li>Reinforce $\pi^p$ with $r_I$</li>
+</ul>
+</li>
+<li>Exploratory Update:<ul>
+<li>Follow $\pi^p$ with exploration, creating experience</li>
+<li>Regress $\pi^q$ towards $a_t$ for each action</li>
+</ul>
+</li>
+<li>Note 1: Algorithm works on partially observable environments<ul><li>We should use final states instead of observations as set of states agent can reach</li></ul>
+</li>
+<li>Note 2: $\pi^p$ can be thought of as implict option but embedding of final state can be thought of as explicit option with $\pi^q$ implementing option</li>
+</ul>
+</li>
+<li>
+<strong>Experiments</strong><ul>
+<li>Experiment 1:<ul>
+<li>25x25 Gridworld with 4 rooms with narrow doors<ul><li>Makes it difficult to pass through to other rooms</li></ul>
+</li>
+<li>Random policy with final states whose distance from initial state is distributed based on a gaussian</li>
+<li>$\pi^q$ conditioned on final state but $\pi^p$ was not<ul><li>Policy is able to go through doors seamlessly<ul><li>Implicitly learns to navigates through doors</li></ul>
+</li></ul>
+</li>
+<li>Maximizing intrinsic control = distribution of final points reachable from $\pi^p$ should be uniform based on points reachable from a given state</li>
+<li>403 reachable states</li>
+</ul>
+</li>
+<li>Experiment 2:<ul>
+<li>40x40 color image of environment</li>
+<li>$\pi^p$ trajectories more consistent than random policy</li>
+<li>221 reachable states</li>
+</ul>
+</li>
+<li>Experiment 3:<ul>
+<li>Grid World but contains blocks agent can push</li>
+<li>1200 reachable state</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Elements Beyond an Agent’s Control</strong><ul>
+<li>Parts of the environment are not impacted by an agent</li>
+<li>Agent is shown to avoid distractors and reach the same level of empowerment</li>
+</ul>
+</li>
+<li>
+<strong>Open vs Closed Loop Options</strong><ul>
+<li>Take grid world environment and add environment noise (stochastically push the agent in a random direction)</li>
+<li>Closed loop policy can correct for this noise (strategy always goes towards goal)</li>
+<li>Open loop agent cannot reliably navigate towards actual location (Only fed start and end states)</li>
+</ul>
+</li>
+<li>
+<strong>Maximizing Extrinsic Reward</strong><ul>
+<li>Agent is given some time to explore + learn to control environment</li>
+<li>After some time, its told the extrinsic reward and has a limited amount of time to collect as much reward as possible</li>
+<li>Found that extrinsic reward is collected significantly faster after having the opportunity to interact with the environment</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<span class="meta"><time datetime="2025-06-02T00:00:00+00:00">June 2, 2025</time> · <a href="/tags/research">research</a></span></section></main></body>
+</html>

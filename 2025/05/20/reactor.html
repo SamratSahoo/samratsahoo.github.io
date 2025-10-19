@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet">
+<meta name="generator" content="Jekyll v4.2.2">
+<meta property="og:title" content="The Reactor: A fast and sample-efficient Actor-Critic agent for Reinforcement Learning">
+<meta name="author" content="samrat sahoo">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="A paper about the reactor algorithm">
+<meta property="og:description" content="A paper about the reactor algorithm">
+<link rel="canonical" href="https://samratsahoo.com/2025/05/20/reactor">
+<meta property="og:url" content="https://samratsahoo.com/2025/05/20/reactor">
+<meta property="og:site_name" content="samrat’s thought space">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2025-05-20T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="The Reactor: A fast and sample-efficient Actor-Critic agent for Reinforcement Learning">
+<meta name="twitter:site" content="@samratdotjs">
+<meta name="twitter:creator" content="@samratdotjs"> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"samrat sahoo","url":"https://samratsahoo.com"},"dateModified":"2025-05-20T00:00:00+00:00","datePublished":"2025-05-20T00:00:00+00:00","description":"A paper about the reactor algorithm","headline":"The Reactor: A fast and sample-efficient Actor-Critic agent for Reinforcement Learning","mainEntityOfPage":{"@type":"WebPage","@id":"https://samratsahoo.com/2025/05/20/reactor"},"url":"https://samratsahoo.com/2025/05/20/reactor"}</script><title> The Reactor: A fast and sample-efficient Actor-Critic agent for Reinforcement Learning - samrat's thought space</title>
+<link rel="shortcut icon" href="/favicon.webp">
+<link rel="alternate" type="application/atom+xml" title="samrat's thought space" href="/atom.xml">
+<link rel="alternate" type="application/json" title="samrat's thought space" href="https://samratsahoo.com/feed.json">
+<link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml">
+<style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:10rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5{line-height:1;margin:1rem 0;font-weight:600}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:60rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}@media print{.no-print,.no-print *{display:none !important}}img.mermaid{max-width:200px}.url{color:#0645AD}*::-moz-selection{color:white;background:#7011dc}*::selection{color:white;background:#7011dc}*{font-family:"Outfit", sans-serif}li>ul{padding-left:1rem}</style>
+<script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"},"svg":{"fontCache":"global","scale":1.0,"minScale":0.5,"mtextInheritFont":true,"merrorInheritFont":true,"mathmlSpacing":false,"skipAttributes":{},"exFactor":0.5},"chtml":{"scale":1.0,"minScale":0.5,"matchFontHeight":true,"mtextFont":"serif","linebreaks":{"automatic":false}}}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js"></script>
+</head>
+<body><main><header aria-hidden="true" class="no-print"> <!--<h1 class="logo">samrat's thought space</h1>--><nav role="navigation" aria-hidden="true"><ul>
+<li><a href="/">about</a></li>
+<li><a href="/reading" class="active">reading</a></li>
+<li><a href="/research">research</a></li>
+<li><a href="/writing">writing</a></li>
+<li><a href="/search">search</a></li>
+</ul></nav></header><section class="post"><h2>The Reactor: A fast and sample-efficient Actor-Critic agent for Reinforcement Learning</h2>
+<ul>
+<li>
+<strong>Resources</strong><ul><li>
+<a href="https://arxiv.org/abs/1704.04651">Paper</a> <br><br>
+</li></ul>
+</li>
+<li>
+<strong>Introduction</strong><ul>
+<li>Value Function Agents<ul>
+<li>Create value function and act $\epsilon$-greedily on it</li>
+<li>Improved sample complexity</li>
+<li>Long Runtimes</li>
+</ul>
+</li>
+<li>Actor-Critic Agents<ul>
+<li>(Can have) parallel actors training</li>
+<li>Worse sample complexity</li>
+<li>Faster training</li>
+</ul>
+</li>
+<li>Retrace-Actor (Reactor)<ul><li>Combines sample-efficiency of off-policy experience replay with time-efficiency of asynchronous algorithms</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Background</strong><ul>
+<li>Assume standard MDP RL setting</li>
+<li>
+<strong>Value-Based Algorithms</strong><ul>
+<li>Common methods:<ul>
+<li>DQN</li>
+<li>Double DQN</li>
+<li>Dueling Architecture</li>
+<li>Rainbow</li>
+</ul>
+</li>
+<li>
+<strong>Prioritized Experience Replay</strong><ul>
+<li>Experience replay that samples with probabilities proportional to the absolutde TD error</li>
+<li>See <a href="https://samratsahoo.com/2025/04/04/prioritized-experience-replay">PER notes</a>
+</li>
+</ul>
+</li>
+<li>
+<strong>Retrace($\lambda$)</strong><ul>
+<li>Assume a trajectory has been generated from a behavior policy ($\mu$)</li>
+<li>We want to evaluate the value of a target policy, $\pi$</li>
+<li>To estimate $Q^\pi$, we use following gradient<ul><li>$\Delta Q(x_t, a_t) = \sum _{s \geq t} \gamma^{s-t}(c _{t+1} \dots c_s) \delta_s^\pi Q$<ul>
+<li>$\delta_s^\pi Q$: temporal difference error at time $s$ under $\pi$</li>
+<li>$c_s = \lambda min(1, \rho_s)$: truncated importance sampling weight<ul><li>$\rho_s = \frac{\pi(a_s \vert x_s)}{\mu(a_s \vert x_s)}$</li></ul>
+</li>
+</ul>
+</li></ul>
+</li>
+<li>Guarantees that in finite state + action spaces, $Q$ estimate converges to $Q^\pi$</li>
+</ul>
+</li>
+<li>
+<strong>Distributional RL</strong><ul>
+<li>Directly estimates distribution over returns (C51 algorithm)<ul><li>Parameterizes distribution over returns with a mixture over diracs</li></ul>
+</li>
+<li>$Q(x, a; \theta) = \sum _{i=0}^{N-1} q_i(x,a;\theta)z_i$<ul>
+<li>$q_i = \frac{e^{\theta_i(x,a)}}{\sum _{j=0}^{N-1}e^{\theta_j(x,a)}}$</li>
+<li>$z_i = v _{min} + i \frac{v _{max} - v _{min}}{N-1}$</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Actor Critic Algorithms</strong><ul>
+<li>A3C Updates:<ul>
+<li>Policy update: $\Delta \theta = \nabla _{\theta} \log \pi(a_t \vert x_t; \theta)A(x_t, a_t; \theta_v)$</li>
+<li>Critic Update: $\Delta \theta_v = A(x_t, a_t; \theta_v) \nabla _{\theta_v}V(x_t)$</li>
+</ul>
+</li>
+<li>PPO is A3C but replaces advantage function with: $min(\rho_t A(x_t, a_t; \theta_v), clip(\rho_t, 1 - \epsilon, 1 + \epsilon)A(x_t, a_t; \theta_v))$</li>
+<li>ACER is A3C but uses<ul>
+<li>Experience replay</li>
+<li>Retrace algorithm for off-policy correction</li>
+<li>Truncated importance sampling likelihood ratio for off-policy policy optimization</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>The Reactor</strong><ul>
+<li>
+<strong>$\beta$-LOO</strong><ul>
+<li>Use policy gradient theorem to train actor<ul>
+<li>$\nabla V^\pi(x_0) = \mathbb{E}[\sum_t \gamma^t \sum_a Q^\pi(x_t, a)\nabla \pi(a \vert x_t)]$</li>
+<li>We want to estimate: $G = \sum_a Q^\pi(a) \nabla \theta(a)$ (drop dependence on state)<ul>
+<li>If we sample $\hat{a}$ from a behavior distribution and have access to unbiased $R(\hat{a}), Q^\pi(\hat{a})$, we can estimate G with likelihood ratio + importance sampling: $\hat{G} _{ISLR} = \frac{\pi(\hat{a})}{\mu(\hat{a})}(R(\hat{a}) - V) \nabla \log \pi(\hat{a})$<ul><li>Suffers from high variance</li></ul>
+</li>
+<li>Alternatively, estimate G by using $R$ for chosen action and $Q$ for all other actions<ul>
+<li>Leave-one-out (LOO) policy gradient estimate: $\hat{G} _{LOO} = R(\hat{a})\nabla \pi(\hat{a}) + \sum _{a \neq \hat{a}} Q(a)\nabla \pi(a)$</li>
+<li>Low variance but may be biased if $Q$ is significantly different from $Q^\pi$</li>
+</ul>
+</li>
+<li>$\beta$-LOO Policy Gradient estimate: $\hat{G} _{\beta-LOO} = \beta(R(\hat{a}) - Q(\hat{a}))\nabla \pi(\hat{a}) + \sum _{a \neq \hat{a}} Q(a)\nabla \pi(a)$<ul>
+<li>$\beta = \beta(\mu, \pi, \hat{a})$: can be a function of both policies and selected action</li>
+<li>When $\beta=1$, this turns into $1$-LOO</li>
+</ul>
+</li>
+<li>$\frac{1}{\mu}$-LOO: When $\beta = 1/\mu(\hat{a})$<ul><li>$\hat{G} _{\frac{1}{\mu}-LOO} = \frac{\pi(\hat{a})}{\mu(\hat{a})}(R(\hat{a}) - Q(\hat{a}))\nabla \pi(\hat{a}) + \sum _{a \neq \hat{a}} Q(a)\nabla \pi(a)$<ul>
+<li>Unbiased (second term corrects bias)</li>
+<li>Generalization of $\hat{G} _{ISLR}$ where a state-action dependent baseline is used</li>
+</ul>
+</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Proposition<ul>
+<li>$\hat{a} \sim \mu$ and $\mathbb{E}[R(\hat{a})] = Q^\pi(\hat{a})$, bias of $G _{\beta-LOO}$ is $\vert \sum_a (1 - \mu(a)\beta(a))\nabla \pi(a) [Q(a) - Q^\pi(a)] \vert$<ul>
+<li>Bias decreases as $\beta(a) \rightarrow 1/\mu(a)$</li>
+<li>Bias decreases as $Q \rightarrow Q^\pi$</li>
+</ul>
+</li>
+<li>Thus we should use $\beta$-LOO with $\beta(\hat{a}) = min(c, \frac{1}{\mu(\hat{a})})$<ul><li>Similar to truncated ISLR; differences:<ul>
+<li>Truncates $\frac{1}{\mu(\hat{a})}$ for additional variance reduction</li>
+<li>Uses Q baseline instead of V baseline</li>
+</ul>
+</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Distributional Retrace</strong><ul>
+<li>Its difficult to produce unbiased $R(\hat{a})$ of $Q^\pi(\hat{a})$ for a target policy when following a behavior policy<ul><li>Requires full importance sampling correction</li></ul>
+</li>
+<li>Use corrected return from retrace algorithm<ul>
+<li>Biased estimate of $Q^\pi(\hat{a})$</li>
+<li>Bias vanishes asymptotically</li>
+</ul>
+</li>
+<li>Multistep Distributional Bellman Operator<ul>
+<li>n-step distributional bellman target:<ul>
+<li>$\sum_i q_i(x _{t+n}, a)\delta _{z_i^n}$</li>
+<li>$z_i^n = \sum _{s=t}^{t+n-1}\gamma^{s-t}r_s + \gamma^n z_i$</li>
+</ul>
+</li>
+<li>Do the same projection + KL divergence loss steps in C51</li>
+</ul>
+</li>
+<li>Distributional Retrace<ul>
+<li>Retrace algorithm has off-policy correction (not handled by n-step distributional bellman backup)</li>
+<li>Rewrite retrace as linear combination of n-step backup, weighted by coefficients $\alpha _{n,a}$:<ul>
+<li>$\Delta Q(x_t, a_t) = \sum _{n \geq 1} \sum _{a \in \mathcal{A}} \alpha _{n,a}[\sum _{s=t}^{t+n-1}\gamma^{s-t}r_s + \gamma^n Q(x _{t+n},a)] - Q(x_t, a_t)$</li>
+<li>$\alpha _{n,a} = (c _{t+1} \dots c _{t+n-1})(\pi(a \vert x _{t+n}) - \mathbb{I}(a = a _{t+n})c _{t+n})$<ul>
+<li>Depends on degree of off-policiness along trajectory</li>
+<li>Coefficients can be negative but in expectation are non-negative</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Distributional retrace is backing up mixture of n-step distributions<ul>
+<li>Retrace target: $\sum _{i=1} q_i^\ast(x_t, a_t)\delta _{z_i}$</li>
+<li>$q_i^\ast(x_t, a_t) = \sum _{n \geq 1} \sum _{a} \alpha _{n,a} \sum_j q_j(x _{t+n}, a _{t+n})h _{z_i}(z_j^n)$<ul><li>$h _{z_i}$: Linear interpolation kernel used for projection (see paper for details)</li></ul>
+</li>
+<li>Update probabilities using KL gradient<ul><li>$\nabla KL(q^\ast (x_t, a_t), q(x_t, a_t)) = - \sum _{i=1}q_i^\ast(x_t, a_t)\nabla \log q_i (x_t, a_t)$</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Prioritized Sequence Replay</strong><ul>
+<li>PER gives same priority to all unsampled transitions</li>
+<li>Assume TD error is temporally correlated with correlation decaying as time increases</li>
+<li>Lazy Initialization: Instead, give new experience no priority when added and only give it priority after its been sampled and used for training<ul>
+<li>Assign priorities to all overlapping sequences of length $n$</li>
+<li>When sampling, sequences with no priority sampled proportionally to average priority of assigned sequences within a local neighborhood</li>
+<li>Starts with priorities $p_t$ for sequences already assigned</li>
+<li>Define a partition $I_i$ that contains one $s_i$ with assigned priority</li>
+<li>Estimated $\hat{p}_i$ for all other sequences: $\hat{p}_i = \sum _{s_i \in J(t)} \frac{w_i}{\sum _{i’ \in J(t)} w _{i’}}p(s_i)$<ul>
+<li>$J(t)$ collection of contiguous partitions containing time t</li>
+<li>$w_i = \vert I_i \vert$: length of partition</li>
+<li>Cell sizes used as importance weights</li>
+<li>When $I_i$ is not a function of the priorities, the algorithm is unbiased</li>
+</ul>
+</li>
+<li>With probability $\epsilon$, sample uniformly randomly, and probability $1 - \epsilon$ sample proportional to $\hat{p}_t$</li>
+<li>Implemented using contextual priority tree</li>
+<li>Prioritization used for variance reduction</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Agent Architecture</strong><ul>
+<li>Decouple acting from learning to improve CPU usage<ul>
+<li>Acting thread gets observations and submits actions and stores experiences in memory</li>
+<li>Learning thread samples experiences and trains on them</li>
+<li>4 - 6 acting steps per learning step</li>
+</ul>
+</li>
+<li>Agent can be distributed over machines<ul>
+<li>Current and target network stored on shared parameter server</li>
+<li>Each machine has its own replay memory</li>
+<li>Training done by downloading shared network + evaluting local gradients + sending them to shared network</li>
+</ul>
+</li>
+<li>
+<strong>Network Architecture</strong><ul>
+<li>Use a recurrent network architecture to evaluate action-values over sequences (allows Convolution layers to process each frame once instead of n times if frame stacking was used)</li>
+<li>$x_t$ used as input and action-value distribution $q_i(x_t, a)$ outputted + policy probability $\pi(a \vert x_t)$</li>
+<li>Architecture inspired by dueling network<ul><li>Splits action-value distribution logits into state-value logits and advantage logits</li></ul>
+</li>
+<li>Final action-value logits produced by summing state + action-specific logits</li>
+<li>Use softmax for probability distributions</li>
+<li>Policy uses softmax layer mixed with fixed uniform distribution with a mixing hyperparmeter</li>
+<li>Seperate LSTMs for Policy and Q Networks<ul><li>LSTM Policy gradients blocked from back-propagating into CNN for stability (avoids positive feedback loops between $\pi,, q_i$ from shared representations)</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Experimental Results</strong><ul>
+<li>Trained on Atari games</li>
+<li>Compared performance with different versions of Reactor</li>
+<li>Prioritization was most important component</li>
+<li>Beta-LOO outperforms truncated importance sampling likelihood ratio</li>
+<li>Distributional and non-distributional versions had similar results<ul><li>Distributional was better with human starts</li></ul>
+</li>
+<li>
+<strong>Comparing to Prior Work</strong><ul>
+<li>Reactor exceeds performance of all algorithms (Rainbow, A3C, Dueling, etc. - see the paper for list) across all metrics</li>
+<li>Reactor doesn’t use noisy networks found in Rainbow (which helped with performance in Rainbow)</li>
+<li>With no-op starts, reactor outperforms all except rainbow - same performance in evaluation however<ul>
+<li>Rainbow more sample efficient during training</li>
+<li>Rainbow performance drops with random human starts<ul><li>May be overfitting to certain trajectories</li></ul>
+</li>
+</ul>
+</li>
+<li>classical + distributional reactor outperformed ACER (another retrace algorithm)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<span class="meta"><time datetime="2025-05-20T00:00:00+00:00">May 20, 2025</time> · <a href="/tags/research">research</a></span></section></main></body>
+</html>

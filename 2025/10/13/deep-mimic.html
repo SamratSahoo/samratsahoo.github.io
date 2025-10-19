@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet">
+<meta name="generator" content="Jekyll v4.2.2">
+<meta property="og:title" content="DeepMimic: Example-Guided Deep Reinforcement Learning of Physics-Based Character Skills">
+<meta name="author" content="samrat sahoo">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="A paper about using reinforcement learning to imitate a range of motion clips">
+<meta property="og:description" content="A paper about using reinforcement learning to imitate a range of motion clips">
+<link rel="canonical" href="https://samratsahoo.com/2025/10/13/deep-mimic">
+<meta property="og:url" content="https://samratsahoo.com/2025/10/13/deep-mimic">
+<meta property="og:site_name" content="samrat’s thought space">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2025-10-13T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="DeepMimic: Example-Guided Deep Reinforcement Learning of Physics-Based Character Skills">
+<meta name="twitter:site" content="@samratdotjs">
+<meta name="twitter:creator" content="@samratdotjs"> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"samrat sahoo","url":"https://samratsahoo.com"},"dateModified":"2025-10-13T00:00:00+00:00","datePublished":"2025-10-13T00:00:00+00:00","description":"A paper about using reinforcement learning to imitate a range of motion clips","headline":"DeepMimic: Example-Guided Deep Reinforcement Learning of Physics-Based Character Skills","mainEntityOfPage":{"@type":"WebPage","@id":"https://samratsahoo.com/2025/10/13/deep-mimic"},"url":"https://samratsahoo.com/2025/10/13/deep-mimic"}</script><title> DeepMimic: Example-Guided Deep Reinforcement Learning of Physics-Based Character Skills - samrat's thought space</title>
+<link rel="shortcut icon" href="/favicon.webp">
+<link rel="alternate" type="application/atom+xml" title="samrat's thought space" href="/atom.xml">
+<link rel="alternate" type="application/json" title="samrat's thought space" href="https://samratsahoo.com/feed.json">
+<link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml">
+<style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:10rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5{line-height:1;margin:1rem 0;font-weight:600}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:60rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}@media print{.no-print,.no-print *{display:none !important}}img.mermaid{max-width:200px}.url{color:#0645AD}*::-moz-selection{color:white;background:#7011dc}*::selection{color:white;background:#7011dc}*{font-family:"Outfit", sans-serif}li>ul{padding-left:1rem}</style>
+<script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"},"svg":{"fontCache":"global","scale":1.0,"minScale":0.5,"mtextInheritFont":true,"merrorInheritFont":true,"mathmlSpacing":false,"skipAttributes":{},"exFactor":0.5},"chtml":{"scale":1.0,"minScale":0.5,"matchFontHeight":true,"mtextFont":"serif","linebreaks":{"automatic":false}}}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js"></script>
+</head>
+<body><main><header aria-hidden="true" class="no-print"> <!--<h1 class="logo">samrat's thought space</h1>--><nav role="navigation" aria-hidden="true"><ul>
+<li><a href="/">about</a></li>
+<li><a href="/reading" class="active">reading</a></li>
+<li><a href="/research">research</a></li>
+<li><a href="/writing">writing</a></li>
+<li><a href="/search">search</a></li>
+</ul></nav></header><section class="post"><h2>DeepMimic: Example-Guided Deep Reinforcement Learning of Physics-Based Character Skills</h2>
+<ul>
+<li>
+<strong>Resources</strong><ul><li>
+<a href="https://arxiv.org/abs/1804.02717">Paper</a> <br><br>
+</li></ul>
+</li>
+<li>
+<strong>Introduction</strong><ul>
+<li>Models humans + animals is challenging<ul>
+<li>Rely on manually designed controllers that don’t generalize well</li>
+<li>Difficult for humans to articulate internal strategies for skills</li>
+</ul>
+</li>
+<li>Reinforcement learning is promising but lags behind kinematic methods<ul><li>Produces extraneous motion or peculiar gaits</li></ul>
+</li>
+<li>Can use motion capture or animation data to improve controller quality<ul><li>Prior work = layering physics based tracking controller on kinematic animation system<ul><li>Challenging because animation system needs to produce feasible to track reference motions<ul><li>Limits recovery and deviations</li></ul>
+</li></ul>
+</li></ul>
+</li>
+<li>Ideal learning system<ul>
+<li>Supply refernece motions and generate goal directed + realistic behavior</li>
+<li>DeepMimic directly rewards policies that resemble reference animation data</li>
+</ul>
+</li>
+<li>DeepMimic Methods<ul>
+<li>Multi-clip reward based on max operator</li>
+<li>Policy training for skills triggered by user</li>
+<li>Sequencing single clip policies by using value functions to determine feasibility of transitions</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Overview</strong><ul>
+<li>Input: character model, kinematic reference motions, and task defined by reward function</li>
+<li>Output: controller that imitates reference motions while satisfying task objective</li>
+<li>Reference motion is a sequence of target poses ($\{ \hat{q}_t \}$)</li>
+<li>Control policy maps state ($s_t$) and goal ($g_t$) to an action ($a_t$)<ul><li>Action specifies target angles for PD controllers</li></ul>
+</li>
+<li>Reference motions used for imitation reward: $r^I(s_t, a_t)$</li>
+<li>Goal used for task specific reward $r^G(s_t, a_t, g_t)$</li>
+</ul>
+</li>
+<li>
+<strong>Background</strong><ul>
+<li>Standard RL setting</li>
+<li>Policies trained with proximal policy optimization</li>
+<li>Value function trained with $TD(\lambda)$</li>
+<li>Advantage function computed via generalized advantage estimation ($GAE(\lambda)$)</li>
+</ul>
+</li>
+<li>
+<strong>Policy Representation</strong><ul>
+<li>Reference motion only provides kinematic information; policy must figure out which actions should be applied</li>
+<li>
+<strong>States and Actions</strong><ul>
+<li>$s$: configuration of character body<ul>
+<li>Link positions relative with respect to root</li>
+<li>Rotations in quaternions</li>
+<li>Linear + angular velocities</li>
+<li>Computed in character’s local coordinate frame</li>
+<li>Phase variable included amongst because reference motions vary with time</li>
+<li>Goal provided if one exists too</li>
+</ul>
+</li>
+<li>$a$: Specifies target orientations for PD controllers for each joint<ul>
+<li>Spherical joints in angle-axis form</li>
+<li>Revolute joints in scalar rotation angles</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Network</strong><ul>
+<li>Policy is neural net that maps state and goal to action distribution, modeled as a gaussian<ul><li>$\pi(a \vert s, g) = \mathcal{N}(\mu(s), \Sigma)$<ul><li>$\Sigma$: Diagonal covariance matrix treated as hyperparameter</li></ul>
+</li></ul>
+</li>
+<li>Vision based tasks augment input with heightmap $H$ of the terrain<ul>
+<li>Use convolutional layers to process the heightmap</li>
+<li>Features then concatenated with the state and goal</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Reward</strong><ul>
+<li>Two termed reward: $r_t = \omega^I r^I_t + \omega^G r^G_t$<ul>
+<li>$r_t^I$: imitation reward</li>
+<li>$r_t^G$: task reward</li>
+</ul>
+</li>
+<li>Imitation reward: $r^I_t = w^pr^p_t + w^vr^v_t + w^er^e_t + w^cr^c_t$<ul>
+<li>$r^p$: Pose reward; encourages to match joint orientations of reference motion<ul><li>$r^p_t = exp[-2(\Sigma_j \vert \vert \hat{q}_t^j \ominus q_t^j \vert \vert^2)]$<ul><li>$\ominus$: indicates quaternion difference</li></ul>
+</li></ul>
+</li>
+<li>$r^v_t$: Difference of local joint velocities<ul><li>$r^v_t = exp[-0.1(\Sigma_j \vert \vert \hat{\dot q_t^j} - \dot q_t^j \vert \vert^2)]$<ul>
+<li>Difference in angular velocities</li>
+<li>Velocity computed via finite differences</li>
+</ul>
+</li></ul>
+</li>
+<li>$r_t^e$: End effect reward; encourages hand and feet to match positions from reference motion<ul><li>$r^e_t = exp[-40(\Sigma_e \vert \vert \hat{p_t^e} - p_t^e \vert \vert^2)]$</li></ul>
+</li>
+<li>$r_t^c$: Penalizes deviations in center of mass of character<ul><li>$r_t^c = exp[-10 \vert \vert \hat{p_t^c} - p_t^c \vert \vert^2]$</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Training</strong><ul>
+<li>Policies trained with PPO-Clip</li>
+<li>Policy network parameterized by $\theta$, Value network by $\psi$</li>
+<li>Initial state sampled from reference motions</li>
+<li>Rollouts generated by sampling actions</li>
+<li>Episodes terminated at a horizon or until termination condition</li>
+<li>Target values computed with $TD(\lambda)$</li>
+<li>Advantages computed with $GAE(\lambda)$</li>
+<li>Use initial state distribution + early termination for exploration</li>
+<li>
+<strong>Initial State Distribution</strong><ul>
+<li>Simple strategy = initialize character to starting state of motion<ul>
+<li>Forces policy to learn motion in a sequential manner</li>
+<li>Problematic for motions like backflips; learning landing is pre-requisitie</li>
+<li>Not good for exploration</li>
+</ul>
+</li>
+<li>Reference state initialization: state sampled from reference motion and used to initialize agent<ul><li>Encounters desirable states from reference motion</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Early Termination</strong><ul>
+<li>Early termination triggered when certain links hit the ground<ul><li>Character gets 0 reward for remainder of episode</li></ul>
+</li>
+<li>Advantages<ul>
+<li>Can be used a means for reward shaping</li>
+<li>Biases data distribution in favor of samples relevant to the task<ul><li>I.e., without early termination, early samples of training dominated by character on the ground</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Multi-Skill Integration</strong><ul>
+<li>We shouldn’t be limited to a single reference clip - can use multi-clip reward</li>
+<li>User can also control character via a skill selector policy</li>
+<li>We can also train a composite policy<ul><li>Multiple policies learned independently but value functions used to determine which policy to activate</li></ul>
+</li>
+<li>Multi-clip reward: Takes the max imitation reward across all clips<ul><li>$r^I_t = max _{j = 1, \dots, k} r_t^j$</li></ul>
+</li>
+<li>Skill Selector: Single policy imitates diverse skills and can then execute arbitrary policies on demand<ul>
+<li>Policy provided with a goal</li>
+<li>During training, this goal is sampled randomly</li>
+</ul>
+</li>
+<li>Composite Policy:<ul>
+<li>Training becomes more difficult as the number of skills needed to learn in 1 policy increases</li>
+<li>Can train seperate policies for each skill<ul><li>Then use value functions to determine which skill to execute</li></ul>
+</li>
+<li>Constructed using a boltzmann distribution<ul>
+<li>$\Pi(a \vert s) = \Sigma _{i=1}^k p^i(s)\pi^i(a \vert s)$</li>
+<li>$p^i(s) = \frac{exp[V^i(s) / T]}{\Sigma _{j=1}^k V^j(s) / T}$<ul><li>Where $T$ is the temperature</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Characters</strong><ul>
+<li>3D Humanoid, Atlas Robot, T-Rex, Dragon</li>
+<li>PD controllers at each joint</li>
+<li>Atlas and humanoid have similar structure but atlas is heavier</li>
+<li>Dragon and T-Rex used for examples where is no motion capture data (use keyframe animations)</li>
+</ul>
+</li>
+<li>
+<strong>Tasks</strong><ul>
+<li>Target Heading: Encourage character to travel in a specific direction<ul>
+<li>$r_t^G = exp[-2.5 max(0, v^\ast - v^T_td_t^\ast)^2]$<ul>
+<li>$v^\ast$: desired speed</li>
+<li>$d_t^\ast$: target direction</li>
+</ul>
+</li>
+<li>Penalizes for traveling slower than desired speed but not faster</li>
+<li>During training target direction chosen randomly</li>
+</ul>
+</li>
+<li>Strike: Character must strike a random target<ul>
+<li>$r^G_t = 1$ if target has been hit</li>
+<li>$r^G_t = exp[-4\vert\vert p_t^{tar} - p_t^e \vert \vert^2]$ otherwise<ul>
+<li>$p_t^{tar}$: location of the target</li>
+<li>$p_t^{e}$: position of link used to hit target</li>
+</ul>
+</li>
+<li>Goal is $g_t = (p_t^{tar}, h)$<ul><li>$h$ indicates if the target was hit in previous timestep</li></ul>
+</li>
+</ul>
+</li>
+<li>Throw: Need to throw ball to target<ul><li>Same reward as strike task but with</li></ul>
+</li>
+<li>Terrain Traversal: Character traverses obstacle filled environments<ul>
+<li>Obstacles:<ul>
+<li>Winding balance beam</li>
+<li>Stairs</li>
+<li>Mixed obstacles</li>
+<li>Gaps</li>
+</ul>
+</li>
+<li>Use progressive learning approach<ul>
+<li>Use fully connected networks to imitate motions on flat terrain</li>
+<li>Next augment with height map and train on irregular environments</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Results</strong><ul>
+<li>For locomotion skills, policies produce natural gaits</li>
+<li>Able to learn variety of skills, even those with long flight phases (i.e., backflip)</li>
+<li>Can reproduce contact rich motions like crawling or rolling</li>
+<li>Can also reproduce motions that require coordination with environment</li>
+<li>Policies robust to perturbations and produce recovery behaviors</li>
+<li>
+<strong>Tasks</strong><ul>
+<li>Policies are able to satisfy additional task objectives</li>
+<li>Throwing success rate is 75% for policy with dual objective (vs 5% for imitation only policy)</li>
+<li>Strike success rate is 99% for policy with dual objective (vs 19% for imitation only policy)</li>
+<li>Can deviate from initial reference motion and use additional strategies to satisfy goals</li>
+<li>Without reference motion, policies produce unnatural behaviors</li>
+</ul>
+</li>
+<li>
+<strong>Multi-Skill Integration</strong><ul>
+<li>Multi-Clip Reward<ul>
+<li>Resulting policy learns many agile stepping behaviours to follow heading</li>
+<li>When heading changes, character’s motion becomes more closely aligned with turning motions</li>
+<li>Once re-aligned, it goes back to forward walking motion</li>
+<li>Shows multi-clip does allow policy to learn from many clips<ul><li>Mixing very different clips results in policy imitating only a subset of the clips</li></ul>
+</li>
+</ul>
+</li>
+<li>Skill Selector<ul>
+<li>Use a one hot vector representation to train policy on many types of skills</li>
+<li>Once trained, policy was able to execute arbitrary sequences of skills</li>
+</ul>
+</li>
+<li>Composite Policy<ul>
+<li>To integrate diverse policies, use the output of the value function and sample from the composite policy to determine which skill to execute</li>
+<li>Policy restricted never to sample same skill consecutively</li>
+<li>Not trained to transition between skills; value functions enable this transition</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Retargeting</strong><ul>
+<li>Character Retargeting<ul>
+<li>Copy local joint rotations from humanoid to atlas</li>
+<li>New policies trained for atlas to imitate retargeted clips<ul><li>Despite different character morphologies, system can train policies to reproduce various skills with Atlas model</li></ul>
+</li>
+</ul>
+</li>
+<li>Environment Retargeting<ul>
+<li>For the jumping motion with reference clip on flat terrain, it was able to apply it again to a new environment that is different from original clip</li>
+<li>With vision based locomotion, we could augment network inputs with a height map<ul>
+<li>During training, Policy was able to learn various strategies to traverse classes of obstacles</li>
+<li>Was able to adapt original reference motion for irregular terrians</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Physics Retargeting<ul>
+<li>Change gravity to do a spin kick</li>
+<li>Despite the differences, policies were able to adapt the motions</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Ablations</strong><ul><li>Reference state initialization + early termination are important!<ul>
+<li>Early termination eliminates local optima by penalizing character when on the ground</li>
+<li>RSI important for skills with long flight times (without it, the policy can’t reproduce behaviors)</li>
+</ul>
+</li></ul>
+</li>
+<li>
+<strong>Robustness</strong><ul>
+<li>Able to stand external perturbations</li>
+<li>No perturbations during training but this behavior occurs likely due to noise froms stochastic policy</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Discussions and Limitations</strong><ul>
+<li>Requires a phase state variable for synchronization with reference motion<ul><li>Limits adjusting timing of motion</li></ul>
+</li>
+<li>Multi-clip integration only works well for small number of clips</li>
+<li>PD servos require insight to set properly for each character morphology</li>
+<li>Learning takes a while per skill</li>
+<li>State symmetric simiarlity defined manually</li>
+</ul>
+</li>
+</ul>
+<span class="meta"><time datetime="2025-10-13T00:00:00+00:00">October 13, 2025</time> · <a href="/tags/research">research</a></span></section></main></body>
+</html>

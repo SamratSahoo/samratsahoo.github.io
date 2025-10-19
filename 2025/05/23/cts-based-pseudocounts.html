@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet">
+<meta name="generator" content="Jekyll v4.2.2">
+<meta property="og:title" content="Unifying Count-Based Exploration and Intrinsic Motivation">
+<meta name="author" content="samrat sahoo">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="A paper about cts-based pseudocounts">
+<meta property="og:description" content="A paper about cts-based pseudocounts">
+<link rel="canonical" href="https://samratsahoo.com/2025/05/23/cts-based-pseudocounts">
+<meta property="og:url" content="https://samratsahoo.com/2025/05/23/cts-based-pseudocounts">
+<meta property="og:site_name" content="samrat’s thought space">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2025-05-23T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="Unifying Count-Based Exploration and Intrinsic Motivation">
+<meta name="twitter:site" content="@samratdotjs">
+<meta name="twitter:creator" content="@samratdotjs"> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"samrat sahoo","url":"https://samratsahoo.com"},"dateModified":"2025-05-23T00:00:00+00:00","datePublished":"2025-05-23T00:00:00+00:00","description":"A paper about cts-based pseudocounts","headline":"Unifying Count-Based Exploration and Intrinsic Motivation","mainEntityOfPage":{"@type":"WebPage","@id":"https://samratsahoo.com/2025/05/23/cts-based-pseudocounts"},"url":"https://samratsahoo.com/2025/05/23/cts-based-pseudocounts"}</script><title> Unifying Count-Based Exploration and Intrinsic Motivation - samrat's thought space</title>
+<link rel="shortcut icon" href="/favicon.webp">
+<link rel="alternate" type="application/atom+xml" title="samrat's thought space" href="/atom.xml">
+<link rel="alternate" type="application/json" title="samrat's thought space" href="https://samratsahoo.com/feed.json">
+<link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml">
+<style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:10rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5{line-height:1;margin:1rem 0;font-weight:600}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:60rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}@media print{.no-print,.no-print *{display:none !important}}img.mermaid{max-width:200px}.url{color:#0645AD}*::-moz-selection{color:white;background:#7011dc}*::selection{color:white;background:#7011dc}*{font-family:"Outfit", sans-serif}li>ul{padding-left:1rem}</style>
+<script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"},"svg":{"fontCache":"global","scale":1.0,"minScale":0.5,"mtextInheritFont":true,"merrorInheritFont":true,"mathmlSpacing":false,"skipAttributes":{},"exFactor":0.5},"chtml":{"scale":1.0,"minScale":0.5,"matchFontHeight":true,"mtextFont":"serif","linebreaks":{"automatic":false}}}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js"></script>
+</head>
+<body><main><header aria-hidden="true" class="no-print"> <!--<h1 class="logo">samrat's thought space</h1>--><nav role="navigation" aria-hidden="true"><ul>
+<li><a href="/">about</a></li>
+<li><a href="/reading" class="active">reading</a></li>
+<li><a href="/research">research</a></li>
+<li><a href="/writing">writing</a></li>
+<li><a href="/search">search</a></li>
+</ul></nav></header><section class="post"><h2>Unifying Count-Based Exploration and Intrinsic Motivation</h2>
+<ul>
+<li>
+<strong>Resources</strong><ul><li>
+<a href="https://arxiv.org/abs/1606.01868">Paper</a> <br><br>
+</li></ul>
+</li>
+<li>
+<strong>Introduction</strong><ul>
+<li>Exploration looks at reducing uncertainty over environment’s reward + dynamics<ul>
+<li>Uncertainty quantified by confidence intervals or posterior</li>
+<li>Confidence intervals + posterior shrink inversely to square root of visit count $N(x,a)$</li>
+</ul>
+</li>
+<li>Model-Based Interval Bonuses with Exploration Bonus solves an augmented bellman equation<ul><li>$V(x) = max _{a \in \mathcal{A}}[\hat{R}(x,a) + \gamma \mathbb{E} _{\hat{P}}[V(x’)] + \beta N(x,a)^{- 1/2}]$</li></ul>
+</li>
+<li>Count based methods don’t work well in large domains where states are rarely visited more than once</li>
+<li>Intrinsic motivation provides guidance for exploration<ul><li>Learning Progress: Guide based on prediction error<ul><li>$e_n(A) - e _{n+1}(A)$: difference in error over some event A at time $n$ and $n+1$</li></ul>
+</li></ul>
+</li>
+<li>Intrinsic motivation equivalent to count based<ul>
+<li>Information gain (KL between prior + posterior) can be related to confidence intervals</li>
+<li>Pseudo Count: Connects information gain as learning progress and count based exploration</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Notation</strong><ul>
+<li>$\chi$: Countable state space<ul>
+<li>$x _{1:n} \in \chi^n$: Sequence of length n</li>
+<li>$\chi^\ast$: Set of finite sequences</li>
+<li>$x _{1:n}x$: concatenation of state to sequence</li>
+<li>$\epsilon$: Empty sequence</li>
+</ul>
+</li>
+<li>$\rho_n (x) = \rho(x; x _{1:n})$: conditional probability of $X _{n+1} = x$ given $X_1 \dots X_n = x _{1:n}$</li>
+<li>$\mu_n (x) = \mu(x; x _{1:n}) = \frac{N_n(x)}{n}$: Empirical distribution derived from a sequence<ul>
+<li>$N_n$: empirical count function (can be extended to state-action spaces as well; i.e., $N_n(x,a)$)</li>
+<li>Limit Point (Convergence point): markov chain stationary distribution</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>From Densities to Counts</strong><ul>
+<li>$N_n(x)$ almost always 0<ul><li>Doesn’t tell us state novelty</li></ul>
+</li>
+<li>
+<strong>Pseudo-Counts and the Recoding Probability</strong><ul>
+<li>Recoding probability of state $x$: $\rho_n’(x) = \rho(x; x _{1:n}x)$<ul><li>Probability assigned to $x$ after observing new occurence of $x$</li></ul>
+</li>
+<li>Two unknowns<ul>
+<li>Pseudo-count function: $\hat{N_n}(x)$</li>
+<li>Pseduo-count total: $\hat{n}$</li>
+<li>Constraint 1: $\rho_n(x) = \frac{\hat{N_n}(x)}{\hat{n}}$</li>
+<li>Constraint 2: $\rho_n’(x) = \frac{\hat{N_n}(x)+1}{\hat{n}+1}$</li>
+<li>Derive pseduo count: $\hat{N_n}(x) = \frac{\rho_n(x) (1 - \rho_n’(x))}{\rho_n’(x)- \rho_n(x)} = \hat{n}\rho_n(x)$</li>
+</ul>
+</li>
+<li>Learning-Positive Density Model<ul>
+<li>Learning Positive: If for all $x _{1:n} \in \chi$ and $x \in \chi$: $\rho_n’(x) \geq \rho_n(x)$<ul>
+<li>$\hat{N_n}(x) \geq 0$ iff $\rho$ is learning positive</li>
+<li>$\hat{N_n}(x) = 0$ iff $\rho_n(x) = 0$</li>
+<li>$\hat{N_n}(x) = \infty$ iff $\rho_n(x) = \rho_n’(x)$</li>
+</ul>
+</li>
+<li>If $\rho_n = \mu_n$, then $\hat{N}_n = N_n$</li>
+<li>If model generalizes across states, then so do pesudo counts</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Estimating the Frequency of a Salient Event in FREEWAY</strong><ul>
+<li>Event of interest: Chicken has reached the very top of the screen</li>
+<li>Apply 250,000 steps of waiting followed by 250,000 steps of going up</li>
+<li>Pseduo count is almost 0 on first occurrence of salient event<ul><li>Increases slightly during 3rd period</li></ul>
+</li>
+<li>Pseudo counts are a fraction of real visit counts</li>
+<li>Ratio of pseudo-counts is different from ratio of real counts</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>The Connection to Intrinsic Motivation</strong><ul>
+<li>Information gain in relation to mixture model, $\xi$, over class of density models $\mathcal{M}$<ul>
+<li>$\xi_n(x) = \xi(x; x _{1:n}) = \int _{\rho \in \mathcal{M}} w_n(\rho) \rho(x; x _{1:n})d \rho$<ul><li>$w_n(\rho)$: Posterior weight of $\rho$<ul>
+<li>$w _{n+1}(\rho) = w_n(\rho, x _{n+1})$</li>
+<li>$w_n(\rho, x) = \frac{w_n(\rho)\rho(x; x _{1:n})}{\xi_n(x)}$</li>
+</ul>
+</li></ul>
+</li>
+<li>Information Gain from observing $x$: $IG_n(x) = IG(x; x _{1:n}) = KL(w(\cdot, x) \vert \vert w_n)$<ul><li>Difficult to compute so compute prediction gain instead: $PG_n(x) = \log \rho_n’(x) - \log \rho_n(x)$<ul>
+<li>If $\rho$ is learning-positive, then prediction gain is non-negative</li>
+<li>Pseudo-count w.r.t. PG: $\hat{N}_n(x) \approx (e^{PG_n(x)} -1)^{-1}$</li>
+</ul>
+</li></ul>
+</li>
+</ul>
+</li>
+<li>Theorem:<ul>
+<li>$IG_n(x) \leq PG_n(x) \leq \hat{N}_n(x)^{-1}$</li>
+<li>$PG_n(x) \leq \hat{N}_n(x)^{-\frac{1}{2}}$<ul>
+<li>Using an exploration bonus proportional to $\hat{N}_n(x)^{-\frac{1}{2}}$ leads to behavior as exploratory as the one derived from information gain bonus</li>
+<li>Since pseudo counts correspond to empirical counts in tabular setting, this preserves theoretical guarantees</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>For existing intrinsic motivation bonuses<ul>
+<li>Bonuses proportional to IG or PG are insufficient for optimal exploration</li>
+<li>Too little exploration relative to pseudo-counts<ul><li>Same conclusion for bonuses proportional to L1/L2 distance between $\xi_n’, \xi_n$</li></ul>
+</li>
+</ul>
+</li>
+<li>Pseudo counts don’t need to learn reward/dynamics model unlike some IM algorithms<ul><li>Learning this model means optimality guarantees can’t exist</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Asymptotic Analysis</strong><ul>
+<li>Assumptions: Let $r(x) = \lim _{n \rightarrow \infty} \frac{\rho_n(x)}{\mu_n(x)}$ and $\dot r(x) = \lim _{n \rightarrow \infty}\frac{\rho_n’(x) - \rho_n(x)}{\mu_n’(x) - \mu(x)}$ exist for all $x$ and $\dot r(x) &gt; 0$<ul>
+<li>First assumption tells us there should be a $r(x) &lt; 1$ unless $\rho_n \rightarrow \mu$</li>
+<li>Second assumption restricts learning rate of $\rho$ relative to $\mu$</li>
+<li>First assumption tells us $\rho_n(x)$ and $\rho_n’(x)$ have a common limit</li>
+</ul>
+</li>
+<li>Theorem: Ratio of pseudo-counts to empirical counts exists for all $x$<ul><li>$\lim _{n \rightarrow \infty} \frac{\hat{N}_n(x)}{N_n(x)} = \frac{r(x)}{\dot r(x)}(\frac{1 - \mu(x)r(x)}{1 - \mu(x)})$</li></ul>
+</li>
+<li>Relative rate of change plays role in ratio of pseudo to empirical counts<ul>
+<li>Density model update: $\rho_n(x) = (1 - \alpha_n)\rho _{n-1}(x) + \alpha_n \mathbb{I}(x_n = x)$</li>
+<li>When $\alpha_n = \frac{1}{n}$, this update rule turns into empirical distribution</li>
+<li>For $n^{-\frac{2}{3}}$, it turns into a stochastic approximation<ul>
+<li>$\lim _{n \rightarrow \infty} \rho_n(x) = \mu(x)$</li>
+<li>$\lim _{n \rightarrow \infty} \frac{\rho_n’(x) - \rho_n(x)}{\mu_n’(x) - \mu(x)} = \infty$ because $\mu_n’(x) - \mu(x) = \frac{1}{n}(1 - \mu_n’(x))$<ul><li>We should require $\rho$ to converge at $\Theta(1/n)$ rate for comparisons to be meaningful</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Corollary: Count based estimator: $\rho_n(x) = \frac{N_n(x) + \phi(x)}{n + \sum _{x’ \in \chi}\phi(x’)}$<ul>
+<li>Where $\chi(x) &gt; 0$ and $\sum _{x \in \chi}\phi(x) &lt; \infty$</li>
+<li>$\hat{N}_n(x) / N(x) \rightarrow 1$ for all $x$ where $\mu(x) &gt; 0$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Empirical Evaluation</strong><ul>
+<li>
+<strong>Exploration in Hard Atari 2600 Games</strong><ul>
+<li>Use bonus: $R_n^+ (x,a) = \beta(\hat{N}_n(x) + 0.01)^{-\frac{1}{2}}$</li>
+<li>Compared to optimistic initialization</li>
+<li>Trained agents with DQNs (but with mixed double Q learning target with MC return)</li>
+<li>Count based exploration allows us to make quick progress<ul><li>Optimistic initialization yields similar performance to DQN</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Exploration for Actor-Critic Methods</strong><ul>
+<li>Compared to A3C with and without exploration bonus<ul><li>Augmented algorithm is called A3C+</li></ul>
+</li>
+<li>A3C fails to learn on 15 games whereas A3C+ fails on 10</li>
+<li>A3C+ has higher median performance and signifcantly outperforms on a quarter of the games</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Future Directions</strong><ul>
+<li>Induced Metric: Choice of density model induces a metric over state space</li>
+<li>Compatible Value Function: There may be mismatch in learning rates between value functions and density model</li>
+<li>Continuous Case: This paper focuses on countable number of state spaces. We should consider continuous ones</li>
+</ul>
+</li>
+</ul>
+<span class="meta"><time datetime="2025-05-23T00:00:00+00:00">May 23, 2025</time> · <a href="/tags/research">research</a></span></section></main></body>
+</html>

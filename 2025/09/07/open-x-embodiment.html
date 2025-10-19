@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet">
+<meta name="generator" content="Jekyll v4.2.2">
+<meta property="og:title" content="Open X-Embodiment: Robotic Learning Datasets and RT-X Models">
+<meta name="author" content="samrat sahoo">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="A paper about Open X-Embodiment">
+<meta property="og:description" content="A paper about Open X-Embodiment">
+<link rel="canonical" href="https://samratsahoo.com/2025/09/07/open-x-embodiment">
+<meta property="og:url" content="https://samratsahoo.com/2025/09/07/open-x-embodiment">
+<meta property="og:site_name" content="samrat’s thought space">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2025-09-07T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="Open X-Embodiment: Robotic Learning Datasets and RT-X Models">
+<meta name="twitter:site" content="@samratdotjs">
+<meta name="twitter:creator" content="@samratdotjs"> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"samrat sahoo","url":"https://samratsahoo.com"},"dateModified":"2025-09-07T00:00:00+00:00","datePublished":"2025-09-07T00:00:00+00:00","description":"A paper about Open X-Embodiment","headline":"Open X-Embodiment: Robotic Learning Datasets and RT-X Models","mainEntityOfPage":{"@type":"WebPage","@id":"https://samratsahoo.com/2025/09/07/open-x-embodiment"},"url":"https://samratsahoo.com/2025/09/07/open-x-embodiment"}</script><title> Open X-Embodiment: Robotic Learning Datasets and RT-X Models - samrat's thought space</title>
+<link rel="shortcut icon" href="/favicon.webp">
+<link rel="alternate" type="application/atom+xml" title="samrat's thought space" href="/atom.xml">
+<link rel="alternate" type="application/json" title="samrat's thought space" href="https://samratsahoo.com/feed.json">
+<link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml">
+<style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:10rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5{line-height:1;margin:1rem 0;font-weight:600}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:60rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}@media print{.no-print,.no-print *{display:none !important}}img.mermaid{max-width:200px}.url{color:#0645AD}*::-moz-selection{color:white;background:#7011dc}*::selection{color:white;background:#7011dc}*{font-family:"Outfit", sans-serif}li>ul{padding-left:1rem}</style>
+</head>
+<body><main><header aria-hidden="true" class="no-print"> <!--<h1 class="logo">samrat's thought space</h1>--><nav role="navigation" aria-hidden="true"><ul>
+<li><a href="/">about</a></li>
+<li><a href="/reading" class="active">reading</a></li>
+<li><a href="/research">research</a></li>
+<li><a href="/writing">writing</a></li>
+<li><a href="/search">search</a></li>
+</ul></nav></header><section class="post"><h2>Open X-Embodiment: Robotic Learning Datasets and RT-X Models</h2>
+<ul>
+<li>
+<strong>Resources</strong><ul><li>
+<a href="https://arxiv.org/abs/2310.08864">Paper</a> <br><br>
+</li></ul>
+</li>
+<li>
+<strong>Introduction</strong><ul>
+<li>Large scale + general purpose models outperform task specific models</li>
+<li>Most effective way to tackle narrow task is to adapt general purpose model<ul>
+<li>Difficult to do in robotics (large datasets hard to come by)</li>
+<li>Datasets are narrow along some axes (single set of objects, narrow range of tasks, single environment)</li>
+</ul>
+</li>
+<li>X-Embodiment Training: Union of narrow datasets provides better coverage of variation in environments and robots</li>
+<li>Open X-Embodiment Repository: Dataset with 22 different robotic embodiments</li>
+</ul>
+</li>
+<li>
+<strong>The Open-X Embodiment Repository</strong><ul>
+<li>Contains large scale data + pre-trained model checkpoints<ul>
+<li>Dataset: 1 million+ robot trajectories across 22 robot embodiments</li>
+<li>Pre-trained Checkpoint: Selection of RT-X model checkpoints</li>
+</ul>
+</li>
+<li>
+<strong>The Open X-Embodiment Dataset</strong><ul>
+<li>1M+ Real Robot Trajectories</li>
+<li>22 Robots</li>
+<li>Pools together 60 robot datasets</li>
+</ul>
+</li>
+<li>
+<strong>Dataset Analysis</strong><ul>
+<li>Franka robot is the most common</li>
+<li>Data also had language annotations</li>
+<li>Use PaLM language model to extract objects + behaviors from instructions</li>
+<li>Most skills belonged to pick-place but some had skills like wiping, assembling, etc.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>RT-X Design</strong><ul>
+<li>Trained the policy based on two transformer policies: RT-1, RT-2</li>
+<li>
+<strong>Data format consolidation</strong><ul>
+<li>Observation and action spaces vary across datasets</li>
+<li>Use a coarsely aligned action + observation space across datasets</li>
+<li>Model receives history of recent images + language instructions and predicts 7D action vector controlling end effector<ul><li>(x,y,z, roll, pitch, yaw, gripper opening or rates of these quantities)</li></ul>
+</li>
+<li>One canonical camera view from each dataset and resize it to common resolution</li>
+<li>Normalize each dataset’s actions prior to discretization<ul><li>Output of model can be denormalized depending on embodiment used</li></ul>
+</li>
+<li>Observations still vary widely across datasets (differing camera poses relative to robot or differing camera properties)</li>
+<li>Actions also vary widely - same action vector can result in very different motions depending on robot (due to values either representing relative or absolute positions/velocities)</li>
+</ul>
+</li>
+<li>
+<strong>Policy architectures</strong><ul>
+<li>RT-1: Transformer architecture for robotic control<ul>
+<li>Takes history of 15 images + language</li>
+<li>Each image processed through pretrained EfficientNet</li>
+<li>Language turned into USE embedding</li>
+<li>Visual + langauge embedding interwoven via FiLM layers</li>
+<li>Tokens fed into decoder only transformer for tokenized actions</li>
+</ul>
+</li>
+<li>RT-2: Large VLM fine tuned for robotic control<ul>
+<li>Casts tokenized actions to text tokens</li>
+<li>Use RT-2-PaLI-X variant<ul><li>ViT vision + UL2 language backbone</li></ul>
+</li>
+</ul>
+</li>
+<li>Input: Visual input + natural language instruction</li>
+<li>Output: Tokenized action</li>
+</ul>
+</li>
+<li>
+<strong>Training and inference details</strong><ul>
+<li>Use categorical cross-entropy over output space (buckets for RT-1 and language tokens for RT-2)</li>
+<li>Data mixture from 9 manipulators</li>
+<li>RT-1-X trained with the data mixture</li>
+<li>RT-2-X co-fine-tuned with 1 to 1 split between original VLM data and robotics data mixture</li>
+<li>At inference, model run at required rate for robot (3 - 10 Hz)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Experimental Results</strong><ul>
+<li>3 Questions:<ul>
+<li>Can policies trained on X-Embodiment enable positive transfer</li>
+<li>Does co-training models on data from multiple platforms generalize to new tasks</li>
+<li>What is the influence of different design dimensions on performance and generalization</li>
+</ul>
+</li>
+<li>
+<strong>In-distribution performance across different embodiments</strong><ul>
+<li>Split evaluation into two types:<ul>
+<li>Domains with small scale datasets where transfer is expected to improve performance</li>
+<li>Domains with large scale datasets where transfer is expected to be challenging</li>
+</ul>
+</li>
+<li>For small scale datasets, compare performance of RT-1-X model</li>
+<li>For large scale datasets, consider RT-1-X and RT-2-X</li>
+<li>Baseline: model developed by creators of dataset (“Original Method”) and RT-1 model trained on dataset in isolation</li>
+<li>Small-scale dataset domains: RT-1 outperforms original method on 4/5 datasets with large average improvement<ul><li>Shows co-training with X-embodiment data is largely beneficial</li></ul>
+</li>
+<li>Large scale dataset domains: RT-1-X doesn’t outperform RT-1 baseline<ul>
+<li>Indicates underfitting for that model class</li>
+<li>RT-2-X outperforms both Original method and RT-1<ul><li>X-robot training improves performance in data-rich environments</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Improved generalization to out-of-distribution settings</strong><ul>
+<li>Use RT-2-X model</li>
+<li>Unseen objects, backgrounds, and environments: RT-2 and RT-2-X perform roughly on par with each other</li>
+<li>Emergent Skills Evaluation:<ul>
+<li>Tasks are not in the RT-2 dataset but occur in bridge dataset</li>
+<li>RT-2-X outperforms RT-2 by 3x<ul>
+<li>Incorporating data from other robots intro training improves range of tasks</li>
+<li>Co-training with data from other platforms gives RT-2-X controller more skills</li>
+</ul>
+</li>
+<li>Removing bridge dataset from RT-2-X training reduces performance on hold-out tasks<ul><li>Transfer is indeed responsible for additional skills</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Design Decisions</strong><ul>
+<li>Including a short history of images improves generalization</li>
+<li>Web-based pretraining critical for performance</li>
+<li>Higher model capacity enables greater transfer</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Discussion, Future Work, and Open Problems</strong><ul>
+<li>Experiments do not consider robots with very different sensing and acutation modalities</li>
+<li>Do not study generalization to new robots</li>
+<li>Does not provide decision criterion for when positive transfer does or doesn’t happen</li>
+</ul>
+</li>
+</ul>
+<span class="meta"><time datetime="2025-09-07T00:00:00+00:00">September 7, 2025</time> · <a href="/tags/research">research</a></span></section></main></body>
+</html>

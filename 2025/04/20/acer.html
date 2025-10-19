@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&amp;display=swap" rel="stylesheet">
+<meta name="generator" content="Jekyll v4.2.2">
+<meta property="og:title" content="Sample Efficient Actor-Critic with Experience Replay">
+<meta name="author" content="samrat sahoo">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="A paper about actor critic methods with experience replay">
+<meta property="og:description" content="A paper about actor critic methods with experience replay">
+<link rel="canonical" href="https://samratsahoo.com/2025/04/20/acer">
+<meta property="og:url" content="https://samratsahoo.com/2025/04/20/acer">
+<meta property="og:site_name" content="samrat’s thought space">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2025-04-20T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="Sample Efficient Actor-Critic with Experience Replay">
+<meta name="twitter:site" content="@samratdotjs">
+<meta name="twitter:creator" content="@samratdotjs"> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"samrat sahoo","url":"https://samratsahoo.com"},"dateModified":"2025-04-20T00:00:00+00:00","datePublished":"2025-04-20T00:00:00+00:00","description":"A paper about actor critic methods with experience replay","headline":"Sample Efficient Actor-Critic with Experience Replay","mainEntityOfPage":{"@type":"WebPage","@id":"https://samratsahoo.com/2025/04/20/acer"},"url":"https://samratsahoo.com/2025/04/20/acer"}</script><title> Sample Efficient Actor-Critic with Experience Replay - samrat's thought space</title>
+<link rel="shortcut icon" href="/favicon.webp">
+<link rel="alternate" type="application/atom+xml" title="samrat's thought space" href="/atom.xml">
+<link rel="alternate" type="application/json" title="samrat's thought space" href="https://samratsahoo.com/feed.json">
+<link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml">
+<style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:10rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5{line-height:1;margin:1rem 0;font-weight:600}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:60rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}@media print{.no-print,.no-print *{display:none !important}}img.mermaid{max-width:200px}.url{color:#0645AD}*::-moz-selection{color:white;background:#7011dc}*::selection{color:white;background:#7011dc}*{font-family:"Outfit", sans-serif}li>ul{padding-left:1rem}</style>
+<script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"},"svg":{"fontCache":"global","scale":1.0,"minScale":0.5,"mtextInheritFont":true,"merrorInheritFont":true,"mathmlSpacing":false,"skipAttributes":{},"exFactor":0.5},"chtml":{"scale":1.0,"minScale":0.5,"matchFontHeight":true,"mtextFont":"serif","linebreaks":{"automatic":false}}}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js"></script>
+</head>
+<body><main><header aria-hidden="true" class="no-print"> <!--<h1 class="logo">samrat's thought space</h1>--><nav role="navigation" aria-hidden="true"><ul>
+<li><a href="/">about</a></li>
+<li><a href="/reading" class="active">reading</a></li>
+<li><a href="/research">research</a></li>
+<li><a href="/writing">writing</a></li>
+<li><a href="/search">search</a></li>
+</ul></nav></header><section class="post"><h2>Sample Efficient Actor-Critic with Experience Replay</h2>
+<ul>
+<li>
+<strong>Resources</strong><ul><li>
+<a href="https://arxiv.org/abs/1611.01224">Paper</a> <br><br>
+</li></ul>
+</li>
+<li>
+<strong>Introduction</strong><ul>
+<li>Experience replay has helped with reducing sample correlation which improves sample efficiency in Deep Q Learning</li>
+<li>Deterministic policies of Deep Q Learning prevent it from being used in adversarial scenarios</li>
+<li>Finding greedy action with respect to Q function is costly for large action spaces</li>
+<li>We need actor critic methods for both discrete and continuous action spaces</li>
+<li>Introduces ACER: Actor Critic with Experience Replay</li>
+<li>Innovations of ACER<ul>
+<li>Truncated Importance Sampling with Bias Correction</li>
+<li>Stochastic Dueling Architectures</li>
+<li>Efficient Trust Region Policy Optimization</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Background and Problem Setup</strong><ul>
+<li>Goal: Maximize expected discounted return</li>
+<li>Inspired from VPG gradient approximation</li>
+<li>Use k-step returns to trade-off bias and variance (From A3C)</li>
+<li>ACER: Off policy counterpart of A3C<ul><li>Uses single neural network to estimate policy + value function</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Discrete Actor Critic with Experience Replay</strong><ul>
+<li>Controlling variance and stability for off-policy estimators (i.e., experience replay) is extremely hard</li>
+<li>Importance weighted policy gradient: $\hat{g}^{imp} = (\Pi _{t=0}^k \rho _t)\sum _{t=0}^k (\sum _{i=0}^k \gamma^i r _{t+i}) \nabla _\theta \log \pi _\theta(a_t \vert x_t)$<ul>
+<li>Where $\rho _t$ is the importance weight</li>
+<li>Unbiased but suffers from unbounded weights</li>
+<li>Can be truncated but will suffer from bias</li>
+<li>Use marginal value functions over limiting distribution: $g^{marg} = \mathbb{E} _{x _t \sim \beta, a _t \sum \mu}[\rho _t \nabla _\theta \log \pi _\theta (a _t \vert x _t) Q^{\pi}(x _t, a _t)]$<ul>
+<li>$\beta(x) = \lim _{t \rightarrow \infty} P(x _t = x \vert x _0, \mu)$ is the limiting distribution</li>
+<li>$\mu$ is the behavior policy</li>
+<li>Avoids having to compute the gradient for the whole trajectory (no longer a product of importance weights - only uses marginal importance weight)<ul><li>Lowers the variance</li></ul>
+</li>
+<li>Estimate $Q^{\pi}$ using lambda-returns: $R _t^{\lambda} = r_t + (1-\lambda)\gamma V(x _{t+1}) + \lambda \gamma \rho _{t+1} R^\lambda _{t+1}$<ul><li>Smaller $\lambda$ means smaller returns</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Multi-Step Estimation of the State-Action Value Function</strong><ul><li>Use the retrace estimator: $Q^{ret}(x _t, a _t) = r_t + \gamma \bar{\rho} _{t+1}[Q^{ret}(x _{t+1}, a _{t+1}) - Q(x _{t+1}, a _{t+1})] + \gamma V(x _{t+1})$ $\bar{\rho} _t = min(\rho _t, c)$: the truncated importance weight<ul>
+<li>Off policy algorithm with low variance and convergence guarantees in tabular settings</li>
+<li>Depends on bootstrapped estimate of $Q$: use two-headed network that outputs the policy and the estimated Q value<ul>
+<li>Vector outputted for Q value (discrete action space)</li>
+<li>$V$ can be found via the expectation across actions of $Q$</li>
+</ul>
+</li>
+<li>ACER depends on $Q^{ret}$ to estimate $Q^{\pi}$. Retrace uses multistep returns to reduce bias</li>
+<li>Use MSE Loss between critic ($Q _{\theta _{v}}$) and $Q^{ret}$ to learn the critic</li>
+</ul>
+</li></ul>
+</li>
+<li>
+<strong>Importance Weight Truncation with Bias Correction</strong><ul>
+<li>Marginal importance weights can become large, causing instability</li>
+<li>Introduce correction via a decomposition: $g^{marg} = \mathbb{E} _{x_t}[ \mathbb{E} _{a_t}[ \bar{\rho}_t \nabla _{\theta} \log \pi _{\theta}(a_t \vert x_t) Q^\pi(x_t, a_t)] + \mathbb{E} _{a \sim \pi} ([ \frac{\rho_t(a) - c}{\rho_t(a)}] _{+} \nabla _{\theta} \log \pi _{\theta}(a \vert x_t) Q^\pi(x_t, a))]$<ul>
+<li>First term with clipped importance weight ensures bounded variance</li>
+<li>The second term (correction term) ensures estimate is unbiased</li>
+<li>$c$ is the threshold for which the correction term goes into effect - else it just becomes 0<ul>
+<li>The correction term is weighted by $[ \frac{\rho_t(a) - c}{\rho_t(a)}] _{+}$ (at most 1)</li>
+<li>In this scenario, truncated term is weighted by at most $c$</li>
+</ul>
+</li>
+<li>Truncation with bias correction trick: $g^{marg} = \mathbb{E} _{x_t}[ \mathbb{E} _{a_t}[ \bar{\rho}_t \nabla _{\theta} \log \pi _{\theta}(a_t \vert x_t) Q^{ret}(x_t, a_t)] + \mathbb{E} _{a \sim \pi} ([ \frac{\rho_t(a) - c}{\rho_t(a)}] _{+} \nabla _{\theta} \log \pi _{\theta}(a \vert x_t) Q _{\theta _{v}}(x_t, a))]$<ul><li>Expectations approximated via sampling trajectories</li></ul>
+</li>
+</ul>
+</li>
+<li>Off-policy ACER Gradient (with baseline): $\hat{g}^{acer} _t = \bar{\rho}_t \nabla _{\theta} \log \pi _{\theta}(a_t \vert x_t) Q^{ret}(x_t, a_t) - V _{\theta _{v}} (x_t) + \mathbb{E} _{a \sim \pi} ([ \frac{\rho_t(a) - c}{\rho_t(a)}] _{+} \nabla _{\theta} \log \pi _{\theta}(a \vert x_t) (Q _{\theta _{v}}(x_t, a) - V _{\theta _{v}} (x_t)))$<ul>
+<li>$c = 0$: Actor critic update entirely based on Q value estimates</li>
+<li>$c = \infty$: Off-policy policy gradient update up to use of retrace</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Efficient Trust Region Policy Optimization</strong><ul>
+<li>Can’t use small learning rates because updates can still be large</li>
+<li>TRPO good but is computationally expensive</li>
+<li>Average policy network: A running average of past policies; force updated policy to not deviate far from this average<ul>
+<li>Policy follows distribution, $f$ and neural net that generates distribution statistics, $\phi _\theta(x)$</li>
+<li>Let $\phi _{\theta_a}(x)$ be the average policy</li>
+<li>Soft updates to policy: $\theta _a = \alpha \theta _a + (1 - \alpha)\theta$</li>
+<li>ACER gradient with respect to $\phi$: $\hat{g}^{acer} _t = \bar{\rho}_t \nabla _{\phi _\theta (x_t)} \log f(a_t \vert \phi _\theta (x)) Q^{ret}(x_t, a_t) - V _{\theta _{v}} (x_t) + \mathbb{E} _{a \sim \pi} ([ \frac{\rho_t(a) - c}{\rho_t(a)}] _{+} \nabla _{\phi _\theta (x_t)} \log f (a \vert \phi _\theta (x)) (Q _{\theta _{v}}(x_t, a) - V _{\theta _{v}} (x_t)))$</li>
+</ul>
+</li>
+<li>Trust region Update:<ul><li>Linear KL divergence constraint: $minimize \frac{1}{2}\vert\vert \hat{g}^{acer}_t -z \vert\vert^2_2$ subject to $\nabla _{\phi _\theta(x_t)} D _{KL}[f(\cdot \vert \phi _{\phi _{\theta _a}(x_t)})\vert\vert f(\cdot \vert \phi _{\phi _\theta(x_t)})]^T z \leq \delta$<ul><li>Linear constraint means we can solve it using KKT conditions: $z^* = \hat{g}^{acer} _t - max(0, \frac{k^T\hat{g}^{acer} _t -\delta}{\vert\vert k \vert\vert^2_2}k)$</li></ul>
+</li></ul>
+</li>
+<li>Trust region step done on statistics space of $f$ instead of policy parameters to avoid an extra backprop step</li>
+<li>ACER has off-policy and on-policy components<ul><li>Can control number of on-policy vs off-policy updates via the replay ratio</li></ul>
+</li>
+<li>On-policy ACER is just A3C with Q baselines and trust region optimization used</li>
+</ul>
+</li>
+<li>
+<strong>Results on Atari</strong><ul>
+<li>Single algorithm + hyperparameters to play atari games</li>
+<li>Using replay signifcantly increases data efficiency<ul><li>Higher replay ratio = accumulates average reward faster (but with diminishing returns)</li></ul>
+</li>
+<li>ACER matches performance of best DQNs</li>
+<li>ACER Off policy is more efficient than on-policy (A3C)</li>
+<li>Similar amount of wall clock training time for ACERs</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Continuous Actor Critic with Experience Replay</strong><ul>
+<li>
+<strong>Policy Evaluation</strong><ul>
+<li>To compute the $V _{\theta_v}$ given $Q _{\theta_v}$, we would need to integrate over the action space; this is intractable<ul><li>We could use importance sampling but has high variance</li></ul>
+</li>
+<li>Stochastic Dueling Networks: Estimates $Q^\pi$ and $V^\pi$ off-policy while maintaing consistency between estimates<ul>
+<li>Outputs stochastic $\tilde{Q _{\theta_v}}$ of $Q^\pi$</li>
+<li>Ouputs deterministic $V _{\theta_v}$ of $V^\pi$<ul><li>Follows equation: $\tilde{Q _{\theta_v}}(x_t, a_t) \sim V _{\theta_v}(x_t) + A _{\theta_v}(x_t, a_t) - \frac{1}{n}\sum _{i=1}^n A _{\theta_v}(x_t, u_i) \text{ where } u_i \sim \pi _\theta(\cdot \vert x_t)$</li></ul>
+</li>
+<li>Target for estimating $V^\pi$: $V^{target}(x_t) = min(1, \frac{\pi(a_t \vert x_t)}{\mu(a_t \vert x_t)})(Q^{ret}(x_t, a_t) - (Q _{\theta_v}(x_t, a_t))) + V _{\theta_v}(x_t)$<ul><li>Can raise the importance sampling weight to the power of $\frac{1}{d}$ for faster learning</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Trust Region Updating</strong><ul><li>Continuous action space ACER gradient: $\begin{multline} \hat{g}^{acer} _t = \mathbb{E} _{x_t}[\mathbb{E} _{a_t}[\bar{\rho}_t \nabla _{\phi _\theta (x_t)} \log f(a_t \vert \phi _\theta (x)) (Q^{opc}(x_t, a_t) - \\ V _{\theta _{v}} (x_t)) + \mathbb{E} _{a \sim \pi} ([ \frac{\rho_t(a) - c}{\rho_t(a)}] _{+} (\tilde{Q} _{\theta _{v}}(x_t, a’) - V _{\theta _{v}} (x_t))\nabla _{\phi _\theta (x_t)} \log f(a’_t \vert \phi _\theta (x)))]]\end{multline}$<ul>
+<li>$Q^{opc}$ is $Q^{ret}$ with the truncated importance ratio set to 1</li>
+<li>Using monte carlo sampling, we can estimate the expectations</li>
+</ul>
+</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Results on Mujoco</strong><ul>
+<li>ACER for continuous domains is entirely off-policy</li>
+<li>ACER outperforms A3C and truncated importance sampling baselines significantly</li>
+<li>Trust region optimization results in huge improvements over baselines (especially in continuous domains)</li>
+<li>
+<strong>Ablation</strong><ul><li>Conducts an ablation study where they remove Retrace / $Q(\lambda)$ off-policy correction, SDNs, trust regions, and trucation with bias correction<ul>
+<li>SDNs + trust regions critical; massive deterioration of performance without them</li>
+<li>Trucation with bias correction didn’t alter results much<ul><li>Although helps in very high dimensional settings (where variance is much higher)</li></ul>
+</li>
+</ul>
+</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+<span class="meta"><time datetime="2025-04-20T00:00:00+00:00">April 20, 2025</time> · <a href="/tags/research">research</a></span></section></main></body>
+</html>
