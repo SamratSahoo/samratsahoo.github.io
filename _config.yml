@@ -1,14 +1,14 @@
-site: samrat's thought space
+site: Samrat Sahoo
 url: https://samratsahoo.com
-title: samrat's thought space
-description: chaos written down.
+title: Samrat Sahoo
+description: Samrat Sahoo is a Master's student in Computer Science at Stanford working on robot learning, dexterous manipulation, and scalable data for robot foundation models.
 twitter:
   username: samratdotjs
-  card: summary
+  card: summary_large_image
   creator: samratdotjs
 author:
   twitter: samratdotjs
-  name: samrat sahoo
+  name: Samrat Sahoo
   avatar:
   email: #youremail
   url: https://samratsahoo.com
@@ -19,6 +19,7 @@ highlighter: none
 
 exclude:
   - .jekyll-cache
+  - README.md
 
 compress_html:
   clippings: all
@@ -53,7 +54,6 @@ jekyll-spaceship:
 
   mathjax-processor:
     src:
-      - https://polyfill.io/v3/polyfill.min.js?features=es6
       - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js
     config:
       tex:
@@ -107,6 +107,7 @@ defaults:
       path: ""
     values:
       layout: "default"
+      image: /assets/img/og.jpg
   - scope:
       path: ""
       type: "pages"

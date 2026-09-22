@@ -7,14 +7,18 @@ layout: compress
 {% include head.html %}
 
 <body>
-  <main>
-
-    {% include navigation.html %}
-
+  <main id="main" class="wrap {% if page.layout == 'home' %}home{% else %}page{% endif %}">
     {{ content }}
-
   </main>
 
+  <footer class="footer">
+    <div class="wrap">
+      © {{ site.time | date: "%Y" }} {% if page.layout == 'home' %}{{ site.data.profile.name }}{% else %}<a href="{{ '/' | relative_url }}">{{ site.data.profile.name }}</a>{% endif %}
+      {%- if page.layout == 'home' %} · Last updated {{ site.time | date: "%B %Y" }}{% endif %}
+    </div>
+  </footer>
+
+  <script src="{{ '/assets/js/site.js' | relative_url }}" defer></script>
 </body>
 
 </html>

@@ -1,0 +1,76 @@
+# Newest first. Rendered by _includes/publication.html.
+#
+#   authors  Names as they appear on the paper; a trailing * marks equal
+#            contribution. My name is bolded; names in people.yml are linked.
+#   venue    Shown with the year as a small label above the title.
+#   media    video + poster (plays while on screen), or figure (a webp/jpg pair, no extension).
+#            For media that isn't 16:9, add `fit: contain` and `size: [width, height]`: it is
+#            letterboxed in the 16:9 box on desktop and shown at its own shape on phones.
+#   summary  Markdown, one sentence.
+#   links    Buttons, in order. A BibTeX button is added when `bibtex` is set.
+#   note     Optional grayed-out button after the links (e.g. "Paper · coming soon").
+
+- key: tandem
+  title: "TANDEM: Task and Motion Planning with As-Needed Demonstrations for Efficient Vision-Language-Action Model Fine-tuning"
+  url: https://prpl-group.com/tandem/
+  authors: [Samrat Sahoo*, Liang Ji*, Yixuan Huang, Tom Silver]
+  venue: Under review
+  year: 2026
+  media:
+    video: /assets/pubs/tandem.mp4
+    poster: /assets/pubs/tandem.webp
+    fit: contain
+    size: [962, 270]
+  summary: >-
+    Combines task and motion planning with on-demand human teleoperation, so people only demonstrate
+    the steps the planner can't do.
+  links:
+    - { label: Website, url: "https://prpl-group.com/tandem/" }
+  note: Paper · coming soon
+
+- key: datafarm
+  title: "DATAFARM: Distribution-Aligned Task and Motion Planning for Fine-Tuning Vision-Language-Action Models"
+  url: https://prpl-group.com/datafarm/
+  authors: [Samrat Sahoo, Yixuan Huang, Tom Silver]
+  venue: Under review
+  year: 2026
+  media:
+    video: /assets/pubs/datafarm.mp4
+    poster: /assets/pubs/datafarm.webp
+  summary: >-
+    Aligns planner-generated demonstrations with a VLA's pretraining distribution, making task and
+    motion planning data nearly as useful as human teleoperation for fine-tuning.
+  links:
+    - { label: Website, url: "https://prpl-group.com/datafarm/" }
+    - { label: arXiv, url: "https://arxiv.org/abs/2609.12316" }
+
+- key: demomimic
+  title: "One Demonstration, Many Objects: Generalizing Manipulation via Local Contact Geometry"
+  url: https://demomimic.github.io/
+  authors: [Satvik Sharma*, Samrat Sahoo*, Huang Huang*, Fei-Fei Li, Jiajun Wu, Dorsa Sadigh, Jeannette Bohg]
+  venue: Under review
+  year: 2026
+  media:
+    video: /assets/pubs/demomimic.mp4
+    poster: /assets/pubs/demomimic.webp
+  summary: >-
+    DemoMimic learns dexterous manipulation from a single human demonstration, with one policy per
+    task that transfers across objects of different shape, scale, mass, and friction.
+  links:
+    - { label: Website, url: "https://demomimic.github.io/" }
+    - { label: arXiv, url: "https://arxiv.org/abs/2609.01938" }
+
+- key: scatter
+  title: "Scatter Protocol: An Incentivized and Trustless Protocol for Decentralized Federated Learning"
+  url: https://ieeexplore.ieee.org/document/10664423
+  authors: [Samrat Sahoo, Sudheer Chava]
+  venue: IEEE International Conference on Blockchain
+  year: 2024
+  media:
+    figure: /assets/pubs/scatter
+  summary: >-
+    A blockchain protocol for decentralized federated learning that uses staking, incentives, and
+    penalties to deter malicious participants.
+  links:
+    - { label: Paper, url: "https://ieeexplore.ieee.org/document/10664423" }
+    - { label: Code, url: "https://github.com/gtfintechlab/scatter-protocol" }

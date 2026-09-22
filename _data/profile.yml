@@ -1,0 +1,7 @@
+# Homepage header: name, photo, and the profile buttons under the bio.
+# linkedin is not shown as a button; it is only listed in the page's search-engine metadata.
+name: Samrat Sahoo
+portrait: /assets/img/portrait
+scholar: https://scholar.google.com/citations?user=ev1TkMYAAAAJ
+github: https://github.com/SamratSahoo
+linkedin: https://www.linkedin.com/in/samratsahoo/

@@ -9,10 +9,13 @@ layout: default
 
         const iframe = document.querySelector('iframe');
         iframe.addEventListener('load', function () {
-            const iframeContent = iframe.contentWindow.document.body;
-            const iframeHeight = iframeContent.scrollHeight;
-            iframe.style.height = iframeHeight + 'px';
-            iframe.closest('section').style.height = iframeHeight + 'px';
+            const body = iframe.contentWindow.document.body;
+            const style = iframe.contentWindow.getComputedStyle(body);
+            const fit = function () {
+                iframe.style.height = (body.scrollHeight + parseFloat(style.marginTop) + parseFloat(style.marginBottom)) + 'px';
+            };
+            fit();
+            if ('ResizeObserver' in window) new ResizeObserver(fit).observe(body);
         });
     });
 </script>

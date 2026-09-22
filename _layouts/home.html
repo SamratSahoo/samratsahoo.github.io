@@ -1,0 +1,38 @@
+---
+layout: default
+---
+{%- assign profile = site.data.profile -%}
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Person","name":{{ profile.name | jsonify }},"url":{{ '/' | absolute_url | jsonify }},"image":{{ profile.portrait | append: '-512.jpg' | absolute_url | jsonify }},"affiliation":{"@type":"CollegeOrUniversity","name":"Stanford University"},"alumniOf":{"@type":"CollegeOrUniversity","name":"Georgia Institute of Technology"},"sameAs":[{{ profile.github | jsonify }},{{ profile.linkedin | jsonify }}{% if profile.scholar %},{{ profile.scholar | jsonify }}{% endif %}]}
+</script>
+
+<header class="intro" id="top">
+  <picture>
+    <source type="image/webp" srcset="{{ profile.portrait | append: '-256.webp' | relative_url }} 256w, {{ profile.portrait | append: '-512.webp' | relative_url }} 512w" sizes="(max-width: 640px) 96px, 168px">
+    <img class="photo" src="{{ profile.portrait | append: '-512.jpg' | relative_url }}" srcset="{{ profile.portrait | append: '-256.jpg' | relative_url }} 256w, {{ profile.portrait | append: '-512.jpg' | relative_url }} 512w" sizes="(max-width: 640px) 96px, 168px" width="168" height="168" alt="Photo of {{ profile.name }}">
+  </picture>
+  <div class="intro-text">
+    <h1>{{ profile.name }}</h1>
+    <div class="bio">
+      {{ content }}
+    </div>
+    <ul class="contact" aria-label="Profiles">
+      {%- if profile.scholar %}
+      <li><a class="btn" href="{{ profile.scholar }}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 9 12 4l9.5 5L12 14 2.5 9z"/><path d="M6.5 11.2v4.3c0 1.4 2.5 3 5.5 3s5.5-1.6 5.5-3v-4.3"/><path d="M21.5 9v5"/></svg>Google Scholar</a></li>
+      {%- endif %}
+      <li><a class="btn" href="{{ profile.github }}"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02a9.5 9.5 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2.2z"/></svg>GitHub</a></li>
+    </ul>
+  </div>
+</header>
+
+<section class="section" id="research" aria-labelledby="research-h">
+  <div class="section-head">
+    <h2 id="research-h">Research</h2>
+    <p class="note">* equal contribution</p>
+  </div>
+  <ul class="pubs">
+    {%- for pub in site.data.publications %}
+    {% include publication.html pub=pub %}
+    {%- endfor %}
+  </ul>
+</section>

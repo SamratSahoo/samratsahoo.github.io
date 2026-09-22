@@ -1,9 +1,11 @@
 ---
 layout: default
 permalink: /research
+title: research
 ---
 
 <section class="posts">
+    <h1>{{ page.title }}</h1>
     <ul>
         {% for post in site.research reversed %}
         <li><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a><time

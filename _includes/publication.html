@@ -1,0 +1,66 @@
+{%- assign pub = include.pub -%}
+<li class="pub" id="{{ pub.key }}">
+  {%- if pub.media.video %}
+  {%- assign vw = pub.media.size[0] | default: 640 %}{% assign vh = pub.media.size[1] | default: 360 %}
+  <a class="thumb{% if pub.media.fit == 'contain' %} contain{% endif %}" href="{{ pub.url }}" tabindex="-1" aria-hidden="true">
+    <video muted loop playsinline preload="none" width="{{ vw }}" height="{{ vh }}" disablepictureinpicture disableremoteplayback poster="{{ pub.media.poster | relative_url }}">
+      <source src="{{ pub.media.video | relative_url }}" type="video/mp4">
+    </video>
+    <noscript><img src="{{ pub.media.poster | relative_url }}" width="{{ vw }}" height="{{ vh }}" alt=""></noscript>
+  </a>
+  {%- elsif pub.media.figure %}
+  <a class="thumb figure" href="{{ pub.url }}" tabindex="-1" aria-hidden="true">
+    <picture>
+      <source type="image/webp" srcset="{{ pub.media.figure | append: '.webp' | relative_url }}">
+      <img src="{{ pub.media.figure | append: '.jpg' | relative_url }}" width="1280" height="720" loading="lazy" decoding="async" alt="">
+    </picture>
+  </a>
+  {%- endif %}
+  <div>
+    {%- comment -%}
+      Keep hyphenated compounds (Vision-Language-Action) from breaking at the hyphen, and join
+      the last two words so a title never ends on a lone word.
+    {%- endcomment -%}
+    {%- capture title -%}
+      {%- assign words = pub.title | split: " " -%}
+      {%- for w in words %}{% if w contains "-" %}<span class="nw">{{ w | escape }}</span>{% else %}{{ w | escape }}{% endif %}{% if forloop.rindex == 2 %}&nbsp;{% else %} {% endif %}{% endfor -%}
+    {%- endcapture %}
+    <p class="kicker">{{ pub.venue }}&nbsp;·&nbsp;{{ pub.year }}</p>
+    <h3 class="pub-title"><a href="{{ pub.url }}">{{ title | strip }}</a></h3>
+    <p class="authors">
+      {%- for author in pub.authors -%}
+        {%- assign name = author | remove: "*" | strip -%}
+        {%- assign equal = false -%}{%- if author contains "*" -%}{%- assign equal = true -%}{%- endif -%}
+        {%- capture mark -%}{%- if equal -%}<sup aria-hidden="true">*</sup><span class="sr-only"> (equal contribution)</span>{%- endif -%}{%- endcapture -%}
+        <span class="nw">
+        {%- if name == site.data.profile.name -%}
+          <strong>{{ name }}</strong>{{ mark }}
+        {%- elsif site.data.people[name] -%}
+          <a href="{{ site.data.people[name] }}">{{ name }}</a>{{ mark }}
+        {%- else -%}
+          {{ name }}{{ mark }}
+        {%- endif -%}
+        </span>
+        {%- unless forloop.last %}, {% endunless -%}
+      {%- endfor -%}
+    </p>
+    <p class="summary">{{ pub.summary | markdownify | remove: '<p>' | remove: '</p>' | strip }}</p>
+    <ul class="links">
+      {%- for link in pub.links %}
+      <li><a class="btn sm" href="{{ link.url | relative_url }}"{% if link.title %} title="{{ link.title }}"{% endif %}>{{ link.label }}</a></li>
+      {%- endfor %}
+      {%- if pub.bibtex %}
+      <li class="js-only"><button class="btn sm" type="button" data-bib aria-expanded="false" aria-controls="bib-{{ pub.key }}">BibTeX</button></li>
+      {%- endif %}
+      {%- if pub.note %}
+      <li><span class="btn sm soon">{{ pub.note }}</span></li>
+      {%- endif %}
+    </ul>
+    {%- if pub.bibtex %}
+    <div class="bib" id="bib-{{ pub.key }}" hidden>
+<pre>{{ pub.bibtex | strip | xml_escape }}</pre>
+      <button class="copy" type="button">Copy</button>
+    </div>
+    {%- endif %}
+  </div>
+</li>
