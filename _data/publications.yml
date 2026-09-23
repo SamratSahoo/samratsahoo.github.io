@@ -13,7 +13,7 @@
 - key: tandem
   title: "TANDEM: Task and Motion Planning with As-Needed Demonstrations for Efficient Vision-Language-Action Model Fine-tuning"
   url: https://prpl-group.com/tandem/
-  authors: [Samrat Sahoo*, Liang Ji*, Yixuan Huang, Tom Silver]
+  authors: [Samrat Sahoo*, Liang Ji*, Tom Silver, Yixuan Huang]
   venue: Under review
   year: 2026
   media:
