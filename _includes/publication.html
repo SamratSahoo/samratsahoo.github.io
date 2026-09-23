@@ -25,7 +25,7 @@
       {%- assign words = pub.title | split: " " -%}
       {%- for w in words %}{% if w contains "-" %}<span class="nw">{{ w | escape }}</span>{% else %}{{ w | escape }}{% endif %}{% if forloop.rindex == 2 %}&nbsp;{% else %} {% endif %}{% endfor -%}
     {%- endcapture %}
-    <p class="kicker">{{ pub.venue }}&nbsp;·&nbsp;{{ pub.year }}</p>
+    <p class="kicker">{{ pub.venue }}{% if pub.year %}&nbsp;·&nbsp;{{ pub.year }}{% endif %}</p>
     <h3 class="pub-title"><a href="{{ pub.url }}">{{ title | strip }}</a></h3>
     <p class="authors">
       {%- for author in pub.authors -%}

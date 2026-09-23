@@ -2,7 +2,7 @@
 #
 #   authors  Names as they appear on the paper; a trailing * marks equal
 #            contribution. My name is bolded; names in people.yml are linked.
-#   venue    Shown with the year as a small label above the title.
+#   venue    Small label above the title, followed by " · year" when `year` is set.
 #   media    video + poster (plays while on screen), or figure (a webp/jpg pair, no extension).
 #            For media that isn't 16:9, add `fit: contain` and `size: [width, height]`: it is
 #            letterboxed in the 16:9 box on desktop and shown at its own shape on phones.
@@ -14,8 +14,7 @@
   title: "TANDEM: Task and Motion Planning with As-Needed Demonstrations for Efficient Vision-Language-Action Model Fine-tuning"
   url: https://prpl-group.com/tandem/
   authors: [Samrat Sahoo*, Liang Ji*, Tom Silver, Yixuan Huang]
-  venue: Under review
-  year: 2026
+  venue: Under review at ICRA 2027
   media:
     video: /assets/pubs/tandem.mp4
     poster: /assets/pubs/tandem.webp
@@ -32,8 +31,7 @@
   title: "DATAFARM: Distribution-Aligned Task and Motion Planning for Fine-Tuning Vision-Language-Action Models"
   url: https://prpl-group.com/datafarm/
   authors: [Samrat Sahoo, Yixuan Huang, Tom Silver]
-  venue: Under review
-  year: 2026
+  venue: Under review at ICRA 2027
   media:
     video: /assets/pubs/datafarm.mp4
     poster: /assets/pubs/datafarm.webp
@@ -48,8 +46,7 @@
   title: "One Demonstration, Many Objects: Generalizing Manipulation via Local Contact Geometry"
   url: https://demomimic.github.io/
   authors: [Satvik Sharma*, Samrat Sahoo*, Huang Huang*, Fei-Fei Li, Jiajun Wu, Dorsa Sadigh, Jeannette Bohg]
-  venue: Under review
-  year: 2026
+  venue: Under review at ICRA 2027
   media:
     video: /assets/pubs/demomimic.mp4
     poster: /assets/pubs/demomimic.webp
@@ -67,7 +64,8 @@
   venue: IEEE International Conference on Blockchain
   year: 2024
   media:
-    figure: /assets/pubs/scatter
+    video: /assets/pubs/scatter.mp4
+    poster: /assets/pubs/scatter.webp
   summary: >-
     A blockchain protocol for decentralized federated learning that uses staking, incentives, and
     penalties to deter malicious participants.
