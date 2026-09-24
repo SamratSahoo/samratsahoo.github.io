@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A Distributional Perspective on Reinforcement Learning · Samrat Sahoo</title>
+<meta name="generator" content="Jekyll v4.2.2">
+<meta property="og:title" content="A Distributional Perspective on Reinforcement Learning">
+<meta name="author" content="Samrat Sahoo">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="A paper about distributional reinforcement learning">
+<meta property="og:description" content="A paper about distributional reinforcement learning">
+<link rel="canonical" href="https://samratsahoo.com/2025/04/27/c51">
+<meta property="og:url" content="https://samratsahoo.com/2025/04/27/c51">
+<meta property="og:site_name" content="Samrat Sahoo">
+<meta property="og:image" content="https://samratsahoo.com/assets/img/og.jpg">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2025-04-27T00:00:00+00:00">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="twitter:image" content="https://samratsahoo.com/assets/img/og.jpg">
+<meta property="twitter:title" content="A Distributional Perspective on Reinforcement Learning">
+<meta name="twitter:site" content="@samratdotjs">
+<meta name="twitter:creator" content="@samratdotjs"> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Samrat Sahoo","url":"https://samratsahoo.com"},"dateModified":"2025-04-27T00:00:00+00:00","datePublished":"2025-04-27T00:00:00+00:00","description":"A paper about distributional reinforcement learning","headline":"A Distributional Perspective on Reinforcement Learning","image":"https://samratsahoo.com/assets/img/og.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://samratsahoo.com/2025/04/27/c51"},"url":"https://samratsahoo.com/2025/04/27/c51"}</script><meta name="color-scheme" content="light">
+<meta name="theme-color" content="#ffffff"> <script>document.documentElement.classList.add("js");</script><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&amp;display=swap">
+<link rel="icon" type="image/webp" href="/favicon.webp">
+<link rel="alternate" type="application/atom+xml" title="Samrat Sahoo" href="/atom.xml">
+<link rel="alternate" type="application/json" title="Samrat Sahoo" href="https://samratsahoo.com/feed.json">
+<link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml">
+<style> /* Palette and type follow the DATAFARM project page: warm neutrals, Inter for text, Source Serif 4 for headings, square corners, hairline rules. */ :root { --ink: #17181a; --ink-2: #35373b; --muted: #6b6e74; --line: #e4e4e1; --line-2: #c9c9c4; --bg: #fff; --bg-soft: #f7f7f5; --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; --serif: "Source Serif 4", Georgia, "Times New Roman", serif; --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; color-scheme: light; } *, *::before, *::after { box-sizing: border-box; } html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-padding-top: 24px; } body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.6 var(--font); -webkit-font-smoothing: antialiased; } h1, h2, h3, p { margin: 0; } img, video { display: block; max-width: 100%; } a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 2px; } a:hover { text-decoration-color: currentColor; } :focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; } ::selection { background: #e6e6e1; } .wrap { max-width: 880px; margin: 0 auto; padding: 0 28px; } .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; } .nw { white-space: nowrap; } html:not(.js) .js-only { display: none; } /* ---------- buttons ---------- */ .btn { display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; border: 1px solid var(--line-2); background: var(--bg); font: 400 14px/1.4 var(--font); color: var(--ink); text-decoration: none; white-space: nowrap; cursor: pointer; } .btn:hover { border-color: var(--ink); } .btn svg { width: 15px; height: 15px; opacity: .75; flex: none; } .btn.sm { padding: 3px 11px; font-size: 13px; } .btn[aria-expanded="true"] { border-color: var(--ink); } .btn.soon { color: var(--muted); border-color: var(--line); cursor: default; } /* ---------- homepage ---------- */ .intro { display: flex; align-items: flex-start; gap: 36px; padding: 64px 0 56px; } .intro picture { flex: none; } .intro .photo { width: 168px; height: 168px; object-fit: cover; } .intro-text { min-width: 0; } .intro h1 { margin: -4px 0 14px; font: 600 36px/1.15 var(--serif); letter-spacing: -.01em; } .bio { font-size: 16.5px; color: var(--ink-2); text-wrap: pretty; } .bio p + p { margin-top: 12px; } .bio strong { color: var(--ink); font-weight: 600; } .contact { display: flex; flex-wrap: wrap; gap: 10px; margin: 22px 0 0; padding: 0; list-style: none; } .section { padding: 56px 0 24px; border-top: 1px solid var(--line); } .section-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px; margin-bottom: 18px; } .section-head h2 { font: 600 27px/1.2 var(--serif); letter-spacing: -.005em; } .section-head .note { font-size: 13.5px; color: var(--muted); } .pubs { margin: 0; padding: 0; list-style: none; } .pub { display: grid; grid-template-columns: 224px minmax(0, 1fr); gap: 28px; padding: 26px 0; border-top: 1px solid var(--line); } .pub:first-child { border-top: 0; padding-top: 12px; } .thumb { display: block; aspect-ratio: 16 / 9; overflow: hidden; background: var(--bg-soft); } .thumb video, .thumb img { width: 100%; height: 100%; object-fit: cover; } .thumb.figure { background: #fff; outline: 1px solid var(--line); outline-offset: -1px; } .thumb.figure img, .thumb.contain video, .thumb.contain img { object-fit: contain; } html:not(.js) .thumb video { display: none; } /* without JS, show the noscript still rather than native controls */ .kicker { margin-bottom: 6px; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); } .pub-title { font: 600 19px/1.3 var(--serif); letter-spacing: -.005em; text-wrap: pretty; } .pub-title a { text-decoration: none; } .pub-title a:hover { text-decoration: underline; text-decoration-color: var(--line-2); } .authors { margin-top: 6px; font-size: 15px; color: var(--ink-2); } .authors a { color: inherit; text-decoration: none; } .authors a:hover { text-decoration: underline; text-decoration-color: var(--line-2); } .authors strong { color: var(--ink); font-weight: 600; } .summary { margin-top: 8px; font-size: 14.5px; line-height: 1.55; color: var(--muted); text-wrap: pretty; } .links { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 14px 0 0; padding: 0; list-style: none; } .bib { position: relative; margin-top: 12px; } .bib pre { margin: 0; padding: 14px 16px; padding-right: 72px; border: 1px solid var(--line); background: var(--bg-soft); color: var(--ink-2); font: 12.5px/1.6 var(--mono); white-space: pre-wrap; overflow-wrap: anywhere; } .bib .copy { position: absolute; top: 8px; right: 8px; padding: 2px 9px; border: 1px solid var(--line-2); background: var(--bg); font: 400 12px/1.5 var(--font); color: var(--muted); cursor: pointer; } .bib .copy:hover { border-color: var(--ink); color: var(--ink); } .footer { border-top: 1px solid var(--line); } .footer .wrap { padding-top: 30px; padding-bottom: 40px; font-size: 13.5px; color: var(--muted); } .footer a { color: var(--muted); text-decoration: none; } .footer a:hover { color: var(--ink); } /* ---------- other pages (notes, writing, search) ---------- */ .page { padding-top: 48px; padding-bottom: 56px; } .post > h2:first-child, .posts > h1:first-child { margin: 0 0 24px; font: 600 32px/1.2 var(--serif); letter-spacing: -.01em; } .post > h2:first-child a { text-decoration: none; color: var(--muted); } .post { color: var(--ink-2); overflow-wrap: break-word; } .post h1, .post h2, .post h3, .post h4, .post h5 { margin: 1.8em 0 .6em; font-family: var(--serif); font-weight: 600; line-height: 1.3; color: var(--ink); } .post h1 { font-size: 24px; } .post h2 { font-size: 21px; } .post h3 { font-size: 18px; } .post h4, .post h5 { font-size: 16px; } .post p, .post ul, .post ol, .post pre, .post table, .post blockquote, .post figure { margin: 0 0 1em; } .post ul, .post ol { padding-left: 1.4em; } .post li + li, .post li > ul, .post li > ol { margin-top: .3em; } .post li > ul, .post li > ol { margin-bottom: 0; } .post strong, .post b { color: var(--ink); font-weight: 600; } .post img { height: auto; } .post img.mermaid { max-width: 200px; } .post code { padding: .1em .3em; background: var(--bg-soft); font: .88em/1.5 var(--mono); } .post pre { overflow-x: auto; padding: 14px 16px; border: 1px solid var(--line); background: var(--bg-soft); font: 13.5px/1.6 var(--mono); } .post pre code { padding: 0; background: none; font-size: inherit; } .post blockquote { padding-left: 1em; border-left: 2px solid var(--line-2); color: var(--muted); font-style: italic; } .post table { display: block; max-width: 100%; overflow-x: auto; border-collapse: collapse; font-size: 15px; } .post th, .post td { padding: 7px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; } .post th { font-weight: 600; color: var(--ink); border-bottom-color: var(--line-2); } .post hr { height: 1px; margin: 2em 0; border: 0; background: var(--line); } .post figcaption { font-size: 14px; color: var(--muted); } .post iframe { max-width: 100%; border: 0; } .post mjx-container[display="true"] { overflow-x: auto; overflow-y: hidden; max-width: 100%; } .post mjx-container:not([display="true"]) { /* long inline formulas scroll on their own instead of widening the page */ display: inline-block; max-width: 100%; overflow-x: auto; overflow-y: hidden; vertical-align: middle; padding-right: 6px; margin-right: -6px; } .post .meta { display: block; margin-top: 40px; font-size: 14px; color: var(--muted); } .post .meta a { color: var(--muted); } .posts > p, .posts > u, .posts > i { color: var(--muted); } .posts ul { margin: 16px 0 0; padding: 0; list-style: none; } .posts li { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 10px 0; border-top: 1px solid var(--line); } .posts li:last-child { border-bottom: 1px solid var(--line); } .posts li a { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-decoration: none; } .posts li a:hover { text-decoration: underline; text-decoration-color: var(--line-2); } .posts li time, .posts li div { flex: none; font-size: 13.5px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; } .page #search-input { padding: 10px 12px; border: 1px solid var(--line-2); background: var(--bg); color: var(--ink); font: inherit; } .page #search-input:focus { border-color: var(--ink); outline: none; } .page #results-container { margin: 12px 0; padding-left: 1.4em; } /* ---------- small screens ---------- */ @media (max-width: 640px) { .wrap { padding-left: 20px; padding-right: 20px; } .intro { gap: 20px; padding: 40px 0 44px; } .intro .photo { width: 96px; height: 96px; } .intro h1 { margin-top: 0; font-size: 30px; } .bio { font-size: 16px; } .section { padding-top: 44px; } .section-head h2 { font-size: 23px; } .pub { grid-template-columns: minmax(0, 1fr); gap: 16px; padding: 28px 0; } .thumb.contain { aspect-ratio: auto; } /* full-width here, so show non-16:9 clips at their own shape */ .thumb.contain video, .thumb.contain img { height: auto; } .page { padding-top: 32px; } .post > h2:first-child, .posts > h1:first-child { font-size: 27px; } .posts li { flex-direction: column; gap: 0; } .posts li a { white-space: normal; } } @media (max-width: 480px) { .intro { flex-direction: column; } } @media (pointer: coarse) { .btn.sm { padding: 6px 12px; } } @media print { [data-bib], .bib .copy { display: none !important; } }</style>
+<script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"},"svg":{"fontCache":"global","scale":1.0,"minScale":0.5,"mtextInheritFont":true,"merrorInheritFont":true,"mathmlSpacing":false,"skipAttributes":{},"exFactor":0.5},"chtml":{"scale":1.0,"minScale":0.5,"matchFontHeight":true,"mtextFont":"serif","linebreaks":{"automatic":false}}}</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js"></script>
+</head>
+<body>
+<main id="main" class="wrap page"><section class="post"><h2>A Distributional Perspective on Reinforcement Learning</h2>
+<ul>
+<li>
+<strong>Resources</strong><ul><li>
+<a href="https://arxiv.org/abs/1707.06887">Paper</a> <br><br>
+</li></ul>
+</li>
+<li>
+<strong>Introduction</strong><ul>
+<li>Bellman’s equation tells us the expected reward + outcome of a random transition</li>
+<li>In distributional RL, we want the random return Z who’s expectation is Q:<ul><li>Distributional Bellman Equation: $Z(x,a) \stackrel{D}{=} R(x, a) + \gamma Z(X’, A’)$<ul><li>Three random variables:<ul>
+<li>$R$: Reward</li>
+<li>$(X’, A’)$: Next State Action</li>
+<li>$Z(X’, A’)$: Random return (value distribution)</li>
+</ul>
+</li></ul>
+</li></ul>
+</li>
+<li>Bellman operator is a contraction in regular policy evaluation (guarantees convergence)<ul>
+<li>This is not the case with distributional RL</li>
+<li>The metric we use to measure distance between distributions matters (i.e., KL, total variation, kolmogorov distance)</li>
+</ul>
+</li>
+<li>There is instability in distributional RL<ul><li>While the bellman operator is a contraction in the expectation, it is not over any metric of distributions<ul><li>Want to learn algorithms that model the effects of nonstationary policies</li></ul>
+</li></ul>
+</li>
+<li>Learning distributions leads to more stable training</li>
+</ul>
+</li>
+<li>
+<strong>Setting</strong><ul>
+<li>Assume standard MDP setting</li>
+<li>Policy maps from a state to a probability distribution over actions</li>
+<li>
+<strong>Bellman’s Equations</strong><ul>
+<li>$Z^\pi$: Sum of discounted rewards along agent’s trajectory of interactions with environment</li>
+<li>$Q^\pi$: expectation of $Z^\pi$<ul>
+<li>$Q^\pi(x,a) = \mathbb{E}[Z^\pi(x,a)] = \mathbb{E}[\sum _{t=0}^\infty \gamma^t R(x_t, a_t)]$</li>
+<li>Bellman Operator: $\tau^\pi Q^\pi(x,a) =\mathbb{E}[R(x,a)] + \mathbb{E} _{P, \pi}[Q^\pi(x’, a’)]$</li>
+<li>Bellman Optimality Operator: $TQ^*(x,a) = \mathbb{E}[R(x,a)] + \gamma \mathbb{E}_P [max _{a’ \in A} Q(x’, a’)]$<ul><li>Both are contractive operators</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>The Distributional Bellman Operators</strong><ul>
+<li>
+<strong>Distributional Equations</strong><ul>
+<li>$\Omega$: Space of all possible outcomes of an experiment</li>
+<li>$F_U(y) = Pr (U \leq y)$ and $F^{-1}_U(q)$ be the inverse CDF</li>
+</ul>
+</li>
+<li>
+<strong>The Wasserstein Metric</strong><ul>
+<li>Wasserstein Distance: $d_P(F,G) = inf _{U,V}\vert\vert U - V\vert\vert _p = \vert\vert F^{-1}(\mathcal{U} - G^{-1}(\mathcal{U})) \vert\vert_p$<ul>
+<li>inf: Infinum (greatest lower bound)</li>
+<li>Where F and G are the CDFs over U and V</li>
+<li>$\mathcal{U}$ is the uniform distribution over $[0,1]$</li>
+<li>If $p &lt; \infty$, $d_P(F,G) = (\int_0^1 \vert F^{-1}(\mathcal{u} - G^{-1}(\mathcal{u})) \vert^p du)^{\frac{1}{p}}$</li>
+</ul>
+</li>
+<li>Properties of $d_p$: Given a scalar $a$ and random variable $A$ independent of $U,V$<ul>
+<li>$d_p(aU, aV) \leq \vert a \vert d_p(U, V)$</li>
+<li>$d_p(A + U, A + V) \leq d_p(U, V)$</li>
+<li>$d_p(AU, AV) \leq \vert\vert A \vert\vert _p d_p(U, V)$</li>
+</ul>
+</li>
+<li>Partition Lemma: Let $A_1, A_2, \dots$ be partitions of $\Omega$<ul><li>$d_p(U, V) \leq \sum_i d_p(A_iU, A_iV)$</li></ul>
+</li>
+<li>Lemma 2 $\bar{d}_p$ is a metric over value distributions:<ul><li>If $\mathcal{Z}$ is the space of value distributions with $Z_1, Z_2 \in \mathcal{Z}$, maximal form of wasserstein metric:<ul><li>$\bar{d}_p (Z_1, Z_2)= sup _{x,a} d_p(Z_1(x,a), Z_2(x,a))$<ul><li>sup: Supremum (smallest upper bound)</li></ul>
+</li></ul>
+</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Policy Evaluation</strong><ul>
+<li>Characterize $Z^\pi$ as intrinsic randomness of agent’s interactions with environment</li>
+<li>Transition Operator: $P^\pi Z(x,a) = Z(X’, A’)$</li>
+<li>Distributional Bellman Operator: $\tau^\pi Z(x,a) = R(x,a) + \gamma P^\pi Z(x,a)$<ul>
+<li>Randomness from reward</li>
+<li>Randomness from transition</li>
+<li>Randomness from next-state value distribution</li>
+</ul>
+</li>
+<li>
+<strong>Contraction in $\bar{d}_p$</strong><ul><li>We expect $\tau^\pi$ to be a contraction operator on $\bar{d}_p$<ul>
+<li>We expect limiting expectation of $Z_k$ to converge exponentially quickly to $Q^\pi$ (along wiht all moments)</li>
+<li>Lemma 3: $\tau^\pi$ is a $\gamma-contraction$ in $\bar{d}_p$<ul>
+<li>Implies $\tau^\pi$ has a unique fixed point</li>
+<li>$Z_k$ converges to $Z^\pi$ in $\bar{d}_p$ for $1 \leq p \leq \infty$</li>
+</ul>
+</li>
+<li>Not all distributional metrics are equal; KL divergence, total variational distance, and Kolmogorov distance do not contract</li>
+</ul>
+</li></ul>
+</li>
+<li>
+<strong>Contraction in Centered Moments</strong><ul>
+<li>Coupling: $C(\omega) = U(\omega) - V(\omega)$</li>
+<li>We see that $d_2^2(U, V) \leq \mathbb{E}[(U-V)^2] = \mathbb{V}(C) + (\mathbb{E} C)^2$<ul>
+<li>We cannot use $d_2$ to bound variance differences like $\vert \mathbb{V}(\tau^\pi Z(x,a)) - \mathbb{V}(\tau^\pi Z(x,a)) \vert$</li>
+<li>However, $\tau^\pi$ is a contraction in variance (but not for higher centered moments, $p &gt; 2$)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Control</strong><ul>
+<li>Control Setting: Seek a policy $\pi$ that maximizes value + find an optimal value distribution<ul>
+<li>There are many optimal value distributions</li>
+<li>Bellman operator does converge to set of optimal value distributions<ul>
+<li>Does not cause a contraction between distributions</li>
+<li>Is more unstable due to greedy updates</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Let $\Pi^*$ be the set of optimal policies<ul>
+<li>Optimal Value Distribution: Value distribution of an optimal policy<ul><li>Set of all optimal value distributions: $\mathcal{Z}^* = Z^\pi : \pi^* \in \Pi^*$</li></ul>
+</li>
+<li>Greedy Policy: $\pi$ for $Z \in \mathcal{Z}$ maximizes expectation of Z<ul><li>Set of all greedy policies: $\mathcal{G}_Z = \pi : \sum_a \pi (a \vert x) \mathbb{E}Z(x,a) = max _{a’ \in A} Z(x,a)$</li></ul>
+</li>
+</ul>
+</li>
+<li>Distributional Bellman Operator: Any operator, $\tau$, which implements greedy selection: $\tau Z = \tau^\pi Z$ for $\pi \in \mathcal{G}_Z$</li>
+<li>Behavior of $\mathbb{E} Z_k$: $\vert \vert \mathbb{E} \tau Z_1 - \mathbb{E} \tau Z_2 \vert \vert _\infty \leq \vert \vert \mathbb{E} Z_1 - \mathbb{E} Z_2 \vert \vert _\infty$<ul>
+<li>Particularly, $\mathbb{E} Z_k \rightarrow Q^*$ exponentially quickly</li>
+<li>Convergence to set $\mathcal{Z}^*$ not assured but best we can hope for is convergence to set of nonstationary optimal value distributions<ul><li>Nonstationary Optimal Value Distributions: value distribution corresponding to set of optimal policies ($\mathcal{Z}^{**}$)</li></ul>
+</li>
+</ul>
+</li>
+<li>Convergence in control setting: If greedy policies are totally ordered and the state + action space is finite, you can get a unique fixed point $Z^* \in \mathcal{Z}^*$<ul><li>The expectation of $Z_k$ converges to $Q^*$ but the distribution not necessarily well behaved</li></ul>
+</li>
+<li>Distribution not well behaved means<ul>
+<li>$\tau$ is not a contraction (the distributions can go further apart first before going closer together)</li>
+<li>Not all optimality operators have a fixed point (i.e., operator can alternate between actions that are tied)</li>
+<li>Existence of a fixed point for an operator, $\tau$, is insufficient to guarantee convergence</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Approximate Distributional Learning</strong><ul>
+<li>
+<strong>Parameteric Distribution</strong><ul><li>Model the value distribution via discrete distribution parameterized by $N, V _{MIN}, V _{MAX}$ with a support of { $z_i = V _{MIN} + i \Delta z : 0 \leq i &lt; N$ } where $\Delta z = \frac{V _{MAX} - V _{MIN}}{N-1}$<ul><li>Parameteric model for probabilities: $Z _{\theta}(x,a) = z_i$ with probabilities $p_i(x,a) = \frac{e^{\theta _i(x,a)}}{\sum_j e^{\theta _j(x,a)}}$</li></ul>
+</li></ul>
+</li>
+<li>
+<strong>Projected Bellman Update</strong><ul>
+<li>Problem: Bellman update ($\tau Z _{\theta}$) and parameterization ($Z _{\theta}$) have disjoint supports<ul><li>We cannot minimize wasserstein loss because we are restricted to learning from sample transitions</li></ul>
+</li>
+<li>Solution: Categorical Algorithm<ul>
+<li>Instead project bellman update $\hat{\tau} Z _{\theta}$ onto support of $Z _\theta$</li>
+<li>Compute bellman update for each transition ( $\hat{\tau} Z _{\theta} = r + \gamma z_j$) for each $z_j$<ul>
+<li>Distribute its probability $p_j(x’, \pi(x’))$ to neighbors $\hat{\tau _{z_j}}$</li>
+<li>i-th component of projected update: $(\Phi \hat{\tau} Z_\theta (x,a))_i = \sum _{j=0}^{N-1} [1 - \frac{\vert [\hat{\tau _{z_j}}] _{V _{MIN}}^{V _{MAX}} - z_i\vert}{\Delta z}] _0^1 p_j(x’, \pi(x’))$</li>
+</ul>
+</li>
+<li>Sample loss is cross entropy term of KL divergence between $(\Phi \hat{\tau} Z _{\tilde{\theta}} (x,a))$ and $Z _\theta (x,a)$</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Evaluation on Atari 2600 Games</strong><ul>
+<li>Use a DQN architecture that outputs atom probabilities instead of action values<ul>
+<li>Replace MSE Loss with KL Loss for distributional RL</li>
+<li>Simple $\epsilon$-greedy policy over expected action values</li>
+</ul>
+</li>
+<li>Safe actions have similar probabilities whereas unfavorable actions have 0 probabibility<ul>
+<li>Seperates low value losing events from high value survival events</li>
+<li>Doesn’t combine these events into a singular expectation</li>
+</ul>
+</li>
+<li>Distributions generally close to gaussians</li>
+<li>
+<strong>Varying Number of Atoms</strong><ul>
+<li>Too few atoms leads to poor performance</li>
+<li>At 51 atoms, categorical DQN outperforms DQN on all games</li>
+<li>Agent is able to pick up on intrinsic stochasticity in its predictions</li>
+</ul>
+</li>
+<li>
+<strong>State-of-the-art Results</strong><ul>
+<li>C51: The 51 atom agent</li>
+<li>C51 compared to SOTA algorithms surpasses by a large margin in a number of the games<ul><li>Particularly good in sparse reward scenarios</li></ul>
+</li>
+<li>C51 also outperforms DQN in far fewer training steps on 45/57 games</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Discussion</strong><ul><li>
+<strong>Why does learning a distribution matter?</strong><ul><li>Learning distributions matter because of approximations:<ul>
+<li>Reduced Chattering:<ul>
+<li>Bellman optimality operator is unstable + combined with function approximation means no convergence guarantees</li>
+<li>Categorical algorithm avoids this by averaging different distributions</li>
+</ul>
+</li>
+<li>State Aliasing:<ul>
+<li>State aliasing occurs when two different states are indistinguishable to the agent</li>
+<li>Modeling a distribution provides a more stable learning target</li>
+</ul>
+</li>
+<li>Richer Predictions:<ul><li>Distribution will tell us the probability the return will take on certain value</li></ul>
+</li>
+<li>Inductive Bias:<ul><li>We can impose assumptions about the domain<ul>
+<li>I.e., we bounded support of the distribution between $[V _{MIN}, V _{MAX}]$<ul><li>Suprisingly clipping values in DQN degrades performance</li></ul>
+</li>
+<li>I.e., we can interpret the discount factor as a probabibility</li>
+</ul>
+</li></ul>
+</li>
+<li>Optimization:<ul>
+<li>KL divergence between categorical distributions is easy to minimize</li>
+<li>KL betweeen continuous distributions had worse results (KL insensitive to values of outcomes)<ul><li>Metric closer to wasserstein should yield even better results</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li></ul>
+</li></ul>
+</li>
+</ul>
+<span class="meta"><time datetime="2025-04-27T00:00:00+00:00">April 27, 2025</time> · <a href="/tags/research">research</a></span></section></main><footer class="footer"><div class="wrap"> © 2026 <a href="/">Samrat Sahoo</a>
+</div></footer><script src="/assets/js/site.js" defer></script>
+</body>
+</html>

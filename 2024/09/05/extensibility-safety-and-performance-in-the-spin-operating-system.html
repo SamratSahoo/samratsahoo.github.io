@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Extensibility, Safety, and Performance in the SPIN Operating System · Samrat Sahoo</title>
+<meta name="generator" content="Jekyll v4.2.2">
+<meta property="og:title" content="Extensibility, Safety, and Performance in the SPIN Operating System">
+<meta name="author" content="Samrat Sahoo">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="A paper about SPIN OS">
+<meta property="og:description" content="A paper about SPIN OS">
+<link rel="canonical" href="https://samratsahoo.com/2024/09/05/extensibility-safety-and-performance-in-the-spin-operating-system">
+<meta property="og:url" content="https://samratsahoo.com/2024/09/05/extensibility-safety-and-performance-in-the-spin-operating-system">
+<meta property="og:site_name" content="Samrat Sahoo">
+<meta property="og:image" content="https://samratsahoo.com/assets/img/og.jpg">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2024-09-05T00:00:00+00:00">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="twitter:image" content="https://samratsahoo.com/assets/img/og.jpg">
+<meta property="twitter:title" content="Extensibility, Safety, and Performance in the SPIN Operating System">
+<meta name="twitter:site" content="@samratdotjs">
+<meta name="twitter:creator" content="@samratdotjs"> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Samrat Sahoo","url":"https://samratsahoo.com"},"dateModified":"2024-09-05T00:00:00+00:00","datePublished":"2024-09-05T00:00:00+00:00","description":"A paper about SPIN OS","headline":"Extensibility, Safety, and Performance in the SPIN Operating System","image":"https://samratsahoo.com/assets/img/og.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://samratsahoo.com/2024/09/05/extensibility-safety-and-performance-in-the-spin-operating-system"},"url":"https://samratsahoo.com/2024/09/05/extensibility-safety-and-performance-in-the-spin-operating-system"}</script><meta name="color-scheme" content="light">
+<meta name="theme-color" content="#ffffff"> <script>document.documentElement.classList.add("js");</script><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&amp;display=swap">
+<link rel="icon" type="image/webp" href="/favicon.webp">
+<link rel="alternate" type="application/atom+xml" title="Samrat Sahoo" href="/atom.xml">
+<link rel="alternate" type="application/json" title="Samrat Sahoo" href="https://samratsahoo.com/feed.json">
+<link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml">
+<style> /* Palette and type follow the DATAFARM project page: warm neutrals, Inter for text, Source Serif 4 for headings, square corners, hairline rules. */ :root { --ink: #17181a; --ink-2: #35373b; --muted: #6b6e74; --line: #e4e4e1; --line-2: #c9c9c4; --bg: #fff; --bg-soft: #f7f7f5; --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; --serif: "Source Serif 4", Georgia, "Times New Roman", serif; --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; color-scheme: light; } *, *::before, *::after { box-sizing: border-box; } html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-padding-top: 24px; } body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.6 var(--font); -webkit-font-smoothing: antialiased; } h1, h2, h3, p { margin: 0; } img, video { display: block; max-width: 100%; } a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 2px; } a:hover { text-decoration-color: currentColor; } :focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; } ::selection { background: #e6e6e1; } .wrap { max-width: 880px; margin: 0 auto; padding: 0 28px; } .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; } .nw { white-space: nowrap; } html:not(.js) .js-only { display: none; } /* ---------- buttons ---------- */ .btn { display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; border: 1px solid var(--line-2); background: var(--bg); font: 400 14px/1.4 var(--font); color: var(--ink); text-decoration: none; white-space: nowrap; cursor: pointer; } .btn:hover { border-color: var(--ink); } .btn svg { width: 15px; height: 15px; opacity: .75; flex: none; } .btn.sm { padding: 3px 11px; font-size: 13px; } .btn[aria-expanded="true"] { border-color: var(--ink); } .btn.soon { color: var(--muted); border-color: var(--line); cursor: default; } /* ---------- homepage ---------- */ .intro { display: flex; align-items: flex-start; gap: 36px; padding: 64px 0 56px; } .intro picture { flex: none; } .intro .photo { width: 168px; height: 168px; object-fit: cover; } .intro-text { min-width: 0; } .intro h1 { margin: -4px 0 14px; font: 600 36px/1.15 var(--serif); letter-spacing: -.01em; } .bio { font-size: 16.5px; color: var(--ink-2); text-wrap: pretty; } .bio p + p { margin-top: 12px; } .bio strong { color: var(--ink); font-weight: 600; } .contact { display: flex; flex-wrap: wrap; gap: 10px; margin: 22px 0 0; padding: 0; list-style: none; } .section { padding: 56px 0 24px; border-top: 1px solid var(--line); } .section-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px; margin-bottom: 18px; } .section-head h2 { font: 600 27px/1.2 var(--serif); letter-spacing: -.005em; } .section-head .note { font-size: 13.5px; color: var(--muted); } .pubs { margin: 0; padding: 0; list-style: none; } .pub { display: grid; grid-template-columns: 224px minmax(0, 1fr); gap: 28px; padding: 26px 0; border-top: 1px solid var(--line); } .pub:first-child { border-top: 0; padding-top: 12px; } .thumb { display: block; aspect-ratio: 16 / 9; overflow: hidden; background: var(--bg-soft); } .thumb video, .thumb img { width: 100%; height: 100%; object-fit: cover; } .thumb.figure { background: #fff; outline: 1px solid var(--line); outline-offset: -1px; } .thumb.figure img, .thumb.contain video, .thumb.contain img { object-fit: contain; } html:not(.js) .thumb video { display: none; } /* without JS, show the noscript still rather than native controls */ .kicker { margin-bottom: 6px; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); } .pub-title { font: 600 19px/1.3 var(--serif); letter-spacing: -.005em; text-wrap: pretty; } .pub-title a { text-decoration: none; } .pub-title a:hover { text-decoration: underline; text-decoration-color: var(--line-2); } .authors { margin-top: 6px; font-size: 15px; color: var(--ink-2); } .authors a { color: inherit; text-decoration: none; } .authors a:hover { text-decoration: underline; text-decoration-color: var(--line-2); } .authors strong { color: var(--ink); font-weight: 600; } .summary { margin-top: 8px; font-size: 14.5px; line-height: 1.55; color: var(--muted); text-wrap: pretty; } .links { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 14px 0 0; padding: 0; list-style: none; } .bib { position: relative; margin-top: 12px; } .bib pre { margin: 0; padding: 14px 16px; padding-right: 72px; border: 1px solid var(--line); background: var(--bg-soft); color: var(--ink-2); font: 12.5px/1.6 var(--mono); white-space: pre-wrap; overflow-wrap: anywhere; } .bib .copy { position: absolute; top: 8px; right: 8px; padding: 2px 9px; border: 1px solid var(--line-2); background: var(--bg); font: 400 12px/1.5 var(--font); color: var(--muted); cursor: pointer; } .bib .copy:hover { border-color: var(--ink); color: var(--ink); } .footer { border-top: 1px solid var(--line); } .footer .wrap { padding-top: 30px; padding-bottom: 40px; font-size: 13.5px; color: var(--muted); } .footer a { color: var(--muted); text-decoration: none; } .footer a:hover { color: var(--ink); } /* ---------- other pages (notes, writing, search) ---------- */ .page { padding-top: 48px; padding-bottom: 56px; } .post > h2:first-child, .posts > h1:first-child { margin: 0 0 24px; font: 600 32px/1.2 var(--serif); letter-spacing: -.01em; } .post > h2:first-child a { text-decoration: none; color: var(--muted); } .post { color: var(--ink-2); overflow-wrap: break-word; } .post h1, .post h2, .post h3, .post h4, .post h5 { margin: 1.8em 0 .6em; font-family: var(--serif); font-weight: 600; line-height: 1.3; color: var(--ink); } .post h1 { font-size: 24px; } .post h2 { font-size: 21px; } .post h3 { font-size: 18px; } .post h4, .post h5 { font-size: 16px; } .post p, .post ul, .post ol, .post pre, .post table, .post blockquote, .post figure { margin: 0 0 1em; } .post ul, .post ol { padding-left: 1.4em; } .post li + li, .post li > ul, .post li > ol { margin-top: .3em; } .post li > ul, .post li > ol { margin-bottom: 0; } .post strong, .post b { color: var(--ink); font-weight: 600; } .post img { height: auto; } .post img.mermaid { max-width: 200px; } .post code { padding: .1em .3em; background: var(--bg-soft); font: .88em/1.5 var(--mono); } .post pre { overflow-x: auto; padding: 14px 16px; border: 1px solid var(--line); background: var(--bg-soft); font: 13.5px/1.6 var(--mono); } .post pre code { padding: 0; background: none; font-size: inherit; } .post blockquote { padding-left: 1em; border-left: 2px solid var(--line-2); color: var(--muted); font-style: italic; } .post table { display: block; max-width: 100%; overflow-x: auto; border-collapse: collapse; font-size: 15px; } .post th, .post td { padding: 7px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; } .post th { font-weight: 600; color: var(--ink); border-bottom-color: var(--line-2); } .post hr { height: 1px; margin: 2em 0; border: 0; background: var(--line); } .post figcaption { font-size: 14px; color: var(--muted); } .post iframe { max-width: 100%; border: 0; } .post mjx-container[display="true"] { overflow-x: auto; overflow-y: hidden; max-width: 100%; } .post mjx-container:not([display="true"]) { /* long inline formulas scroll on their own instead of widening the page */ display: inline-block; max-width: 100%; overflow-x: auto; overflow-y: hidden; vertical-align: middle; padding-right: 6px; margin-right: -6px; } .post .meta { display: block; margin-top: 40px; font-size: 14px; color: var(--muted); } .post .meta a { color: var(--muted); } .posts > p, .posts > u, .posts > i { color: var(--muted); } .posts ul { margin: 16px 0 0; padding: 0; list-style: none; } .posts li { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 10px 0; border-top: 1px solid var(--line); } .posts li:last-child { border-bottom: 1px solid var(--line); } .posts li a { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-decoration: none; } .posts li a:hover { text-decoration: underline; text-decoration-color: var(--line-2); } .posts li time, .posts li div { flex: none; font-size: 13.5px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; } .page #search-input { padding: 10px 12px; border: 1px solid var(--line-2); background: var(--bg); color: var(--ink); font: inherit; } .page #search-input:focus { border-color: var(--ink); outline: none; } .page #results-container { margin: 12px 0; padding-left: 1.4em; } /* ---------- small screens ---------- */ @media (max-width: 640px) { .wrap { padding-left: 20px; padding-right: 20px; } .intro { gap: 20px; padding: 40px 0 44px; } .intro .photo { width: 96px; height: 96px; } .intro h1 { margin-top: 0; font-size: 30px; } .bio { font-size: 16px; } .section { padding-top: 44px; } .section-head h2 { font-size: 23px; } .pub { grid-template-columns: minmax(0, 1fr); gap: 16px; padding: 28px 0; } .thumb.contain { aspect-ratio: auto; } /* full-width here, so show non-16:9 clips at their own shape */ .thumb.contain video, .thumb.contain img { height: auto; } .page { padding-top: 32px; } .post > h2:first-child, .posts > h1:first-child { font-size: 27px; } .posts li { flex-direction: column; gap: 0; } .posts li a { white-space: normal; } } @media (max-width: 480px) { .intro { flex-direction: column; } } @media (pointer: coarse) { .btn.sm { padding: 6px 12px; } } @media print { [data-bib], .bib .copy { display: none !important; } }</style>
+</head>
+<body>
+<main id="main" class="wrap page"><section class="post"><h2>Extensibility, Safety, and Performance in the SPIN Operating System</h2>
+<ul>
+<li>Exposes physical resource management to applications for their specific purposes → leads to significant performance improvements relative to monolithic Kernel<ul>
+<li>Securely multiplexes hardware resources to untrusted application-level libraries (Library Operating Systems)</li>
+<li>Separates protection from management</li>
+<li>Protections Include:<ul>
+<li>Secure Bindings: Apps bind to machine resources securely</li>
+<li>Resource Revocation: Apps participate in a resource revocation protocol</li>
+<li>Abort Protocol: Kernel can break bindings of uncooperative apps by force</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Motivation</strong><ul>
+<li>Cost of Performance: Applications that do not need specific features are required to pay substantial overhead costs<ul><li>There is no way to abstract resources such that it works well for all applications (i.e., there are tradeoffs like sparse vs dense address spaces, read vs write intensive apps, etc.)</li></ul>
+</li>
+<li>Limited Functionality: Hide Information from applications which prevents apps from implementing their own abstractions</li>
+<li>Secure multiplexing of resources can be simply done through tables that track ownership</li>
+<li>Simple kernel allows it to easily adapt new requirements while being lightweight</li>
+<li>Library Operating Systems can be simpler and more specialized than Kernel implementations<ul><li>Library OS can also trust the application because Kernel does not need to trust the Library OS (i.e., only app impacted by malicious Library OS not exokernel)</li></ul>
+</li>
+<li>Kernel crossings are fewer because most of the OS runs in user address space</li>
+<li>Standard interfaces in OSes are easily portable</li>
+<li>An application can freely replace Library OS without special privledges</li>
+<li>Backward compatibility is possible through:<ul>
+<li>Binary emulation of OS + application</li>
+<li>Implementation of hardware abstractions on exokernel</li>
+<li>Implementation of OS abstractions on exokernel</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Exokernel Design</strong><ul>
+<li>
+<strong>Design Principles</strong><ul>
+<li>
+<strong>Securely Expose Hardware:</strong><ul>
+<li>Resources should be finely subdivided</li>
+<li>Exokernel should avoid resource management except when required for protection</li>
+<li>Export system calls that allow Library OSes to implement OS abstractions</li>
+</ul>
+</li>
+<li>
+<strong>Expose Allocation</strong><ul>
+<li>Allow Library OSes to request for physical pages</li>
+<li>No implicit allocation should occur; Library OS should be involved in every allocation decision</li>
+</ul>
+</li>
+<li>
+<strong>Expose Names</strong><ul>
+<li>Export physical names to avoid layers of indirection</li>
+<li>Should export book keeping data structures (i.e., freelists, TLB, disk arm positions, etc.) so apps can tailor requests based on resources</li>
+</ul>
+</li>
+<li>
+<strong>Expose Revocation</strong><ul><li>Allows well behaved Library OSes to perform efficient resource management and lets them choose which instance of a resource to relinquish</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Policy</strong><ul>
+<li>Exokernel needs to determine a policy to arbitrate competing Library OSes</li>
+<li>Can implement traditional resource partition strategies by granting or revoking access to resources</li>
+</ul>
+</li>
+<li>
+<strong>Secure Bindings</strong><ul>
+<li>Decouples authorization from the actual use of the resource</li>
+<li>Protection checks expressed as simple kernel operations that can be done quickly</li>
+<li>Authorization only occurs at bind time → decouples management and protection</li>
+<li>When a resource is used, it can be accessed without needing to understand what is being accessed<ul>
+<li>Bind Time: Understand + Authorize (setup rules)</li>
+<li>Access Time: Access + Protect (enforce rules)</li>
+</ul>
+</li>
+<li>Secure bindings implemented through three mechanisms:<ul>
+<li>Hardware Mechanisms: Secure bindings can be embedded as low level protection operations so accesses don’t need to check high-level authorization details everytime</li>
+<li>Software Caching: Used to cache frequently used secure bindings</li>
+<li>Downloading Application Code: Apps can provide code that kernels execute when a certain resource is accessed → reduces context switches + immediate execution of application code</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Multiplexing Physical Memory</strong><ul>
+<li>Exokernel creates a secure binding when a library OS allocates a physical memory page<ul>
+<li>Exokernel will present access requests to library OS for security</li>
+<li>Exokernel uses TLB (either hardware or software) / page table to cache virtual to physical mappings</li>
+</ul>
+</li>
+<li>Protecting resources directly → allows apps to grant access rights to other apps without exokernel</li>
+<li>Breaking a secure binding = flushing the TLB mappings</li>
+</ul>
+</li>
+<li>
+<strong>Multiplexing Network</strong><ul>
+<li>Packet filters allow the OS to demultiplex different network packets<ul>
+<li>These are just secure bindings downloaded into the Kernel<ul><li>Kernel does protection checks to make sure it is safe</li></ul>
+</li>
+<li>It’s possible some packet filters can accept packets not belonging to them → use a central server install filters<ul><li>Not an issue on trusted systems</li></ul>
+</li>
+</ul>
+</li>
+<li>CInan also use hardware mechanisms if available to demultiplex</li>
+<li>Outgoing messages → copy message from app to transmit buffer (and these can be mapped to application space)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Downloading Code</strong><ul>
+<li>Downloading code reduces kernel crossings</li>
+<li>Allows downloaded code to be executed even when not scheduled</li>
+<li>Application Safe Handlers: Process messages on reception → reduces latency because you don’t need to wait until a application is scheduled to process its packets</li>
+</ul>
+</li>
+<li>
+<strong>Visible Resource Revocation</strong><ul>
+<li>Invisible Revocation: OS allocates and deallocates physical memory without informing user → lower latency because no communication with app</li>
+<li>Visible Revocation: Informs apps about revocations → used by the exokernel</li>
+<li>
+<strong>Revocation and Physical Naming</strong><ul>
+<li>Relocation: Applications need to rename physical names in page tables, caches, etc. during deallocation</li>
+<li>When kernel deallocates, resource lists should be updated by the Library OS</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>The Abort Protocol</strong><ul>
+<li>Kernel needs to be able to take resources from Library OSes by force when Library OS doesn’t respond satisfactorily.<ul><li>Second stage of revocation where if certain constraint isn’t met to return resources, kernel forces revocation</li></ul>
+</li>
+<li>Repossession Vector: records when exokernel takes resource from library operating system<ul>
+<li>Library OS gets repossession exception to remap resources</li>
+<li>Library OS can allocate some memory to record vital information → these pages are guaranteed not to be repossessed<ul><li>If these need to be repossessed, then Library OS will get a notification from kernel to use swap memory</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Aegis</strong><ul>
+<li>Uses primitive operations to encapsulate privileged instructions + doesn’t alter application visible registers</li>
+<li>
+<strong>Processor Time Slices:</strong><ul>
+<li>CPU Allocation is done similar to how memory allocation is</li>
+<li>Round Robin styled time slots</li>
+<li>Compute heavy apps can schedule contiguous areas</li>
+<li>Position tells when the time slice will be run</li>
+<li>Uses timer interrupts to denote start and end of time slice</li>
+<li>Achieves fairness by bounding context-switching time</li>
+</ul>
+</li>
+<li>
+<strong>Processor Environments:</strong><ul><li>Four events delivered by Aegis<ul>
+<li>Exception context: contains PC value + pointer to memory for saving registers when an exception occurs</li>
+<li>Interrupt context: PC values + register save region<ul><li>Timer interrupts: status register + start/end PC values</li></ul>
+</li>
+<li>Protected entry context: PC values for control transfers</li>
+<li>Addressing context: Guaranteed mappings of virtual to physical addresses → used for bootstrapping OS data structures.<ul><li>Also includes address space identifier, a status register, and a tag needed to switch environments</li></ul>
+</li>
+</ul>
+</li></ul>
+</li>
+<li>
+<strong>Exception Handling in Aegis</strong><ul>
+<li>Step 1: Saves three scratch register in register save area</li>
+<li>Step 2: Load exception PC + cause of exception</li>
+<li>Step 3: Indirect jump to application-specific PC with appropriate permissions set</li>
+<li>All execution state must be saved in user accessible memory → allows user reconstruction</li>
+</ul>
+</li>
+<li>
+<strong>Address Translations</strong><ul>
+<li>Aegis uses guaranteed mappings to allow application to easily allocate space for things like TLB, exception handlers, etc.</li>
+<li>Guaranteed Mappings segment application virtual address space into two parts:<ul><li>First segment = normal application data + code</li></ul>
+</li>
+<li>On TLB miss:<ul>
+<li>Step 1:<ul>
+<li>If virtual address in first segment → exception to application</li>
+<li>If virtual address in second segment → if it is guaranteed mapping → installs the TLB entry and continues, else, forward to application</li>
+</ul>
+</li>
+<li>Step 2:<ul>
+<li>Application looks up virtual address in page table</li>
+<li>If access not allowed, raises exception</li>
+<li>Else constructs appropriate TLB entry</li>
+</ul>
+</li>
+<li>Step 3:<ul><li>Checks if capability corresponds to access rights requested by application<ul>
+<li>if it does mapping is installed in TLB and returns control</li>
+<li>Else throws an error</li>
+</ul>
+</li></ul>
+</li>
+<li>Step 4: Applications clean up and resume execution</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Protected Control Transfers</strong><ul>
+<li>IPC Abstraction</li>
+<li>Changes the PC value to an agreed value in the callee and donated current time slice to the callee environment + installs callee’s processor context</li>
+<li>Synchronous: Donates current and all future instantiations of the time slice</li>
+<li>Asynchronous: Donates only the remainder of the current time slice</li>
+<li>Ensures atomicity + persistence of application visible registers</li>
+</ul>
+</li>
+<li>
+<strong>Dynamic Packet Filter</strong><ul><li>Dynamic Code Generation: Creation of executable code at runtime<ul>
+<li>Allows DPF to eliminate interpretation overhead by compiling packet filters to executable at installation time</li>
+<li>Filter constants optimize the generated code</li>
+</ul>
+</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>ExOS</strong><ul>
+<li>
+<strong>IPC Abstractions</strong><ul>
+<li>Uses the same protected control transfer mechanism used in Aegis</li>
+<li>Ultrix (monolithic OS) can only emulate apps on pre-existing abstractions so significantly slower than ExOS</li>
+</ul>
+</li>
+<li>
+<strong>Application level Virtual Memory</strong><ul>
+<li>Limitations: No swapping and page tables are linear vectors (requires binary search to find translation)</li>
+<li>Flexible support for aliasing, sharing, disabling, per-page caching, specific page allocation, DMA</li>
+</ul>
+</li>
+<li>
+<strong>Application-Specific Safe Handlers</strong><ul>
+<li>We cannot map network buffers to application space safely</li>
+<li>ASH allow you to run code when a context switch is impractical → decouples latency critical operations (i.e., message reply) from process scheduling</li>
+<li>ASH are untrusted → made safe through code inspection, sandboxing, and execution on arrival</li>
+<li>Four abilities of ASH<ul>
+<li>Control where messages are copied in memory</li>
+<li>Dynamic integrated layer processing → integrate data manipulators (i.e., checksum) into data transfer engine</li>
+<li>Message initiation for low latency message replies</li>
+<li>Control initiation → can perform control operations at message reception time</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Extensibility with ExOS</strong><ul>
+<li>
+<strong>Extensible RPC</strong><ul><li>Implemented a version of LRPC that trusts the server to save and restore callee registers → Improved performance by a factor of 2</li></ul>
+</li>
+<li>
+<strong>Extensible Page Table Structures</strong><ul><li>Inverted page tables → used in apps with sparse address spaces</li></ul>
+</li>
+<li>
+<strong>Extensible Schedulers</strong><ul><li>Implemented stride scheduling → uses the proportion of time slice to determine which process to schedule</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+<span class="meta"><time datetime="2024-09-05T00:00:00+00:00">September 5, 2024</time> · <a href="/tags/research">research</a></span></section></main><footer class="footer"><div class="wrap"> © 2026 <a href="/">Samrat Sahoo</a>
+</div></footer><script src="/assets/js/site.js" defer></script>
+</body>
+</html>

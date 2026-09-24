@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>lecture 2 - given a model of the world · Samrat Sahoo</title>
+<meta name="generator" content="Jekyll v4.2.2">
+<meta property="og:title" content="lecture 2 - given a model of the world">
+<meta name="author" content="Samrat Sahoo">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="Resources: Lecture Video">
+<meta property="og:description" content="Resources: Lecture Video">
+<link rel="canonical" href="https://samratsahoo.com/brain/cs234/given-a-model-of-the-world">
+<meta property="og:url" content="https://samratsahoo.com/brain/cs234/given-a-model-of-the-world">
+<meta property="og:site_name" content="Samrat Sahoo">
+<meta property="og:image" content="https://samratsahoo.com/assets/img/og.jpg">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2024-05-02T00:00:00+00:00">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="twitter:image" content="https://samratsahoo.com/assets/img/og.jpg">
+<meta property="twitter:title" content="lecture 2 - given a model of the world">
+<meta name="twitter:site" content="@samratdotjs">
+<meta name="twitter:creator" content="@samratdotjs"> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Samrat Sahoo","url":"https://samratsahoo.com"},"dateModified":"2024-05-02T00:00:00+00:00","datePublished":"2024-05-02T00:00:00+00:00","description":"Resources: Lecture Video","headline":"lecture 2 - given a model of the world","image":"https://samratsahoo.com/assets/img/og.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://samratsahoo.com/brain/cs234/given-a-model-of-the-world"},"url":"https://samratsahoo.com/brain/cs234/given-a-model-of-the-world"}</script><meta name="color-scheme" content="light">
+<meta name="theme-color" content="#ffffff"> <script>document.documentElement.classList.add("js");</script><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&amp;display=swap">
+<link rel="icon" type="image/webp" href="/favicon.webp">
+<link rel="alternate" type="application/atom+xml" title="Samrat Sahoo" href="/atom.xml">
+<link rel="alternate" type="application/json" title="Samrat Sahoo" href="https://samratsahoo.com/feed.json">
+<link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml">
+<style> /* Palette and type follow the DATAFARM project page: warm neutrals, Inter for text, Source Serif 4 for headings, square corners, hairline rules. */ :root { --ink: #17181a; --ink-2: #35373b; --muted: #6b6e74; --line: #e4e4e1; --line-2: #c9c9c4; --bg: #fff; --bg-soft: #f7f7f5; --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; --serif: "Source Serif 4", Georgia, "Times New Roman", serif; --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; color-scheme: light; } *, *::before, *::after { box-sizing: border-box; } html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-padding-top: 24px; } body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.6 var(--font); -webkit-font-smoothing: antialiased; } h1, h2, h3, p { margin: 0; } img, video { display: block; max-width: 100%; } a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 2px; } a:hover { text-decoration-color: currentColor; } :focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; } ::selection { background: #e6e6e1; } .wrap { max-width: 880px; margin: 0 auto; padding: 0 28px; } .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; } .nw { white-space: nowrap; } html:not(.js) .js-only { display: none; } /* ---------- buttons ---------- */ .btn { display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; border: 1px solid var(--line-2); background: var(--bg); font: 400 14px/1.4 var(--font); color: var(--ink); text-decoration: none; white-space: nowrap; cursor: pointer; } .btn:hover { border-color: var(--ink); } .btn svg { width: 15px; height: 15px; opacity: .75; flex: none; } .btn.sm { padding: 3px 11px; font-size: 13px; } .btn[aria-expanded="true"] { border-color: var(--ink); } .btn.soon { color: var(--muted); border-color: var(--line); cursor: default; } /* ---------- homepage ---------- */ .intro { display: flex; align-items: flex-start; gap: 36px; padding: 64px 0 56px; } .intro picture { flex: none; } .intro .photo { width: 168px; height: 168px; object-fit: cover; } .intro-text { min-width: 0; } .intro h1 { margin: -4px 0 14px; font: 600 36px/1.15 var(--serif); letter-spacing: -.01em; } .bio { font-size: 16.5px; color: var(--ink-2); text-wrap: pretty; } .bio p + p { margin-top: 12px; } .bio strong { color: var(--ink); font-weight: 600; } .contact { display: flex; flex-wrap: wrap; gap: 10px; margin: 22px 0 0; padding: 0; list-style: none; } .section { padding: 56px 0 24px; border-top: 1px solid var(--line); } .section-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px; margin-bottom: 18px; } .section-head h2 { font: 600 27px/1.2 var(--serif); letter-spacing: -.005em; } .section-head .note { font-size: 13.5px; color: var(--muted); } .pubs { margin: 0; padding: 0; list-style: none; } .pub { display: grid; grid-template-columns: 224px minmax(0, 1fr); gap: 28px; padding: 26px 0; border-top: 1px solid var(--line); } .pub:first-child { border-top: 0; padding-top: 12px; } .thumb { display: block; aspect-ratio: 16 / 9; overflow: hidden; background: var(--bg-soft); } .thumb video, .thumb img { width: 100%; height: 100%; object-fit: cover; } .thumb.figure { background: #fff; outline: 1px solid var(--line); outline-offset: -1px; } .thumb.figure img, .thumb.contain video, .thumb.contain img { object-fit: contain; } html:not(.js) .thumb video { display: none; } /* without JS, show the noscript still rather than native controls */ .kicker { margin-bottom: 6px; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); } .pub-title { font: 600 19px/1.3 var(--serif); letter-spacing: -.005em; text-wrap: pretty; } .pub-title a { text-decoration: none; } .pub-title a:hover { text-decoration: underline; text-decoration-color: var(--line-2); } .authors { margin-top: 6px; font-size: 15px; color: var(--ink-2); } .authors a { color: inherit; text-decoration: none; } .authors a:hover { text-decoration: underline; text-decoration-color: var(--line-2); } .authors strong { color: var(--ink); font-weight: 600; } .summary { margin-top: 8px; font-size: 14.5px; line-height: 1.55; color: var(--muted); text-wrap: pretty; } .links { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 14px 0 0; padding: 0; list-style: none; } .bib { position: relative; margin-top: 12px; } .bib pre { margin: 0; padding: 14px 16px; padding-right: 72px; border: 1px solid var(--line); background: var(--bg-soft); color: var(--ink-2); font: 12.5px/1.6 var(--mono); white-space: pre-wrap; overflow-wrap: anywhere; } .bib .copy { position: absolute; top: 8px; right: 8px; padding: 2px 9px; border: 1px solid var(--line-2); background: var(--bg); font: 400 12px/1.5 var(--font); color: var(--muted); cursor: pointer; } .bib .copy:hover { border-color: var(--ink); color: var(--ink); } .footer { border-top: 1px solid var(--line); } .footer .wrap { padding-top: 30px; padding-bottom: 40px; font-size: 13.5px; color: var(--muted); } .footer a { color: var(--muted); text-decoration: none; } .footer a:hover { color: var(--ink); } /* ---------- other pages (notes, writing, search) ---------- */ .page { padding-top: 48px; padding-bottom: 56px; } .post > h2:first-child, .posts > h1:first-child { margin: 0 0 24px; font: 600 32px/1.2 var(--serif); letter-spacing: -.01em; } .post > h2:first-child a { text-decoration: none; color: var(--muted); } .post { color: var(--ink-2); overflow-wrap: break-word; } .post h1, .post h2, .post h3, .post h4, .post h5 { margin: 1.8em 0 .6em; font-family: var(--serif); font-weight: 600; line-height: 1.3; color: var(--ink); } .post h1 { font-size: 24px; } .post h2 { font-size: 21px; } .post h3 { font-size: 18px; } .post h4, .post h5 { font-size: 16px; } .post p, .post ul, .post ol, .post pre, .post table, .post blockquote, .post figure { margin: 0 0 1em; } .post ul, .post ol { padding-left: 1.4em; } .post li + li, .post li > ul, .post li > ol { margin-top: .3em; } .post li > ul, .post li > ol { margin-bottom: 0; } .post strong, .post b { color: var(--ink); font-weight: 600; } .post img { height: auto; } .post img.mermaid { max-width: 200px; } .post code { padding: .1em .3em; background: var(--bg-soft); font: .88em/1.5 var(--mono); } .post pre { overflow-x: auto; padding: 14px 16px; border: 1px solid var(--line); background: var(--bg-soft); font: 13.5px/1.6 var(--mono); } .post pre code { padding: 0; background: none; font-size: inherit; } .post blockquote { padding-left: 1em; border-left: 2px solid var(--line-2); color: var(--muted); font-style: italic; } .post table { display: block; max-width: 100%; overflow-x: auto; border-collapse: collapse; font-size: 15px; } .post th, .post td { padding: 7px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; } .post th { font-weight: 600; color: var(--ink); border-bottom-color: var(--line-2); } .post hr { height: 1px; margin: 2em 0; border: 0; background: var(--line); } .post figcaption { font-size: 14px; color: var(--muted); } .post iframe { max-width: 100%; border: 0; } .post mjx-container[display="true"] { overflow-x: auto; overflow-y: hidden; max-width: 100%; } .post mjx-container:not([display="true"]) { /* long inline formulas scroll on their own instead of widening the page */ display: inline-block; max-width: 100%; overflow-x: auto; overflow-y: hidden; vertical-align: middle; padding-right: 6px; margin-right: -6px; } .post .meta { display: block; margin-top: 40px; font-size: 14px; color: var(--muted); } .post .meta a { color: var(--muted); } .posts > p, .posts > u, .posts > i { color: var(--muted); } .posts ul { margin: 16px 0 0; padding: 0; list-style: none; } .posts li { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 10px 0; border-top: 1px solid var(--line); } .posts li:last-child { border-bottom: 1px solid var(--line); } .posts li a { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-decoration: none; } .posts li a:hover { text-decoration: underline; text-decoration-color: var(--line-2); } .posts li time, .posts li div { flex: none; font-size: 13.5px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; } .page #search-input { padding: 10px 12px; border: 1px solid var(--line-2); background: var(--bg); color: var(--ink); font: inherit; } .page #search-input:focus { border-color: var(--ink); outline: none; } .page #results-container { margin: 12px 0; padding-left: 1.4em; } /* ---------- small screens ---------- */ @media (max-width: 640px) { .wrap { padding-left: 20px; padding-right: 20px; } .intro { gap: 20px; padding: 40px 0 44px; } .intro .photo { width: 96px; height: 96px; } .intro h1 { margin-top: 0; font-size: 30px; } .bio { font-size: 16px; } .section { padding-top: 44px; } .section-head h2 { font-size: 23px; } .pub { grid-template-columns: minmax(0, 1fr); gap: 16px; padding: 28px 0; } .thumb.contain { aspect-ratio: auto; } /* full-width here, so show non-16:9 clips at their own shape */ .thumb.contain video, .thumb.contain img { height: auto; } .page { padding-top: 32px; } .post > h2:first-child, .posts > h1:first-child { font-size: 27px; } .posts li { flex-direction: column; gap: 0; } .posts li a { white-space: normal; } } @media (max-width: 480px) { .intro { flex-direction: column; } } @media (pointer: coarse) { .btn.sm { padding: 6px 12px; } } @media print { [data-bib], .bib .copy { display: none !important; } }</style>
+<script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"},"svg":{"fontCache":"global","scale":1.0,"minScale":0.5,"mtextInheritFont":true,"merrorInheritFont":true,"mathmlSpacing":false,"skipAttributes":{},"exFactor":0.5},"chtml":{"scale":1.0,"minScale":0.5,"matchFontHeight":true,"mtextFont":"serif","linebreaks":{"automatic":false}}}</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js"></script>
+</head>
+<body>
+<main id="main" class="wrap page"><section class="post"><h2>
+<a href="/brain/cs234" class="url">cs234</a> / lecture 2 - given a model of the world</h2>
+<p><strong>Resources:</strong></p>
+<ul><li><a href="https://youtu.be/E3f2Camj0Is?feature=shared">Lecture Video</a></li></ul>
+<h3 id="markov-process-and-markov-chains">Markov Process and Markov Chains</h3>
+<ul>
+<li>Memoryless / random sequence of events which satisfies the markov property</li>
+<li>No rewards, no actions</li>
+<li>Dynamics model specifies the probability of the next state given the previous state. This is expressible as a matrix: $$ \begin{pmatrix} P(s_1 \vert s_1) &amp; P(s_1 \vert s_2) &amp; \dots &amp; P(s_1 \vert s_N)<br> \\ \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ P(s_N \vert s_1) &amp; P(s_N \vert s_2) &amp; \dots &amp; P(s_N \vert s_N) \end{pmatrix} $$</li>
+</ul>
+<h3 id="markov-reward-process">Markov Reward Process</h3>
+<ul>
+<li>Markov Reward Process: Markov Chains + rewards (no actions)</li>
+<li>$S:$ Finite number of states ($s \in S$)</li>
+<li>$P:$ Dynamics / transition model where $P(s _{t+1} = s’ \vert s_t = s)$</li>
+<li>$R:$ Reward function $R(s_t = s) = E[r_t \vert s_t = s]$<ul><li>Tied to immediate state or state and next state</li></ul>
+</li>
+<li>$\gamma:$ Discount factor [0, 1]</li>
+</ul>
+<h3 id="return-and-value-function">Return and Value Function</h3>
+<ul>
+<li>
+<strong>Horizon:</strong> The number of time steps in an episodes<ul><li>Can be infinite or finite (finite Markov Process)</li></ul>
+</li>
+<li>
+<strong>Return:</strong> Discounted sum of rewards from time step t to horizon<ul><li>$G_t = r_t + \gamma r _{t+1} + \gamma^2 r _{t+2} \dots$</li></ul>
+</li>
+<li>
+<strong>Value Function:</strong> Expected return from a state<ul>
+<li>$V(s) = E[G_t \vert s_t = s] = E[r_t + \gamma r _{t+1} + \gamma^2 r _{t+2} \dots \vert s_t = s]$</li>
+<li>Same as return if the process is deterministic (single next state from a state)</li>
+<li>Different from return if process is stochastic</li>
+</ul>
+</li>
+</ul>
+<h3 id="discount-factor">Discount Factor</h3>
+<ul>
+<li>Used to avoid inifinite returns and values</li>
+<li>$\gamma = 0:$ Only care about immediate rewards</li>
+<li>$\gamma = 1:$ Future reward and immediate reward equally beneficial<ul><li>Use $\gamma = 1$ for finite episode lengths (for mathematical convenience)</li></ul>
+</li>
+</ul>
+<h3 id="computing-value-of-a-markov-reward-process">Computing Value of a Markov Reward Process</h3>
+<ul>
+<li>Estimate by simulation by generating a large number of episodes<ul>
+<li>Average the returns</li>
+<li>Requires no assumption of Markov structure</li>
+</ul>
+</li>
+<li>Using markov structure<ul><li>MRP Value Function: $V(s) = R(s) + \gamma \sum _{s’ \in S}P(s’ \vert s)V(s’)$<ul>
+<li>$R(s):$ Immediate rewards</li>
+<li>$\gamma \sum _{s’ \in S}P(s’ \vert s)V(s’):$ Discounted sum of future rewards</li>
+</ul>
+</li></ul>
+</li>
+<li>Matrix form of Bellman Equation for MRPs: $V = R + \gamma PV$<ul><li>Simplify equation to: $V - \gamma PV = R = (I - \gamma P)V = R \rightarrow V = (I - \gamma P)^{-1}R$</li></ul>
+</li>
+</ul>
+<p>$$ \begin{pmatrix} V(s_1)<br> \\ \vdots \\ V(s_N) \end{pmatrix} = \begin{pmatrix} R(s_1)<br> \\ \vdots \\ R(s_N) \end{pmatrix} + \gamma \begin{pmatrix} P(s_1 \vert s_1) &amp; P(s_1 \vert s_2) &amp; \dots &amp; P(s_1 \vert s_N)<br> \\ \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ P(s_N \vert s_1) &amp; P(s_N \vert s_2) &amp; \dots &amp; P(s_N \vert s_N) \end{pmatrix} \begin{pmatrix} V(s_1)<br> \\ \vdots \\ V(s_N) \end{pmatrix} $$</p>
+<ul><li>Iterative Algorithm for Computing Value of an MRP (Dynamic Programming)<ul>
+<li>Initialize $V_0(s) = 0$ for all s</li>
+<li>For k = 1 until convergence<ul><li>For all s in S<ul><li>$V_k = R(s) + \gamma \sum _{s’ \in S}P(s’\vert s)V _{k-1}(s’)$</li></ul>
+</li></ul>
+</li>
+</ul>
+</li></ul>
+<h3 id="markov-decision-processes">Markov Decision Processes</h3>
+<ul>
+<li>Markov reward processes with actions ($a \in A$)</li>
+<li>We have a dynamics model that is specified differently for <em>each action</em> $\rightarrow P(s _{t+1} = s’ \vert s_t = s, a_t = a)$<ul><li>Multiple matrices (one for each action)</li></ul>
+</li>
+<li>Our reward function can be a function current state, current state + action, or current state + action + next state<ul><li>$R(s_t = s, a_t = a) = E[r_t \vert s_t = s, a_t = a]$</li></ul>
+</li>
+<li>Can express MDPs as a tuple of $(S, A, R, P, \gamma)$</li>
+</ul>
+<p><strong>Policies</strong></p>
+<ul>
+<li>Expressed as $\pi(a_t = a \vert s_t = s) = P(a_t = a \vert s_t = s)$</li>
+<li>Specifies which action to take in each state $\rightarrow$ can be deterministic or stochastic</li>
+<li>Markov Reward Process = MDP + Policy $\rightarrow$ specifying a policy induces MRP because it defines the expected rewards and transition model<ul>
+<li>$R^{\pi}(s) = \sum _{a \in A} \pi(a \vert s)R(s,a)$</li>
+<li>$P^{\pi}(s) = \sum _{a \in A} \pi(a \vert s)P(s’\vert s,a)$</li>
+</ul>
+</li>
+</ul>
+<h3 id="policy-evaluation">Policy Evaluation</h3>
+<ul><li>Iterative Algorithm (Bellman Backup)<ul>
+<li>Initialize $V_0(s) = 0$ for all s</li>
+<li>For k = 1 until convergence<ul><li>For all s in S<ul><li>$V^{\pi}_k = r(s, \pi(s)) + \gamma \sum _{s’ \in S}P(s’\vert s, \pi(s))V^{\pi} _{k-1}(s’)$</li></ul>
+</li></ul>
+</li>
+</ul>
+</li></ul>
+<h3 id="mdp-control">MDP Control</h3>
+<ul>
+<li>We want to find the optimal policy<ul>
+<li>$\pi^*(s) = argmax _{\pi} V^{\pi}(s)$</li>
+<li>There exists a unique optimal value function</li>
+</ul>
+</li>
+<li>Optimal Policy Characteristics (for infinite horizon MDPs):<ul>
+<li>Deterministic</li>
+<li>Stationary (doesn’t depend on time step)</li>
+<li>not necessarily unique (there could be ties between policies that get the optimal value function)</li>
+</ul>
+</li>
+</ul>
+<h3 id="policy-search">Policy Search</h3>
+<ul>
+<li>We know that the number of deterministic policies is $\vert A \vert ^{\vert S \vert}$</li>
+<li>Using enumeration is inefficient (evaluating every policy exhaustively)</li>
+<li>We prefer policy iteration</li>
+</ul>
+<h3 id="mdp-policy-iteration"><a href="#mdp-policy-iteration">MDP Policy Iteration</a></h3>
+<ul>
+<li>We take a “guess” of the optimal policy, we evaluate it, and then we try to improve it until we cannot improve it anymore</li>
+<li>Algorithm:<ul>
+<li>Set i = 0</li>
+<li>Intialize $\pi_{0}(s)$ randomly for all states $s$</li>
+<li>While i == 0 or $\vert\vert \pi_i - \pi _{i-1}\vert\vert &gt; 0$ (L1 Norm to see if policy changes)<ul>
+<li>$V^{\pi i} \leftarrow \text{MDP Value Function}$</li>
+<li>$\pi _{i+1} \leftarrow \text{Policy Improvement}$</li>
+<li>$i = i + 1$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>State Value:</strong> $V^{\pi}(s)$<ul><li><em>“If you start in state s and follow a policy, what is the discounted sum of rewards”</em></li></ul>
+</li>
+<li>
+<strong>State-Action Value:</strong> $Q^{\pi}(s, a) = R(s, a) + \gamma \sum _{s’ \in S} P(s’ \vert s, a)V^{\pi}(s’)$<ul><li><em>“If you start in state s, take an action, and then follow a policy, what is the discounted sum of rewards”</em></li></ul>
+</li>
+<li>
+<strong>Policy Improvement:</strong><ul>
+<li>Compute the state action value of a policy<ul><li>For s in S and a in A<ul><li>Compute $Q ^{\pi i}(s,a) = R(s, a) + \gamma \sum _{s’ \in S} P(s’ \vert s, a)V^{\pi}(s’)$</li></ul>
+</li></ul>
+</li>
+<li>Compute new policy $\pi _{i+1}$ for all $s \in S$<ul><li>$\pi _{i+1} = argmax _{a} Q^{\pi i}(s, a) \forall s \in S$</li></ul>
+</li>
+</ul>
+</li>
+<li>Monotonic Improvement in Policy: The value of the policy is greater than or equal to the old policy for all states</li>
+<li>Once the policy stops changing, you know you are at the global best policy</li>
+<li>There is a maximum of $\vert A \vert ^{\vert S \vert}$ iterations for policy iteration</li>
+</ul>
+<h3 id="value-iteration">Value Iteration</h3>
+<ul>
+<li>Maintain the optimal value of starting in a state if we have a finite number of steps left in the episode</li>
+<li>Value function must satisfy the bellman equation</li>
+<li>
+<strong>Bellman Backup Operator:</strong> Allows us to transform an old value function into a new one to improve it<ul>
+<li>$BV(s) = max_a R(s, a) + \gamma \sum _{s’ \in S}P(s’ \vert s, a)V(s’)$</li>
+<li>For a particular policy: $B^{\pi}V(s) = R^{\pi}(s) + \gamma \sum _{s’ \in S}P^{\pi}(s’ \vert s)V(s)$<ul><li>We can do policy evaluation using this operating as follows: $B^{\pi}B^{\pi}B^{\pi}\cdots V$ until it converges</li></ul>
+</li>
+</ul>
+</li>
+<li>Value Iteration Algorithm<ul>
+<li>Set k = 1</li>
+<li>Initialize $V_0(s) = 0$ for all s</li>
+<li>Loop until finite horizon ends or convergence<ul><li>For each state, s:<ul>
+<li>Compute $V _{k+1} = max_a R(s, a) + \gamma \sum _{s’ \in S} P(s’ \vert s, a)V_k(s’)$</li>
+<li>$V _{k+1} = BV_k$</li>
+<li>$\pi _{k+1}(s) = argmax_a R(s,a) + \gamma \sum _{s’ \in S} P(s’ \vert s, a)V_k(s’)$</li>
+</ul>
+</li></ul>
+</li>
+</ul>
+</li>
+<li>Contraction Operator<ul>
+<li>Let $O$ be an operator $\vert x \vert$ be any norm of $x$</li>
+<li>If $\vert OV - OV’ \vert \leq \vert V - V’\vert$ then O is a contraction operator</li>
+<li>Value iteration converges because the Bellman Backup is a contractor operator when $\gamma &lt; 1$</li>
+</ul>
+</li>
+</ul></section></main><footer class="footer"><div class="wrap"> © 2026 <a href="/">Samrat Sahoo</a>
+</div></footer><script src="/assets/js/site.js" defer></script>
+</body>
+</html>

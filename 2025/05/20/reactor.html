@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Reactor: A fast and sample-efficient Actor-Critic agent for Reinforcement Learning · Samrat Sahoo</title>
+<meta name="generator" content="Jekyll v4.2.2">
+<meta property="og:title" content="The Reactor: A fast and sample-efficient Actor-Critic agent for Reinforcement Learning">
+<meta name="author" content="Samrat Sahoo">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="A paper about the reactor algorithm">
+<meta property="og:description" content="A paper about the reactor algorithm">
+<link rel="canonical" href="https://samratsahoo.com/2025/05/20/reactor">
+<meta property="og:url" content="https://samratsahoo.com/2025/05/20/reactor">
+<meta property="og:site_name" content="Samrat Sahoo">
+<meta property="og:image" content="https://samratsahoo.com/assets/img/og.jpg">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2025-05-20T00:00:00+00:00">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="twitter:image" content="https://samratsahoo.com/assets/img/og.jpg">
+<meta property="twitter:title" content="The Reactor: A fast and sample-efficient Actor-Critic agent for Reinforcement Learning">
+<meta name="twitter:site" content="@samratdotjs">
+<meta name="twitter:creator" content="@samratdotjs"> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Samrat Sahoo","url":"https://samratsahoo.com"},"dateModified":"2025-05-20T00:00:00+00:00","datePublished":"2025-05-20T00:00:00+00:00","description":"A paper about the reactor algorithm","headline":"The Reactor: A fast and sample-efficient Actor-Critic agent for Reinforcement Learning","image":"https://samratsahoo.com/assets/img/og.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://samratsahoo.com/2025/05/20/reactor"},"url":"https://samratsahoo.com/2025/05/20/reactor"}</script><meta name="color-scheme" content="light">
+<meta name="theme-color" content="#ffffff"> <script>document.documentElement.classList.add("js");</script><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&amp;display=swap">
+<link rel="icon" type="image/webp" href="/favicon.webp">
+<link rel="alternate" type="application/atom+xml" title="Samrat Sahoo" href="/atom.xml">
+<link rel="alternate" type="application/json" title="Samrat Sahoo" href="https://samratsahoo.com/feed.json">
+<link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml">
+<style> /* Palette and type follow the DATAFARM project page: warm neutrals, Inter for text, Source Serif 4 for headings, square corners, hairline rules. */ :root { --ink: #17181a; --ink-2: #35373b; --muted: #6b6e74; --line: #e4e4e1; --line-2: #c9c9c4; --bg: #fff; --bg-soft: #f7f7f5; --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; --serif: "Source Serif 4", Georgia, "Times New Roman", serif; --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; color-scheme: light; } *, *::before, *::after { box-sizing: border-box; } html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-padding-top: 24px; } body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.6 var(--font); -webkit-font-smoothing: antialiased; } h1, h2, h3, p { margin: 0; } img, video { display: block; max-width: 100%; } a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 2px; } a:hover { text-decoration-color: currentColor; } :focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; } ::selection { background: #e6e6e1; } .wrap { max-width: 880px; margin: 0 auto; padding: 0 28px; } .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; } .nw { white-space: nowrap; } html:not(.js) .js-only { display: none; } /* ---------- buttons ---------- */ .btn { display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; border: 1px solid var(--line-2); background: var(--bg); font: 400 14px/1.4 var(--font); color: var(--ink); text-decoration: none; white-space: nowrap; cursor: pointer; } .btn:hover { border-color: var(--ink); } .btn svg { width: 15px; height: 15px; opacity: .75; flex: none; } .btn.sm { padding: 3px 11px; font-size: 13px; } .btn[aria-expanded="true"] { border-color: var(--ink); } .btn.soon { color: var(--muted); border-color: var(--line); cursor: default; } /* ---------- homepage ---------- */ .intro { display: flex; align-items: flex-start; gap: 36px; padding: 64px 0 56px; } .intro picture { flex: none; } .intro .photo { width: 168px; height: 168px; object-fit: cover; } .intro-text { min-width: 0; } .intro h1 { margin: -4px 0 14px; font: 600 36px/1.15 var(--serif); letter-spacing: -.01em; } .bio { font-size: 16.5px; color: var(--ink-2); text-wrap: pretty; } .bio p + p { margin-top: 12px; } .bio strong { color: var(--ink); font-weight: 600; } .contact { display: flex; flex-wrap: wrap; gap: 10px; margin: 22px 0 0; padding: 0; list-style: none; } .section { padding: 56px 0 24px; border-top: 1px solid var(--line); } .section-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px; margin-bottom: 18px; } .section-head h2 { font: 600 27px/1.2 var(--serif); letter-spacing: -.005em; } .section-head .note { font-size: 13.5px; color: var(--muted); } .pubs { margin: 0; padding: 0; list-style: none; } .pub { display: grid; grid-template-columns: 224px minmax(0, 1fr); gap: 28px; padding: 26px 0; border-top: 1px solid var(--line); } .pub:first-child { border-top: 0; padding-top: 12px; } .thumb { display: block; aspect-ratio: 16 / 9; overflow: hidden; background: var(--bg-soft); } .thumb video, .thumb img { width: 100%; height: 100%; object-fit: cover; } .thumb.figure { background: #fff; outline: 1px solid var(--line); outline-offset: -1px; } .thumb.figure img, .thumb.contain video, .thumb.contain img { object-fit: contain; } html:not(.js) .thumb video { display: none; } /* without JS, show the noscript still rather than native controls */ .kicker { margin-bottom: 6px; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); } .pub-title { font: 600 19px/1.3 var(--serif); letter-spacing: -.005em; text-wrap: pretty; } .pub-title a { text-decoration: none; } .pub-title a:hover { text-decoration: underline; text-decoration-color: var(--line-2); } .authors { margin-top: 6px; font-size: 15px; color: var(--ink-2); } .authors a { color: inherit; text-decoration: none; } .authors a:hover { text-decoration: underline; text-decoration-color: var(--line-2); } .authors strong { color: var(--ink); font-weight: 600; } .summary { margin-top: 8px; font-size: 14.5px; line-height: 1.55; color: var(--muted); text-wrap: pretty; } .links { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 14px 0 0; padding: 0; list-style: none; } .bib { position: relative; margin-top: 12px; } .bib pre { margin: 0; padding: 14px 16px; padding-right: 72px; border: 1px solid var(--line); background: var(--bg-soft); color: var(--ink-2); font: 12.5px/1.6 var(--mono); white-space: pre-wrap; overflow-wrap: anywhere; } .bib .copy { position: absolute; top: 8px; right: 8px; padding: 2px 9px; border: 1px solid var(--line-2); background: var(--bg); font: 400 12px/1.5 var(--font); color: var(--muted); cursor: pointer; } .bib .copy:hover { border-color: var(--ink); color: var(--ink); } .footer { border-top: 1px solid var(--line); } .footer .wrap { padding-top: 30px; padding-bottom: 40px; font-size: 13.5px; color: var(--muted); } .footer a { color: var(--muted); text-decoration: none; } .footer a:hover { color: var(--ink); } /* ---------- other pages (notes, writing, search) ---------- */ .page { padding-top: 48px; padding-bottom: 56px; } .post > h2:first-child, .posts > h1:first-child { margin: 0 0 24px; font: 600 32px/1.2 var(--serif); letter-spacing: -.01em; } .post > h2:first-child a { text-decoration: none; color: var(--muted); } .post { color: var(--ink-2); overflow-wrap: break-word; } .post h1, .post h2, .post h3, .post h4, .post h5 { margin: 1.8em 0 .6em; font-family: var(--serif); font-weight: 600; line-height: 1.3; color: var(--ink); } .post h1 { font-size: 24px; } .post h2 { font-size: 21px; } .post h3 { font-size: 18px; } .post h4, .post h5 { font-size: 16px; } .post p, .post ul, .post ol, .post pre, .post table, .post blockquote, .post figure { margin: 0 0 1em; } .post ul, .post ol { padding-left: 1.4em; } .post li + li, .post li > ul, .post li > ol { margin-top: .3em; } .post li > ul, .post li > ol { margin-bottom: 0; } .post strong, .post b { color: var(--ink); font-weight: 600; } .post img { height: auto; } .post img.mermaid { max-width: 200px; } .post code { padding: .1em .3em; background: var(--bg-soft); font: .88em/1.5 var(--mono); } .post pre { overflow-x: auto; padding: 14px 16px; border: 1px solid var(--line); background: var(--bg-soft); font: 13.5px/1.6 var(--mono); } .post pre code { padding: 0; background: none; font-size: inherit; } .post blockquote { padding-left: 1em; border-left: 2px solid var(--line-2); color: var(--muted); font-style: italic; } .post table { display: block; max-width: 100%; overflow-x: auto; border-collapse: collapse; font-size: 15px; } .post th, .post td { padding: 7px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; } .post th { font-weight: 600; color: var(--ink); border-bottom-color: var(--line-2); } .post hr { height: 1px; margin: 2em 0; border: 0; background: var(--line); } .post figcaption { font-size: 14px; color: var(--muted); } .post iframe { max-width: 100%; border: 0; } .post mjx-container[display="true"] { overflow-x: auto; overflow-y: hidden; max-width: 100%; } .post mjx-container:not([display="true"]) { /* long inline formulas scroll on their own instead of widening the page */ display: inline-block; max-width: 100%; overflow-x: auto; overflow-y: hidden; vertical-align: middle; padding-right: 6px; margin-right: -6px; } .post .meta { display: block; margin-top: 40px; font-size: 14px; color: var(--muted); } .post .meta a { color: var(--muted); } .posts > p, .posts > u, .posts > i { color: var(--muted); } .posts ul { margin: 16px 0 0; padding: 0; list-style: none; } .posts li { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 10px 0; border-top: 1px solid var(--line); } .posts li:last-child { border-bottom: 1px solid var(--line); } .posts li a { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-decoration: none; } .posts li a:hover { text-decoration: underline; text-decoration-color: var(--line-2); } .posts li time, .posts li div { flex: none; font-size: 13.5px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; } .page #search-input { padding: 10px 12px; border: 1px solid var(--line-2); background: var(--bg); color: var(--ink); font: inherit; } .page #search-input:focus { border-color: var(--ink); outline: none; } .page #results-container { margin: 12px 0; padding-left: 1.4em; } /* ---------- small screens ---------- */ @media (max-width: 640px) { .wrap { padding-left: 20px; padding-right: 20px; } .intro { gap: 20px; padding: 40px 0 44px; } .intro .photo { width: 96px; height: 96px; } .intro h1 { margin-top: 0; font-size: 30px; } .bio { font-size: 16px; } .section { padding-top: 44px; } .section-head h2 { font-size: 23px; } .pub { grid-template-columns: minmax(0, 1fr); gap: 16px; padding: 28px 0; } .thumb.contain { aspect-ratio: auto; } /* full-width here, so show non-16:9 clips at their own shape */ .thumb.contain video, .thumb.contain img { height: auto; } .page { padding-top: 32px; } .post > h2:first-child, .posts > h1:first-child { font-size: 27px; } .posts li { flex-direction: column; gap: 0; } .posts li a { white-space: normal; } } @media (max-width: 480px) { .intro { flex-direction: column; } } @media (pointer: coarse) { .btn.sm { padding: 6px 12px; } } @media print { [data-bib], .bib .copy { display: none !important; } }</style>
+<script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"},"svg":{"fontCache":"global","scale":1.0,"minScale":0.5,"mtextInheritFont":true,"merrorInheritFont":true,"mathmlSpacing":false,"skipAttributes":{},"exFactor":0.5},"chtml":{"scale":1.0,"minScale":0.5,"matchFontHeight":true,"mtextFont":"serif","linebreaks":{"automatic":false}}}</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js"></script>
+</head>
+<body>
+<main id="main" class="wrap page"><section class="post"><h2>The Reactor: A fast and sample-efficient Actor-Critic agent for Reinforcement Learning</h2>
+<ul>
+<li>
+<strong>Resources</strong><ul><li>
+<a href="https://arxiv.org/abs/1704.04651">Paper</a> <br><br>
+</li></ul>
+</li>
+<li>
+<strong>Introduction</strong><ul>
+<li>Value Function Agents<ul>
+<li>Create value function and act $\epsilon$-greedily on it</li>
+<li>Improved sample complexity</li>
+<li>Long Runtimes</li>
+</ul>
+</li>
+<li>Actor-Critic Agents<ul>
+<li>(Can have) parallel actors training</li>
+<li>Worse sample complexity</li>
+<li>Faster training</li>
+</ul>
+</li>
+<li>Retrace-Actor (Reactor)<ul><li>Combines sample-efficiency of off-policy experience replay with time-efficiency of asynchronous algorithms</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Background</strong><ul>
+<li>Assume standard MDP RL setting</li>
+<li>
+<strong>Value-Based Algorithms</strong><ul>
+<li>Common methods:<ul>
+<li>DQN</li>
+<li>Double DQN</li>
+<li>Dueling Architecture</li>
+<li>Rainbow</li>
+</ul>
+</li>
+<li>
+<strong>Prioritized Experience Replay</strong><ul>
+<li>Experience replay that samples with probabilities proportional to the absolutde TD error</li>
+<li>See <a href="https://samratsahoo.com/2025/04/04/prioritized-experience-replay">PER notes</a>
+</li>
+</ul>
+</li>
+<li>
+<strong>Retrace($\lambda$)</strong><ul>
+<li>Assume a trajectory has been generated from a behavior policy ($\mu$)</li>
+<li>We want to evaluate the value of a target policy, $\pi$</li>
+<li>To estimate $Q^\pi$, we use following gradient<ul><li>$\Delta Q(x_t, a_t) = \sum _{s \geq t} \gamma^{s-t}(c _{t+1} \dots c_s) \delta_s^\pi Q$<ul>
+<li>$\delta_s^\pi Q$: temporal difference error at time $s$ under $\pi$</li>
+<li>$c_s = \lambda min(1, \rho_s)$: truncated importance sampling weight<ul><li>$\rho_s = \frac{\pi(a_s \vert x_s)}{\mu(a_s \vert x_s)}$</li></ul>
+</li>
+</ul>
+</li></ul>
+</li>
+<li>Guarantees that in finite state + action spaces, $Q$ estimate converges to $Q^\pi$</li>
+</ul>
+</li>
+<li>
+<strong>Distributional RL</strong><ul>
+<li>Directly estimates distribution over returns (C51 algorithm)<ul><li>Parameterizes distribution over returns with a mixture over diracs</li></ul>
+</li>
+<li>$Q(x, a; \theta) = \sum _{i=0}^{N-1} q_i(x,a;\theta)z_i$<ul>
+<li>$q_i = \frac{e^{\theta_i(x,a)}}{\sum _{j=0}^{N-1}e^{\theta_j(x,a)}}$</li>
+<li>$z_i = v _{min} + i \frac{v _{max} - v _{min}}{N-1}$</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Actor Critic Algorithms</strong><ul>
+<li>A3C Updates:<ul>
+<li>Policy update: $\Delta \theta = \nabla _{\theta} \log \pi(a_t \vert x_t; \theta)A(x_t, a_t; \theta_v)$</li>
+<li>Critic Update: $\Delta \theta_v = A(x_t, a_t; \theta_v) \nabla _{\theta_v}V(x_t)$</li>
+</ul>
+</li>
+<li>PPO is A3C but replaces advantage function with: $min(\rho_t A(x_t, a_t; \theta_v), clip(\rho_t, 1 - \epsilon, 1 + \epsilon)A(x_t, a_t; \theta_v))$</li>
+<li>ACER is A3C but uses<ul>
+<li>Experience replay</li>
+<li>Retrace algorithm for off-policy correction</li>
+<li>Truncated importance sampling likelihood ratio for off-policy policy optimization</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>The Reactor</strong><ul>
+<li>
+<strong>$\beta$-LOO</strong><ul>
+<li>Use policy gradient theorem to train actor<ul>
+<li>$\nabla V^\pi(x_0) = \mathbb{E}[\sum_t \gamma^t \sum_a Q^\pi(x_t, a)\nabla \pi(a \vert x_t)]$</li>
+<li>We want to estimate: $G = \sum_a Q^\pi(a) \nabla \theta(a)$ (drop dependence on state)<ul>
+<li>If we sample $\hat{a}$ from a behavior distribution and have access to unbiased $R(\hat{a}), Q^\pi(\hat{a})$, we can estimate G with likelihood ratio + importance sampling: $\hat{G} _{ISLR} = \frac{\pi(\hat{a})}{\mu(\hat{a})}(R(\hat{a}) - V) \nabla \log \pi(\hat{a})$<ul><li>Suffers from high variance</li></ul>
+</li>
+<li>Alternatively, estimate G by using $R$ for chosen action and $Q$ for all other actions<ul>
+<li>Leave-one-out (LOO) policy gradient estimate: $\hat{G} _{LOO} = R(\hat{a})\nabla \pi(\hat{a}) + \sum _{a \neq \hat{a}} Q(a)\nabla \pi(a)$</li>
+<li>Low variance but may be biased if $Q$ is significantly different from $Q^\pi$</li>
+</ul>
+</li>
+<li>$\beta$-LOO Policy Gradient estimate: $\hat{G} _{\beta-LOO} = \beta(R(\hat{a}) - Q(\hat{a}))\nabla \pi(\hat{a}) + \sum _{a \neq \hat{a}} Q(a)\nabla \pi(a)$<ul>
+<li>$\beta = \beta(\mu, \pi, \hat{a})$: can be a function of both policies and selected action</li>
+<li>When $\beta=1$, this turns into $1$-LOO</li>
+</ul>
+</li>
+<li>$\frac{1}{\mu}$-LOO: When $\beta = 1/\mu(\hat{a})$<ul><li>$\hat{G} _{\frac{1}{\mu}-LOO} = \frac{\pi(\hat{a})}{\mu(\hat{a})}(R(\hat{a}) - Q(\hat{a}))\nabla \pi(\hat{a}) + \sum _{a \neq \hat{a}} Q(a)\nabla \pi(a)$<ul>
+<li>Unbiased (second term corrects bias)</li>
+<li>Generalization of $\hat{G} _{ISLR}$ where a state-action dependent baseline is used</li>
+</ul>
+</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Proposition<ul>
+<li>$\hat{a} \sim \mu$ and $\mathbb{E}[R(\hat{a})] = Q^\pi(\hat{a})$, bias of $G _{\beta-LOO}$ is $\vert \sum_a (1 - \mu(a)\beta(a))\nabla \pi(a) [Q(a) - Q^\pi(a)] \vert$<ul>
+<li>Bias decreases as $\beta(a) \rightarrow 1/\mu(a)$</li>
+<li>Bias decreases as $Q \rightarrow Q^\pi$</li>
+</ul>
+</li>
+<li>Thus we should use $\beta$-LOO with $\beta(\hat{a}) = min(c, \frac{1}{\mu(\hat{a})})$<ul><li>Similar to truncated ISLR; differences:<ul>
+<li>Truncates $\frac{1}{\mu(\hat{a})}$ for additional variance reduction</li>
+<li>Uses Q baseline instead of V baseline</li>
+</ul>
+</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Distributional Retrace</strong><ul>
+<li>Its difficult to produce unbiased $R(\hat{a})$ of $Q^\pi(\hat{a})$ for a target policy when following a behavior policy<ul><li>Requires full importance sampling correction</li></ul>
+</li>
+<li>Use corrected return from retrace algorithm<ul>
+<li>Biased estimate of $Q^\pi(\hat{a})$</li>
+<li>Bias vanishes asymptotically</li>
+</ul>
+</li>
+<li>Multistep Distributional Bellman Operator<ul>
+<li>n-step distributional bellman target:<ul>
+<li>$\sum_i q_i(x _{t+n}, a)\delta _{z_i^n}$</li>
+<li>$z_i^n = \sum _{s=t}^{t+n-1}\gamma^{s-t}r_s + \gamma^n z_i$</li>
+</ul>
+</li>
+<li>Do the same projection + KL divergence loss steps in C51</li>
+</ul>
+</li>
+<li>Distributional Retrace<ul>
+<li>Retrace algorithm has off-policy correction (not handled by n-step distributional bellman backup)</li>
+<li>Rewrite retrace as linear combination of n-step backup, weighted by coefficients $\alpha _{n,a}$:<ul>
+<li>$\Delta Q(x_t, a_t) = \sum _{n \geq 1} \sum _{a \in \mathcal{A}} \alpha _{n,a}[\sum _{s=t}^{t+n-1}\gamma^{s-t}r_s + \gamma^n Q(x _{t+n},a)] - Q(x_t, a_t)$</li>
+<li>$\alpha _{n,a} = (c _{t+1} \dots c _{t+n-1})(\pi(a \vert x _{t+n}) - \mathbb{I}(a = a _{t+n})c _{t+n})$<ul>
+<li>Depends on degree of off-policiness along trajectory</li>
+<li>Coefficients can be negative but in expectation are non-negative</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Distributional retrace is backing up mixture of n-step distributions<ul>
+<li>Retrace target: $\sum _{i=1} q_i^\ast(x_t, a_t)\delta _{z_i}$</li>
+<li>$q_i^\ast(x_t, a_t) = \sum _{n \geq 1} \sum _{a} \alpha _{n,a} \sum_j q_j(x _{t+n}, a _{t+n})h _{z_i}(z_j^n)$<ul><li>$h _{z_i}$: Linear interpolation kernel used for projection (see paper for details)</li></ul>
+</li>
+<li>Update probabilities using KL gradient<ul><li>$\nabla KL(q^\ast (x_t, a_t), q(x_t, a_t)) = - \sum _{i=1}q_i^\ast(x_t, a_t)\nabla \log q_i (x_t, a_t)$</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Prioritized Sequence Replay</strong><ul>
+<li>PER gives same priority to all unsampled transitions</li>
+<li>Assume TD error is temporally correlated with correlation decaying as time increases</li>
+<li>Lazy Initialization: Instead, give new experience no priority when added and only give it priority after its been sampled and used for training<ul>
+<li>Assign priorities to all overlapping sequences of length $n$</li>
+<li>When sampling, sequences with no priority sampled proportionally to average priority of assigned sequences within a local neighborhood</li>
+<li>Starts with priorities $p_t$ for sequences already assigned</li>
+<li>Define a partition $I_i$ that contains one $s_i$ with assigned priority</li>
+<li>Estimated $\hat{p}_i$ for all other sequences: $\hat{p}_i = \sum _{s_i \in J(t)} \frac{w_i}{\sum _{i’ \in J(t)} w _{i’}}p(s_i)$<ul>
+<li>$J(t)$ collection of contiguous partitions containing time t</li>
+<li>$w_i = \vert I_i \vert$: length of partition</li>
+<li>Cell sizes used as importance weights</li>
+<li>When $I_i$ is not a function of the priorities, the algorithm is unbiased</li>
+</ul>
+</li>
+<li>With probability $\epsilon$, sample uniformly randomly, and probability $1 - \epsilon$ sample proportional to $\hat{p}_t$</li>
+<li>Implemented using contextual priority tree</li>
+<li>Prioritization used for variance reduction</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Agent Architecture</strong><ul>
+<li>Decouple acting from learning to improve CPU usage<ul>
+<li>Acting thread gets observations and submits actions and stores experiences in memory</li>
+<li>Learning thread samples experiences and trains on them</li>
+<li>4 - 6 acting steps per learning step</li>
+</ul>
+</li>
+<li>Agent can be distributed over machines<ul>
+<li>Current and target network stored on shared parameter server</li>
+<li>Each machine has its own replay memory</li>
+<li>Training done by downloading shared network + evaluting local gradients + sending them to shared network</li>
+</ul>
+</li>
+<li>
+<strong>Network Architecture</strong><ul>
+<li>Use a recurrent network architecture to evaluate action-values over sequences (allows Convolution layers to process each frame once instead of n times if frame stacking was used)</li>
+<li>$x_t$ used as input and action-value distribution $q_i(x_t, a)$ outputted + policy probability $\pi(a \vert x_t)$</li>
+<li>Architecture inspired by dueling network<ul><li>Splits action-value distribution logits into state-value logits and advantage logits</li></ul>
+</li>
+<li>Final action-value logits produced by summing state + action-specific logits</li>
+<li>Use softmax for probability distributions</li>
+<li>Policy uses softmax layer mixed with fixed uniform distribution with a mixing hyperparmeter</li>
+<li>Seperate LSTMs for Policy and Q Networks<ul><li>LSTM Policy gradients blocked from back-propagating into CNN for stability (avoids positive feedback loops between $\pi,, q_i$ from shared representations)</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Experimental Results</strong><ul>
+<li>Trained on Atari games</li>
+<li>Compared performance with different versions of Reactor</li>
+<li>Prioritization was most important component</li>
+<li>Beta-LOO outperforms truncated importance sampling likelihood ratio</li>
+<li>Distributional and non-distributional versions had similar results<ul><li>Distributional was better with human starts</li></ul>
+</li>
+<li>
+<strong>Comparing to Prior Work</strong><ul>
+<li>Reactor exceeds performance of all algorithms (Rainbow, A3C, Dueling, etc. - see the paper for list) across all metrics</li>
+<li>Reactor doesn’t use noisy networks found in Rainbow (which helped with performance in Rainbow)</li>
+<li>With no-op starts, reactor outperforms all except rainbow - same performance in evaluation however<ul>
+<li>Rainbow more sample efficient during training</li>
+<li>Rainbow performance drops with random human starts<ul><li>May be overfitting to certain trajectories</li></ul>
+</li>
+</ul>
+</li>
+<li>classical + distributional reactor outperformed ACER (another retrace algorithm)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<span class="meta"><time datetime="2025-05-20T00:00:00+00:00">May 20, 2025</time> · <a href="/tags/research">research</a></span></section></main><footer class="footer"><div class="wrap"> © 2026 <a href="/">Samrat Sahoo</a>
+</div></footer><script src="/assets/js/site.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Variational Intrinsic Control · Samrat Sahoo</title>
+<meta name="generator" content="Jekyll v4.2.2">
+<meta property="og:title" content="Variational Intrinsic Control">
+<meta name="author" content="Samrat Sahoo">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="A paper about vic">
+<meta property="og:description" content="A paper about vic">
+<link rel="canonical" href="https://samratsahoo.com/2025/06/02/vic">
+<meta property="og:url" content="https://samratsahoo.com/2025/06/02/vic">
+<meta property="og:site_name" content="Samrat Sahoo">
+<meta property="og:image" content="https://samratsahoo.com/assets/img/og.jpg">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2025-06-02T00:00:00+00:00">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="twitter:image" content="https://samratsahoo.com/assets/img/og.jpg">
+<meta property="twitter:title" content="Variational Intrinsic Control">
+<meta name="twitter:site" content="@samratdotjs">
+<meta name="twitter:creator" content="@samratdotjs"> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Samrat Sahoo","url":"https://samratsahoo.com"},"dateModified":"2025-06-02T00:00:00+00:00","datePublished":"2025-06-02T00:00:00+00:00","description":"A paper about vic","headline":"Variational Intrinsic Control","image":"https://samratsahoo.com/assets/img/og.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://samratsahoo.com/2025/06/02/vic"},"url":"https://samratsahoo.com/2025/06/02/vic"}</script><meta name="color-scheme" content="light">
+<meta name="theme-color" content="#ffffff"> <script>document.documentElement.classList.add("js");</script><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&amp;display=swap">
+<link rel="icon" type="image/webp" href="/favicon.webp">
+<link rel="alternate" type="application/atom+xml" title="Samrat Sahoo" href="/atom.xml">
+<link rel="alternate" type="application/json" title="Samrat Sahoo" href="https://samratsahoo.com/feed.json">
+<link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml">
+<style> /* Palette and type follow the DATAFARM project page: warm neutrals, Inter for text, Source Serif 4 for headings, square corners, hairline rules. */ :root { --ink: #17181a; --ink-2: #35373b; --muted: #6b6e74; --line: #e4e4e1; --line-2: #c9c9c4; --bg: #fff; --bg-soft: #f7f7f5; --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; --serif: "Source Serif 4", Georgia, "Times New Roman", serif; --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; color-scheme: light; } *, *::before, *::after { box-sizing: border-box; } html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-padding-top: 24px; } body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.6 var(--font); -webkit-font-smoothing: antialiased; } h1, h2, h3, p { margin: 0; } img, video { display: block; max-width: 100%; } a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 2px; } a:hover { text-decoration-color: currentColor; } :focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; } ::selection { background: #e6e6e1; } .wrap { max-width: 880px; margin: 0 auto; padding: 0 28px; } .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; } .nw { white-space: nowrap; } html:not(.js) .js-only { display: none; } /* ---------- buttons ---------- */ .btn { display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; border: 1px solid var(--line-2); background: var(--bg); font: 400 14px/1.4 var(--font); color: var(--ink); text-decoration: none; white-space: nowrap; cursor: pointer; } .btn:hover { border-color: var(--ink); } .btn svg { width: 15px; height: 15px; opacity: .75; flex: none; } .btn.sm { padding: 3px 11px; font-size: 13px; } .btn[aria-expanded="true"] { border-color: var(--ink); } .btn.soon { color: var(--muted); border-color: var(--line); cursor: default; } /* ---------- homepage ---------- */ .intro { display: flex; align-items: flex-start; gap: 36px; padding: 64px 0 56px; } .intro picture { flex: none; } .intro .photo { width: 168px; height: 168px; object-fit: cover; } .intro-text { min-width: 0; } .intro h1 { margin: -4px 0 14px; font: 600 36px/1.15 var(--serif); letter-spacing: -.01em; } .bio { font-size: 16.5px; color: var(--ink-2); text-wrap: pretty; } .bio p + p { margin-top: 12px; } .bio strong { color: var(--ink); font-weight: 600; } .contact { display: flex; flex-wrap: wrap; gap: 10px; margin: 22px 0 0; padding: 0; list-style: none; } .section { padding: 56px 0 24px; border-top: 1px solid var(--line); } .section-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px; margin-bottom: 18px; } .section-head h2 { font: 600 27px/1.2 var(--serif); letter-spacing: -.005em; } .section-head .note { font-size: 13.5px; color: var(--muted); } .pubs { margin: 0; padding: 0; list-style: none; } .pub { display: grid; grid-template-columns: 224px minmax(0, 1fr); gap: 28px; padding: 26px 0; border-top: 1px solid var(--line); } .pub:first-child { border-top: 0; padding-top: 12px; } .thumb { display: block; aspect-ratio: 16 / 9; overflow: hidden; background: var(--bg-soft); } .thumb video, .thumb img { width: 100%; height: 100%; object-fit: cover; } .thumb.figure { background: #fff; outline: 1px solid var(--line); outline-offset: -1px; } .thumb.figure img, .thumb.contain video, .thumb.contain img { object-fit: contain; } html:not(.js) .thumb video { display: none; } /* without JS, show the noscript still rather than native controls */ .kicker { margin-bottom: 6px; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); } .pub-title { font: 600 19px/1.3 var(--serif); letter-spacing: -.005em; text-wrap: pretty; } .pub-title a { text-decoration: none; } .pub-title a:hover { text-decoration: underline; text-decoration-color: var(--line-2); } .authors { margin-top: 6px; font-size: 15px; color: var(--ink-2); } .authors a { color: inherit; text-decoration: none; } .authors a:hover { text-decoration: underline; text-decoration-color: var(--line-2); } .authors strong { color: var(--ink); font-weight: 600; } .summary { margin-top: 8px; font-size: 14.5px; line-height: 1.55; color: var(--muted); text-wrap: pretty; } .links { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 14px 0 0; padding: 0; list-style: none; } .bib { position: relative; margin-top: 12px; } .bib pre { margin: 0; padding: 14px 16px; padding-right: 72px; border: 1px solid var(--line); background: var(--bg-soft); color: var(--ink-2); font: 12.5px/1.6 var(--mono); white-space: pre-wrap; overflow-wrap: anywhere; } .bib .copy { position: absolute; top: 8px; right: 8px; padding: 2px 9px; border: 1px solid var(--line-2); background: var(--bg); font: 400 12px/1.5 var(--font); color: var(--muted); cursor: pointer; } .bib .copy:hover { border-color: var(--ink); color: var(--ink); } .footer { border-top: 1px solid var(--line); } .footer .wrap { padding-top: 30px; padding-bottom: 40px; font-size: 13.5px; color: var(--muted); } .footer a { color: var(--muted); text-decoration: none; } .footer a:hover { color: var(--ink); } /* ---------- other pages (notes, writing, search) ---------- */ .page { padding-top: 48px; padding-bottom: 56px; } .post > h2:first-child, .posts > h1:first-child { margin: 0 0 24px; font: 600 32px/1.2 var(--serif); letter-spacing: -.01em; } .post > h2:first-child a { text-decoration: none; color: var(--muted); } .post { color: var(--ink-2); overflow-wrap: break-word; } .post h1, .post h2, .post h3, .post h4, .post h5 { margin: 1.8em 0 .6em; font-family: var(--serif); font-weight: 600; line-height: 1.3; color: var(--ink); } .post h1 { font-size: 24px; } .post h2 { font-size: 21px; } .post h3 { font-size: 18px; } .post h4, .post h5 { font-size: 16px; } .post p, .post ul, .post ol, .post pre, .post table, .post blockquote, .post figure { margin: 0 0 1em; } .post ul, .post ol { padding-left: 1.4em; } .post li + li, .post li > ul, .post li > ol { margin-top: .3em; } .post li > ul, .post li > ol { margin-bottom: 0; } .post strong, .post b { color: var(--ink); font-weight: 600; } .post img { height: auto; } .post img.mermaid { max-width: 200px; } .post code { padding: .1em .3em; background: var(--bg-soft); font: .88em/1.5 var(--mono); } .post pre { overflow-x: auto; padding: 14px 16px; border: 1px solid var(--line); background: var(--bg-soft); font: 13.5px/1.6 var(--mono); } .post pre code { padding: 0; background: none; font-size: inherit; } .post blockquote { padding-left: 1em; border-left: 2px solid var(--line-2); color: var(--muted); font-style: italic; } .post table { display: block; max-width: 100%; overflow-x: auto; border-collapse: collapse; font-size: 15px; } .post th, .post td { padding: 7px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; } .post th { font-weight: 600; color: var(--ink); border-bottom-color: var(--line-2); } .post hr { height: 1px; margin: 2em 0; border: 0; background: var(--line); } .post figcaption { font-size: 14px; color: var(--muted); } .post iframe { max-width: 100%; border: 0; } .post mjx-container[display="true"] { overflow-x: auto; overflow-y: hidden; max-width: 100%; } .post mjx-container:not([display="true"]) { /* long inline formulas scroll on their own instead of widening the page */ display: inline-block; max-width: 100%; overflow-x: auto; overflow-y: hidden; vertical-align: middle; padding-right: 6px; margin-right: -6px; } .post .meta { display: block; margin-top: 40px; font-size: 14px; color: var(--muted); } .post .meta a { color: var(--muted); } .posts > p, .posts > u, .posts > i { color: var(--muted); } .posts ul { margin: 16px 0 0; padding: 0; list-style: none; } .posts li { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 10px 0; border-top: 1px solid var(--line); } .posts li:last-child { border-bottom: 1px solid var(--line); } .posts li a { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-decoration: none; } .posts li a:hover { text-decoration: underline; text-decoration-color: var(--line-2); } .posts li time, .posts li div { flex: none; font-size: 13.5px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; } .page #search-input { padding: 10px 12px; border: 1px solid var(--line-2); background: var(--bg); color: var(--ink); font: inherit; } .page #search-input:focus { border-color: var(--ink); outline: none; } .page #results-container { margin: 12px 0; padding-left: 1.4em; } /* ---------- small screens ---------- */ @media (max-width: 640px) { .wrap { padding-left: 20px; padding-right: 20px; } .intro { gap: 20px; padding: 40px 0 44px; } .intro .photo { width: 96px; height: 96px; } .intro h1 { margin-top: 0; font-size: 30px; } .bio { font-size: 16px; } .section { padding-top: 44px; } .section-head h2 { font-size: 23px; } .pub { grid-template-columns: minmax(0, 1fr); gap: 16px; padding: 28px 0; } .thumb.contain { aspect-ratio: auto; } /* full-width here, so show non-16:9 clips at their own shape */ .thumb.contain video, .thumb.contain img { height: auto; } .page { padding-top: 32px; } .post > h2:first-child, .posts > h1:first-child { font-size: 27px; } .posts li { flex-direction: column; gap: 0; } .posts li a { white-space: normal; } } @media (max-width: 480px) { .intro { flex-direction: column; } } @media (pointer: coarse) { .btn.sm { padding: 6px 12px; } } @media print { [data-bib], .bib .copy { display: none !important; } }</style>
+<script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"},"svg":{"fontCache":"global","scale":1.0,"minScale":0.5,"mtextInheritFont":true,"merrorInheritFont":true,"mathmlSpacing":false,"skipAttributes":{},"exFactor":0.5},"chtml":{"scale":1.0,"minScale":0.5,"matchFontHeight":true,"mtextFont":"serif","linebreaks":{"automatic":false}}}</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js"></script>
+</head>
+<body>
+<main id="main" class="wrap page"><section class="post"><h2>Variational Intrinsic Control</h2>
+<ul>
+<li>
+<strong>Resources</strong><ul><li>
+<a href="https://arxiv.org/abs/1611.07507">Paper</a> <br><br>
+</li></ul>
+</li>
+<li>
+<strong>Introduction</strong><ul>
+<li>We want to find what intrinsic options available to agent at a state</li>
+<li>Options: policies with a termination condition<ul>
+<li>Independent of agent’s intentions</li>
+<li>Set of all things that is possible for an agent to achieve</li>
+</ul>
+</li>
+<li>Traditional approach to option learning: Find small set of options for a specific task<ul><li>Makes credit assignment + planning easier over long horizons</li></ul>
+</li>
+<li>Larger sets of options advantageous<ul>
+<li>Number of options still smaller than number of action sequences (since options distinguished by final state)</li>
+<li>We want to learn representational embedding of options (similar options = similar embedding)</li>
+<li>In embedded spaces, planners only needs to choose neighborhood of space</li>
+</ul>
+</li>
+<li>Using function approximators for state + goal embeddings was useful for control + generalization over many goals<ul><li>This paper gives a method to <em>learn</em> goals (options)</li></ul>
+</li>
+<li>Two applications of learning intrinsic options<ul>
+<li>Classical RL: maximize expected reward</li>
+<li>Empowerment: Get to a state with maximal set of options that an agent knows<ul><li>Agent should aim for states where it has most control <em>after learning</em>
+</li></ul>
+</li>
+</ul>
+</li>
+<li>Intrinsic Motivation vs Options<ul>
+<li>Motivation: goal is to predict observations<ul><li>Understands environment via creating a dynamics model; may distract / impair the agent</li></ul>
+</li>
+<li>Options: goal is to control the environment<ul>
+<li>Learns the amount of influence agent has on environment (i.e., how many distinct states it can cause)</li>
+<li>Similar to unsupervised learning but instead of finding representations, it finds policies</li>
+<li>Also estimates amount of control in different states</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Evaluation Metrics<ul>
+<li>Unsupervised learning uses data likelihood: amount of information needed to describe data</li>
+<li>For unsupervised control, use mutual information between options and final states<ul>
+<li>Open loop options: agent decides sequence of actions beforehand and follows them regardless of environment dynamics. Mutual information is between sequence of actions and final states<ul><li>Results in poor performance</li></ul>
+</li>
+<li>Closed loop options: actions conditioned on state</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Intrinsic Control and the Mutual Information Principle</strong><ul>
+<li>Option: Element, $\Omega$ of a space and policy $\pi(a \vert s, \Omega)$<ul>
+<li>$\pi$ has termination action that leads to final state, $s_f$</li>
+<li>$\Omega$ can take finite number of values; each value has a distinct policy</li>
+<li>$\Omega$ can be a binary vector; $2^n$ options</li>
+<li>$\Omega$ can be a real-valued vector; infinite options</li>
+</ul>
+</li>
+<li>Start at $s_0$ and follow an option $\Omega \rightarrow$ stochastic environments + policies means policy is a probability distribution: $p^J(s_f \vert s_0, \Omega)$</li>
+<li>Options that lead to similar states should be the same<ul><li>Group these options together into a probability distribution and sample from it when choosing an option<ul>
+<li>Called the controllability distribution: $p^C(\Omega \vert s_0)$</li>
+<li>Ensures behavior diversity</li>
+</ul>
+</li></ul>
+</li>
+<li>To maximize intrinsic control, choose $\Omega$ that maximizes diversity of final states<ul>
+<li>Entropy of final states: $H(s_f) = -\sum _{s_f} p(s_f \vert s_0) \log p(s_f \vert s_0)$<ul><li>$p(s_f \vert s_0) = \sum _{\Omega}p^J(s_f \vert s_0 \Omega) p^C(\Omega \vert s_0)$<ul><li>Can also be expressed as the information content for a given $\Omega$: $-\log p^J(s_f \vert s_0, \Omega)$</li></ul>
+</li></ul>
+</li>
+<li>Mutual information between options and final states under $p(\Omega, s_f \vert s_0) = p^J(s_f \vert s_0, \Omega)p^C(\Omega \vert s_0)$<ul>
+<li>$I(\Omega, s_f \vert s_0) = H(s_f \vert s_0) - H(s_f \vert s_0, \Omega)$</li>
+<li>$I(\Omega, s_f \vert s_0) = - \sum _{s_f} p(s_f \vert s_0)\log p(s_f \vert s_0) + \sum _{\Omega, s_f}p^J(s_f \vert s_0, \Omega)p^C(\Omega \vert s_0)\log p^J(s_f \vert s_0, \Omega)$</li>
+<li>Reverse Expression: $I(\Omega, s_f \vert s_0) = - \sum _{\Omega} p^C(\Omega \vert s_0)\log p^C(\Omega \vert s_0) + \sum _{\Omega, s_f}p^J(s_f \vert s_0, \Omega)p^C(\Omega \vert s_0)\log p(\Omega \vert s_0, s_f)$<ul>
+<li>First term: maximize set of options (i.e., achieve large entropy)</li>
+<li>Second term: make sure options achieve different goals (can infer option from final state)</li>
+<li>Formulation avoids $p(s_f \vert s_0)$ - requires integration over $\Omega$</li>
+<li>Introduces $p(\Omega \vert s_0, s_f)$ which we get from Bayes rule $p^J(s_f \vert s_0, \Omega)p^C(\Omega \vert s_0)$<ul>
+<li>$p^J(s_f \vert s_0, \Omega)$ inherent to environment</li>
+<li>$p^C(\Omega \vert s_0)$ is what the variational bound provides</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Mutual Information Variational Bound: $I^{VB}(\Omega, s_f \vert s_0) = - \sum _{\Omega} p^C(\Omega \vert s_0)\log p^C(\Omega \vert s_0) + \sum _{\Omega, s_f}p^J(s_f \vert s_0, \Omega)p^C(\Omega \vert s_0)\log q(\Omega \vert s_0, s_f)$<ul>
+<li>$q$: Arbitrary distribution</li>
+<li>$I \geq I^{VB}$: thus maximize $I^{VB}$</li>
+<li>Train parameters of $p^C(\Omega \vert s_0), q(\Omega \vert s_0, s_f), \pi(a \vert s, \Omega)$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Intuition: If mutual information is high, we can easily map an option to a distinct behavior<ul><li>This is like learning a representation!</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Intrinsic Control with Explicit Options</strong><ul>
+<li>Algorithm<ul><li>for episode $1 \dots M$<ul>
+<li>Sample $\Omega \sim p^C(\Omega \vert s_0)$</li>
+<li>Follow policy: $\pi(a \vert \Omega, s)$ until $s_f$</li>
+<li>Regress $q(\Omega \vert s_0, s_f)$ towards $\Omega$<ul><li>Using log likelihood + gradient descent</li></ul>
+</li>
+<li>Compute intrinsic reward $r_I = \log q(\Omega \vert s_0, s_f) - \log p^C(\Omega \vert s_0)$</li>
+<li>Use RL algorithm to update policy to maximize $r_I$</li>
+<li>Reinforce $p^C(\Omega \vert s_0)$ based on $r_I$<ul><li>If intrinsic reward is high, choose option more often</li></ul>
+</li>
+<li>$s_0 = s_f$</li>
+</ul>
+</li></ul>
+</li>
+<li>Tries to choose $\Omega$ that can be inferred from $s_f$ using $q(\Omega \vert s_0, s_f)$<ul><li>Infer option well = other options don’t lead to this state often $\rightarrow$ option intrinsically different from others</li></ul>
+</li>
+<li>On average, $r_I$, is log of number of options an agent has in a state (empowerment)</li>
+<li>$\log p^C(\Omega \vert s_0)$ is approximately negative log of number of options we can choose<ul>
+<li>If $q(\Omega \vert s_0, s_f)$ is large, it defines region of similar options</li>
+<li>Empowerment = number of regions in total region given by $p^C$</li>
+<li>$r_I = \log q - \log p^C$: log ratio of total options ($1 / p^C$) to options in a region ($1 / q$)</li>
+</ul>
+</li>
+<li>Train $p^C$ using policy gradients</li>
+<li>
+<strong>Experiments</strong><ul>
+<li>
+<strong>Grid World</strong><ul>
+<li>Let there be 30 options with the prior distribution over options to be uniform</li>
+<li>Goal: learn a policy that makes the 30 options end up at as many different states as possible</li>
+<li>End of each episode we get $r_I = -\log p + \log q = \log N + \log q$<ul>
+<li>If option is inferred correctly + with confidence, $\log q$ is close to 0, meaning reward will be large</li>
+<li>If not, then $\log q$ will be very negative and small reward</li>
+</ul>
+</li>
+<li>To get large reward, options need to reach substantially distinct states</li>
+<li>With Q learning, we update Q function by using $N \cdot n _{actions}$ values and updating on triplets of experience (N is the number of options)<ul><li>For continuous option spaces, we randomly sample options and do this same process</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Dangerous Grid World</strong><ul>
+<li>Modified grid world with 2 parts:<ul>
+<li>Narrow corridor with open square</li>
+<li>Blue walls</li>
+</ul>
+</li>
+<li>In one sublattice of the grid right and left only move the agent and the other sublattice up and down actions move the agent<ul><li>If it doesn’t pick these actions, it gets stuck in a state for a long time</li></ul>
+</li>
+<li>If the agent doesn’t observe environment, loses info about what sublattice its on and falls into low empowerment state</li>
+<li>If the agent does observe the environment, it knows which sublattice its on and therefore doesn’t fall</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>The Importance of Closed Loop Policies</strong><ul>
+<li>Open Loop: Agent commits to series of actions and blindly follows it irrespective of environment<ul>
+<li>Leads to underestimation of empowerment</li>
+<li>In dangerous grid, the agent tends to stay in corridor because of exponentially increasing probability of being reset as time increases<ul><li>This is a low empowerment state</li></ul>
+</li>
+</ul>
+</li>
+<li>Closed Loop: Action is conditioned on current state<ul><li>In dangerous grid, empowerment grows quadratically with option length</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Advantages and Disadvantages</strong><ul>
+<li>Advantages:<ul>
+<li>Simple</li>
+<li>Closed Loop Policies</li>
+<li>Can be used with function approximation</li>
+<li>Works well with discrete and continuous options spaces</li>
+<li>Model Free</li>
+</ul>
+</li>
+<li>Disadvantages<ul>
+<li>Difficult to make work in practice with function approximation<ul>
+<li>Intrinsic reward is noisy</li>
+<li>Difficult to make work with continuous option spaces</li>
+</ul>
+</li>
+<li>Exploration<ul>
+<li>If agent discovers new state, we want it go there because there might be new options</li>
+<li>When it gets there, $q$ hasn’t learned it yet; inferring incorrect option<ul><li>Causes low reward, discouraging it to go there</li></ul>
+</li>
+<li>It does good job expressing options in familiar regions but fails to push to new state regions</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Intrinsic Control with Implicit Policies</strong><ul>
+<li>To address disadvantages, use action space as option space<ul>
+<li>Controllability prior, $p^C$, merges with the policy: $\pi^p(a_t \vert s_t^p)$<ul><li>$s_t^p$: Internal state computed from $(s _{t-1}^p, x_t, a _{t-1})$</li></ul>
+</li>
+<li>$q = \pi^q(a_t \vert s_t^q)$: infers actions made by $\pi^p$ given the final observation $x_f$</li>
+<li>$r _{I, t} = \log \pi^q(a_t \vert s_t^q) - \log \pi^p(a_t \vert s_t^p)$</li>
+</ul>
+</li>
+<li>Learning $\pi^q$ becomes a supervised learning problem of inferring actions that led to $x_f$<ul>
+<li>Can be done on random policies too because random policies produce variety of final states</li>
+<li>$\pi^p$ selects different possible behaviros based on whether they lead to diverse outcomes<ul><li>As $\pi_p$ chooses diverse behaviors, $\pi_q$ gets more varied training data</li></ul>
+</li>
+</ul>
+</li>
+<li>Algorithm<ul>
+<li>Full Update:<ul>
+<li>Follow $\pi^p$. Gets experience $x_0, a_0 \dots x_f$</li>
+<li>Regress $\pi^q$ towards $a_t$ for each action</li>
+<li>Compute $r_I$</li>
+<li>Reinforce $\pi^p$ with $r_I$</li>
+</ul>
+</li>
+<li>Exploratory Update:<ul>
+<li>Follow $\pi^p$ with exploration, creating experience</li>
+<li>Regress $\pi^q$ towards $a_t$ for each action</li>
+</ul>
+</li>
+<li>Note 1: Algorithm works on partially observable environments<ul><li>We should use final states instead of observations as set of states agent can reach</li></ul>
+</li>
+<li>Note 2: $\pi^p$ can be thought of as implict option but embedding of final state can be thought of as explicit option with $\pi^q$ implementing option</li>
+</ul>
+</li>
+<li>
+<strong>Experiments</strong><ul>
+<li>Experiment 1:<ul>
+<li>25x25 Gridworld with 4 rooms with narrow doors<ul><li>Makes it difficult to pass through to other rooms</li></ul>
+</li>
+<li>Random policy with final states whose distance from initial state is distributed based on a gaussian</li>
+<li>$\pi^q$ conditioned on final state but $\pi^p$ was not<ul><li>Policy is able to go through doors seamlessly<ul><li>Implicitly learns to navigates through doors</li></ul>
+</li></ul>
+</li>
+<li>Maximizing intrinsic control = distribution of final points reachable from $\pi^p$ should be uniform based on points reachable from a given state</li>
+<li>403 reachable states</li>
+</ul>
+</li>
+<li>Experiment 2:<ul>
+<li>40x40 color image of environment</li>
+<li>$\pi^p$ trajectories more consistent than random policy</li>
+<li>221 reachable states</li>
+</ul>
+</li>
+<li>Experiment 3:<ul>
+<li>Grid World but contains blocks agent can push</li>
+<li>1200 reachable state</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Elements Beyond an Agent’s Control</strong><ul>
+<li>Parts of the environment are not impacted by an agent</li>
+<li>Agent is shown to avoid distractors and reach the same level of empowerment</li>
+</ul>
+</li>
+<li>
+<strong>Open vs Closed Loop Options</strong><ul>
+<li>Take grid world environment and add environment noise (stochastically push the agent in a random direction)</li>
+<li>Closed loop policy can correct for this noise (strategy always goes towards goal)</li>
+<li>Open loop agent cannot reliably navigate towards actual location (Only fed start and end states)</li>
+</ul>
+</li>
+<li>
+<strong>Maximizing Extrinsic Reward</strong><ul>
+<li>Agent is given some time to explore + learn to control environment</li>
+<li>After some time, its told the extrinsic reward and has a limited amount of time to collect as much reward as possible</li>
+<li>Found that extrinsic reward is collected significantly faster after having the opportunity to interact with the environment</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<span class="meta"><time datetime="2025-06-02T00:00:00+00:00">June 2, 2025</time> · <a href="/tags/research">research</a></span></section></main><footer class="footer"><div class="wrap"> © 2026 <a href="/">Samrat Sahoo</a>
+</div></footer><script src="/assets/js/site.js" defer></script>
+</body>
+</html>
