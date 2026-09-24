@@ -25,7 +25,7 @@
     the steps the planner can't do.
   links:
     - { label: Website, url: "https://prpl-group.com/tandem/" }
-  note: Paper · coming soon
+    - { label: arXiv, url: "https://arxiv.org/abs/2609.28314" }
 
 - key: datafarm
   title: "DATAFARM: Distribution-Aligned Task and Motion Planning for Fine-Tuning Vision-Language-Action Models"
