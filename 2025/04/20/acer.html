@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sample Efficient Actor-Critic with Experience Replay · Samrat Sahoo</title>
+<meta name="generator" content="Jekyll v4.2.2">
+<meta property="og:title" content="Sample Efficient Actor-Critic with Experience Replay">
+<meta name="author" content="Samrat Sahoo">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="A paper about actor critic methods with experience replay">
+<meta property="og:description" content="A paper about actor critic methods with experience replay">
+<link rel="canonical" href="https://samratsahoo.com/2025/04/20/acer">
+<meta property="og:url" content="https://samratsahoo.com/2025/04/20/acer">
+<meta property="og:site_name" content="Samrat Sahoo">
+<meta property="og:image" content="https://samratsahoo.com/assets/img/og.jpg">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2025-04-20T00:00:00+00:00">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="twitter:image" content="https://samratsahoo.com/assets/img/og.jpg">
+<meta property="twitter:title" content="Sample Efficient Actor-Critic with Experience Replay">
+<meta name="twitter:site" content="@samratdotjs">
+<meta name="twitter:creator" content="@samratdotjs"> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Samrat Sahoo","url":"https://samratsahoo.com"},"dateModified":"2025-04-20T00:00:00+00:00","datePublished":"2025-04-20T00:00:00+00:00","description":"A paper about actor critic methods with experience replay","headline":"Sample Efficient Actor-Critic with Experience Replay","image":"https://samratsahoo.com/assets/img/og.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://samratsahoo.com/2025/04/20/acer"},"url":"https://samratsahoo.com/2025/04/20/acer"}</script><meta name="color-scheme" content="light">
+<meta name="theme-color" content="#ffffff"> <script>document.documentElement.classList.add("js");</script><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&amp;display=swap">
+<link rel="icon" type="image/webp" href="/favicon.webp">
+<link rel="alternate" type="application/atom+xml" title="Samrat Sahoo" href="/atom.xml">
+<link rel="alternate" type="application/json" title="Samrat Sahoo" href="https://samratsahoo.com/feed.json">
+<link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml">
+<style> /* Palette and type follow the DATAFARM project page: warm neutrals, Inter for text, Source Serif 4 for headings, square corners, hairline rules. */ :root { --ink: #17181a; --ink-2: #35373b; --muted: #6b6e74; --line: #e4e4e1; --line-2: #c9c9c4; --bg: #fff; --bg-soft: #f7f7f5; --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; --serif: "Source Serif 4", Georgia, "Times New Roman", serif; --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; color-scheme: light; } *, *::before, *::after { box-sizing: border-box; } html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-padding-top: 24px; } body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.6 var(--font); -webkit-font-smoothing: antialiased; } h1, h2, h3, p { margin: 0; } img, video { display: block; max-width: 100%; } a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 2px; } a:hover { text-decoration-color: currentColor; } :focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; } ::selection { background: #e6e6e1; } .wrap { max-width: 880px; margin: 0 auto; padding: 0 28px; } .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; } .nw { white-space: nowrap; } html:not(.js) .js-only { display: none; } /* ---------- buttons ---------- */ .btn { display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; border: 1px solid var(--line-2); background: var(--bg); font: 400 14px/1.4 var(--font); color: var(--ink); text-decoration: none; white-space: nowrap; cursor: pointer; } .btn:hover { border-color: var(--ink); } .btn svg { width: 15px; height: 15px; opacity: .75; flex: none; } .btn.sm { padding: 3px 11px; font-size: 13px; } .btn[aria-expanded="true"] { border-color: var(--ink); } .btn.soon { color: var(--muted); border-color: var(--line); cursor: default; } /* ---------- homepage ---------- */ .intro { display: flex; align-items: flex-start; gap: 36px; padding: 64px 0 56px; } .intro picture { flex: none; } .intro .photo { width: 168px; height: 168px; object-fit: cover; } .intro-text { min-width: 0; } .intro h1 { margin: -4px 0 14px; font: 600 36px/1.15 var(--serif); letter-spacing: -.01em; } .bio { font-size: 16.5px; color: var(--ink-2); text-wrap: pretty; } .bio p + p { margin-top: 12px; } .bio strong { color: var(--ink); font-weight: 600; } .contact { display: flex; flex-wrap: wrap; gap: 10px; margin: 22px 0 0; padding: 0; list-style: none; } .section { padding: 56px 0 24px; border-top: 1px solid var(--line); } .section-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px; margin-bottom: 18px; } .section-head h2 { font: 600 27px/1.2 var(--serif); letter-spacing: -.005em; } .section-head .note { font-size: 13.5px; color: var(--muted); } .pubs { margin: 0; padding: 0; list-style: none; } .pub { display: grid; grid-template-columns: 224px minmax(0, 1fr); gap: 28px; padding: 26px 0; border-top: 1px solid var(--line); } .pub:first-child { border-top: 0; padding-top: 12px; } .thumb { display: block; aspect-ratio: 16 / 9; overflow: hidden; background: var(--bg-soft); } .thumb video, .thumb img { width: 100%; height: 100%; object-fit: cover; } .thumb.figure { background: #fff; outline: 1px solid var(--line); outline-offset: -1px; } .thumb.figure img, .thumb.contain video, .thumb.contain img { object-fit: contain; } html:not(.js) .thumb video { display: none; } /* without JS, show the noscript still rather than native controls */ .kicker { margin-bottom: 6px; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); } .pub-title { font: 600 19px/1.3 var(--serif); letter-spacing: -.005em; text-wrap: pretty; } .pub-title a { text-decoration: none; } .pub-title a:hover { text-decoration: underline; text-decoration-color: var(--line-2); } .authors { margin-top: 6px; font-size: 15px; color: var(--ink-2); } .authors a { color: inherit; text-decoration: none; } .authors a:hover { text-decoration: underline; text-decoration-color: var(--line-2); } .authors strong { color: var(--ink); font-weight: 600; } .summary { margin-top: 8px; font-size: 14.5px; line-height: 1.55; color: var(--muted); text-wrap: pretty; } .links { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 14px 0 0; padding: 0; list-style: none; } .bib { position: relative; margin-top: 12px; } .bib pre { margin: 0; padding: 14px 16px; padding-right: 72px; border: 1px solid var(--line); background: var(--bg-soft); color: var(--ink-2); font: 12.5px/1.6 var(--mono); white-space: pre-wrap; overflow-wrap: anywhere; } .bib .copy { position: absolute; top: 8px; right: 8px; padding: 2px 9px; border: 1px solid var(--line-2); background: var(--bg); font: 400 12px/1.5 var(--font); color: var(--muted); cursor: pointer; } .bib .copy:hover { border-color: var(--ink); color: var(--ink); } .footer { border-top: 1px solid var(--line); } .footer .wrap { padding-top: 30px; padding-bottom: 40px; font-size: 13.5px; color: var(--muted); } .footer a { color: var(--muted); text-decoration: none; } .footer a:hover { color: var(--ink); } /* ---------- other pages (notes, writing, search) ---------- */ .page { padding-top: 48px; padding-bottom: 56px; } .post > h2:first-child, .posts > h1:first-child { margin: 0 0 24px; font: 600 32px/1.2 var(--serif); letter-spacing: -.01em; } .post > h2:first-child a { text-decoration: none; color: var(--muted); } .post { color: var(--ink-2); overflow-wrap: break-word; } .post h1, .post h2, .post h3, .post h4, .post h5 { margin: 1.8em 0 .6em; font-family: var(--serif); font-weight: 600; line-height: 1.3; color: var(--ink); } .post h1 { font-size: 24px; } .post h2 { font-size: 21px; } .post h3 { font-size: 18px; } .post h4, .post h5 { font-size: 16px; } .post p, .post ul, .post ol, .post pre, .post table, .post blockquote, .post figure { margin: 0 0 1em; } .post ul, .post ol { padding-left: 1.4em; } .post li + li, .post li > ul, .post li > ol { margin-top: .3em; } .post li > ul, .post li > ol { margin-bottom: 0; } .post strong, .post b { color: var(--ink); font-weight: 600; } .post img { height: auto; } .post img.mermaid { max-width: 200px; } .post code { padding: .1em .3em; background: var(--bg-soft); font: .88em/1.5 var(--mono); } .post pre { overflow-x: auto; padding: 14px 16px; border: 1px solid var(--line); background: var(--bg-soft); font: 13.5px/1.6 var(--mono); } .post pre code { padding: 0; background: none; font-size: inherit; } .post blockquote { padding-left: 1em; border-left: 2px solid var(--line-2); color: var(--muted); font-style: italic; } .post table { display: block; max-width: 100%; overflow-x: auto; border-collapse: collapse; font-size: 15px; } .post th, .post td { padding: 7px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; } .post th { font-weight: 600; color: var(--ink); border-bottom-color: var(--line-2); } .post hr { height: 1px; margin: 2em 0; border: 0; background: var(--line); } .post figcaption { font-size: 14px; color: var(--muted); } .post iframe { max-width: 100%; border: 0; } .post mjx-container[display="true"] { overflow-x: auto; overflow-y: hidden; max-width: 100%; } .post mjx-container:not([display="true"]) { /* long inline formulas scroll on their own instead of widening the page */ display: inline-block; max-width: 100%; overflow-x: auto; overflow-y: hidden; vertical-align: middle; padding-right: 6px; margin-right: -6px; } .post .meta { display: block; margin-top: 40px; font-size: 14px; color: var(--muted); } .post .meta a { color: var(--muted); } .posts > p, .posts > u, .posts > i { color: var(--muted); } .posts ul { margin: 16px 0 0; padding: 0; list-style: none; } .posts li { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 10px 0; border-top: 1px solid var(--line); } .posts li:last-child { border-bottom: 1px solid var(--line); } .posts li a { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-decoration: none; } .posts li a:hover { text-decoration: underline; text-decoration-color: var(--line-2); } .posts li time, .posts li div { flex: none; font-size: 13.5px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; } .page #search-input { padding: 10px 12px; border: 1px solid var(--line-2); background: var(--bg); color: var(--ink); font: inherit; } .page #search-input:focus { border-color: var(--ink); outline: none; } .page #results-container { margin: 12px 0; padding-left: 1.4em; } /* ---------- small screens ---------- */ @media (max-width: 640px) { .wrap { padding-left: 20px; padding-right: 20px; } .intro { gap: 20px; padding: 40px 0 44px; } .intro .photo { width: 96px; height: 96px; } .intro h1 { margin-top: 0; font-size: 30px; } .bio { font-size: 16px; } .section { padding-top: 44px; } .section-head h2 { font-size: 23px; } .pub { grid-template-columns: minmax(0, 1fr); gap: 16px; padding: 28px 0; } .thumb.contain { aspect-ratio: auto; } /* full-width here, so show non-16:9 clips at their own shape */ .thumb.contain video, .thumb.contain img { height: auto; } .page { padding-top: 32px; } .post > h2:first-child, .posts > h1:first-child { font-size: 27px; } .posts li { flex-direction: column; gap: 0; } .posts li a { white-space: normal; } } @media (max-width: 480px) { .intro { flex-direction: column; } } @media (pointer: coarse) { .btn.sm { padding: 6px 12px; } } @media print { [data-bib], .bib .copy { display: none !important; } }</style>
+<script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"},"svg":{"fontCache":"global","scale":1.0,"minScale":0.5,"mtextInheritFont":true,"merrorInheritFont":true,"mathmlSpacing":false,"skipAttributes":{},"exFactor":0.5},"chtml":{"scale":1.0,"minScale":0.5,"matchFontHeight":true,"mtextFont":"serif","linebreaks":{"automatic":false}}}</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js"></script>
+</head>
+<body>
+<main id="main" class="wrap page"><section class="post"><h2>Sample Efficient Actor-Critic with Experience Replay</h2>
+<ul>
+<li>
+<strong>Resources</strong><ul><li>
+<a href="https://arxiv.org/abs/1611.01224">Paper</a> <br><br>
+</li></ul>
+</li>
+<li>
+<strong>Introduction</strong><ul>
+<li>Experience replay has helped with reducing sample correlation which improves sample efficiency in Deep Q Learning</li>
+<li>Deterministic policies of Deep Q Learning prevent it from being used in adversarial scenarios</li>
+<li>Finding greedy action with respect to Q function is costly for large action spaces</li>
+<li>We need actor critic methods for both discrete and continuous action spaces</li>
+<li>Introduces ACER: Actor Critic with Experience Replay</li>
+<li>Innovations of ACER<ul>
+<li>Truncated Importance Sampling with Bias Correction</li>
+<li>Stochastic Dueling Architectures</li>
+<li>Efficient Trust Region Policy Optimization</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Background and Problem Setup</strong><ul>
+<li>Goal: Maximize expected discounted return</li>
+<li>Inspired from VPG gradient approximation</li>
+<li>Use k-step returns to trade-off bias and variance (From A3C)</li>
+<li>ACER: Off policy counterpart of A3C<ul><li>Uses single neural network to estimate policy + value function</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Discrete Actor Critic with Experience Replay</strong><ul>
+<li>Controlling variance and stability for off-policy estimators (i.e., experience replay) is extremely hard</li>
+<li>Importance weighted policy gradient: $\hat{g}^{imp} = (\Pi _{t=0}^k \rho _t)\sum _{t=0}^k (\sum _{i=0}^k \gamma^i r _{t+i}) \nabla _\theta \log \pi _\theta(a_t \vert x_t)$<ul>
+<li>Where $\rho _t$ is the importance weight</li>
+<li>Unbiased but suffers from unbounded weights</li>
+<li>Can be truncated but will suffer from bias</li>
+<li>Use marginal value functions over limiting distribution: $g^{marg} = \mathbb{E} _{x _t \sim \beta, a _t \sum \mu}[\rho _t \nabla _\theta \log \pi _\theta (a _t \vert x _t) Q^{\pi}(x _t, a _t)]$<ul>
+<li>$\beta(x) = \lim _{t \rightarrow \infty} P(x _t = x \vert x _0, \mu)$ is the limiting distribution</li>
+<li>$\mu$ is the behavior policy</li>
+<li>Avoids having to compute the gradient for the whole trajectory (no longer a product of importance weights - only uses marginal importance weight)<ul><li>Lowers the variance</li></ul>
+</li>
+<li>Estimate $Q^{\pi}$ using lambda-returns: $R _t^{\lambda} = r_t + (1-\lambda)\gamma V(x _{t+1}) + \lambda \gamma \rho _{t+1} R^\lambda _{t+1}$<ul><li>Smaller $\lambda$ means smaller returns</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Multi-Step Estimation of the State-Action Value Function</strong><ul><li>Use the retrace estimator: $Q^{ret}(x _t, a _t) = r_t + \gamma \bar{\rho} _{t+1}[Q^{ret}(x _{t+1}, a _{t+1}) - Q(x _{t+1}, a _{t+1})] + \gamma V(x _{t+1})$ $\bar{\rho} _t = min(\rho _t, c)$: the truncated importance weight<ul>
+<li>Off policy algorithm with low variance and convergence guarantees in tabular settings</li>
+<li>Depends on bootstrapped estimate of $Q$: use two-headed network that outputs the policy and the estimated Q value<ul>
+<li>Vector outputted for Q value (discrete action space)</li>
+<li>$V$ can be found via the expectation across actions of $Q$</li>
+</ul>
+</li>
+<li>ACER depends on $Q^{ret}$ to estimate $Q^{\pi}$. Retrace uses multistep returns to reduce bias</li>
+<li>Use MSE Loss between critic ($Q _{\theta _{v}}$) and $Q^{ret}$ to learn the critic</li>
+</ul>
+</li></ul>
+</li>
+<li>
+<strong>Importance Weight Truncation with Bias Correction</strong><ul>
+<li>Marginal importance weights can become large, causing instability</li>
+<li>Introduce correction via a decomposition: $g^{marg} = \mathbb{E} _{x_t}[ \mathbb{E} _{a_t}[ \bar{\rho}_t \nabla _{\theta} \log \pi _{\theta}(a_t \vert x_t) Q^\pi(x_t, a_t)] + \mathbb{E} _{a \sim \pi} ([ \frac{\rho_t(a) - c}{\rho_t(a)}] _{+} \nabla _{\theta} \log \pi _{\theta}(a \vert x_t) Q^\pi(x_t, a))]$<ul>
+<li>First term with clipped importance weight ensures bounded variance</li>
+<li>The second term (correction term) ensures estimate is unbiased</li>
+<li>$c$ is the threshold for which the correction term goes into effect - else it just becomes 0<ul>
+<li>The correction term is weighted by $[ \frac{\rho_t(a) - c}{\rho_t(a)}] _{+}$ (at most 1)</li>
+<li>In this scenario, truncated term is weighted by at most $c$</li>
+</ul>
+</li>
+<li>Truncation with bias correction trick: $g^{marg} = \mathbb{E} _{x_t}[ \mathbb{E} _{a_t}[ \bar{\rho}_t \nabla _{\theta} \log \pi _{\theta}(a_t \vert x_t) Q^{ret}(x_t, a_t)] + \mathbb{E} _{a \sim \pi} ([ \frac{\rho_t(a) - c}{\rho_t(a)}] _{+} \nabla _{\theta} \log \pi _{\theta}(a \vert x_t) Q _{\theta _{v}}(x_t, a))]$<ul><li>Expectations approximated via sampling trajectories</li></ul>
+</li>
+</ul>
+</li>
+<li>Off-policy ACER Gradient (with baseline): $\hat{g}^{acer} _t = \bar{\rho}_t \nabla _{\theta} \log \pi _{\theta}(a_t \vert x_t) Q^{ret}(x_t, a_t) - V _{\theta _{v}} (x_t) + \mathbb{E} _{a \sim \pi} ([ \frac{\rho_t(a) - c}{\rho_t(a)}] _{+} \nabla _{\theta} \log \pi _{\theta}(a \vert x_t) (Q _{\theta _{v}}(x_t, a) - V _{\theta _{v}} (x_t)))$<ul>
+<li>$c = 0$: Actor critic update entirely based on Q value estimates</li>
+<li>$c = \infty$: Off-policy policy gradient update up to use of retrace</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Efficient Trust Region Policy Optimization</strong><ul>
+<li>Can’t use small learning rates because updates can still be large</li>
+<li>TRPO good but is computationally expensive</li>
+<li>Average policy network: A running average of past policies; force updated policy to not deviate far from this average<ul>
+<li>Policy follows distribution, $f$ and neural net that generates distribution statistics, $\phi _\theta(x)$</li>
+<li>Let $\phi _{\theta_a}(x)$ be the average policy</li>
+<li>Soft updates to policy: $\theta _a = \alpha \theta _a + (1 - \alpha)\theta$</li>
+<li>ACER gradient with respect to $\phi$: $\hat{g}^{acer} _t = \bar{\rho}_t \nabla _{\phi _\theta (x_t)} \log f(a_t \vert \phi _\theta (x)) Q^{ret}(x_t, a_t) - V _{\theta _{v}} (x_t) + \mathbb{E} _{a \sim \pi} ([ \frac{\rho_t(a) - c}{\rho_t(a)}] _{+} \nabla _{\phi _\theta (x_t)} \log f (a \vert \phi _\theta (x)) (Q _{\theta _{v}}(x_t, a) - V _{\theta _{v}} (x_t)))$</li>
+</ul>
+</li>
+<li>Trust region Update:<ul><li>Linear KL divergence constraint: $minimize \frac{1}{2}\vert\vert \hat{g}^{acer}_t -z \vert\vert^2_2$ subject to $\nabla _{\phi _\theta(x_t)} D _{KL}[f(\cdot \vert \phi _{\phi _{\theta _a}(x_t)})\vert\vert f(\cdot \vert \phi _{\phi _\theta(x_t)})]^T z \leq \delta$<ul><li>Linear constraint means we can solve it using KKT conditions: $z^* = \hat{g}^{acer} _t - max(0, \frac{k^T\hat{g}^{acer} _t -\delta}{\vert\vert k \vert\vert^2_2}k)$</li></ul>
+</li></ul>
+</li>
+<li>Trust region step done on statistics space of $f$ instead of policy parameters to avoid an extra backprop step</li>
+<li>ACER has off-policy and on-policy components<ul><li>Can control number of on-policy vs off-policy updates via the replay ratio</li></ul>
+</li>
+<li>On-policy ACER is just A3C with Q baselines and trust region optimization used</li>
+</ul>
+</li>
+<li>
+<strong>Results on Atari</strong><ul>
+<li>Single algorithm + hyperparameters to play atari games</li>
+<li>Using replay signifcantly increases data efficiency<ul><li>Higher replay ratio = accumulates average reward faster (but with diminishing returns)</li></ul>
+</li>
+<li>ACER matches performance of best DQNs</li>
+<li>ACER Off policy is more efficient than on-policy (A3C)</li>
+<li>Similar amount of wall clock training time for ACERs</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Continuous Actor Critic with Experience Replay</strong><ul>
+<li>
+<strong>Policy Evaluation</strong><ul>
+<li>To compute the $V _{\theta_v}$ given $Q _{\theta_v}$, we would need to integrate over the action space; this is intractable<ul><li>We could use importance sampling but has high variance</li></ul>
+</li>
+<li>Stochastic Dueling Networks: Estimates $Q^\pi$ and $V^\pi$ off-policy while maintaing consistency between estimates<ul>
+<li>Outputs stochastic $\tilde{Q _{\theta_v}}$ of $Q^\pi$</li>
+<li>Ouputs deterministic $V _{\theta_v}$ of $V^\pi$<ul><li>Follows equation: $\tilde{Q _{\theta_v}}(x_t, a_t) \sim V _{\theta_v}(x_t) + A _{\theta_v}(x_t, a_t) - \frac{1}{n}\sum _{i=1}^n A _{\theta_v}(x_t, u_i) \text{ where } u_i \sim \pi _\theta(\cdot \vert x_t)$</li></ul>
+</li>
+<li>Target for estimating $V^\pi$: $V^{target}(x_t) = min(1, \frac{\pi(a_t \vert x_t)}{\mu(a_t \vert x_t)})(Q^{ret}(x_t, a_t) - (Q _{\theta_v}(x_t, a_t))) + V _{\theta_v}(x_t)$<ul><li>Can raise the importance sampling weight to the power of $\frac{1}{d}$ for faster learning</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Trust Region Updating</strong><ul><li>Continuous action space ACER gradient: $\begin{multline} \hat{g}^{acer} _t = \mathbb{E} _{x_t}[\mathbb{E} _{a_t}[\bar{\rho}_t \nabla _{\phi _\theta (x_t)} \log f(a_t \vert \phi _\theta (x)) (Q^{opc}(x_t, a_t) - \\ V _{\theta _{v}} (x_t)) + \mathbb{E} _{a \sim \pi} ([ \frac{\rho_t(a) - c}{\rho_t(a)}] _{+} (\tilde{Q} _{\theta _{v}}(x_t, a’) - V _{\theta _{v}} (x_t))\nabla _{\phi _\theta (x_t)} \log f(a’_t \vert \phi _\theta (x)))]]\end{multline}$<ul>
+<li>$Q^{opc}$ is $Q^{ret}$ with the truncated importance ratio set to 1</li>
+<li>Using monte carlo sampling, we can estimate the expectations</li>
+</ul>
+</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Results on Mujoco</strong><ul>
+<li>ACER for continuous domains is entirely off-policy</li>
+<li>ACER outperforms A3C and truncated importance sampling baselines significantly</li>
+<li>Trust region optimization results in huge improvements over baselines (especially in continuous domains)</li>
+<li>
+<strong>Ablation</strong><ul><li>Conducts an ablation study where they remove Retrace / $Q(\lambda)$ off-policy correction, SDNs, trust regions, and trucation with bias correction<ul>
+<li>SDNs + trust regions critical; massive deterioration of performance without them</li>
+<li>Trucation with bias correction didn’t alter results much<ul><li>Although helps in very high dimensional settings (where variance is much higher)</li></ul>
+</li>
+</ul>
+</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+<span class="meta"><time datetime="2025-04-20T00:00:00+00:00">April 20, 2025</time> · <a href="/tags/research">research</a></span></section></main><footer class="footer"><div class="wrap"> © 2026 <a href="/">Samrat Sahoo</a>
+</div></footer><script src="/assets/js/site.js" defer></script>
+</body>
+</html>

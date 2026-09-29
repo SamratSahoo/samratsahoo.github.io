@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Distributional Reinforcement Learning with Quantile Regression · Samrat Sahoo</title>
+<meta name="generator" content="Jekyll v4.2.2">
+<meta property="og:title" content="Distributional Reinforcement Learning with Quantile Regression">
+<meta name="author" content="Samrat Sahoo">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="A paper about distributional reinforcement learning with quantile regression">
+<meta property="og:description" content="A paper about distributional reinforcement learning with quantile regression">
+<link rel="canonical" href="https://samratsahoo.com/2025/05/05/qr-dqn">
+<meta property="og:url" content="https://samratsahoo.com/2025/05/05/qr-dqn">
+<meta property="og:site_name" content="Samrat Sahoo">
+<meta property="og:image" content="https://samratsahoo.com/assets/img/og.jpg">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2025-05-05T00:00:00+00:00">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="twitter:image" content="https://samratsahoo.com/assets/img/og.jpg">
+<meta property="twitter:title" content="Distributional Reinforcement Learning with Quantile Regression">
+<meta name="twitter:site" content="@samratdotjs">
+<meta name="twitter:creator" content="@samratdotjs"> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Samrat Sahoo","url":"https://samratsahoo.com"},"dateModified":"2025-05-05T00:00:00+00:00","datePublished":"2025-05-05T00:00:00+00:00","description":"A paper about distributional reinforcement learning with quantile regression","headline":"Distributional Reinforcement Learning with Quantile Regression","image":"https://samratsahoo.com/assets/img/og.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://samratsahoo.com/2025/05/05/qr-dqn"},"url":"https://samratsahoo.com/2025/05/05/qr-dqn"}</script><meta name="color-scheme" content="light">
+<meta name="theme-color" content="#ffffff"> <script>document.documentElement.classList.add("js");</script><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&amp;display=swap">
+<link rel="icon" type="image/webp" href="/favicon.webp">
+<link rel="alternate" type="application/atom+xml" title="Samrat Sahoo" href="/atom.xml">
+<link rel="alternate" type="application/json" title="Samrat Sahoo" href="https://samratsahoo.com/feed.json">
+<link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml">
+<style> /* Palette and type follow the DATAFARM project page: warm neutrals, Inter for text, Source Serif 4 for headings, square corners, hairline rules. */ :root { --ink: #17181a; --ink-2: #35373b; --muted: #6b6e74; --line: #e4e4e1; --line-2: #c9c9c4; --bg: #fff; --bg-soft: #f7f7f5; --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; --serif: "Source Serif 4", Georgia, "Times New Roman", serif; --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; color-scheme: light; } *, *::before, *::after { box-sizing: border-box; } html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-padding-top: 24px; } body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.6 var(--font); -webkit-font-smoothing: antialiased; } h1, h2, h3, p { margin: 0; } img, video { display: block; max-width: 100%; } a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 2px; } a:hover { text-decoration-color: currentColor; } :focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; } ::selection { background: #e6e6e1; } .wrap { max-width: 880px; margin: 0 auto; padding: 0 28px; } .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; } .nw { white-space: nowrap; } html:not(.js) .js-only { display: none; } /* ---------- buttons ---------- */ .btn { display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; border: 1px solid var(--line-2); background: var(--bg); font: 400 14px/1.4 var(--font); color: var(--ink); text-decoration: none; white-space: nowrap; cursor: pointer; } .btn:hover { border-color: var(--ink); } .btn svg { width: 15px; height: 15px; opacity: .75; flex: none; } .btn.sm { padding: 3px 11px; font-size: 13px; } .btn[aria-expanded="true"] { border-color: var(--ink); } .btn.soon { color: var(--muted); border-color: var(--line); cursor: default; } /* ---------- homepage ---------- */ .intro { display: flex; align-items: flex-start; gap: 36px; padding: 64px 0 56px; } .intro picture { flex: none; } .intro .photo { width: 168px; height: 168px; object-fit: cover; } .intro-text { min-width: 0; } .intro h1 { margin: -4px 0 14px; font: 600 36px/1.15 var(--serif); letter-spacing: -.01em; } .bio { font-size: 16.5px; color: var(--ink-2); text-wrap: pretty; } .bio p + p { margin-top: 12px; } .bio strong { color: var(--ink); font-weight: 600; } .contact { display: flex; flex-wrap: wrap; gap: 10px; margin: 22px 0 0; padding: 0; list-style: none; } .section { padding: 56px 0 24px; border-top: 1px solid var(--line); } .section-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px; margin-bottom: 18px; } .section-head h2 { font: 600 27px/1.2 var(--serif); letter-spacing: -.005em; } .section-head .note { font-size: 13.5px; color: var(--muted); } .pubs { margin: 0; padding: 0; list-style: none; } .pub { display: grid; grid-template-columns: 224px minmax(0, 1fr); gap: 28px; padding: 26px 0; border-top: 1px solid var(--line); } .pub:first-child { border-top: 0; padding-top: 12px; } .thumb { display: block; aspect-ratio: 16 / 9; overflow: hidden; background: var(--bg-soft); } .thumb video, .thumb img { width: 100%; height: 100%; object-fit: cover; } .thumb.figure { background: #fff; outline: 1px solid var(--line); outline-offset: -1px; } .thumb.figure img, .thumb.contain video, .thumb.contain img { object-fit: contain; } html:not(.js) .thumb video { display: none; } /* without JS, show the noscript still rather than native controls */ .kicker { margin-bottom: 6px; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); } .pub-title { font: 600 19px/1.3 var(--serif); letter-spacing: -.005em; text-wrap: pretty; } .pub-title a { text-decoration: none; } .pub-title a:hover { text-decoration: underline; text-decoration-color: var(--line-2); } .authors { margin-top: 6px; font-size: 15px; color: var(--ink-2); } .authors a { color: inherit; text-decoration: none; } .authors a:hover { text-decoration: underline; text-decoration-color: var(--line-2); } .authors strong { color: var(--ink); font-weight: 600; } .summary { margin-top: 8px; font-size: 14.5px; line-height: 1.55; color: var(--muted); text-wrap: pretty; } .links { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 14px 0 0; padding: 0; list-style: none; } .bib { position: relative; margin-top: 12px; } .bib pre { margin: 0; padding: 14px 16px; padding-right: 72px; border: 1px solid var(--line); background: var(--bg-soft); color: var(--ink-2); font: 12.5px/1.6 var(--mono); white-space: pre-wrap; overflow-wrap: anywhere; } .bib .copy { position: absolute; top: 8px; right: 8px; padding: 2px 9px; border: 1px solid var(--line-2); background: var(--bg); font: 400 12px/1.5 var(--font); color: var(--muted); cursor: pointer; } .bib .copy:hover { border-color: var(--ink); color: var(--ink); } .footer { border-top: 1px solid var(--line); } .footer .wrap { padding-top: 30px; padding-bottom: 40px; font-size: 13.5px; color: var(--muted); } .footer a { color: var(--muted); text-decoration: none; } .footer a:hover { color: var(--ink); } /* ---------- other pages (notes, writing, search) ---------- */ .page { padding-top: 48px; padding-bottom: 56px; } .post > h2:first-child, .posts > h1:first-child { margin: 0 0 24px; font: 600 32px/1.2 var(--serif); letter-spacing: -.01em; } .post > h2:first-child a { text-decoration: none; color: var(--muted); } .post { color: var(--ink-2); overflow-wrap: break-word; } .post h1, .post h2, .post h3, .post h4, .post h5 { margin: 1.8em 0 .6em; font-family: var(--serif); font-weight: 600; line-height: 1.3; color: var(--ink); } .post h1 { font-size: 24px; } .post h2 { font-size: 21px; } .post h3 { font-size: 18px; } .post h4, .post h5 { font-size: 16px; } .post p, .post ul, .post ol, .post pre, .post table, .post blockquote, .post figure { margin: 0 0 1em; } .post ul, .post ol { padding-left: 1.4em; } .post li + li, .post li > ul, .post li > ol { margin-top: .3em; } .post li > ul, .post li > ol { margin-bottom: 0; } .post strong, .post b { color: var(--ink); font-weight: 600; } .post img { height: auto; } .post img.mermaid { max-width: 200px; } .post code { padding: .1em .3em; background: var(--bg-soft); font: .88em/1.5 var(--mono); } .post pre { overflow-x: auto; padding: 14px 16px; border: 1px solid var(--line); background: var(--bg-soft); font: 13.5px/1.6 var(--mono); } .post pre code { padding: 0; background: none; font-size: inherit; } .post blockquote { padding-left: 1em; border-left: 2px solid var(--line-2); color: var(--muted); font-style: italic; } .post table { display: block; max-width: 100%; overflow-x: auto; border-collapse: collapse; font-size: 15px; } .post th, .post td { padding: 7px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; } .post th { font-weight: 600; color: var(--ink); border-bottom-color: var(--line-2); } .post hr { height: 1px; margin: 2em 0; border: 0; background: var(--line); } .post figcaption { font-size: 14px; color: var(--muted); } .post iframe { max-width: 100%; border: 0; } .post mjx-container[display="true"] { overflow-x: auto; overflow-y: hidden; max-width: 100%; } .post mjx-container:not([display="true"]) { /* long inline formulas scroll on their own instead of widening the page */ display: inline-block; max-width: 100%; overflow-x: auto; overflow-y: hidden; vertical-align: middle; padding-right: 6px; margin-right: -6px; } .post .meta { display: block; margin-top: 40px; font-size: 14px; color: var(--muted); } .post .meta a { color: var(--muted); } .posts > p, .posts > u, .posts > i { color: var(--muted); } .posts ul { margin: 16px 0 0; padding: 0; list-style: none; } .posts li { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 10px 0; border-top: 1px solid var(--line); } .posts li:last-child { border-bottom: 1px solid var(--line); } .posts li a { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-decoration: none; } .posts li a:hover { text-decoration: underline; text-decoration-color: var(--line-2); } .posts li time, .posts li div { flex: none; font-size: 13.5px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; } .page #search-input { padding: 10px 12px; border: 1px solid var(--line-2); background: var(--bg); color: var(--ink); font: inherit; } .page #search-input:focus { border-color: var(--ink); outline: none; } .page #results-container { margin: 12px 0; padding-left: 1.4em; } /* ---------- small screens ---------- */ @media (max-width: 640px) { .wrap { padding-left: 20px; padding-right: 20px; } .intro { gap: 20px; padding: 40px 0 44px; } .intro .photo { width: 96px; height: 96px; } .intro h1 { margin-top: 0; font-size: 30px; } .bio { font-size: 16px; } .section { padding-top: 44px; } .section-head h2 { font-size: 23px; } .pub { grid-template-columns: minmax(0, 1fr); gap: 16px; padding: 28px 0; } .thumb.contain { aspect-ratio: auto; } /* full-width here, so show non-16:9 clips at their own shape */ .thumb.contain video, .thumb.contain img { height: auto; } .page { padding-top: 32px; } .post > h2:first-child, .posts > h1:first-child { font-size: 27px; } .posts li { flex-direction: column; gap: 0; } .posts li a { white-space: normal; } } @media (max-width: 480px) { .intro { flex-direction: column; } } @media (pointer: coarse) { .btn.sm { padding: 6px 12px; } } @media print { [data-bib], .bib .copy { display: none !important; } }</style>
+<script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"},"svg":{"fontCache":"global","scale":1.0,"minScale":0.5,"mtextInheritFont":true,"merrorInheritFont":true,"mathmlSpacing":false,"skipAttributes":{},"exFactor":0.5},"chtml":{"scale":1.0,"minScale":0.5,"matchFontHeight":true,"mtextFont":"serif","linebreaks":{"automatic":false}}}</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js"></script>
+</head>
+<body>
+<main id="main" class="wrap page"><section class="post"><h2>Distributional Reinforcement Learning with Quantile Regression</h2>
+<ul>
+<li>
+<strong>Resources</strong><ul><li>
+<a href="https://arxiv.org/abs/1710.10044">Paper</a> <br><br>
+</li></ul>
+</li>
+<li>
+<strong>Introduction</strong><ul>
+<li>In classical distributional RL (C51 algorithm), we could not use wasserstein metric between probability distributions<ul>
+<li>Cannot minimize using SGD</li>
+<li>C51 instead used a projection with a KL divergence minimization</li>
+</ul>
+</li>
+<li>However, we can do distributional RL with Wasserstein metric<ul>
+<li>C51 uses $N$ fixed locations for distribution supports and adjusts probabibilties<ul><li>Instead, assign fixed uniform probabibilties with adjustable locations</li></ul>
+</li>
+<li>Quantile regression for adjusting locations</li>
+</ul>
+</li>
+<li>They use smoothened version of quantile regression (Huber quantile regression) to beat C51</li>
+</ul>
+</li>
+<li>
+<strong>Distributional RL</strong><ul>
+<li>Assume standard distributional RL setting (see <a href="https://samratsahoo.com/2025/04/27/c51">C51 paper notes</a>)</li>
+<li>Value function = mean of value distribution<ul><li>Value function = expectation of value distribution over all intrinsic randomness (randomness in MDP)</li></ul>
+</li>
+<li>Bellman operator: $\mathcal{T}^\pi Q(x,a) = \mathbb{E}[R(x,a)] + \gamma \mathbb{E} _{P, \pi} [Q(x’, a’)]$<ul>
+<li>Distributional Bellman operator: $\mathcal{T}^\pi Z(x,a) \stackrel{D}{=} R(x,a) + \gamma P^\pi Z(x,a)$</li>
+<li>C51 models $Z^\pi (x,a)$ using discrete distribution on fixed locations ($z_1 \leq \dots \leq z_N$)<ul>
+<li>Parameters: probabilities of each location</li>
+<li>Projects $\mathcal{T}^\pi Z$ onto finite element support + minimizes KL</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>The Wasserstein Metric</strong><ul><li>p-Wasserstein metric between U and Y: $W_p(U, Y) = (\int_0^1 \vert F^{-1}(\omega - G^{-1}(\omega)) \vert^p d\omega)^{\frac{1}{p}}$<ul><li>Where $F^-1$ is the inverse CDF</li></ul>
+</li></ul>
+</li>
+<li>
+<strong>Convergence of Distributional Bellman Operator</strong><ul>
+<li>Maximal form of the wasserstein metric: $\bar{d_p}(Z_1, Z_2) = sup W_p (Z_1(x,a), Z_2(x,a))$<ul><li>Z_1, Z_2 are two action-value distributions</li></ul>
+</li>
+<li>Distributional bellman operator is a contraction in $\bar{d_p}$<ul>
+<li>$\bar{d_p}(\mathcal{T}^\pi Z_1, \mathcal{T}^\pi Z_2) \leq \gamma \bar{d_p}(Z_1, Z_2)$</li>
+<li>Tells us minimizing wasserstein distance is useful for learning distributions - but this is not possible<ul><li>Because we train with SARSA transitions, we use samples<ul><li>Minimum of expected sample loss is different from of true wasserstein loss</li></ul>
+</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Approximately Minimizing Wasserstein</strong><ul>
+<li>Instead of fixed locations on parameterized probabibilities, we can use fixed probabilities with variable locations<ul><li>New probabilities: $q_i = 1/N$</li></ul>
+</li>
+<li>We want to estimate quantiles of target distribution<ul>
+<li>$Z_Q$: space of quantile distributions for $N$</li>
+<li>CDF denoted by $\mathcal{T}_i = \frac{i}{N}$</li>
+<li>Create a parameteric model that maps state-action pairs to uniform probability distribution<ul><li>$Z_\theta (x,a) = \frac{1}{N} \sum _{i=1}^N \delta _{\theta _{i(x,a)}}$<ul><li>$\delta_z$ is a dirac at $z$</li></ul>
+</li></ul>
+</li>
+</ul>
+</li>
+<li>Parameterizing quantile:<ul>
+<li>No restrictions on prespecified bounds on support (more accuracy)</li>
+<li>No projection step needed</li>
+<li>We can minimize wasserstein loss without biased gradients (with quantile regression)</li>
+</ul>
+</li>
+<li>
+<strong>The Quantile Approximation</strong><ul>
+<li>Bellman update projected onto parameterized quantile distribution = contraction</li>
+<li>Quantile Projection<ul>
+<li>We want to project a value distribution $Z \in \mathcal{Z}$ onto $\mathcal{Z}_Q$<ul><li>$\Pi _{W_1} Z = argmin _{Z _{\theta} \in Z_Q} W_1(Z, Z _{\theta})$</li></ul>
+</li>
+<li>1-Wasserstein distance: $W_1(Y, U) = \sum _{i=1}^N \int _{\mathcal{T} _{i-1}}^\mathcal{T} \vert F_Y^{-1}(\omega) - \theta_i \vert d\omega$</li>
+<li>For a given interval, we want to find the $\theta$ that minimizes: $\int _{\mathcal{T}}^{\mathcal{T}^{‘}} \vert F_Y^{-1}(\omega) - \theta \vert d\omega$<ul><li>The minimizer of this is the median of the interval: $F_Y(\theta) = \frac{\mathcal{T} + \mathcal{T}’}{2} \Rightarrow \theta = F_Y^{-1}(\frac{\mathcal{T} + \mathcal{T}’}{2})$</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Quantile Regression</strong><ul>
+<li>Quantile parameterization leads to biased gradients</li>
+<li>We can get unbiased approximations of the quantile function using quantile regression<ul><li>Quantile Regression Loss: $\mathcal{L}^\tau _{QR}(\theta) = \mathbb{E} _{\hat{Z} \sim Z}[\rho _{\tau}(\hat{Z} - \theta)]$ where $\rho _\tau = u(\tau - \delta _{u &lt; 0}) \forall u \in \mathbb{R}$<ul>
+<li>Penalizes overestimation of quantiles by $\tau$ and underestimation by $1 - \tau$</li>
+<li>We want to find $\theta_1 \dots \theta_N$ that minimizes: $\sum _{i=1}^N \mathbb{E} _{\hat{Z} \sim Z}[\rho _{\tau}(\hat{Z} - \theta_i)]$<ul><li>Do this through SGD</li></ul>
+</li>
+</ul>
+</li></ul>
+</li>
+<li>Quantile Huber Loss:<ul>
+<li>Quantile regression loss not smooth at 0; as $u^+ \rightarrow 0$, gradient stays constant</li>
+<li>Quantile Huber Loss acts as asymmetric squared loss around 0 in interval $[-\mathcal{K}, \mathcal{K}]$ and reverts back to original loss outside of it</li>
+<li>Huber Loss: $\begin{multline}\begin{cases} \frac{1}{2}u^2 \text{ if } \vert u \vert \leq \mathcal{K} \\ \mathcal{K}(\vert u \vert - \frac{1}{2}\mathcal{K}) \text{ otherwise }\end{cases}\end{multline}$</li>
+<li>Quantile Huber Loss: $\rho^\mathcal{K} _\mathcal{T}(u) = \vert \mathcal{T} - \delta _{u &lt; 0}\vert \mathcal{L} _\mathcal{K}(u)$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Combining Projection and Bellman Update</strong><ul><li>The quantile projection guarantees a non-expansion in $\infty$-wasserstein distance<ul>
+<li>$\bar{d} _\infty(\Pi _{W_1}\mathcal{T}^\pi Z_1, \Pi _{W_1}\mathcal{T}^\pi Z_2) \leq \bar{d} _\infty(Z_1, Z_2)$</li>
+<li>Repeated application of $\Pi _{W_1}\mathcal{T}^\pi$ leads to a fixed point solution</li>
+<li>Because $\bar{d}_p \leq \bar{d} _\infty$, convergence occurs for all $1 \leq p \leq \infty$</li>
+</ul>
+</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Distributional RL using Quantile Regression</strong><ul>
+<li>Approximate value distribution using quantile midpoints</li>
+<li>
+<strong>Quantile Regression Temporal Difference Learning</strong><ul>
+<li>Standard TD update: $V(x) \leftarrow V(x) + \alpha(r + \gamma V(x’) - V(x))$</li>
+<li>Quantile Regression TD Update: $\theta_i(x) \leftarrow \theta_i(x) + \alpha(\hat{\mathcal{T}}_i - \delta _{r + \gamma z’ &lt; \theta_i(x)})$<ul>
+<li>$z’ \sim Z _\theta$</li>
+<li>$\hat{\mathcal{T}}_i$: midpoint of quantile</li>
+<li>$Z _\theta$ quantile distribution</li>
+<li>$\theta_i(x)$ estimated value of quantile function in state x ($F^{-1} _{Z^\pi(x)}(\hat{\mathcal{T}}_i)$)</li>
+<li>We should draw many samples $z’ \sim Z _\theta$ to minimize the expected update</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Quantile Regression DQN</strong><ul>
+<li>Bellman Optimality Operator: $\mathcal{T} Q(x,a) = \mathbb{E}[R(x,a)] + \gamma \mathbb{E} _{x’ \sim P}[max _{a’}Q(x’,a’)]$</li>
+<li>Distributional Bellman Operator: $\mathcal{T} Z(x,a) = R(x,a) + \gamma Z(x’,a’)$<ul><li>$a’ = argmax _{a’} \mathbb{E} _{z \sim Z(x’,a’)}[z]$</li></ul>
+</li>
+<li>Three modifications to DQN algorithm<ul>
+<li>Change output layer of DQN output layer to be size $\vert A \vert \times N$<ul><li>N is number of quantile targets (atoms)</li></ul>
+</li>
+<li>Replace L1 loss with quantile huber loss</li>
+<li>Replace RMSProp with Adam</li>
+</ul>
+</li>
+<li>Because we are setting quantile targets, QR-DQN can expand/contract arbitrarily as needed</li>
+<li>Higher N = able to estimate lower + higher quantiles of distribution + distinguish low probability events</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Experimental Results</strong><ul>
+<li>Value Distribution Approximation Error: Quantile regression TD minimizes the 1-wasserstein distance and converges correctly despite the approximation errors</li>
+<li>
+<strong>Evaluation on Atari 2600</strong><ul>
+<li>Best Agent Performance: QR-DQN outperforms all previous agents in mean and median human-normalized score</li>
+<li>Online performance:<ul>
+<li>Early in learning, most algorithms perform worse than a random policy</li>
+<li>QRTD has similar sample complexity as prioritized experience replay (but better final performance)</li>
+<li>On a small subset of games, it reaches less than 10% of human performance</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<span class="meta"><time datetime="2025-05-05T00:00:00+00:00">May 5, 2025</time> · <a href="/tags/research">research</a></span></section></main><footer class="footer"><div class="wrap"> © 2026 <a href="/">Samrat Sahoo</a>
+</div></footer><script src="/assets/js/site.js" defer></script>
+</body>
+</html>

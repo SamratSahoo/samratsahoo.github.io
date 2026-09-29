@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>lecture 7 - imitation learning · Samrat Sahoo</title>
+<meta name="generator" content="Jekyll v4.2.2">
+<meta property="og:title" content="lecture 7 - imitation learning">
+<meta name="author" content="Samrat Sahoo">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="Resources: Lecture Video">
+<meta property="og:description" content="Resources: Lecture Video">
+<link rel="canonical" href="https://samratsahoo.com/brain/cs234/imitation-learning">
+<meta property="og:url" content="https://samratsahoo.com/brain/cs234/imitation-learning">
+<meta property="og:site_name" content="Samrat Sahoo">
+<meta property="og:image" content="https://samratsahoo.com/assets/img/og.jpg">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2024-05-15T00:00:00+00:00">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="twitter:image" content="https://samratsahoo.com/assets/img/og.jpg">
+<meta property="twitter:title" content="lecture 7 - imitation learning">
+<meta name="twitter:site" content="@samratdotjs">
+<meta name="twitter:creator" content="@samratdotjs"> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Samrat Sahoo","url":"https://samratsahoo.com"},"dateModified":"2024-05-15T00:00:00+00:00","datePublished":"2024-05-15T00:00:00+00:00","description":"Resources: Lecture Video","headline":"lecture 7 - imitation learning","image":"https://samratsahoo.com/assets/img/og.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://samratsahoo.com/brain/cs234/imitation-learning"},"url":"https://samratsahoo.com/brain/cs234/imitation-learning"}</script><meta name="color-scheme" content="light">
+<meta name="theme-color" content="#ffffff"> <script>document.documentElement.classList.add("js");</script><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&amp;display=swap">
+<link rel="icon" type="image/webp" href="/favicon.webp">
+<link rel="alternate" type="application/atom+xml" title="Samrat Sahoo" href="/atom.xml">
+<link rel="alternate" type="application/json" title="Samrat Sahoo" href="https://samratsahoo.com/feed.json">
+<link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml">
+<style> /* Palette and type follow the DATAFARM project page: warm neutrals, Inter for text, Source Serif 4 for headings, square corners, hairline rules. */ :root { --ink: #17181a; --ink-2: #35373b; --muted: #6b6e74; --line: #e4e4e1; --line-2: #c9c9c4; --bg: #fff; --bg-soft: #f7f7f5; --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; --serif: "Source Serif 4", Georgia, "Times New Roman", serif; --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; color-scheme: light; } *, *::before, *::after { box-sizing: border-box; } html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-padding-top: 24px; } body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.6 var(--font); -webkit-font-smoothing: antialiased; } h1, h2, h3, p { margin: 0; } img, video { display: block; max-width: 100%; } a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 2px; } a:hover { text-decoration-color: currentColor; } :focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; } ::selection { background: #e6e6e1; } .wrap { max-width: 880px; margin: 0 auto; padding: 0 28px; } .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; } .nw { white-space: nowrap; } html:not(.js) .js-only { display: none; } /* ---------- buttons ---------- */ .btn { display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; border: 1px solid var(--line-2); background: var(--bg); font: 400 14px/1.4 var(--font); color: var(--ink); text-decoration: none; white-space: nowrap; cursor: pointer; } .btn:hover { border-color: var(--ink); } .btn svg { width: 15px; height: 15px; opacity: .75; flex: none; } .btn.sm { padding: 3px 11px; font-size: 13px; } .btn[aria-expanded="true"] { border-color: var(--ink); } .btn.soon { color: var(--muted); border-color: var(--line); cursor: default; } /* ---------- homepage ---------- */ .intro { display: flex; align-items: flex-start; gap: 36px; padding: 64px 0 56px; } .intro picture { flex: none; } .intro .photo { width: 168px; height: 168px; object-fit: cover; } .intro-text { min-width: 0; } .intro h1 { margin: -4px 0 14px; font: 600 36px/1.15 var(--serif); letter-spacing: -.01em; } .bio { font-size: 16.5px; color: var(--ink-2); text-wrap: pretty; } .bio p + p { margin-top: 12px; } .bio strong { color: var(--ink); font-weight: 600; } .contact { display: flex; flex-wrap: wrap; gap: 10px; margin: 22px 0 0; padding: 0; list-style: none; } .section { padding: 56px 0 24px; border-top: 1px solid var(--line); } .section-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px; margin-bottom: 18px; } .section-head h2 { font: 600 27px/1.2 var(--serif); letter-spacing: -.005em; } .section-head .note { font-size: 13.5px; color: var(--muted); } .pubs { margin: 0; padding: 0; list-style: none; } .pub { display: grid; grid-template-columns: 224px minmax(0, 1fr); gap: 28px; padding: 26px 0; border-top: 1px solid var(--line); } .pub:first-child { border-top: 0; padding-top: 12px; } .thumb { display: block; aspect-ratio: 16 / 9; overflow: hidden; background: var(--bg-soft); } .thumb video, .thumb img { width: 100%; height: 100%; object-fit: cover; } .thumb.figure { background: #fff; outline: 1px solid var(--line); outline-offset: -1px; } .thumb.figure img, .thumb.contain video, .thumb.contain img { object-fit: contain; } html:not(.js) .thumb video { display: none; } /* without JS, show the noscript still rather than native controls */ .kicker { margin-bottom: 6px; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); } .pub-title { font: 600 19px/1.3 var(--serif); letter-spacing: -.005em; text-wrap: pretty; } .pub-title a { text-decoration: none; } .pub-title a:hover { text-decoration: underline; text-decoration-color: var(--line-2); } .authors { margin-top: 6px; font-size: 15px; color: var(--ink-2); } .authors a { color: inherit; text-decoration: none; } .authors a:hover { text-decoration: underline; text-decoration-color: var(--line-2); } .authors strong { color: var(--ink); font-weight: 600; } .summary { margin-top: 8px; font-size: 14.5px; line-height: 1.55; color: var(--muted); text-wrap: pretty; } .links { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 14px 0 0; padding: 0; list-style: none; } .bib { position: relative; margin-top: 12px; } .bib pre { margin: 0; padding: 14px 16px; padding-right: 72px; border: 1px solid var(--line); background: var(--bg-soft); color: var(--ink-2); font: 12.5px/1.6 var(--mono); white-space: pre-wrap; overflow-wrap: anywhere; } .bib .copy { position: absolute; top: 8px; right: 8px; padding: 2px 9px; border: 1px solid var(--line-2); background: var(--bg); font: 400 12px/1.5 var(--font); color: var(--muted); cursor: pointer; } .bib .copy:hover { border-color: var(--ink); color: var(--ink); } .footer { border-top: 1px solid var(--line); } .footer .wrap { padding-top: 30px; padding-bottom: 40px; font-size: 13.5px; color: var(--muted); } .footer a { color: var(--muted); text-decoration: none; } .footer a:hover { color: var(--ink); } /* ---------- other pages (notes, writing, search) ---------- */ .page { padding-top: 48px; padding-bottom: 56px; } .post > h2:first-child, .posts > h1:first-child { margin: 0 0 24px; font: 600 32px/1.2 var(--serif); letter-spacing: -.01em; } .post > h2:first-child a { text-decoration: none; color: var(--muted); } .post { color: var(--ink-2); overflow-wrap: break-word; } .post h1, .post h2, .post h3, .post h4, .post h5 { margin: 1.8em 0 .6em; font-family: var(--serif); font-weight: 600; line-height: 1.3; color: var(--ink); } .post h1 { font-size: 24px; } .post h2 { font-size: 21px; } .post h3 { font-size: 18px; } .post h4, .post h5 { font-size: 16px; } .post p, .post ul, .post ol, .post pre, .post table, .post blockquote, .post figure { margin: 0 0 1em; } .post ul, .post ol { padding-left: 1.4em; } .post li + li, .post li > ul, .post li > ol { margin-top: .3em; } .post li > ul, .post li > ol { margin-bottom: 0; } .post strong, .post b { color: var(--ink); font-weight: 600; } .post img { height: auto; } .post img.mermaid { max-width: 200px; } .post code { padding: .1em .3em; background: var(--bg-soft); font: .88em/1.5 var(--mono); } .post pre { overflow-x: auto; padding: 14px 16px; border: 1px solid var(--line); background: var(--bg-soft); font: 13.5px/1.6 var(--mono); } .post pre code { padding: 0; background: none; font-size: inherit; } .post blockquote { padding-left: 1em; border-left: 2px solid var(--line-2); color: var(--muted); font-style: italic; } .post table { display: block; max-width: 100%; overflow-x: auto; border-collapse: collapse; font-size: 15px; } .post th, .post td { padding: 7px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; } .post th { font-weight: 600; color: var(--ink); border-bottom-color: var(--line-2); } .post hr { height: 1px; margin: 2em 0; border: 0; background: var(--line); } .post figcaption { font-size: 14px; color: var(--muted); } .post iframe { max-width: 100%; border: 0; } .post mjx-container[display="true"] { overflow-x: auto; overflow-y: hidden; max-width: 100%; } .post mjx-container:not([display="true"]) { /* long inline formulas scroll on their own instead of widening the page */ display: inline-block; max-width: 100%; overflow-x: auto; overflow-y: hidden; vertical-align: middle; padding-right: 6px; margin-right: -6px; } .post .meta { display: block; margin-top: 40px; font-size: 14px; color: var(--muted); } .post .meta a { color: var(--muted); } .posts > p, .posts > u, .posts > i { color: var(--muted); } .posts ul { margin: 16px 0 0; padding: 0; list-style: none; } .posts li { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 10px 0; border-top: 1px solid var(--line); } .posts li:last-child { border-bottom: 1px solid var(--line); } .posts li a { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-decoration: none; } .posts li a:hover { text-decoration: underline; text-decoration-color: var(--line-2); } .posts li time, .posts li div { flex: none; font-size: 13.5px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; } .page #search-input { padding: 10px 12px; border: 1px solid var(--line-2); background: var(--bg); color: var(--ink); font: inherit; } .page #search-input:focus { border-color: var(--ink); outline: none; } .page #results-container { margin: 12px 0; padding-left: 1.4em; } /* ---------- small screens ---------- */ @media (max-width: 640px) { .wrap { padding-left: 20px; padding-right: 20px; } .intro { gap: 20px; padding: 40px 0 44px; } .intro .photo { width: 96px; height: 96px; } .intro h1 { margin-top: 0; font-size: 30px; } .bio { font-size: 16px; } .section { padding-top: 44px; } .section-head h2 { font-size: 23px; } .pub { grid-template-columns: minmax(0, 1fr); gap: 16px; padding: 28px 0; } .thumb.contain { aspect-ratio: auto; } /* full-width here, so show non-16:9 clips at their own shape */ .thumb.contain video, .thumb.contain img { height: auto; } .page { padding-top: 32px; } .post > h2:first-child, .posts > h1:first-child { font-size: 27px; } .posts li { flex-direction: column; gap: 0; } .posts li a { white-space: normal; } } @media (max-width: 480px) { .intro { flex-direction: column; } } @media (pointer: coarse) { .btn.sm { padding: 6px 12px; } } @media print { [data-bib], .bib .copy { display: none !important; } }</style>
+<script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"},"svg":{"fontCache":"global","scale":1.0,"minScale":0.5,"mtextInheritFont":true,"merrorInheritFont":true,"mathmlSpacing":false,"skipAttributes":{},"exFactor":0.5},"chtml":{"scale":1.0,"minScale":0.5,"matchFontHeight":true,"mtextFont":"serif","linebreaks":{"automatic":false}}}</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js"></script>
+</head>
+<body>
+<main id="main" class="wrap page"><section class="post"><h2>
+<a href="/brain/cs234" class="url">cs234</a> / lecture 7 - imitation learning</h2>
+<p><strong>Resources:</strong></p>
+<ul><li><a href="https://youtu.be/V7CY68zH6ps?feature=shared">Lecture Video</a></li></ul>
+<h3 id="generalization-and-efficiency">Generalization and Efficiency</h3>
+<ul>
+<li>For learning in a generic MDP, it requires a large number of samples to learn a good policy $\rightarrow$ generally infeasible.</li>
+<li>Alternative: Use structure + additional knowledge to constrain and speed up reinforcement learning</li>
+<li>Reinforcement Learning: Policies guided by rewards<ul>
+<li>Pros: Simple and cheap form of supervision</li>
+<li>Cons: High sample complexity</li>
+<li>Good for simulations where data is easy and parallelization is easy</li>
+<li>Bad when actions are slow, expensive/intolerable to fail, and want to be safe</li>
+</ul>
+</li>
+</ul>
+<h3 id="reward-shaping">Reward Shaping</h3>
+<ul><li>Rewards that are dense in time closely guide the agent<ul>
+<li>Can either manually design them (brittle)</li>
+<li>Specify them through demonstrations</li>
+</ul>
+</li></ul>
+<h3 id="learning-from-demonstrations">Learning from Demonstrations</h3>
+<ul>
+<li>Types of Learning from Demonstrations: Inverse RL, Imitation Learning</li>
+<li>Expert Provides a set of demonstration trajectories (sequences of states and actions)<ul><li>Useful when its easier for an expert to demonstrate the desired behavior rather than specifying a reward function to generate the behavior or desired policy directly</li></ul>
+</li>
+<li>
+<strong>Problem Setup:</strong><ul>
+<li>Input:<ul>
+<li>State Space, Action Space</li>
+<li>Transition Model</li>
+<li>No Reward Function</li>
+<li>Set of one or more teacher’s demonstrations $(s_0, a_0, s_1, \dots) \rightarrow$ actions from teacher’s policy, $\pi^\ast$</li>
+</ul>
+</li>
+<li>Behavioral Cloning: Can we directly learn the teacher’s policy using supervised learning</li>
+<li>Inverse RL: Can we recover the reward function</li>
+<li>Apprenticeship Learning via Inverse RL: Can we use R to generate a good policy</li>
+</ul>
+</li>
+</ul>
+<h3 id="behavioral-cloning">Behavioral Cloning</h3>
+<ul><li>Formulate the problem as a standard machine learning problem<ul>
+<li>Fix a policy class: neural nets, decision trees, etc.</li>
+<li>Estimate the policy from training examples $(s_0, a_0),(s_1, a_1), \dots$</li>
+<li>Problem: Compound Errors<ul>
+<li>Supervised Learning assumed Independent + Identically Distributed (IID) Random Variables and ignores temporal structure<ul><li>Error at time $t$ has probability of $\epsilon \rightarrow E[\text{Total Errors}] \leq \epsilon T$ where T is the total number of time steps</li></ul>
+</li>
+<li>If a different action deviates from the one found in the expert example, then we come across a state space that was likely never seen before $\rightarrow$ compounds to larger errors<ul><li>Error at time $t$ has probability of $\epsilon \rightarrow E[\text{Total Errors}] \leq \epsilon(T + (T-1) + (T-2) \dots) \approx \epsilon T^2$</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li></ul>
+<h3 id="dagger-dataset-aggregation">DAGGER: Dataset Aggregation</h3>
+<ul>
+<li>Idea: Get more data from expert along the path taken by the policy computed by behavior cloning<ul><li>For every state you encounter in a trajectory, you ask the expert</li></ul>
+</li>
+<li>
+<strong>Algorithm:</strong><ul>
+<li>Initialize $D \leftarrow \emptyset$, $\hat{\pi}_1$ to any policy</li>
+<li>for i = 1 to N<ul>
+<li>Let $\pi_i = \beta_i\pi^\ast + (1-\beta)\hat{\pi}_i$</li>
+<li>Sample T trajectories using $\pi_i$</li>
+<li>Get dataset $D_i = {(s, \pi^\ast(s))}$ of visited states by $\pi_i$ and actions given by expert</li>
+<li>Aggregate datasets: $D \leftarrow D \cup D_i$</li>
+<li>Train classifier $\hat{\pi} _{i+1}$ on $D$</li>
+</ul>
+</li>
+<li>Return best $\hat{\pi}_i$ during validation</li>
+</ul>
+</li>
+</ul>
+<h3 id="feature-based-reward-function">Feature Based Reward Function</h3>
+<ul>
+<li>Given a state space, action space, and transition model</li>
+<li>Not given a reward function</li>
+<li>There exists a set of teacher demonstrations $(s_0, a_0, s_1, a_1 \dots)$ based on the teacher’s policy</li>
+<li>We want to infer the reward function<ul>
+<li>Teacher’s policy should be optimal because we cannot infer anything when its not optimal (i.e., random behavior)</li>
+<li>There can be multiple reward functions (not unique)</li>
+</ul>
+</li>
+</ul>
+<h3 id="linear-feature-reward-inverse-rl">Linear Feature Reward Inverse RL</h3>
+<ul><li>Rewards can be linear over the features: $R(s) = w^Tx(s)$ where $w \in \mathbb{R}^n , x: S \rightarrow \mathbb{R}^n$<ul>
+<li>We want to identify the weights given a set of demonstrations</li>
+<li>Value Function for a policy: $V^\pi = \mathbb{E}[\sum _{t=0}^\infty \gamma^t R(s_t)] = \mathbb{E}[\sum _{t=0}^\infty \gamma^t w^T x(s_t) \vert \pi]$<ul><li>$= w^T \mathbb{E}[\sum _{t=0}^\infty \gamma^t x(s_t) \vert \pi] = w^T \mu(\pi)$<ul><li>$\mu(\pi)(s)$: discounted weighted frequnecy of state features under policy $\pi$</li></ul>
+</li></ul>
+</li>
+</ul>
+</li></ul>
+<h3 id="apprenticeship-learning">Apprenticeship Learning</h3>
+<ul>
+<li>$V^\ast = \mathbb{E}[\sum _{t=0}^\infty \gamma^t R^\ast(s_t) \vert \pi^\ast] \geq V^\pi = \mathbb{E}[\sum _{t=0}^\infty \gamma^t R^\ast(s_t) \vert \pi]$<ul><li>Therefore we can find weights such that $w ^{\ast T} \mu(\pi^\ast) \geq w ^{\ast T} \mu(\pi) \forall \pi \neq \pi^\ast$</li></ul>
+</li>
+<li>
+<strong>Feature Matching:</strong><ul>
+<li>We want to find a reward function that the expert policy outperforms all other policies</li>
+<li>For a policy to perform as well as the expert, it suffices we have a policy where its discounted sum of feature expectations match the expert policy<ul>
+<li>$\vert\vert \mu(\pi) - \mu(\pi^\ast) \vert \vert \leq \epsilon$</li>
+<li>$\vert w^T\mu(\pi) - w^T\mu(\pi^\ast) \vert \leq \epsilon$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Algorithm:</strong><ul>
+<li>Assume: $R(s) = w^T x(s)$</li>
+<li>Initialize policy: $\pi_0$</li>
+<li>For $i = 0, 1, 2 \dots$<ul>
+<li>Find a reward function such that the teacher maximally outperforms all previous controllers<ul><li>$argmax_w max_\gamma s.t. w^T\mu(\pi^\ast) \geq w^T\mu(\pi) + \gamma \forall \pi$</li></ul>
+</li>
+<li>s.t. $\vert \vert w \vert \vert \leq 1$</li>
+<li>Find optimal control policy $\pi_i$ for the current $w$</li>
+<li>Exit if $\gamma \leq \epsilon / 2$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Ambiguity: Infinite number of reward and policies; which one should we pick?</li>
+</ul></section></main><footer class="footer"><div class="wrap"> © 2026 <a href="/">Samrat Sahoo</a>
+</div></footer><script src="/assets/js/site.js" defer></script>
+</body>
+</html>

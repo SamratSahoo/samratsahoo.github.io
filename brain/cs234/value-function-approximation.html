@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>lecture 5 - value function approximation · Samrat Sahoo</title>
+<meta name="generator" content="Jekyll v4.2.2">
+<meta property="og:title" content="lecture 5 - value function approximation">
+<meta name="author" content="Samrat Sahoo">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="Resources: Lecture Video">
+<meta property="og:description" content="Resources: Lecture Video">
+<link rel="canonical" href="https://samratsahoo.com/brain/cs234/value-function-approximation">
+<meta property="og:url" content="https://samratsahoo.com/brain/cs234/value-function-approximation">
+<meta property="og:site_name" content="Samrat Sahoo">
+<meta property="og:image" content="https://samratsahoo.com/assets/img/og.jpg">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2024-05-07T00:00:00+00:00">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="twitter:image" content="https://samratsahoo.com/assets/img/og.jpg">
+<meta property="twitter:title" content="lecture 5 - value function approximation">
+<meta name="twitter:site" content="@samratdotjs">
+<meta name="twitter:creator" content="@samratdotjs"> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Samrat Sahoo","url":"https://samratsahoo.com"},"dateModified":"2024-05-07T00:00:00+00:00","datePublished":"2024-05-07T00:00:00+00:00","description":"Resources: Lecture Video","headline":"lecture 5 - value function approximation","image":"https://samratsahoo.com/assets/img/og.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://samratsahoo.com/brain/cs234/value-function-approximation"},"url":"https://samratsahoo.com/brain/cs234/value-function-approximation"}</script><meta name="color-scheme" content="light">
+<meta name="theme-color" content="#ffffff"> <script>document.documentElement.classList.add("js");</script><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&amp;display=swap">
+<link rel="icon" type="image/webp" href="/favicon.webp">
+<link rel="alternate" type="application/atom+xml" title="Samrat Sahoo" href="/atom.xml">
+<link rel="alternate" type="application/json" title="Samrat Sahoo" href="https://samratsahoo.com/feed.json">
+<link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml">
+<style> /* Palette and type follow the DATAFARM project page: warm neutrals, Inter for text, Source Serif 4 for headings, square corners, hairline rules. */ :root { --ink: #17181a; --ink-2: #35373b; --muted: #6b6e74; --line: #e4e4e1; --line-2: #c9c9c4; --bg: #fff; --bg-soft: #f7f7f5; --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; --serif: "Source Serif 4", Georgia, "Times New Roman", serif; --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; color-scheme: light; } *, *::before, *::after { box-sizing: border-box; } html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-padding-top: 24px; } body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.6 var(--font); -webkit-font-smoothing: antialiased; } h1, h2, h3, p { margin: 0; } img, video { display: block; max-width: 100%; } a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 2px; } a:hover { text-decoration-color: currentColor; } :focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; } ::selection { background: #e6e6e1; } .wrap { max-width: 880px; margin: 0 auto; padding: 0 28px; } .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; } .nw { white-space: nowrap; } html:not(.js) .js-only { display: none; } /* ---------- buttons ---------- */ .btn { display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; border: 1px solid var(--line-2); background: var(--bg); font: 400 14px/1.4 var(--font); color: var(--ink); text-decoration: none; white-space: nowrap; cursor: pointer; } .btn:hover { border-color: var(--ink); } .btn svg { width: 15px; height: 15px; opacity: .75; flex: none; } .btn.sm { padding: 3px 11px; font-size: 13px; } .btn[aria-expanded="true"] { border-color: var(--ink); } .btn.soon { color: var(--muted); border-color: var(--line); cursor: default; } /* ---------- homepage ---------- */ .intro { display: flex; align-items: flex-start; gap: 36px; padding: 64px 0 56px; } .intro picture { flex: none; } .intro .photo { width: 168px; height: 168px; object-fit: cover; } .intro-text { min-width: 0; } .intro h1 { margin: -4px 0 14px; font: 600 36px/1.15 var(--serif); letter-spacing: -.01em; } .bio { font-size: 16.5px; color: var(--ink-2); text-wrap: pretty; } .bio p + p { margin-top: 12px; } .bio strong { color: var(--ink); font-weight: 600; } .contact { display: flex; flex-wrap: wrap; gap: 10px; margin: 22px 0 0; padding: 0; list-style: none; } .section { padding: 56px 0 24px; border-top: 1px solid var(--line); } .section-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px; margin-bottom: 18px; } .section-head h2 { font: 600 27px/1.2 var(--serif); letter-spacing: -.005em; } .section-head .note { font-size: 13.5px; color: var(--muted); } .pubs { margin: 0; padding: 0; list-style: none; } .pub { display: grid; grid-template-columns: 224px minmax(0, 1fr); gap: 28px; padding: 26px 0; border-top: 1px solid var(--line); } .pub:first-child { border-top: 0; padding-top: 12px; } .thumb { display: block; aspect-ratio: 16 / 9; overflow: hidden; background: var(--bg-soft); } .thumb video, .thumb img { width: 100%; height: 100%; object-fit: cover; } .thumb.figure { background: #fff; outline: 1px solid var(--line); outline-offset: -1px; } .thumb.figure img, .thumb.contain video, .thumb.contain img { object-fit: contain; } html:not(.js) .thumb video { display: none; } /* without JS, show the noscript still rather than native controls */ .kicker { margin-bottom: 6px; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); } .pub-title { font: 600 19px/1.3 var(--serif); letter-spacing: -.005em; text-wrap: pretty; } .pub-title a { text-decoration: none; } .pub-title a:hover { text-decoration: underline; text-decoration-color: var(--line-2); } .authors { margin-top: 6px; font-size: 15px; color: var(--ink-2); } .authors a { color: inherit; text-decoration: none; } .authors a:hover { text-decoration: underline; text-decoration-color: var(--line-2); } .authors strong { color: var(--ink); font-weight: 600; } .summary { margin-top: 8px; font-size: 14.5px; line-height: 1.55; color: var(--muted); text-wrap: pretty; } .links { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 14px 0 0; padding: 0; list-style: none; } .bib { position: relative; margin-top: 12px; } .bib pre { margin: 0; padding: 14px 16px; padding-right: 72px; border: 1px solid var(--line); background: var(--bg-soft); color: var(--ink-2); font: 12.5px/1.6 var(--mono); white-space: pre-wrap; overflow-wrap: anywhere; } .bib .copy { position: absolute; top: 8px; right: 8px; padding: 2px 9px; border: 1px solid var(--line-2); background: var(--bg); font: 400 12px/1.5 var(--font); color: var(--muted); cursor: pointer; } .bib .copy:hover { border-color: var(--ink); color: var(--ink); } .footer { border-top: 1px solid var(--line); } .footer .wrap { padding-top: 30px; padding-bottom: 40px; font-size: 13.5px; color: var(--muted); } .footer a { color: var(--muted); text-decoration: none; } .footer a:hover { color: var(--ink); } /* ---------- other pages (notes, writing, search) ---------- */ .page { padding-top: 48px; padding-bottom: 56px; } .post > h2:first-child, .posts > h1:first-child { margin: 0 0 24px; font: 600 32px/1.2 var(--serif); letter-spacing: -.01em; } .post > h2:first-child a { text-decoration: none; color: var(--muted); } .post { color: var(--ink-2); overflow-wrap: break-word; } .post h1, .post h2, .post h3, .post h4, .post h5 { margin: 1.8em 0 .6em; font-family: var(--serif); font-weight: 600; line-height: 1.3; color: var(--ink); } .post h1 { font-size: 24px; } .post h2 { font-size: 21px; } .post h3 { font-size: 18px; } .post h4, .post h5 { font-size: 16px; } .post p, .post ul, .post ol, .post pre, .post table, .post blockquote, .post figure { margin: 0 0 1em; } .post ul, .post ol { padding-left: 1.4em; } .post li + li, .post li > ul, .post li > ol { margin-top: .3em; } .post li > ul, .post li > ol { margin-bottom: 0; } .post strong, .post b { color: var(--ink); font-weight: 600; } .post img { height: auto; } .post img.mermaid { max-width: 200px; } .post code { padding: .1em .3em; background: var(--bg-soft); font: .88em/1.5 var(--mono); } .post pre { overflow-x: auto; padding: 14px 16px; border: 1px solid var(--line); background: var(--bg-soft); font: 13.5px/1.6 var(--mono); } .post pre code { padding: 0; background: none; font-size: inherit; } .post blockquote { padding-left: 1em; border-left: 2px solid var(--line-2); color: var(--muted); font-style: italic; } .post table { display: block; max-width: 100%; overflow-x: auto; border-collapse: collapse; font-size: 15px; } .post th, .post td { padding: 7px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; } .post th { font-weight: 600; color: var(--ink); border-bottom-color: var(--line-2); } .post hr { height: 1px; margin: 2em 0; border: 0; background: var(--line); } .post figcaption { font-size: 14px; color: var(--muted); } .post iframe { max-width: 100%; border: 0; } .post mjx-container[display="true"] { overflow-x: auto; overflow-y: hidden; max-width: 100%; } .post mjx-container:not([display="true"]) { /* long inline formulas scroll on their own instead of widening the page */ display: inline-block; max-width: 100%; overflow-x: auto; overflow-y: hidden; vertical-align: middle; padding-right: 6px; margin-right: -6px; } .post .meta { display: block; margin-top: 40px; font-size: 14px; color: var(--muted); } .post .meta a { color: var(--muted); } .posts > p, .posts > u, .posts > i { color: var(--muted); } .posts ul { margin: 16px 0 0; padding: 0; list-style: none; } .posts li { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 10px 0; border-top: 1px solid var(--line); } .posts li:last-child { border-bottom: 1px solid var(--line); } .posts li a { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-decoration: none; } .posts li a:hover { text-decoration: underline; text-decoration-color: var(--line-2); } .posts li time, .posts li div { flex: none; font-size: 13.5px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; } .page #search-input { padding: 10px 12px; border: 1px solid var(--line-2); background: var(--bg); color: var(--ink); font: inherit; } .page #search-input:focus { border-color: var(--ink); outline: none; } .page #results-container { margin: 12px 0; padding-left: 1.4em; } /* ---------- small screens ---------- */ @media (max-width: 640px) { .wrap { padding-left: 20px; padding-right: 20px; } .intro { gap: 20px; padding: 40px 0 44px; } .intro .photo { width: 96px; height: 96px; } .intro h1 { margin-top: 0; font-size: 30px; } .bio { font-size: 16px; } .section { padding-top: 44px; } .section-head h2 { font-size: 23px; } .pub { grid-template-columns: minmax(0, 1fr); gap: 16px; padding: 28px 0; } .thumb.contain { aspect-ratio: auto; } /* full-width here, so show non-16:9 clips at their own shape */ .thumb.contain video, .thumb.contain img { height: auto; } .page { padding-top: 32px; } .post > h2:first-child, .posts > h1:first-child { font-size: 27px; } .posts li { flex-direction: column; gap: 0; } .posts li a { white-space: normal; } } @media (max-width: 480px) { .intro { flex-direction: column; } } @media (pointer: coarse) { .btn.sm { padding: 6px 12px; } } @media print { [data-bib], .bib .copy { display: none !important; } }</style>
+<script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"},"svg":{"fontCache":"global","scale":1.0,"minScale":0.5,"mtextInheritFont":true,"merrorInheritFont":true,"mathmlSpacing":false,"skipAttributes":{},"exFactor":0.5},"chtml":{"scale":1.0,"minScale":0.5,"matchFontHeight":true,"mtextFont":"serif","linebreaks":{"automatic":false}}}</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js"></script>
+</head>
+<body>
+<main id="main" class="wrap page"><section class="post"><h2>
+<a href="/brain/cs234" class="url">cs234</a> / lecture 5 - value function approximation</h2>
+<p><strong>Resources:</strong></p>
+<ul><li><a href="https://youtu.be/buptHUzDKcE?feature=shared">Lecture Video</a></li></ul>
+<h3 id="value-function-approximation">Value Function Approximation</h3>
+<ul>
+<li>Represet the state / state-action value function as a parameterized function instead of table<ul>
+<li>$\hat{V}(s; w)$</li>
+<li>$\hat{Q}(s, a; w)$<ul><li>$w$ is a vector of parameters of a deep neural network or something simpler</li></ul>
+</li>
+</ul>
+</li>
+<li>This allows for generalization<ul>
+<li>Reduces the memory, computation, and experience needed to find a good $P, R / V / Q / \pi$</li>
+<li>Trade offs between representational capacity and memory, computation, data</li>
+</ul>
+</li>
+<li>Possible Function Approximators<ul>
+<li>Linear Combinations</li>
+<li>Neural Networks</li>
+<li>Decision Trees</li>
+<li>Nearest neighbors</li>
+<li>Fourier/wavelet bases</li>
+</ul>
+</li>
+</ul>
+<h3 id="review-gradient-descent">Review: Gradient Descent</h3>
+<ul><li>Given a function $J(w)$ that is differentiable to $w$<ul>
+<li>Find a $w$ that minimizes J</li>
+<li>Gradient: $\nabla w J(w) = \frac{dJ(w)}{dw_1}\frac{dJ(w)}{dw_2}\dots$</li>
+<li>Move parameter vector in the direction of the gradient<ul><li>$\overrightarrow{w} = \overrightarrow{w} - \alpha(\nabla w J(w))$<ul><li>$\alpha$ is the learning rate</li></ul>
+</li></ul>
+</li>
+</ul>
+</li></ul>
+<h3 id="value-function-approximation-for-policy-evaluation">Value Function Approximation for Policy Evaluation</h3>
+<ul>
+<li>Core Idea: We want to find the best representation in our space for state value pairs $(s_1, V^\pi(s_1))$</li>
+<li>In the context of stochastic gradient descent:<ul>
+<li>Minimize our loss between true value function $V^\pi(s)$ and its approximation $\hat{V}(s; w)$</li>
+<li>Use mean square error: $J(w) = E_{\pi}[(V^\pi(s) - \hat{V}(s; w))^2]$<ul><li>Perform gradient descent on this: $\Delta w = \frac{-1}{2}\alpha\nabla_w J(w)$</li></ul>
+</li>
+<li>Use stochastic gradient descent to calculate $\Delta w$ for a single point</li>
+</ul>
+</li>
+<li>Issue: we do not have an oracle that will give us the true value function of a state ($V^\pi(s)$)</li>
+</ul>
+<h3 id="model-free-value-function-approximation">Model Free Value Function Approximation</h3>
+<ul>
+<li>In model free policy evaluation we:<ul>
+<li>Followed a fixed policy</li>
+<li>Needed to estimate the state value and state-action value functions</li>
+</ul>
+</li>
+<li>During the estimate step, we also will now fit the function approximator</li>
+</ul>
+<h3 id="feature-factors">Feature Factors</h3>
+<ul><li>If a state vector is partially aliased (no information to estimate an effect once earlier features have been fit), then it is not markov</li></ul>
+<h3 id="linear-value-function-approximation">Linear Value Function Approximation</h3>
+<ul>
+<li>Features encode states for policy evaluation</li>
+<li>We can represent a value function (or state-action value function) for a policy as a weighted linear combination of features<ul>
+<li>$\hat{V}(s; w) = \sum _{j= 1}^n x_j(s)w_j = x(s)^Tw$</li>
+<li>Objective is to minimize: $J(w) = E_{\pi}[(V^\pi(s) - \hat{V}(s; w))^2]$</li>
+<li>Update = step size * prediction error * feature value<ul><li>$\Delta w = -\frac{1}{2}\alpha (2(V^\pi(s) - \hat{V^\pi}(s)))x(s)$</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="monte-carlo-value-function-approximation">Monte Carlo Value Function Approximation</h3>
+<ul>
+<li>Return $G_t$ as a noisy sample (estimate) of the true expected return</li>
+<li>We can supervised learning on (state, return) pairs: $(s_1, G_1), (s_2, G_2) \dots$<ul><li>$\Delta w = \alpha (G_t - x(s_t)^Tw)x(s_t)$</li></ul>
+</li>
+<li>
+<strong>Algorithm:</strong><ul>
+<li>Initialize $w = 0, k = 1$</li>
+<li>Loop<ul>
+<li>sample kth episode $(s _{k,1}, a _{k,1}, r _{k,1}, s _{k,2}, a _{k,2}, r _{k,2}, \dots)$ given $\pi$</li>
+<li>for $t = 1 \dots L_k$<ul><li>if First visit or every visit to (s) in episode k then<ul>
+<li>$G_t(s) = \sum _{j=t}^{L_k} r _{k,j}$</li>
+<li>Update weights<ul><li>$w = w - \alpha(G_t(s) - \hat{V}(s, w))x(s)$<ul><li>$\hat{V}(s, w) = x_s(w)$</li></ul>
+</li></ul>
+</li>
+</ul>
+</li></ul>
+</li>
+<li>$k = k+1$</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="convergence-guarantees-for-linear-value-function-approximation-for-policy-evaluation">Convergence Guarantees for Linear Value Function Approximation for Policy Evaluation</h3>
+<ul>
+<li>A markov chain with an MDP with a particular policy will converge to a probability distribution over states, $d(s)$</li>
+<li>$d(s)$: Stationary distribution over states of $\pi$<ul>
+<li>$\sum_s d(s) = 1$</li>
+<li>$d(s’) = \sum _{s} \sum _{a} \pi(s\vert a)p(s’\vert s, a)d(s)$</li>
+</ul>
+</li>
+<li>We want to define the mean squared error of a linear value function approximation for a policy relative to the true value<ul>
+<li>$MSVE(w) = \sum _{s \in S}d(s)(V^\pi(s) - \hat{V^\pi}(s; w))^2$<ul><li>Intuition: if there is a state that is visited rarely, then a bigger error is okay and vice versa</li></ul>
+</li>
+<li>$MSVE(w _{MC}) = min_w \sum _{s \in S}d(s)(V^\pi(s) - \hat{V^\pi}(s; w))^2$<ul><li>If you run monte carlo policy evaluation with VFA, this will converge to the best possible weights</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="batch-monte-carlo-value-function-approximation">Batch Monte Carlo Value Function Approximation</h3>
+<ul>
+<li>You have a set of episodes from a policy</li>
+<li>Analytically solve for best linear approximation that minimizes mean squared error on that dataset</li>
+<li>Let $G(s_i)$ be an unbiased sample of the true return, $V^\pi (s_i)$<ul>
+<li>We can find the weights that minimize the error: $argmin_w\sum _{i=1}^N(G(s_i)-x(s_i)^Tw)^2$</li>
+<li>Take the derivative and set it equal to 0 and then solve for w: $w = (X^TX)^{-1}X^TG$</li>
+</ul>
+</li>
+</ul>
+<h3 id="temporal-difference-learning-with-value-function-approximation">Temporal Difference Learning with Value Function Approximation</h3>
+<ul>
+<li>Our target value is $r + \gamma \hat{V}^\pi(s’;w)$ - however this is biased estimate of the true value of $V^\pi$</li>
+<li>Instead we can do TD learning with value function approximation on a set of data pairs $(s_1, r_1 + \hat{V}\pi(s_2; w)), (s_2, r_2 + \hat{V}\pi(s_3; w)) \dots$</li>
+<li>Then we find weights to minimize: $J(w) = E _\pi[(r_j + \hat{V}\pi(s _{j+1}; w) - \hat{V}(s_j; w))^2]$</li>
+<li>TD(0) Difference: $\Delta w = \alpha(r + \gamma x(s’)^Tw-x(s)^Tw)x(s)$</li>
+<li>
+<strong>Algorithm:</strong><ul>
+<li>Initialize $w = 0, k = 1$</li>
+<li>Loop:<ul>
+<li>Sample a tuple $(s_k, a_k, r_k, s _{k+1})$</li>
+<li>Update Weights: $w = w + \alpha(r + \gamma x(s’)^Tw-x(s)^Tw)x(s)$</li>
+<li>$k = k+1$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Convergence:<ul>
+<li>$MSVE(w _{TD}) = \frac{1}{1-\gamma}min_w \sum _{s \in S}d(s)(V^\pi(s) - \hat{V^\pi}(s; w))^2$</li>
+<li>Weights generateed from convergence is within a constant factor of the minimum MSVE error possible<ul><li>Not quite as good as Monte Carlo</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="control-using-value-function-approximation">Control Using Value Function Approximation</h3>
+<ul>
+<li>$\hat{Q}^\pi(s, a; w) \approx Q^\pi$</li>
+<li>Approximate policy evaluation using value function approximation</li>
+<li>Perform $\epsilon$-greedy policy improvement</li>
+<li>Can be unstable because of the intersection of function approximation, sampling, bootstrapping, and off-policy learning</li>
+</ul>
+<h3 id="action-value-approximation-with-an-oracle">Action-Value Approximation with an Oracle</h3>
+<ul><li>Minimize the following with stochastic gradient descent: $J(w) = E_{\pi}[(Q^\pi(s, a) - \hat{V}(s, a; w))^2]$</li></ul>
+<h3 id="linear-state-action-value-approximation-with-an-oracle">Linear State Action Value Approximation with an Oracle</h3>
+<ul><li>Features encode states and actions<ul>
+<li>$\hat{Q}(s, a; w) = \sum _{j= 1}^n x_j(s, a)w_j = x(s, a)^Tw$</li>
+<li>Use stochastic gradient descent to update: $\nabla_w J(w) = \nabla_w E_{\pi}[(Q^\pi(s, a) - \hat{V}(s, a; w))^2]$</li>
+</ul>
+</li></ul>
+<h3 id="incremental-model-free-control-approaches">Incremental Model-Free Control Approaches</h3>
+<ul><li>Similar to policy evaluation: true state-action value for a function is unknown so just substitute a target value<ul>
+<li>Monte Carlo: $\Delta w = \alpha (G_t - \hat{Q}(s_t, a_t;w))\nabla_w\hat{Q}(s_t, a_t;w)$</li>
+<li>SARSA: $\Delta w = \alpha (r + \gamma \hat{Q}^\pi(s’, a’;w) - \hat{Q}(s_t, a_t;w))\nabla_w\hat{Q}(s_t, a_t;w)$</li>
+<li>Q-Learning: $\Delta w = \alpha (r + \gamma max _{a’} \hat{Q}^\pi(s’, a’;w) - \hat{Q}(s_t, a_t;w))\nabla_w\hat{Q}(s_t, a_t;w)$</li>
+</ul>
+</li></ul>
+<h3 id="convergence-of-td-methods-with-vfa">Convergence of TD Methods with VFA</h3>
+<ul><li>Value function approximation is not necessarily a contraction (like with bellman operators)<ul><li>This means the value can diverge</li></ul>
+</li></ul>
+<p><strong>Convergence Guarantees:</strong></p>
+<table>
+<thead><tr>
+<th style="text-align: left"> </th>
+<th style="text-align: left">Tabular</th>
+<th style="text-align: left">Linear VFA</th>
+<th style="text-align: left">Nonlinear VFA</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align: left"><strong>Monte Carlo Control</strong></td>
+<td style="text-align: left">✅</td>
+<td style="text-align: left">✅(might be oscillation)</td>
+<td style="text-align: left">❌</td>
+</tr>
+<tr>
+<td style="text-align: left"><strong>SARSA</strong></td>
+<td style="text-align: left">✅</td>
+<td style="text-align: left">✅ (might be oscillation)</td>
+<td style="text-align: left">❌</td>
+</tr>
+<tr>
+<td style="text-align: left"><strong>Q-Learning</strong></td>
+<td style="text-align: left">✅</td>
+<td style="text-align: left">❌</td>
+<td style="text-align: left">❌</td>
+</tr>
+</tbody>
+</table></section></main><footer class="footer"><div class="wrap"> © 2026 <a href="/">Samrat Sahoo</a>
+</div></footer><script src="/assets/js/site.js" defer></script>
+</body>
+</html>
