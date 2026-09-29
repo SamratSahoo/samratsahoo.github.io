@@ -26,6 +26,7 @@
   links:
     - { label: Website, url: "https://prpl-group.com/tandem/" }
     - { label: arXiv, url: "https://arxiv.org/abs/2609.28314" }
+    - { label: Code, url: "https://github.com/SamratSahoo/TANDEM" }
 
 - key: datafarm
   title: "DATAFARM: Distribution-Aligned Task and Motion Planning for Fine-Tuning Vision-Language-Action Models"
@@ -41,6 +42,7 @@
   links:
     - { label: Website, url: "https://prpl-group.com/datafarm/" }
     - { label: arXiv, url: "https://arxiv.org/abs/2609.12316" }
+    - { label: Code, url: "https://github.com/SamratSahoo/DATAFARM" }
 
 - key: demomimic
   title: "One Demonstration, Many Objects: Generalizing Manipulation via Local Contact Geometry"
