@@ -21,8 +21,9 @@
     fit: contain
     size: [962, 270]
   summary: >-
-    Combines task and motion planning with on-demand human teleoperation, so people only demonstrate
-    the steps the planner can't do.
+    TANDEM (Task and Motion Planning with As-Needed Demonstrations) is a system that combines task and
+    motion planning with selective human teleoperation to collect demonstrations for tasks beyond a
+    planner's capabilities.
   links:
     - { label: Website, url: "https://prpl-group.com/tandem/" }
     - { label: arXiv, url: "https://arxiv.org/abs/2609.28314" }
@@ -37,8 +38,8 @@
     video: /assets/pubs/datafarm.mp4
     poster: /assets/pubs/datafarm.webp
   summary: >-
-    Aligns planner-generated demonstrations with a VLA's pretraining distribution, making task and
-    motion planning data nearly as useful as human teleoperation for fine-tuning.
+    DATAFARM uses the pretraining distribution to guide task and motion planning trajectory
+    generation, aligning joint configurations, motion style and timing.
   links:
     - { label: Website, url: "https://prpl-group.com/datafarm/" }
     - { label: arXiv, url: "https://arxiv.org/abs/2609.12316" }
