@@ -60,6 +60,21 @@
     - { label: Website, url: "https://demomimic.github.io/" }
     - { label: arXiv, url: "https://arxiv.org/abs/2609.01938" }
 
+- key: roboarcade
+  title: "RoboARCade: Benchmarking Agentic Robot Control"
+  url: https://roboarcade.org/
+  authors: [Satvik Sharma, Hengyuan Hu, Mihika Kamat, Samrat Sahoo, Dorsa Sadigh, Jeannette Bohg]
+  venue: Under review at ICLR 2027
+  media:
+    video: /assets/pubs/roboarcade.mp4
+    poster: /assets/pubs/roboarcade.webp
+  summary: >-
+    RoboARCade is a benchmark of long-horizon manipulation tasks across three robot embodiments that
+    tests the in-context adaptation, memory, and reasoning of foundation-model agents controlling robots.
+  links:
+    - { label: Website, url: "https://roboarcade.org/" }
+    - { label: arXiv, url: "https://arxiv.org/abs/2611.08209" }
+
 - key: scatter
   title: "Scatter Protocol: An Incentivized and Trustless Protocol for Decentralized Federated Learning"
   url: https://ieeexplore.ieee.org/document/10664423
