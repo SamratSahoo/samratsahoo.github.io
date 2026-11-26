@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unifying Count-Based Exploration and Intrinsic Motivation · Samrat Sahoo</title>
+<meta name="generator" content="Jekyll v4.2.2">
+<meta property="og:title" content="Unifying Count-Based Exploration and Intrinsic Motivation">
+<meta name="author" content="Samrat Sahoo">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="A paper about cts-based pseudocounts">
+<meta property="og:description" content="A paper about cts-based pseudocounts">
+<link rel="canonical" href="https://samratsahoo.com/2025/05/23/cts-based-pseudocounts">
+<meta property="og:url" content="https://samratsahoo.com/2025/05/23/cts-based-pseudocounts">
+<meta property="og:site_name" content="Samrat Sahoo">
+<meta property="og:image" content="https://samratsahoo.com/assets/img/og.jpg">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2025-05-23T00:00:00+00:00">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="twitter:image" content="https://samratsahoo.com/assets/img/og.jpg">
+<meta property="twitter:title" content="Unifying Count-Based Exploration and Intrinsic Motivation">
+<meta name="twitter:site" content="@samratdotjs">
+<meta name="twitter:creator" content="@samratdotjs"> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Samrat Sahoo","url":"https://samratsahoo.com"},"dateModified":"2025-05-23T00:00:00+00:00","datePublished":"2025-05-23T00:00:00+00:00","description":"A paper about cts-based pseudocounts","headline":"Unifying Count-Based Exploration and Intrinsic Motivation","image":"https://samratsahoo.com/assets/img/og.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://samratsahoo.com/2025/05/23/cts-based-pseudocounts"},"url":"https://samratsahoo.com/2025/05/23/cts-based-pseudocounts"}</script><meta name="color-scheme" content="light">
+<meta name="theme-color" content="#ffffff"> <script>document.documentElement.classList.add("js");</script><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&amp;display=swap">
+<link rel="icon" type="image/webp" href="/favicon.webp">
+<link rel="alternate" type="application/atom+xml" title="Samrat Sahoo" href="/atom.xml">
+<link rel="alternate" type="application/json" title="Samrat Sahoo" href="https://samratsahoo.com/feed.json">
+<link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml">
+<style> /* Palette and type follow the DATAFARM project page: warm neutrals, Inter for text, Source Serif 4 for headings, square corners, hairline rules. */ :root { --ink: #17181a; --ink-2: #35373b; --muted: #6b6e74; --line: #e4e4e1; --line-2: #c9c9c4; --bg: #fff; --bg-soft: #f7f7f5; --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; --serif: "Source Serif 4", Georgia, "Times New Roman", serif; --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; color-scheme: light; } *, *::before, *::after { box-sizing: border-box; } html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-padding-top: 24px; } body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.6 var(--font); -webkit-font-smoothing: antialiased; } h1, h2, h3, p { margin: 0; } img, video { display: block; max-width: 100%; } a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 2px; } a:hover { text-decoration-color: currentColor; } :focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; } ::selection { background: #e6e6e1; } .wrap { max-width: 880px; margin: 0 auto; padding: 0 28px; } .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; } .nw { white-space: nowrap; } html:not(.js) .js-only { display: none; } /* ---------- buttons ---------- */ .btn { display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; border: 1px solid var(--line-2); background: var(--bg); font: 400 14px/1.4 var(--font); color: var(--ink); text-decoration: none; white-space: nowrap; cursor: pointer; } .btn:hover { border-color: var(--ink); } .btn svg { width: 15px; height: 15px; opacity: .75; flex: none; } .btn.sm { padding: 3px 11px; font-size: 13px; } .btn[aria-expanded="true"] { border-color: var(--ink); } .btn.soon { color: var(--muted); border-color: var(--line); cursor: default; } /* ---------- homepage ---------- */ .intro { display: flex; align-items: flex-start; gap: 36px; padding: 64px 0 56px; } .intro picture { flex: none; } .intro .photo { width: 168px; height: 168px; object-fit: cover; } .intro-text { min-width: 0; } .intro h1 { margin: -4px 0 14px; font: 600 36px/1.15 var(--serif); letter-spacing: -.01em; } .bio { font-size: 16.5px; color: var(--ink-2); text-wrap: pretty; } .bio p + p { margin-top: 12px; } .bio strong { color: var(--ink); font-weight: 600; } .contact { display: flex; flex-wrap: wrap; gap: 10px; margin: 22px 0 0; padding: 0; list-style: none; } .section { padding: 56px 0 24px; border-top: 1px solid var(--line); } .section-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px; margin-bottom: 18px; } .section-head h2 { font: 600 27px/1.2 var(--serif); letter-spacing: -.005em; } .section-head .note { font-size: 13.5px; color: var(--muted); } .pubs { margin: 0; padding: 0; list-style: none; } .pub { display: grid; grid-template-columns: 224px minmax(0, 1fr); gap: 28px; padding: 26px 0; border-top: 1px solid var(--line); } .pub:first-child { border-top: 0; padding-top: 12px; } .thumb { display: block; aspect-ratio: 16 / 9; overflow: hidden; background: var(--bg-soft); } .thumb video, .thumb img { width: 100%; height: 100%; object-fit: cover; } .thumb.figure { background: #fff; outline: 1px solid var(--line); outline-offset: -1px; } .thumb.figure img, .thumb.contain video, .thumb.contain img { object-fit: contain; } html:not(.js) .thumb video { display: none; } /* without JS, show the noscript still rather than native controls */ .kicker { margin-bottom: 6px; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); } .pub-title { font: 600 19px/1.3 var(--serif); letter-spacing: -.005em; text-wrap: pretty; } .pub-title a { text-decoration: none; } .pub-title a:hover { text-decoration: underline; text-decoration-color: var(--line-2); } .authors { margin-top: 6px; font-size: 15px; color: var(--ink-2); } .authors a { color: inherit; text-decoration: none; } .authors a:hover { text-decoration: underline; text-decoration-color: var(--line-2); } .authors strong { color: var(--ink); font-weight: 600; } .summary { margin-top: 8px; font-size: 14.5px; line-height: 1.55; color: var(--muted); text-wrap: pretty; } .links { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 14px 0 0; padding: 0; list-style: none; } .bib { position: relative; margin-top: 12px; } .bib pre { margin: 0; padding: 14px 16px; padding-right: 72px; border: 1px solid var(--line); background: var(--bg-soft); color: var(--ink-2); font: 12.5px/1.6 var(--mono); white-space: pre-wrap; overflow-wrap: anywhere; } .bib .copy { position: absolute; top: 8px; right: 8px; padding: 2px 9px; border: 1px solid var(--line-2); background: var(--bg); font: 400 12px/1.5 var(--font); color: var(--muted); cursor: pointer; } .bib .copy:hover { border-color: var(--ink); color: var(--ink); } .footer { border-top: 1px solid var(--line); } .footer .wrap { padding-top: 30px; padding-bottom: 40px; font-size: 13.5px; color: var(--muted); } .footer a { color: var(--muted); text-decoration: none; } .footer a:hover { color: var(--ink); } /* ---------- other pages (notes, writing, search) ---------- */ .page { padding-top: 48px; padding-bottom: 56px; } .post > h2:first-child, .posts > h1:first-child { margin: 0 0 24px; font: 600 32px/1.2 var(--serif); letter-spacing: -.01em; } .post > h2:first-child a { text-decoration: none; color: var(--muted); } .post { color: var(--ink-2); overflow-wrap: break-word; } .post h1, .post h2, .post h3, .post h4, .post h5 { margin: 1.8em 0 .6em; font-family: var(--serif); font-weight: 600; line-height: 1.3; color: var(--ink); } .post h1 { font-size: 24px; } .post h2 { font-size: 21px; } .post h3 { font-size: 18px; } .post h4, .post h5 { font-size: 16px; } .post p, .post ul, .post ol, .post pre, .post table, .post blockquote, .post figure { margin: 0 0 1em; } .post ul, .post ol { padding-left: 1.4em; } .post li + li, .post li > ul, .post li > ol { margin-top: .3em; } .post li > ul, .post li > ol { margin-bottom: 0; } .post strong, .post b { color: var(--ink); font-weight: 600; } .post img { height: auto; } .post img.mermaid { max-width: 200px; } .post code { padding: .1em .3em; background: var(--bg-soft); font: .88em/1.5 var(--mono); } .post pre { overflow-x: auto; padding: 14px 16px; border: 1px solid var(--line); background: var(--bg-soft); font: 13.5px/1.6 var(--mono); } .post pre code { padding: 0; background: none; font-size: inherit; } .post blockquote { padding-left: 1em; border-left: 2px solid var(--line-2); color: var(--muted); font-style: italic; } .post table { display: block; max-width: 100%; overflow-x: auto; border-collapse: collapse; font-size: 15px; } .post th, .post td { padding: 7px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; } .post th { font-weight: 600; color: var(--ink); border-bottom-color: var(--line-2); } .post hr { height: 1px; margin: 2em 0; border: 0; background: var(--line); } .post figcaption { font-size: 14px; color: var(--muted); } .post iframe { max-width: 100%; border: 0; } .post mjx-container[display="true"] { overflow-x: auto; overflow-y: hidden; max-width: 100%; } .post mjx-container:not([display="true"]) { /* long inline formulas scroll on their own instead of widening the page */ display: inline-block; max-width: 100%; overflow-x: auto; overflow-y: hidden; vertical-align: middle; padding-right: 6px; margin-right: -6px; } .post .meta { display: block; margin-top: 40px; font-size: 14px; color: var(--muted); } .post .meta a { color: var(--muted); } .posts > p, .posts > u, .posts > i { color: var(--muted); } .posts ul { margin: 16px 0 0; padding: 0; list-style: none; } .posts li { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 10px 0; border-top: 1px solid var(--line); } .posts li:last-child { border-bottom: 1px solid var(--line); } .posts li a { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-decoration: none; } .posts li a:hover { text-decoration: underline; text-decoration-color: var(--line-2); } .posts li time, .posts li div { flex: none; font-size: 13.5px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; } .page #search-input { padding: 10px 12px; border: 1px solid var(--line-2); background: var(--bg); color: var(--ink); font: inherit; } .page #search-input:focus { border-color: var(--ink); outline: none; } .page #results-container { margin: 12px 0; padding-left: 1.4em; } /* ---------- small screens ---------- */ @media (max-width: 640px) { .wrap { padding-left: 20px; padding-right: 20px; } .intro { gap: 20px; padding: 40px 0 44px; } .intro .photo { width: 96px; height: 96px; } .intro h1 { margin-top: 0; font-size: 30px; } .bio { font-size: 16px; } .section { padding-top: 44px; } .section-head h2 { font-size: 23px; } .pub { grid-template-columns: minmax(0, 1fr); gap: 16px; padding: 28px 0; } .thumb.contain { aspect-ratio: auto; } /* full-width here, so show non-16:9 clips at their own shape */ .thumb.contain video, .thumb.contain img { height: auto; } .page { padding-top: 32px; } .post > h2:first-child, .posts > h1:first-child { font-size: 27px; } .posts li { flex-direction: column; gap: 0; } .posts li a { white-space: normal; } } @media (max-width: 480px) { .intro { flex-direction: column; } } @media (pointer: coarse) { .btn.sm { padding: 6px 12px; } } @media print { [data-bib], .bib .copy { display: none !important; } }</style>
+<script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"},"svg":{"fontCache":"global","scale":1.0,"minScale":0.5,"mtextInheritFont":true,"merrorInheritFont":true,"mathmlSpacing":false,"skipAttributes":{},"exFactor":0.5},"chtml":{"scale":1.0,"minScale":0.5,"matchFontHeight":true,"mtextFont":"serif","linebreaks":{"automatic":false}}}</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js"></script>
+</head>
+<body>
+<main id="main" class="wrap page"><section class="post"><h2>Unifying Count-Based Exploration and Intrinsic Motivation</h2>
+<ul>
+<li>
+<strong>Resources</strong><ul><li>
+<a href="https://arxiv.org/abs/1606.01868">Paper</a> <br><br>
+</li></ul>
+</li>
+<li>
+<strong>Introduction</strong><ul>
+<li>Exploration looks at reducing uncertainty over environment’s reward + dynamics<ul>
+<li>Uncertainty quantified by confidence intervals or posterior</li>
+<li>Confidence intervals + posterior shrink inversely to square root of visit count $N(x,a)$</li>
+</ul>
+</li>
+<li>Model-Based Interval Bonuses with Exploration Bonus solves an augmented bellman equation<ul><li>$V(x) = max _{a \in \mathcal{A}}[\hat{R}(x,a) + \gamma \mathbb{E} _{\hat{P}}[V(x’)] + \beta N(x,a)^{- 1/2}]$</li></ul>
+</li>
+<li>Count based methods don’t work well in large domains where states are rarely visited more than once</li>
+<li>Intrinsic motivation provides guidance for exploration<ul><li>Learning Progress: Guide based on prediction error<ul><li>$e_n(A) - e _{n+1}(A)$: difference in error over some event A at time $n$ and $n+1$</li></ul>
+</li></ul>
+</li>
+<li>Intrinsic motivation equivalent to count based<ul>
+<li>Information gain (KL between prior + posterior) can be related to confidence intervals</li>
+<li>Pseudo Count: Connects information gain as learning progress and count based exploration</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Notation</strong><ul>
+<li>$\chi$: Countable state space<ul>
+<li>$x _{1:n} \in \chi^n$: Sequence of length n</li>
+<li>$\chi^\ast$: Set of finite sequences</li>
+<li>$x _{1:n}x$: concatenation of state to sequence</li>
+<li>$\epsilon$: Empty sequence</li>
+</ul>
+</li>
+<li>$\rho_n (x) = \rho(x; x _{1:n})$: conditional probability of $X _{n+1} = x$ given $X_1 \dots X_n = x _{1:n}$</li>
+<li>$\mu_n (x) = \mu(x; x _{1:n}) = \frac{N_n(x)}{n}$: Empirical distribution derived from a sequence<ul>
+<li>$N_n$: empirical count function (can be extended to state-action spaces as well; i.e., $N_n(x,a)$)</li>
+<li>Limit Point (Convergence point): markov chain stationary distribution</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>From Densities to Counts</strong><ul>
+<li>$N_n(x)$ almost always 0<ul><li>Doesn’t tell us state novelty</li></ul>
+</li>
+<li>
+<strong>Pseudo-Counts and the Recoding Probability</strong><ul>
+<li>Recoding probability of state $x$: $\rho_n’(x) = \rho(x; x _{1:n}x)$<ul><li>Probability assigned to $x$ after observing new occurence of $x$</li></ul>
+</li>
+<li>Two unknowns<ul>
+<li>Pseudo-count function: $\hat{N_n}(x)$</li>
+<li>Pseduo-count total: $\hat{n}$</li>
+<li>Constraint 1: $\rho_n(x) = \frac{\hat{N_n}(x)}{\hat{n}}$</li>
+<li>Constraint 2: $\rho_n’(x) = \frac{\hat{N_n}(x)+1}{\hat{n}+1}$</li>
+<li>Derive pseduo count: $\hat{N_n}(x) = \frac{\rho_n(x) (1 - \rho_n’(x))}{\rho_n’(x)- \rho_n(x)} = \hat{n}\rho_n(x)$</li>
+</ul>
+</li>
+<li>Learning-Positive Density Model<ul>
+<li>Learning Positive: If for all $x _{1:n} \in \chi$ and $x \in \chi$: $\rho_n’(x) \geq \rho_n(x)$<ul>
+<li>$\hat{N_n}(x) \geq 0$ iff $\rho$ is learning positive</li>
+<li>$\hat{N_n}(x) = 0$ iff $\rho_n(x) = 0$</li>
+<li>$\hat{N_n}(x) = \infty$ iff $\rho_n(x) = \rho_n’(x)$</li>
+</ul>
+</li>
+<li>If $\rho_n = \mu_n$, then $\hat{N}_n = N_n$</li>
+<li>If model generalizes across states, then so do pesudo counts</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Estimating the Frequency of a Salient Event in FREEWAY</strong><ul>
+<li>Event of interest: Chicken has reached the very top of the screen</li>
+<li>Apply 250,000 steps of waiting followed by 250,000 steps of going up</li>
+<li>Pseduo count is almost 0 on first occurrence of salient event<ul><li>Increases slightly during 3rd period</li></ul>
+</li>
+<li>Pseudo counts are a fraction of real visit counts</li>
+<li>Ratio of pseudo-counts is different from ratio of real counts</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>The Connection to Intrinsic Motivation</strong><ul>
+<li>Information gain in relation to mixture model, $\xi$, over class of density models $\mathcal{M}$<ul>
+<li>$\xi_n(x) = \xi(x; x _{1:n}) = \int _{\rho \in \mathcal{M}} w_n(\rho) \rho(x; x _{1:n})d \rho$<ul><li>$w_n(\rho)$: Posterior weight of $\rho$<ul>
+<li>$w _{n+1}(\rho) = w_n(\rho, x _{n+1})$</li>
+<li>$w_n(\rho, x) = \frac{w_n(\rho)\rho(x; x _{1:n})}{\xi_n(x)}$</li>
+</ul>
+</li></ul>
+</li>
+<li>Information Gain from observing $x$: $IG_n(x) = IG(x; x _{1:n}) = KL(w(\cdot, x) \vert \vert w_n)$<ul><li>Difficult to compute so compute prediction gain instead: $PG_n(x) = \log \rho_n’(x) - \log \rho_n(x)$<ul>
+<li>If $\rho$ is learning-positive, then prediction gain is non-negative</li>
+<li>Pseudo-count w.r.t. PG: $\hat{N}_n(x) \approx (e^{PG_n(x)} -1)^{-1}$</li>
+</ul>
+</li></ul>
+</li>
+</ul>
+</li>
+<li>Theorem:<ul>
+<li>$IG_n(x) \leq PG_n(x) \leq \hat{N}_n(x)^{-1}$</li>
+<li>$PG_n(x) \leq \hat{N}_n(x)^{-\frac{1}{2}}$<ul>
+<li>Using an exploration bonus proportional to $\hat{N}_n(x)^{-\frac{1}{2}}$ leads to behavior as exploratory as the one derived from information gain bonus</li>
+<li>Since pseudo counts correspond to empirical counts in tabular setting, this preserves theoretical guarantees</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>For existing intrinsic motivation bonuses<ul>
+<li>Bonuses proportional to IG or PG are insufficient for optimal exploration</li>
+<li>Too little exploration relative to pseudo-counts<ul><li>Same conclusion for bonuses proportional to L1/L2 distance between $\xi_n’, \xi_n$</li></ul>
+</li>
+</ul>
+</li>
+<li>Pseudo counts don’t need to learn reward/dynamics model unlike some IM algorithms<ul><li>Learning this model means optimality guarantees can’t exist</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Asymptotic Analysis</strong><ul>
+<li>Assumptions: Let $r(x) = \lim _{n \rightarrow \infty} \frac{\rho_n(x)}{\mu_n(x)}$ and $\dot r(x) = \lim _{n \rightarrow \infty}\frac{\rho_n’(x) - \rho_n(x)}{\mu_n’(x) - \mu(x)}$ exist for all $x$ and $\dot r(x) &gt; 0$<ul>
+<li>First assumption tells us there should be a $r(x) &lt; 1$ unless $\rho_n \rightarrow \mu$</li>
+<li>Second assumption restricts learning rate of $\rho$ relative to $\mu$</li>
+<li>First assumption tells us $\rho_n(x)$ and $\rho_n’(x)$ have a common limit</li>
+</ul>
+</li>
+<li>Theorem: Ratio of pseudo-counts to empirical counts exists for all $x$<ul><li>$\lim _{n \rightarrow \infty} \frac{\hat{N}_n(x)}{N_n(x)} = \frac{r(x)}{\dot r(x)}(\frac{1 - \mu(x)r(x)}{1 - \mu(x)})$</li></ul>
+</li>
+<li>Relative rate of change plays role in ratio of pseudo to empirical counts<ul>
+<li>Density model update: $\rho_n(x) = (1 - \alpha_n)\rho _{n-1}(x) + \alpha_n \mathbb{I}(x_n = x)$</li>
+<li>When $\alpha_n = \frac{1}{n}$, this update rule turns into empirical distribution</li>
+<li>For $n^{-\frac{2}{3}}$, it turns into a stochastic approximation<ul>
+<li>$\lim _{n \rightarrow \infty} \rho_n(x) = \mu(x)$</li>
+<li>$\lim _{n \rightarrow \infty} \frac{\rho_n’(x) - \rho_n(x)}{\mu_n’(x) - \mu(x)} = \infty$ because $\mu_n’(x) - \mu(x) = \frac{1}{n}(1 - \mu_n’(x))$<ul><li>We should require $\rho$ to converge at $\Theta(1/n)$ rate for comparisons to be meaningful</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Corollary: Count based estimator: $\rho_n(x) = \frac{N_n(x) + \phi(x)}{n + \sum _{x’ \in \chi}\phi(x’)}$<ul>
+<li>Where $\chi(x) &gt; 0$ and $\sum _{x \in \chi}\phi(x) &lt; \infty$</li>
+<li>$\hat{N}_n(x) / N(x) \rightarrow 1$ for all $x$ where $\mu(x) &gt; 0$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Empirical Evaluation</strong><ul>
+<li>
+<strong>Exploration in Hard Atari 2600 Games</strong><ul>
+<li>Use bonus: $R_n^+ (x,a) = \beta(\hat{N}_n(x) + 0.01)^{-\frac{1}{2}}$</li>
+<li>Compared to optimistic initialization</li>
+<li>Trained agents with DQNs (but with mixed double Q learning target with MC return)</li>
+<li>Count based exploration allows us to make quick progress<ul><li>Optimistic initialization yields similar performance to DQN</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Exploration for Actor-Critic Methods</strong><ul>
+<li>Compared to A3C with and without exploration bonus<ul><li>Augmented algorithm is called A3C+</li></ul>
+</li>
+<li>A3C fails to learn on 15 games whereas A3C+ fails on 10</li>
+<li>A3C+ has higher median performance and signifcantly outperforms on a quarter of the games</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Future Directions</strong><ul>
+<li>Induced Metric: Choice of density model induces a metric over state space</li>
+<li>Compatible Value Function: There may be mismatch in learning rates between value functions and density model</li>
+<li>Continuous Case: This paper focuses on countable number of state spaces. We should consider continuous ones</li>
+</ul>
+</li>
+</ul>
+<span class="meta"><time datetime="2025-05-23T00:00:00+00:00">May 23, 2025</time> · <a href="/tags/research">research</a></span></section></main><footer class="footer"><div class="wrap"> © 2026 <a href="/">Samrat Sahoo</a>
+</div></footer><script src="/assets/js/site.js" defer></script>
+</body>
+</html>

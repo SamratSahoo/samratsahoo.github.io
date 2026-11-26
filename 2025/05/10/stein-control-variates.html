@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Action-dependent Control Variates for Policy Optimization via Stein’s Identity · Samrat Sahoo</title>
+<meta name="generator" content="Jekyll v4.2.2">
+<meta property="og:title" content="Action-dependent Control Variates for Policy Optimization via Stein’s Identity">
+<meta name="author" content="Samrat Sahoo">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="A paper about stein control variates">
+<meta property="og:description" content="A paper about stein control variates">
+<link rel="canonical" href="https://samratsahoo.com/2025/05/10/stein-control-variates">
+<meta property="og:url" content="https://samratsahoo.com/2025/05/10/stein-control-variates">
+<meta property="og:site_name" content="Samrat Sahoo">
+<meta property="og:image" content="https://samratsahoo.com/assets/img/og.jpg">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2025-05-10T00:00:00+00:00">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="twitter:image" content="https://samratsahoo.com/assets/img/og.jpg">
+<meta property="twitter:title" content="Action-dependent Control Variates for Policy Optimization via Stein’s Identity">
+<meta name="twitter:site" content="@samratdotjs">
+<meta name="twitter:creator" content="@samratdotjs"> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Samrat Sahoo","url":"https://samratsahoo.com"},"dateModified":"2025-05-10T00:00:00+00:00","datePublished":"2025-05-10T00:00:00+00:00","description":"A paper about stein control variates","headline":"Action-dependent Control Variates for Policy Optimization via Stein’s Identity","image":"https://samratsahoo.com/assets/img/og.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://samratsahoo.com/2025/05/10/stein-control-variates"},"url":"https://samratsahoo.com/2025/05/10/stein-control-variates"}</script><meta name="color-scheme" content="light">
+<meta name="theme-color" content="#ffffff"> <script>document.documentElement.classList.add("js");</script><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&amp;display=swap">
+<link rel="icon" type="image/webp" href="/favicon.webp">
+<link rel="alternate" type="application/atom+xml" title="Samrat Sahoo" href="/atom.xml">
+<link rel="alternate" type="application/json" title="Samrat Sahoo" href="https://samratsahoo.com/feed.json">
+<link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml">
+<style> /* Palette and type follow the DATAFARM project page: warm neutrals, Inter for text, Source Serif 4 for headings, square corners, hairline rules. */ :root { --ink: #17181a; --ink-2: #35373b; --muted: #6b6e74; --line: #e4e4e1; --line-2: #c9c9c4; --bg: #fff; --bg-soft: #f7f7f5; --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; --serif: "Source Serif 4", Georgia, "Times New Roman", serif; --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; color-scheme: light; } *, *::before, *::after { box-sizing: border-box; } html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-padding-top: 24px; } body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.6 var(--font); -webkit-font-smoothing: antialiased; } h1, h2, h3, p { margin: 0; } img, video { display: block; max-width: 100%; } a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 2px; } a:hover { text-decoration-color: currentColor; } :focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; } ::selection { background: #e6e6e1; } .wrap { max-width: 880px; margin: 0 auto; padding: 0 28px; } .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; } .nw { white-space: nowrap; } html:not(.js) .js-only { display: none; } /* ---------- buttons ---------- */ .btn { display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; border: 1px solid var(--line-2); background: var(--bg); font: 400 14px/1.4 var(--font); color: var(--ink); text-decoration: none; white-space: nowrap; cursor: pointer; } .btn:hover { border-color: var(--ink); } .btn svg { width: 15px; height: 15px; opacity: .75; flex: none; } .btn.sm { padding: 3px 11px; font-size: 13px; } .btn[aria-expanded="true"] { border-color: var(--ink); } .btn.soon { color: var(--muted); border-color: var(--line); cursor: default; } /* ---------- homepage ---------- */ .intro { display: flex; align-items: flex-start; gap: 36px; padding: 64px 0 56px; } .intro picture { flex: none; } .intro .photo { width: 168px; height: 168px; object-fit: cover; } .intro-text { min-width: 0; } .intro h1 { margin: -4px 0 14px; font: 600 36px/1.15 var(--serif); letter-spacing: -.01em; } .bio { font-size: 16.5px; color: var(--ink-2); text-wrap: pretty; } .bio p + p { margin-top: 12px; } .bio strong { color: var(--ink); font-weight: 600; } .contact { display: flex; flex-wrap: wrap; gap: 10px; margin: 22px 0 0; padding: 0; list-style: none; } .section { padding: 56px 0 24px; border-top: 1px solid var(--line); } .section-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px; margin-bottom: 18px; } .section-head h2 { font: 600 27px/1.2 var(--serif); letter-spacing: -.005em; } .section-head .note { font-size: 13.5px; color: var(--muted); } .pubs { margin: 0; padding: 0; list-style: none; } .pub { display: grid; grid-template-columns: 224px minmax(0, 1fr); gap: 28px; padding: 26px 0; border-top: 1px solid var(--line); } .pub:first-child { border-top: 0; padding-top: 12px; } .thumb { display: block; aspect-ratio: 16 / 9; overflow: hidden; background: var(--bg-soft); } .thumb video, .thumb img { width: 100%; height: 100%; object-fit: cover; } .thumb.figure { background: #fff; outline: 1px solid var(--line); outline-offset: -1px; } .thumb.figure img, .thumb.contain video, .thumb.contain img { object-fit: contain; } html:not(.js) .thumb video { display: none; } /* without JS, show the noscript still rather than native controls */ .kicker { margin-bottom: 6px; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); } .pub-title { font: 600 19px/1.3 var(--serif); letter-spacing: -.005em; text-wrap: pretty; } .pub-title a { text-decoration: none; } .pub-title a:hover { text-decoration: underline; text-decoration-color: var(--line-2); } .authors { margin-top: 6px; font-size: 15px; color: var(--ink-2); } .authors a { color: inherit; text-decoration: none; } .authors a:hover { text-decoration: underline; text-decoration-color: var(--line-2); } .authors strong { color: var(--ink); font-weight: 600; } .summary { margin-top: 8px; font-size: 14.5px; line-height: 1.55; color: var(--muted); text-wrap: pretty; } .links { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 14px 0 0; padding: 0; list-style: none; } .bib { position: relative; margin-top: 12px; } .bib pre { margin: 0; padding: 14px 16px; padding-right: 72px; border: 1px solid var(--line); background: var(--bg-soft); color: var(--ink-2); font: 12.5px/1.6 var(--mono); white-space: pre-wrap; overflow-wrap: anywhere; } .bib .copy { position: absolute; top: 8px; right: 8px; padding: 2px 9px; border: 1px solid var(--line-2); background: var(--bg); font: 400 12px/1.5 var(--font); color: var(--muted); cursor: pointer; } .bib .copy:hover { border-color: var(--ink); color: var(--ink); } .footer { border-top: 1px solid var(--line); } .footer .wrap { padding-top: 30px; padding-bottom: 40px; font-size: 13.5px; color: var(--muted); } .footer a { color: var(--muted); text-decoration: none; } .footer a:hover { color: var(--ink); } /* ---------- other pages (notes, writing, search) ---------- */ .page { padding-top: 48px; padding-bottom: 56px; } .post > h2:first-child, .posts > h1:first-child { margin: 0 0 24px; font: 600 32px/1.2 var(--serif); letter-spacing: -.01em; } .post > h2:first-child a { text-decoration: none; color: var(--muted); } .post { color: var(--ink-2); overflow-wrap: break-word; } .post h1, .post h2, .post h3, .post h4, .post h5 { margin: 1.8em 0 .6em; font-family: var(--serif); font-weight: 600; line-height: 1.3; color: var(--ink); } .post h1 { font-size: 24px; } .post h2 { font-size: 21px; } .post h3 { font-size: 18px; } .post h4, .post h5 { font-size: 16px; } .post p, .post ul, .post ol, .post pre, .post table, .post blockquote, .post figure { margin: 0 0 1em; } .post ul, .post ol { padding-left: 1.4em; } .post li + li, .post li > ul, .post li > ol { margin-top: .3em; } .post li > ul, .post li > ol { margin-bottom: 0; } .post strong, .post b { color: var(--ink); font-weight: 600; } .post img { height: auto; } .post img.mermaid { max-width: 200px; } .post code { padding: .1em .3em; background: var(--bg-soft); font: .88em/1.5 var(--mono); } .post pre { overflow-x: auto; padding: 14px 16px; border: 1px solid var(--line); background: var(--bg-soft); font: 13.5px/1.6 var(--mono); } .post pre code { padding: 0; background: none; font-size: inherit; } .post blockquote { padding-left: 1em; border-left: 2px solid var(--line-2); color: var(--muted); font-style: italic; } .post table { display: block; max-width: 100%; overflow-x: auto; border-collapse: collapse; font-size: 15px; } .post th, .post td { padding: 7px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; } .post th { font-weight: 600; color: var(--ink); border-bottom-color: var(--line-2); } .post hr { height: 1px; margin: 2em 0; border: 0; background: var(--line); } .post figcaption { font-size: 14px; color: var(--muted); } .post iframe { max-width: 100%; border: 0; } .post mjx-container[display="true"] { overflow-x: auto; overflow-y: hidden; max-width: 100%; } .post mjx-container:not([display="true"]) { /* long inline formulas scroll on their own instead of widening the page */ display: inline-block; max-width: 100%; overflow-x: auto; overflow-y: hidden; vertical-align: middle; padding-right: 6px; margin-right: -6px; } .post .meta { display: block; margin-top: 40px; font-size: 14px; color: var(--muted); } .post .meta a { color: var(--muted); } .posts > p, .posts > u, .posts > i { color: var(--muted); } .posts ul { margin: 16px 0 0; padding: 0; list-style: none; } .posts li { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 10px 0; border-top: 1px solid var(--line); } .posts li:last-child { border-bottom: 1px solid var(--line); } .posts li a { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-decoration: none; } .posts li a:hover { text-decoration: underline; text-decoration-color: var(--line-2); } .posts li time, .posts li div { flex: none; font-size: 13.5px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; } .page #search-input { padding: 10px 12px; border: 1px solid var(--line-2); background: var(--bg); color: var(--ink); font: inherit; } .page #search-input:focus { border-color: var(--ink); outline: none; } .page #results-container { margin: 12px 0; padding-left: 1.4em; } /* ---------- small screens ---------- */ @media (max-width: 640px) { .wrap { padding-left: 20px; padding-right: 20px; } .intro { gap: 20px; padding: 40px 0 44px; } .intro .photo { width: 96px; height: 96px; } .intro h1 { margin-top: 0; font-size: 30px; } .bio { font-size: 16px; } .section { padding-top: 44px; } .section-head h2 { font-size: 23px; } .pub { grid-template-columns: minmax(0, 1fr); gap: 16px; padding: 28px 0; } .thumb.contain { aspect-ratio: auto; } /* full-width here, so show non-16:9 clips at their own shape */ .thumb.contain video, .thumb.contain img { height: auto; } .page { padding-top: 32px; } .post > h2:first-child, .posts > h1:first-child { font-size: 27px; } .posts li { flex-direction: column; gap: 0; } .posts li a { white-space: normal; } } @media (max-width: 480px) { .intro { flex-direction: column; } } @media (pointer: coarse) { .btn.sm { padding: 6px 12px; } } @media print { [data-bib], .bib .copy { display: none !important; } }</style>
+<script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"},"svg":{"fontCache":"global","scale":1.0,"minScale":0.5,"mtextInheritFont":true,"merrorInheritFont":true,"mathmlSpacing":false,"skipAttributes":{},"exFactor":0.5},"chtml":{"scale":1.0,"minScale":0.5,"matchFontHeight":true,"mtextFont":"serif","linebreaks":{"automatic":false}}}</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js"></script>
+</head>
+<body>
+<main id="main" class="wrap page"><section class="post"><h2>Action-dependent Control Variates for Policy Optimization via Stein’s Identity</h2>
+<ul>
+<li>
+<strong>Resources</strong><ul><li>
+<a href="https://arxiv.org/abs/1710.11198">Paper</a> <br><br>
+</li></ul>
+</li>
+<li>
+<strong>Introduction</strong><ul>
+<li>Policy gradient = high variance</li>
+<li>Control Variate: subtract monte carlo gradient estimator by baseline which has 0 expectation<ul><li>Doesn’t introduce bias but in theory reduces variance</li></ul>
+</li>
+<li>Baseline choices<ul>
+<li>Constant (REINFORCE)</li>
+<li>State-dependent baseline like V(s) (A2C)</li>
+<li>Action dependent baseline (Q-Prop)</li>
+</ul>
+</li>
+<li>State-action dependent baselines could be more powerful but hard to design when expectation needs to be 0</li>
+<li>Use stein control variates (depends on stein’s identity) to create arbitrary baseline functions that depend on state and action</li>
+</ul>
+</li>
+<li>
+<strong>Background</strong><ul>
+<li>
+<strong>Reinforcement Learning and Policy Gradient</strong><ul>
+<li>Assume classical reinforcement learning and policy gradient settings</li>
+<li>Obtain trajectories, empirically find $\hat{Q}^\pi (s_t, a_t)$, and estimate $\nabla _\theta J(\theta)$<ul><li>$\hat{\nabla} _{\theta} J(\theta) = \frac{1}{n} \sum _{t = 1}^n \gamma ^{t-1} \nabla _\theta \log \pi(a_t \vert s_t) \hat{Q}^\pi (s_t, a_t)$</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Control Variate</strong><ul>
+<li>Control Variate: a function, $f(s,a)$ with a known expectation under $\tau$ which can be assumed to be 0</li>
+<li>Alternative unbiased estimator: $\hat{\mu} = \frac{1}{n} \sum _{t=1}^n (g(s_t, a_t) - f(s_t, a_t))$<ul>
+<li>Variance: $var _{\tau}(g - f) / n$</li>
+<li>When $f$ similar to $g$, (ideally: $f = g - \mu$), variance is reduced causing a better estimator</li>
+</ul>
+</li>
+<li>For A2C and REINFORCE, the baseline cannot be equal to $Q^\pi (s,a)$ because $\phi$ (the baseline) only depends on state and not action</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Policy Gradient with Stein Control Variate</strong><ul>
+<li>
+<strong>Stein’s Identity</strong><ul><li>Stein’s identity: $\mathbb{E} _{\pi(a \vert s)}[\nabla _a \log \pi(a \vert s) \phi(s,a) + \nabla_a \phi(s,a)] = 0$<ul>
+<li>$\phi(s,a)$ can be any function that hold for some conditions</li>
+<li>We can achieve zero-variance estimators for general monte carlo estimations</li>
+</ul>
+</li></ul>
+</li>
+<li>
+<strong>Stein Control Variate for Policy Gradient</strong><ul>
+<li>Cannot apply stein’s identity directly to policy gradient<ul>
+<li>Policy gradient takes gradients with respect to parameters, $\theta$</li>
+<li>Stein’s identity takes gradient with respect to actions</li>
+</ul>
+</li>
+<li>Reparameterization:<ul>
+<li>Let $a = f _\theta(s, \xi)$ where $\xi$ is random noise independent of $\theta$</li>
+<li>$\pi(a, \xi \vert s)$: joint distribution of $(a, \xi)$ conditioned on $s \Rightarrow \pi(a \vert s) = \int \pi(a \vert s, \xi) \pi(\xi) d\xi$<ul>
+<li>$\pi(\xi)$ is the noise generating distributions</li>
+<li>$\pi(a \vert s, \xi) = \delta(a - f(s, \xi))$</li>
+</ul>
+</li>
+<li>Reparameterized expectation: $\mathbb{E} _{\pi(a \vert s)}[\nabla _a \log \pi(a \vert s) \phi(s,a)] = \mathbb{E} _{\pi(a, \xi \vert s)}[\nabla _\theta f _{\theta}(s, \xi) \nabla_a \phi(s,a)]$</li>
+</ul>
+</li>
+<li>Stein Control Variate Policy Gradient Equation<ul>
+<li>$\nabla _{\theta} J(\theta) = \mathbb{E} _\pi [\nabla _{\theta} \log \pi (a \vert s) (\hat{Q}^\pi(s,a) - \phi(s,a)) + \nabla _{\theta} f _{\theta}(s, \xi) \nabla_a \phi(s,a)]$</li>
+<li>Estimator: $\hat{\nabla} _{\theta} J(\theta) = \frac{1}{n}\sum _{t=1}^n [\nabla _{\theta} \log \pi (a \vert s) (\hat{Q}^\pi(s,a) - \phi(s,a)) + \nabla _{\theta} f _{\theta}(s, \xi) \nabla_a \phi(s,a)]$</li>
+</ul>
+</li>
+<li>Relation to Q-Prop<ul>
+<li>Q-Prop creates a control variate using a taylor expansion; this is just a special $\phi$ with an action-independent gradient<ul><li>$\nabla_a \phi(s,a)$ in stein control variate becomes $\varphi(s)$</li></ul>
+</li>
+<li>We know that $\mathbb{E} _{\pi(\xi)}[\nabla _{\theta} f(s, \xi)] = \nabla _{\theta} \mathbb{E} _{\pi(\xi)}[f(s, \xi)] = \nabla _{\theta} \mu _{\pi}(s)$ which is th expectation of the action conditioned on $s$<ul><li>$\nabla _{\theta} f _{\theta}(s, \xi)$ becomes $\mu _{\pi}(s)$</li></ul>
+</li>
+<li>Baseline function: $\phi(s,a) = \hat{V}^\pi(s) + \langle \nabla_a \hat{Q}^\pi(s, \mu _{\pi}(s)), a - \mu _\pi(s)\rangle$</li>
+</ul>
+</li>
+<li>Relation to Reparameterization<ul>
+<li>Auxillary objective Function: $L_s(\theta) = \mathbb{E} _{\pi(a \vert s)}[\phi(s,a)] = \int \pi(a \vert s) \phi(s,a)da$</li>
+<li>Apply log derivative trick: $\nabla _\theta L_s(\theta) = \int \nabla _\theta \pi(a \vert s)\phi(s,a)da = \mathbb{E} _\pi(a \vert s)[\nabla _\theta \log \pi(a\vert s) \phi(s,a)]$</li>
+<li>Reparameterized gradient when $a = f _\theta(s, \xi)$ and $L_s = \mathbb{E} _{\pi(\xi)}[\phi(s, f _\theta(s,\xi))]$: $\mathbb{E} _{\pi(a, \xi \vert s)}[\nabla _\theta f _{\theta}(s, \xi) \nabla_a \phi(s,a)]$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Constructing Baseline Functions for Stein Control Variate</strong><ul>
+<li>Assume a parameteric form for baseline: $\phi_w(s,a)$</li>
+<li>If $\phi$ constructed on trajectory data = additional dependency + no longer unbiased (albeit negligible bias in practice)</li>
+<li>Estimating $\phi$ by fitting Q function<ul>
+<li>If $\phi(s,a) = Q^\pi(s,a)$, then the stein control variate policy gradient becomes an interpolation between log-likelihood and reparamterized policy gradients</li>
+<li>Leads to much smaller variances with an extreme case being a deterministic policy where log-likelihood policy gradient variance is infinite and reparametermized is close to 0<ul><li>In this scenario, we favor the reparameterized policy gradient</li></ul>
+</li>
+<li>We should set $\phi(s,a) = \hat{Q}^\pi(s,a)$ so that log-likelihood ratio term is small<ul><li>$min_w \sum _{t=1}^n(\phi_w(s_t, a_t) - R_t)^2$</li></ul>
+</li>
+</ul>
+</li>
+<li>Estimating $\phi$ by minimizing the variance<ul>
+<li>We know $var(\hat{\nabla} _{\theta} J(\theta)) = \mathbb{E}[(\hat{\nabla} _{\theta} J(\theta))^2] - \mathbb{E}[\hat{\nabla} _{\theta} J(\theta)]^2$<ul><li>$\mathbb{E}[\hat{\nabla} _{\theta} J(\theta)] = \hat{\nabla} _{\theta} J(\theta)$: doesn’t rely on $\phi$ therefore we can omit minimizing this</li></ul>
+</li>
+<li>$min_w \sum _{t=1}^n \vert\vert \nabla _\theta \log \pi(a_t\vert s_t)(\hat{Q}^\pi(s_t, a_t) - \phi_w (s_t, a_t)) + \nabla _\theta f(s_t, \xi_t) \nabla_a \phi_w(s_t, a_t)\vert\vert_2^2$<ul><li>Hard to implement efficiently due to gradients with $a$ and $\theta$; use an approximation instead</li></ul>
+</li>
+</ul>
+</li>
+<li>Architectures of $\phi$<ul>
+<li>Since $\phi$ and $Q$ are similar, decompose $\phi$: $\phi_2(s,a) = \hat{V}^\pi(s) + \psi_w (s,a)$</li>
+<li>New gradient: $\hat{\nabla} _{\theta}J(\theta) = \frac{1}{n} \sum _{t=1}^n [\nabla _{\theta} \log \pi(a_t \vert s_t)(\hat{A}^\pi(s_t, a_t) - \psi_w(s_t, a_t)) + \nabla _{\theta} f _{\theta}(s_t, \xi_t) \nabla_a \psi_w(s_t, a_t)]$<ul><li>Seperating $\hat{V}^\pi(s)$ from $\psi_w(s,a)$ works well because it provides an estimation of $\phi$ and allows us to improve on top of baseline</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Stein Control Variate for Gaussian Policies</strong><ul>
+<li>Gaussian policy: $\pi(a \vert s) = \mathcal{N}(a; \mu _{\theta_1}(s), \Sigma _{\theta_2}(s))$<ul><li>Mean and covariance are parameteric functions with parameters $\theta_1, \theta_2$ repsectively</li></ul>
+</li>
+<li>Policy gradient with respect to $\theta_1$: $\nabla _{\theta_1} J(\theta) = \mathbb{E} _\pi [\nabla _{\theta_1} \log \pi (a \vert s) (\hat{Q}^\pi(s,a) - \phi(s,a)) + \nabla _{\theta_1} \mu (s) \nabla_a \phi(s,a)]$</li>
+<li>Gradient with respect to variance parameter (for each coordinate $\theta_l$): $\nabla _{\theta_l} J(\theta) = \mathbb{E} _{\pi}[\nabla _{\theta_l} \log \pi (a \vert s) (Q^\pi(s,a) - \phi(s,a)) - \frac{1}{2} \langle \nabla_a \log \pi(a \vert s) \nabla_a \phi(s,a)^T, \nabla _{\theta_l} \Sigma \rangle]$<ul>
+<li>Angle brackets denote trace operator</li>
+<li>Can simplify further with stein’s identity: $\nabla _{\theta_l} J(\theta) = \mathbb{E} _{\pi}[\nabla _{\theta_l} \log \pi (a \vert s) (Q^\pi(s,a) - \phi(s,a)) - \frac{1}{2} \langle \nabla _{a,a} \phi(s,a), \nabla _{\theta_l} \Sigma \rangle]$<ul><li>Requires 2nd derivative but may have lower variance</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>PPO with Stein Control Variate</strong><ul>
+<li>Assumes a PPO-Penalty (KL Divergence penalty) loss function</li>
+<li>Rewrite gradient of PPO: $\nabla _{\theta} J _{ppo}(\theta) = \mathbb{E} _{\pi _{old}}[w _\pi(s,a) \nabla _\theta \log (a \vert s) Q^\pi _\lambda(s,a)]$<ul>
+<li>$w _\pi(s,a) = \frac{\pi _\theta(a \vert s)}{\pi _{old}(a \vert s)}$</li>
+<li>$Q^\pi _\lambda(s,a) = Q^\pi(s,a) + \lambda w _\pi(s,a)^{-1}$: second term from KL penalty</li>
+</ul>
+</li>
+<li>PPO Gradient with Stein Control Variates + Reparameterization: $\nabla _{\theta} J _{ppo}(\theta) = \mathbb{E} _{\pi _{old}}[w _{\pi}(s,a) (\nabla _{\theta} \log \pi (a \vert s)(Q^\pi _{\lambda}(s,a) - \phi(s,a)) + \nabla _{\theta} f _{\theta}(s,a)\nabla_a \phi(s,a))]$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Experiments</strong><ul>
+<li>Tested on MuJoCo continuous control environments</li>
+<li>Use gaussian policies<ul>
+<li>Estimate $\hat{V}^\pi$ seperately</li>
+<li>$\psi$ either minimizes MSE with Q value or minimizes variance</li>
+<li>3 Architecutures for $\psi$<ul>
+<li>Linear: $\psi_w (s,a) = \langle \nabla_a q_w(a, \mu _\pi(s)), (a - \mu _\pi(s)) \rangle$</li>
+<li>Quadratic: $\psi_w (s,a) = -(a - \mu_w(s))^T \Sigma^{-1}_2 (a - \mu_w(s))$<ul>
+<li>$\mu_w(s)$ is a neural network</li>
+<li>$\Sigma_w$: positive diagonal matrix independent of $s$</li>
+</ul>
+</li>
+<li>MLP: Neural network that concatenates state and action before passing into hidden layer and then an output layer</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Comparing the Variance of Different Gradient Estimators</strong><ul><li>Using MLP or quadratic result in significantly lower variance than regular valuye function baselines</li></ul>
+</li>
+<li>
+<strong>Comparison with Q-Prop Using TRPO for Policy Optimization</strong><ul>
+<li>Stein control variates outperform Q-Prop on all tasks<ul><li>Suprising because Q-Prop uses on-policy and off-policy data whereas Stein’s only uses on-policy</li></ul>
+</li>
+<li>Quadratic requires more iterations than MLP to converge in practice</li>
+</ul>
+</li>
+<li>
+<strong>PPO with Different Control Variates</strong><ul>
+<li>All three stein control variates outperform value function baselines</li>
+<li>Quadratic and MLP outperform linear in general</li>
+<li>Variance minimization usually works better with MLPs and MSE works better with Quadratic</li>
+<li>Variance minimization + MLP usually the best in most cases</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<span class="meta"><time datetime="2025-05-10T00:00:00+00:00">May 10, 2025</time> · <a href="/tags/research">research</a></span></section></main><footer class="footer"><div class="wrap"> © 2026 <a href="/">Samrat Sahoo</a>
+</div></footer><script src="/assets/js/site.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: https://samratsahoo.com/sitemap.xml

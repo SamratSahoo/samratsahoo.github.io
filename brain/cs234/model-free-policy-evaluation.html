@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>lecture 3 - model free policy evaluation · Samrat Sahoo</title>
+<meta name="generator" content="Jekyll v4.2.2">
+<meta property="og:title" content="lecture 3 - model free policy evaluation">
+<meta name="author" content="Samrat Sahoo">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="Resources: Lecture Video">
+<meta property="og:description" content="Resources: Lecture Video">
+<link rel="canonical" href="https://samratsahoo.com/brain/cs234/model-free-policy-evaluation">
+<meta property="og:url" content="https://samratsahoo.com/brain/cs234/model-free-policy-evaluation">
+<meta property="og:site_name" content="Samrat Sahoo">
+<meta property="og:image" content="https://samratsahoo.com/assets/img/og.jpg">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2024-05-03T00:00:00+00:00">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="twitter:image" content="https://samratsahoo.com/assets/img/og.jpg">
+<meta property="twitter:title" content="lecture 3 - model free policy evaluation">
+<meta name="twitter:site" content="@samratdotjs">
+<meta name="twitter:creator" content="@samratdotjs"> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Samrat Sahoo","url":"https://samratsahoo.com"},"dateModified":"2024-05-03T00:00:00+00:00","datePublished":"2024-05-03T00:00:00+00:00","description":"Resources: Lecture Video","headline":"lecture 3 - model free policy evaluation","image":"https://samratsahoo.com/assets/img/og.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://samratsahoo.com/brain/cs234/model-free-policy-evaluation"},"url":"https://samratsahoo.com/brain/cs234/model-free-policy-evaluation"}</script><meta name="color-scheme" content="light">
+<meta name="theme-color" content="#ffffff"> <script>document.documentElement.classList.add("js");</script><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&amp;display=swap">
+<link rel="icon" type="image/webp" href="/favicon.webp">
+<link rel="alternate" type="application/atom+xml" title="Samrat Sahoo" href="/atom.xml">
+<link rel="alternate" type="application/json" title="Samrat Sahoo" href="https://samratsahoo.com/feed.json">
+<link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml">
+<style> /* Palette and type follow the DATAFARM project page: warm neutrals, Inter for text, Source Serif 4 for headings, square corners, hairline rules. */ :root { --ink: #17181a; --ink-2: #35373b; --muted: #6b6e74; --line: #e4e4e1; --line-2: #c9c9c4; --bg: #fff; --bg-soft: #f7f7f5; --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; --serif: "Source Serif 4", Georgia, "Times New Roman", serif; --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; color-scheme: light; } *, *::before, *::after { box-sizing: border-box; } html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-padding-top: 24px; } body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.6 var(--font); -webkit-font-smoothing: antialiased; } h1, h2, h3, p { margin: 0; } img, video { display: block; max-width: 100%; } a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 2px; } a:hover { text-decoration-color: currentColor; } :focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; } ::selection { background: #e6e6e1; } .wrap { max-width: 880px; margin: 0 auto; padding: 0 28px; } .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; } .nw { white-space: nowrap; } html:not(.js) .js-only { display: none; } /* ---------- buttons ---------- */ .btn { display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; border: 1px solid var(--line-2); background: var(--bg); font: 400 14px/1.4 var(--font); color: var(--ink); text-decoration: none; white-space: nowrap; cursor: pointer; } .btn:hover { border-color: var(--ink); } .btn svg { width: 15px; height: 15px; opacity: .75; flex: none; } .btn.sm { padding: 3px 11px; font-size: 13px; } .btn[aria-expanded="true"] { border-color: var(--ink); } .btn.soon { color: var(--muted); border-color: var(--line); cursor: default; } /* ---------- homepage ---------- */ .intro { display: flex; align-items: flex-start; gap: 36px; padding: 64px 0 56px; } .intro picture { flex: none; } .intro .photo { width: 168px; height: 168px; object-fit: cover; } .intro-text { min-width: 0; } .intro h1 { margin: -4px 0 14px; font: 600 36px/1.15 var(--serif); letter-spacing: -.01em; } .bio { font-size: 16.5px; color: var(--ink-2); text-wrap: pretty; } .bio p + p { margin-top: 12px; } .bio strong { color: var(--ink); font-weight: 600; } .contact { display: flex; flex-wrap: wrap; gap: 10px; margin: 22px 0 0; padding: 0; list-style: none; } .section { padding: 56px 0 24px; border-top: 1px solid var(--line); } .section-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px; margin-bottom: 18px; } .section-head h2 { font: 600 27px/1.2 var(--serif); letter-spacing: -.005em; } .section-head .note { font-size: 13.5px; color: var(--muted); } .pubs { margin: 0; padding: 0; list-style: none; } .pub { display: grid; grid-template-columns: 224px minmax(0, 1fr); gap: 28px; padding: 26px 0; border-top: 1px solid var(--line); } .pub:first-child { border-top: 0; padding-top: 12px; } .thumb { display: block; aspect-ratio: 16 / 9; overflow: hidden; background: var(--bg-soft); } .thumb video, .thumb img { width: 100%; height: 100%; object-fit: cover; } .thumb.figure { background: #fff; outline: 1px solid var(--line); outline-offset: -1px; } .thumb.figure img, .thumb.contain video, .thumb.contain img { object-fit: contain; } html:not(.js) .thumb video { display: none; } /* without JS, show the noscript still rather than native controls */ .kicker { margin-bottom: 6px; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); } .pub-title { font: 600 19px/1.3 var(--serif); letter-spacing: -.005em; text-wrap: pretty; } .pub-title a { text-decoration: none; } .pub-title a:hover { text-decoration: underline; text-decoration-color: var(--line-2); } .authors { margin-top: 6px; font-size: 15px; color: var(--ink-2); } .authors a { color: inherit; text-decoration: none; } .authors a:hover { text-decoration: underline; text-decoration-color: var(--line-2); } .authors strong { color: var(--ink); font-weight: 600; } .summary { margin-top: 8px; font-size: 14.5px; line-height: 1.55; color: var(--muted); text-wrap: pretty; } .links { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 14px 0 0; padding: 0; list-style: none; } .bib { position: relative; margin-top: 12px; } .bib pre { margin: 0; padding: 14px 16px; padding-right: 72px; border: 1px solid var(--line); background: var(--bg-soft); color: var(--ink-2); font: 12.5px/1.6 var(--mono); white-space: pre-wrap; overflow-wrap: anywhere; } .bib .copy { position: absolute; top: 8px; right: 8px; padding: 2px 9px; border: 1px solid var(--line-2); background: var(--bg); font: 400 12px/1.5 var(--font); color: var(--muted); cursor: pointer; } .bib .copy:hover { border-color: var(--ink); color: var(--ink); } .footer { border-top: 1px solid var(--line); } .footer .wrap { padding-top: 30px; padding-bottom: 40px; font-size: 13.5px; color: var(--muted); } .footer a { color: var(--muted); text-decoration: none; } .footer a:hover { color: var(--ink); } /* ---------- other pages (notes, writing, search) ---------- */ .page { padding-top: 48px; padding-bottom: 56px; } .post > h2:first-child, .posts > h1:first-child { margin: 0 0 24px; font: 600 32px/1.2 var(--serif); letter-spacing: -.01em; } .post > h2:first-child a { text-decoration: none; color: var(--muted); } .post { color: var(--ink-2); overflow-wrap: break-word; } .post h1, .post h2, .post h3, .post h4, .post h5 { margin: 1.8em 0 .6em; font-family: var(--serif); font-weight: 600; line-height: 1.3; color: var(--ink); } .post h1 { font-size: 24px; } .post h2 { font-size: 21px; } .post h3 { font-size: 18px; } .post h4, .post h5 { font-size: 16px; } .post p, .post ul, .post ol, .post pre, .post table, .post blockquote, .post figure { margin: 0 0 1em; } .post ul, .post ol { padding-left: 1.4em; } .post li + li, .post li > ul, .post li > ol { margin-top: .3em; } .post li > ul, .post li > ol { margin-bottom: 0; } .post strong, .post b { color: var(--ink); font-weight: 600; } .post img { height: auto; } .post img.mermaid { max-width: 200px; } .post code { padding: .1em .3em; background: var(--bg-soft); font: .88em/1.5 var(--mono); } .post pre { overflow-x: auto; padding: 14px 16px; border: 1px solid var(--line); background: var(--bg-soft); font: 13.5px/1.6 var(--mono); } .post pre code { padding: 0; background: none; font-size: inherit; } .post blockquote { padding-left: 1em; border-left: 2px solid var(--line-2); color: var(--muted); font-style: italic; } .post table { display: block; max-width: 100%; overflow-x: auto; border-collapse: collapse; font-size: 15px; } .post th, .post td { padding: 7px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; } .post th { font-weight: 600; color: var(--ink); border-bottom-color: var(--line-2); } .post hr { height: 1px; margin: 2em 0; border: 0; background: var(--line); } .post figcaption { font-size: 14px; color: var(--muted); } .post iframe { max-width: 100%; border: 0; } .post mjx-container[display="true"] { overflow-x: auto; overflow-y: hidden; max-width: 100%; } .post mjx-container:not([display="true"]) { /* long inline formulas scroll on their own instead of widening the page */ display: inline-block; max-width: 100%; overflow-x: auto; overflow-y: hidden; vertical-align: middle; padding-right: 6px; margin-right: -6px; } .post .meta { display: block; margin-top: 40px; font-size: 14px; color: var(--muted); } .post .meta a { color: var(--muted); } .posts > p, .posts > u, .posts > i { color: var(--muted); } .posts ul { margin: 16px 0 0; padding: 0; list-style: none; } .posts li { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 10px 0; border-top: 1px solid var(--line); } .posts li:last-child { border-bottom: 1px solid var(--line); } .posts li a { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-decoration: none; } .posts li a:hover { text-decoration: underline; text-decoration-color: var(--line-2); } .posts li time, .posts li div { flex: none; font-size: 13.5px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; } .page #search-input { padding: 10px 12px; border: 1px solid var(--line-2); background: var(--bg); color: var(--ink); font: inherit; } .page #search-input:focus { border-color: var(--ink); outline: none; } .page #results-container { margin: 12px 0; padding-left: 1.4em; } /* ---------- small screens ---------- */ @media (max-width: 640px) { .wrap { padding-left: 20px; padding-right: 20px; } .intro { gap: 20px; padding: 40px 0 44px; } .intro .photo { width: 96px; height: 96px; } .intro h1 { margin-top: 0; font-size: 30px; } .bio { font-size: 16px; } .section { padding-top: 44px; } .section-head h2 { font-size: 23px; } .pub { grid-template-columns: minmax(0, 1fr); gap: 16px; padding: 28px 0; } .thumb.contain { aspect-ratio: auto; } /* full-width here, so show non-16:9 clips at their own shape */ .thumb.contain video, .thumb.contain img { height: auto; } .page { padding-top: 32px; } .post > h2:first-child, .posts > h1:first-child { font-size: 27px; } .posts li { flex-direction: column; gap: 0; } .posts li a { white-space: normal; } } @media (max-width: 480px) { .intro { flex-direction: column; } } @media (pointer: coarse) { .btn.sm { padding: 6px 12px; } } @media print { [data-bib], .bib .copy { display: none !important; } }</style>
+<script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"},"svg":{"fontCache":"global","scale":1.0,"minScale":0.5,"mtextInheritFont":true,"merrorInheritFont":true,"mathmlSpacing":false,"skipAttributes":{},"exFactor":0.5},"chtml":{"scale":1.0,"minScale":0.5,"matchFontHeight":true,"mtextFont":"serif","linebreaks":{"automatic":false}}}</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js"></script>
+</head>
+<body>
+<main id="main" class="wrap page"><section class="post"><h2>
+<a href="/brain/cs234" class="url">cs234</a> / lecture 3 - model free policy evaluation</h2>
+<p><strong>Resources:</strong></p>
+<ul><li><a href="https://youtu.be/dRIhrn8cc9w?feature=shared">Lecture Video</a></li></ul>
+<h3 id="dynamic-programming-policy-evaluation">Dynamic Programming Policy Evaluation</h3>
+<p><img class="mermaid" src="https://mermaid.ink/svg/eyJjb2RlIjoiZ3JhcGggVEQ7XG5zdWJncmFwaCBib290c3RyYXBcblMxLS0-QTE7XG5BMS0tPnxFeHBlY3RhdGlvbnxTMjtcbkExLS0-fEV4cGVjdGF0aW9ufFMzO1xuZW5kO1xuUzItLT5BMjtcblMzLS0-QTM7XG5BMi0tPnxFeHBlY3RhdGlvbnxTNDtcbkEyLS0-fEV4cGVjdGF0aW9ufFM1O1xuQTMtLT58RXhwZWN0YXRpb258UzY7XG5BMy0tPnxFeHBlY3RhdGlvbnxTNztcbiUlLVxuc3R5bGUgQTEgZmlsbDogI2ZmOTQ4Y1xuc3R5bGUgQTIgZmlsbDogI2ZmOTQ4Y1xuc3R5bGUgQTMgZmlsbDogI2ZmOTQ4YyIsIm1lcm1haWQiOnsidGhlbWUiOiJkZWZhdWx0In19"></p>
+<ul><li>
+<strong>Bootstrapping:</strong> Dynamic programming computes the highlighted area by bootstrapping the rest of the expected return with value estimate of $V _{k-1}$<ul><li>Update for $V$ uses an estimate as opposed to an exact value</li></ul>
+</li></ul>
+<h3 id="monte-carlo-policy-evaluation">Monte Carlo Policy Evaluation</h3>
+<ul>
+<li>Does not require an MDP dynamics or rewards</li>
+<li>No Bootstrapping</li>
+<li>Does not assume state is markov</li>
+<li>Can only be applied to episodic MDPs<ul>
+<li>Requires each episode to terminate</li>
+<li>Averaging returns over a complete episode</li>
+</ul>
+</li>
+<li>Value Function: $V^{\pi}(s) = E _{T \tilde{\pi}}[G_t \vert s_t = s]$<ul><li>Get the value over all possible trajectories and average them</li></ul>
+</li>
+<li>Done in an incremental fashion<ul><li>After each episode, $V^{\pi}(s)$ gets updated</li></ul>
+</li>
+<li>
+<strong>First-Visit Monte Carlo On Policy Evaluation Algorithm</strong><ul>
+<li>Initialize $N(s) = 0, G(s) = 0, \forall s \in S$ $\rightarrow N(s)$ is the number of times a state has been visited</li>
+<li>Loop<ul>
+<li>Take a sample episode $i = s _{i,1}, a _{i, 1}, r _{i, 1}, s _{i,2}, a _{i, 2}, r _{i, 2}, \dots s _{i,T}$</li>
+<li>Define $G _{i, t} = r _{i, t} + \gamma r _{i, t+1} + \dots$ as return from time step t onwards for the ith episode</li>
+<li>For each state, $s$, visited in episode i<ul><li>For the first time $t$ that state $s$ is visited in that episode<ul>
+<li>Increment $N(s)$: $N(s) = N(s) + 1$</li>
+<li>Increment total return: $G(s) = G(s) + G _{i, t}$</li>
+<li>Update Estimate $V^{\pi}(s) = G(s) / N(s)$</li>
+</ul>
+</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Every-Visit Monte Carlo On Policy Evaluation Algorithm</strong><ul>
+<li>Initialize $N(s) = 0, G(s) = 0, \forall s \in S$ $\rightarrow N(s)$ is the number of times a state has been visited</li>
+<li>Loop<ul>
+<li>Take a sample episode $i = s _{i,1}, a _{i, 1}, r _{i, 1}, s _{i,2}, a _{i, 2}, r _{i, 2}, \dots s _{i,T}$</li>
+<li>Define $G _{i, t} = r _{i, t} + \gamma r _{i, t+1} + \dots$ as return from time step t onwards for the ith episode</li>
+<li>For each state, $s$, visited in episode i<ul><li>For the <strong>every</strong> time $t$ that state $s$ is visited in that episode<ul>
+<li>Increment $N(s)$: $N(s) = N(s) + 1$</li>
+<li>Increment total return: $G(s) = G(s) + G _{i, t}$</li>
+<li>Update Estimate $V^{\pi}(s) = G(s) / N(s)$</li>
+</ul>
+</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Incremental Monte Carlo On Policy Evaluation Algorithm</strong><ul>
+<li>After each episode $i = s _{i,1}, a _{i, 1}, r _{i, 1}, s _{i,2}, a _{i, 2}, r _{i, 2}, \dots s _{i,T}$<ul>
+<li>Define $G _{i, t} = r _{i, t} + \gamma r _{i, t+1} + \dots$ as return from time step t onwards for the ith episode</li>
+<li>For each state, $s$, visited in episode i<ul>
+<li>Increment $N(s)$: $N(s) = N(s) + 1$</li>
+<li>Update Estimate: $V^{\pi}(s) = V^{\pi}(s) \frac{N(s) -1}{N(s)}+ \frac{G _{i,t}}{N(s)} = V^{\pi}(s) + \frac{1}{N(s)}(G _{i,t} - V^{\pi}(s))$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>We can rewrite the running mean (estimate) as follows: $V^{\pi}(s) + \alpha(G _{i,t} - V^{\pi}(s))$<ul>
+<li>If $\alpha = \frac{1}{N(s)}$: This is identical to every visit monte carlo</li>
+<li>If $\alpha &gt; \frac{1}{N(s)}$: Forget older data (good for non-stationary domains)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Limitations<ul>
+<li>High Variance estimator</li>
+<li>Requires episodic settings $\rightarrow$ episode must end before we can use it to update the value function</li>
+</ul>
+</li>
+</ul>
+<h3 id="bias-variance-and-mse">Bias, Variance, and MSE</h3>
+<ul>
+<li>
+<strong>Bias:</strong> Expected Value - True Value<ul><li>$Bias _{\theta}(\hat{\theta}) = E _{x\vert\theta}[\hat{\theta}] - \theta$</li></ul>
+</li>
+<li>
+<strong>Variance:</strong> $Var(\hat{\theta}) = E _{x\vert\theta}[(\hat{\theta} - E[\hat{\theta}])^2]$</li>
+<li>
+<strong>Mean Squared Error:</strong> $MSE(\hat{\theta}) = Var(\hat{\theta})^2 + Bias(\hat{\theta})^2$</li>
+</ul>
+<p><strong>Back to First Visit Monte Carlo:</strong></p>
+<ul><li>$V^{\pi}$ is an unbiased estimator of the true $E _{\pi}[G_t \vert s_t = s]$<ul><li>
+<strong>Consistent:</strong> By law of large numbers, as $N(s) \rightarrow \infty$, $V^{\pi}$ converges to $E _{\pi}[G_t \vert s_t = s]$</li></ul>
+</li></ul>
+<p><strong>Back to Every Visit Monte Carlo:</strong></p>
+<ul><li>$V^{\pi}$ is a biased estimator of the true $E _{\pi}[G_t \vert s_t = s]$<ul><li>Better MSE and still consistent</li></ul>
+</li></ul>
+<h3 id="temporal-difference-learning">Temporal Difference Learning</h3>
+<ul>
+<li>Model free approach that combines monte carlo and dynamic programming methods for policy evaluation $\rightarrow$ both bootstraps and samples<ul>
+<li>Can be used for episodic and infinite horizon settings</li>
+<li>Can immediately update estimates of $V$</li>
+</ul>
+</li>
+<li>Similar to incremental every visit monte carlo but instead of having to wait until the end of an episode to get $G_t$, we can estimate $V^\pi$ using our old estimate of our next state $\rightarrow r_t + \gamma V^\pi (s _{t+1})$ (bootstrapping)<ul>
+<li>$V^\pi(s_t) = V^\pi(s_t) + \alpha([r_t + \gamma V^\pi(s _{t+1})] - V^\pi(s_t))$</li>
+<li>TD Error: $\delta _t = r_t + \gamma V^\pi(s _{t+1}) - V^\pi(s_t)$<ul><li>TD Target: $r_t + \gamma V^\pi(s _{t+1})$</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Temporal Difference (0) Learning Algorithm</strong><ul>
+<li>Initialize $V^{\pi}(s) = 0 \forall s \in S$</li>
+<li>Loop<ul>
+<li>Sample $(s_t, a_t, r_t, s _{t+1})$</li>
+<li>Compute $V^\pi(s_t) = V^\pi(s_t) + \alpha([r_t + \gamma V^\pi(s _{t+1})] - V^\pi(s_t))$</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="dynamic-programming-vs-monte-carlo-vs-temporal-difference">Dynamic Programming vs Monte Carlo vs Temporal Difference</h3>
+<table>
+<thead><tr>
+<th style="text-align: left"> </th>
+<th style="text-align: left">Dynamic Programming</th>
+<th style="text-align: left">Monte Carlo</th>
+<th style="text-align: left">Temporal Difference</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align: left"><strong>Usable without a model of the domain</strong></td>
+<td style="text-align: left">✅</td>
+<td style="text-align: left">✅</td>
+<td style="text-align: left">✅</td>
+</tr>
+<tr>
+<td style="text-align: left"><strong>Usable with non-episodic domains</strong></td>
+<td style="text-align: left">✅</td>
+<td style="text-align: left"> </td>
+<td style="text-align: left">✅</td>
+</tr>
+<tr>
+<td style="text-align: left"><strong>Handles Non-Markovian domains</strong></td>
+<td style="text-align: left"> </td>
+<td style="text-align: left">✅</td>
+<td style="text-align: left"> </td>
+</tr>
+<tr>
+<td style="text-align: left"><strong>Converges to true value in limit</strong></td>
+<td style="text-align: left">✅</td>
+<td style="text-align: left">✅</td>
+<td style="text-align: left">✅</td>
+</tr>
+<tr>
+<td style="text-align: left"><strong>Unbiased estimate of value</strong></td>
+<td style="text-align: left"> </td>
+<td style="text-align: left">✅ (first visit)</td>
+<td style="text-align: left"> </td>
+</tr>
+</tbody>
+</table>
+<p>Properties to Evaluate Algorithms:</p>
+<ul>
+<li>Bias / Variance<ul>
+<li>Monte Carlo is unbiased + high variance + consistent</li>
+<li>Temporal Difference (0) has some bias + lower variance + converges with tabular representation (not necessarily with function approximation)</li>
+</ul>
+</li>
+<li>Data efficiency</li>
+<li>
+<p>Computational efficiency</p>
+<h3 id="batch-monte-carlo-and-temporal-difference">Batch Monte Carlo and Temporal Difference</h3>
+<ul>
+<li>Batch / Offline Solution for finite dataset:<ul>
+<li>Given K episodes</li>
+<li>Repeatedly sample an episode from K</li>
+<li>Apply TD(0) or MC until convergence</li>
+</ul>
+</li>
+<li>Monte Carlo in batch setting minimizes MSE<ul>
+<li>Minimize loss with respect to expected returns</li>
+<li>TD(0) converges DP policy $V^\pi$ for the MDP with the maximum likelihood model estimates</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul></section></main><footer class="footer"><div class="wrap"> © 2026 <a href="/">Samrat Sahoo</a>
+</div></footer><script src="/assets/js/site.js" defer></script>
+</body>
+</html>

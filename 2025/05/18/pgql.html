@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Combining Policy Gradient and Q-learning · Samrat Sahoo</title>
+<meta name="generator" content="Jekyll v4.2.2">
+<meta property="og:title" content="Combining Policy Gradient and Q-learning">
+<meta name="author" content="Samrat Sahoo">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="A paper about the policy gradient and Q-learning algorithm">
+<meta property="og:description" content="A paper about the policy gradient and Q-learning algorithm">
+<link rel="canonical" href="https://samratsahoo.com/2025/05/18/pgql">
+<meta property="og:url" content="https://samratsahoo.com/2025/05/18/pgql">
+<meta property="og:site_name" content="Samrat Sahoo">
+<meta property="og:image" content="https://samratsahoo.com/assets/img/og.jpg">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2025-05-18T00:00:00+00:00">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="twitter:image" content="https://samratsahoo.com/assets/img/og.jpg">
+<meta property="twitter:title" content="Combining Policy Gradient and Q-learning">
+<meta name="twitter:site" content="@samratdotjs">
+<meta name="twitter:creator" content="@samratdotjs"> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Samrat Sahoo","url":"https://samratsahoo.com"},"dateModified":"2025-05-18T00:00:00+00:00","datePublished":"2025-05-18T00:00:00+00:00","description":"A paper about the policy gradient and Q-learning algorithm","headline":"Combining Policy Gradient and Q-learning","image":"https://samratsahoo.com/assets/img/og.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://samratsahoo.com/2025/05/18/pgql"},"url":"https://samratsahoo.com/2025/05/18/pgql"}</script><meta name="color-scheme" content="light">
+<meta name="theme-color" content="#ffffff"> <script>document.documentElement.classList.add("js");</script><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&amp;display=swap">
+<link rel="icon" type="image/webp" href="/favicon.webp">
+<link rel="alternate" type="application/atom+xml" title="Samrat Sahoo" href="/atom.xml">
+<link rel="alternate" type="application/json" title="Samrat Sahoo" href="https://samratsahoo.com/feed.json">
+<link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml">
+<style> /* Palette and type follow the DATAFARM project page: warm neutrals, Inter for text, Source Serif 4 for headings, square corners, hairline rules. */ :root { --ink: #17181a; --ink-2: #35373b; --muted: #6b6e74; --line: #e4e4e1; --line-2: #c9c9c4; --bg: #fff; --bg-soft: #f7f7f5; --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; --serif: "Source Serif 4", Georgia, "Times New Roman", serif; --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; color-scheme: light; } *, *::before, *::after { box-sizing: border-box; } html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-padding-top: 24px; } body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.6 var(--font); -webkit-font-smoothing: antialiased; } h1, h2, h3, p { margin: 0; } img, video { display: block; max-width: 100%; } a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 2px; } a:hover { text-decoration-color: currentColor; } :focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; } ::selection { background: #e6e6e1; } .wrap { max-width: 880px; margin: 0 auto; padding: 0 28px; } .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; } .nw { white-space: nowrap; } html:not(.js) .js-only { display: none; } /* ---------- buttons ---------- */ .btn { display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; border: 1px solid var(--line-2); background: var(--bg); font: 400 14px/1.4 var(--font); color: var(--ink); text-decoration: none; white-space: nowrap; cursor: pointer; } .btn:hover { border-color: var(--ink); } .btn svg { width: 15px; height: 15px; opacity: .75; flex: none; } .btn.sm { padding: 3px 11px; font-size: 13px; } .btn[aria-expanded="true"] { border-color: var(--ink); } .btn.soon { color: var(--muted); border-color: var(--line); cursor: default; } /* ---------- homepage ---------- */ .intro { display: flex; align-items: flex-start; gap: 36px; padding: 64px 0 56px; } .intro picture { flex: none; } .intro .photo { width: 168px; height: 168px; object-fit: cover; } .intro-text { min-width: 0; } .intro h1 { margin: -4px 0 14px; font: 600 36px/1.15 var(--serif); letter-spacing: -.01em; } .bio { font-size: 16.5px; color: var(--ink-2); text-wrap: pretty; } .bio p + p { margin-top: 12px; } .bio strong { color: var(--ink); font-weight: 600; } .contact { display: flex; flex-wrap: wrap; gap: 10px; margin: 22px 0 0; padding: 0; list-style: none; } .section { padding: 56px 0 24px; border-top: 1px solid var(--line); } .section-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px; margin-bottom: 18px; } .section-head h2 { font: 600 27px/1.2 var(--serif); letter-spacing: -.005em; } .section-head .note { font-size: 13.5px; color: var(--muted); } .pubs { margin: 0; padding: 0; list-style: none; } .pub { display: grid; grid-template-columns: 224px minmax(0, 1fr); gap: 28px; padding: 26px 0; border-top: 1px solid var(--line); } .pub:first-child { border-top: 0; padding-top: 12px; } .thumb { display: block; aspect-ratio: 16 / 9; overflow: hidden; background: var(--bg-soft); } .thumb video, .thumb img { width: 100%; height: 100%; object-fit: cover; } .thumb.figure { background: #fff; outline: 1px solid var(--line); outline-offset: -1px; } .thumb.figure img, .thumb.contain video, .thumb.contain img { object-fit: contain; } html:not(.js) .thumb video { display: none; } /* without JS, show the noscript still rather than native controls */ .kicker { margin-bottom: 6px; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); } .pub-title { font: 600 19px/1.3 var(--serif); letter-spacing: -.005em; text-wrap: pretty; } .pub-title a { text-decoration: none; } .pub-title a:hover { text-decoration: underline; text-decoration-color: var(--line-2); } .authors { margin-top: 6px; font-size: 15px; color: var(--ink-2); } .authors a { color: inherit; text-decoration: none; } .authors a:hover { text-decoration: underline; text-decoration-color: var(--line-2); } .authors strong { color: var(--ink); font-weight: 600; } .summary { margin-top: 8px; font-size: 14.5px; line-height: 1.55; color: var(--muted); text-wrap: pretty; } .links { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 14px 0 0; padding: 0; list-style: none; } .bib { position: relative; margin-top: 12px; } .bib pre { margin: 0; padding: 14px 16px; padding-right: 72px; border: 1px solid var(--line); background: var(--bg-soft); color: var(--ink-2); font: 12.5px/1.6 var(--mono); white-space: pre-wrap; overflow-wrap: anywhere; } .bib .copy { position: absolute; top: 8px; right: 8px; padding: 2px 9px; border: 1px solid var(--line-2); background: var(--bg); font: 400 12px/1.5 var(--font); color: var(--muted); cursor: pointer; } .bib .copy:hover { border-color: var(--ink); color: var(--ink); } .footer { border-top: 1px solid var(--line); } .footer .wrap { padding-top: 30px; padding-bottom: 40px; font-size: 13.5px; color: var(--muted); } .footer a { color: var(--muted); text-decoration: none; } .footer a:hover { color: var(--ink); } /* ---------- other pages (notes, writing, search) ---------- */ .page { padding-top: 48px; padding-bottom: 56px; } .post > h2:first-child, .posts > h1:first-child { margin: 0 0 24px; font: 600 32px/1.2 var(--serif); letter-spacing: -.01em; } .post > h2:first-child a { text-decoration: none; color: var(--muted); } .post { color: var(--ink-2); overflow-wrap: break-word; } .post h1, .post h2, .post h3, .post h4, .post h5 { margin: 1.8em 0 .6em; font-family: var(--serif); font-weight: 600; line-height: 1.3; color: var(--ink); } .post h1 { font-size: 24px; } .post h2 { font-size: 21px; } .post h3 { font-size: 18px; } .post h4, .post h5 { font-size: 16px; } .post p, .post ul, .post ol, .post pre, .post table, .post blockquote, .post figure { margin: 0 0 1em; } .post ul, .post ol { padding-left: 1.4em; } .post li + li, .post li > ul, .post li > ol { margin-top: .3em; } .post li > ul, .post li > ol { margin-bottom: 0; } .post strong, .post b { color: var(--ink); font-weight: 600; } .post img { height: auto; } .post img.mermaid { max-width: 200px; } .post code { padding: .1em .3em; background: var(--bg-soft); font: .88em/1.5 var(--mono); } .post pre { overflow-x: auto; padding: 14px 16px; border: 1px solid var(--line); background: var(--bg-soft); font: 13.5px/1.6 var(--mono); } .post pre code { padding: 0; background: none; font-size: inherit; } .post blockquote { padding-left: 1em; border-left: 2px solid var(--line-2); color: var(--muted); font-style: italic; } .post table { display: block; max-width: 100%; overflow-x: auto; border-collapse: collapse; font-size: 15px; } .post th, .post td { padding: 7px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; } .post th { font-weight: 600; color: var(--ink); border-bottom-color: var(--line-2); } .post hr { height: 1px; margin: 2em 0; border: 0; background: var(--line); } .post figcaption { font-size: 14px; color: var(--muted); } .post iframe { max-width: 100%; border: 0; } .post mjx-container[display="true"] { overflow-x: auto; overflow-y: hidden; max-width: 100%; } .post mjx-container:not([display="true"]) { /* long inline formulas scroll on their own instead of widening the page */ display: inline-block; max-width: 100%; overflow-x: auto; overflow-y: hidden; vertical-align: middle; padding-right: 6px; margin-right: -6px; } .post .meta { display: block; margin-top: 40px; font-size: 14px; color: var(--muted); } .post .meta a { color: var(--muted); } .posts > p, .posts > u, .posts > i { color: var(--muted); } .posts ul { margin: 16px 0 0; padding: 0; list-style: none; } .posts li { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 10px 0; border-top: 1px solid var(--line); } .posts li:last-child { border-bottom: 1px solid var(--line); } .posts li a { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-decoration: none; } .posts li a:hover { text-decoration: underline; text-decoration-color: var(--line-2); } .posts li time, .posts li div { flex: none; font-size: 13.5px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; } .page #search-input { padding: 10px 12px; border: 1px solid var(--line-2); background: var(--bg); color: var(--ink); font: inherit; } .page #search-input:focus { border-color: var(--ink); outline: none; } .page #results-container { margin: 12px 0; padding-left: 1.4em; } /* ---------- small screens ---------- */ @media (max-width: 640px) { .wrap { padding-left: 20px; padding-right: 20px; } .intro { gap: 20px; padding: 40px 0 44px; } .intro .photo { width: 96px; height: 96px; } .intro h1 { margin-top: 0; font-size: 30px; } .bio { font-size: 16px; } .section { padding-top: 44px; } .section-head h2 { font-size: 23px; } .pub { grid-template-columns: minmax(0, 1fr); gap: 16px; padding: 28px 0; } .thumb.contain { aspect-ratio: auto; } /* full-width here, so show non-16:9 clips at their own shape */ .thumb.contain video, .thumb.contain img { height: auto; } .page { padding-top: 32px; } .post > h2:first-child, .posts > h1:first-child { font-size: 27px; } .posts li { flex-direction: column; gap: 0; } .posts li a { white-space: normal; } } @media (max-width: 480px) { .intro { flex-direction: column; } } @media (pointer: coarse) { .btn.sm { padding: 6px 12px; } } @media print { [data-bib], .bib .copy { display: none !important; } }</style>
+<script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"},"svg":{"fontCache":"global","scale":1.0,"minScale":0.5,"mtextInheritFont":true,"merrorInheritFont":true,"mathmlSpacing":false,"skipAttributes":{},"exFactor":0.5},"chtml":{"scale":1.0,"minScale":0.5,"matchFontHeight":true,"mtextFont":"serif","linebreaks":{"automatic":false}}}</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js"></script>
+</head>
+<body>
+<main id="main" class="wrap page"><section class="post"><h2>Combining Policy Gradient and Q-learning</h2>
+<ul>
+<li>
+<strong>Resources</strong><ul><li>
+<a href="https://arxiv.org/abs/1611.01626">Paper</a> <br><br>
+</li></ul>
+</li>
+<li>
+<strong>Introduction</strong><ul>
+<li>With action value techniques, we fit an action value function<ul>
+<li>SARSA is on-policy and fits Q function current policy</li>
+<li>Q learning is off-policy and directly finds optimal Q values</li>
+</ul>
+</li>
+<li>Policy gradients improve policy by updating parameters in direction of performance<ul><li>Actor-Critic methods are online and use an estimation of the action-value function (can be off-policy too)</li></ul>
+</li>
+<li>This paper derives link between Q values induced by policy and the policy itself (when policy is a fixed point of regularized policy gradient)<ul><li>Allows us to estimate Q values which can be refined with off-policy data</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Reinforcement Learning</strong><ul>
+<li>Assume standard reinforcement learning setting</li>
+<li>For PGQL, policy maps state-action pair to probability of taking that action in that state</li>
+<li>
+<strong>Action-Value Learning</strong><ul>
+<li>Approximate Q values using function approximators</li>
+<li>Update parameters so that Q values are as close as possible to fixed point of bellman equation<ul>
+<li>SARSA uses normal bellman operator</li>
+<li>Q learning uses optimal bellman operator (maximum over actions)</li>
+</ul>
+</li>
+<li>Bellman operator approximated via sampling + boostrapping in online setting</li>
+<li>Exploration happens via epsilon-greedy learning<ul><li>Alternatively, we can use boltzmann exploration which computes the softmax over Q values with a temperature: $\pi(s,a) = \frac{exp(Q(s,a)/T)}{\sum_b exp(Q(s,a)/T)}$</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Policy Gradient</strong><ul>
+<li>Parameterizes policy directly and improves it via gradient ascent</li>
+<li>In online case of policy gradient, we usually add an entropy regularizer for exploration (else policy becomes deterministic)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Regularized Policy Gradient Theorem</strong><ul>
+<li>
+<strong>Tabular Case</strong><ul>
+<li>Let:<ul>
+<li>$f(\theta) = \mathbb{E} _{s,a}[Q^\pi(s,a) \nabla _{\theta} \log \pi(s,a)] + \alpha \mathbb{E} _{s}[\nabla _{\theta}H(\pi_s)]$</li>
+<li>$g_s(\pi) \sum_a \pi(s,a)$</li>
+</ul>
+</li>
+<li>Fixed Point: When we can no longer update $\theta$ without violating a constraint<ul>
+<li>Constraints: $g_s(\pi) = 1$, $f(\theta)$ in span of vectors $\nabla _{\theta} g_s(\pi)$</li>
+<li>Fixed point must satisfy $f(\theta) = \sum_s \lambda_s \nabla _{\theta}g_s(\pi)$ s.t. $g_s(\pi) = 1$ where $\lambda_s$ is a lagrange multiplier for a state, $s$<ul>
+<li>Equal to: $\mathbb{E} _{s,a}[Q^\pi(s,a) - \alpha \log \pi(s,a) - c_s \nabla _{\theta} \pi(s,a)] = 0$<ul><li>$c_s$ absorbs all constants</li></ul>
+</li>
+<li>In tabular case, $\nabla _{\theta} \pi(s,a) = 1$ (single number for each state-action pair)</li>
+<li>We want to find: $Q^\pi(s,a) - \alpha \log \pi(s,a) - c_s = 0$</li>
+<li>Multiply by $\pi(a,s)$ and sum over $a \in \mathcal{A}$, $c_s = \alpha H^\pi(s) + V^\pi(s)$</li>
+<li>Final policy formulation: $\pi(s,a) = exp(A^\pi(s,a) / \alpha - H^\pi(s))$<ul>
+<li>Softmax over the advantage function</li>
+<li>$\alpha$ can be used as a temperature</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Estimate of Q values using policy formulation: $\tilde{Q}^\pi(s,a) = \tilde{A}(s,a) + V^\pi(s) = \alpha(\log \pi(s,a) + H^\pi(s)) + V^\pi(s)$<ul><li>Gradient: $\theta \propto \mathbb{E} _{s,a}[(Q^\pi(s,a) - \tilde{Q}^\pi(s,a)) \nabla _\theta \log \pi(s,a)]$</li></ul>
+</li>
+<li>When policy parameterized by softmax, action preferences are Q values scaled by $1/\alpha$</li>
+</ul>
+</li>
+<li>
+<strong>General Case</strong><ul>
+<li>Constrained optimization problem:<ul>
+<li>Minimize: $\mathbb{E} _{s,a}[(q(s,a) - \alpha \log \pi(s,a))^2]$</li>
+<li>Subject to: $\sum_a \pi(s,a) = 1, s \in \mathcal{S}$</li>
+</ul>
+</li>
+<li>Find $\theta$ which parameterize $\pi$</li>
+<li>Optimality Condition: $\mathbb{E} _{s,a}[(q(s,a) - \alpha \log \pi(s,a) + c_s)\nabla _\theta \log \pi(s,a)] = 0$<ul>
+<li>$c_s$ is the lagrange multiplier for a state</li>
+<li>If $q = Q^\pi$, we get same set of fixed points</li>
+<li>Fixed points of regularized policy gradient = regression of log policy onto Q values</li>
+</ul>
+</li>
+<li>Softmax formulation of policy only approximately holds<ul><li>We go ahead and estimate Q values using this formulation</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Connection to Action-Value Methods</strong><ul>
+<li>Actor critic methods arejust action-value fitting methods</li>
+<li>In Actor Critic<ul><li>Policy: $\pi^k(s,a) = exp(W^k(s,a) / \alpha) / \sum_b exp(W^k(s,b) / \alpha)$<ul>
+<li>$W^k$: action preferences at iteration k, parameterized by $\theta$</li>
+<li>Gradient: $\nabla _\theta \log \pi^k (s,a) = (1 / \alpha)(\nabla _{\theta}W^k(s,a) - \sum_b \pi^k(s,b) \nabla _\theta W^k(s,b))$</li>
+<li>Updates:<ul>
+<li>$\Delta \theta \propto \mathbb{E} _{s,a}[\delta _{ac}(\nabla _{\theta} W^k(s,a) - \sum_b \pi^k(s,b) \nabla _{\theta} W^k(s,b))]$</li>
+<li>$\Delta w \propto \mathbb{E} _{s,a}\delta _{ac} \nabla_w V^k(s)$<ul>
+<li>$w$: the parameters of $V$</li>
+<li>$\delta _{ac}$: critic minus baseline</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li></ul>
+</li>
+<li>In action-value methods<ul>
+<li>Q-Value Function: $Q(s,a) = Y^k(s,a) - \sum_b \mu(s,b) Y^k(s,b) + V^k(s)$<ul>
+<li>$\mu$: Probability distribution</li>
+<li>$Y^k$: parameterized function (by $\theta^k$)</li>
+</ul>
+</li>
+<li>Exploration Policy: Boltzmann distribution<ul><li>$pi^k(s,a) = exp(Y^k(s,a) / \alpha) / \sum_b exp(Y^k(s,b) / \alpha)$</li></ul>
+</li>
+<li>Updates:<ul>
+<li>$\Delta \theta \propto \mathbb{E} _{s,a}[\delta _{av}(\nabla _{\theta} Y^k(s,a) - \sum_b \mu(s,b) \nabla _{\theta} Y^k(s,b))]$</li>
+<li>$\Delta w \propto \mathbb{E} _{s,a}\delta _{av} \nabla_w V^k(s)$<ul><li>$\delta _{av}$: action-value error term</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Equivalence between methods<ul>
+<li>Policies identical if $W^k = Y^k$</li>
+<li>Updates identical if $\mu = \pi^k$</li>
+<li>Slightly modified action-value method is equivalent to actor-critic policy gradient</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Bellman Residual</strong><ul><li>We can show that $\vert \vert \mathcal{T}^\ast Q^{\pi _\alpha} -Q^{\pi _\alpha} \vert \vert \rightarrow 0$<ul>
+<li>$\mathcal{T}^\ast Q^{\pi _\alpha} \geq \mathcal{T}^{\pi _\alpha} Q^{\pi _\alpha} = Q^{\pi _\alpha}$</li>
+<li>$\Rightarrow \mathcal{T}^\ast Q^{\pi _\alpha}(s,a) - Q^{\pi _\alpha}(s,a) \geq 0$</li>
+<li>$= \mathcal{T}^\ast Q^{\pi _\alpha}(s,a) - \mathcal{T}^{\pi _{\alpha}} Q^{\pi _\alpha}(s,a) \geq 0$</li>
+<li>$= \mathbb{E} _{s’}[max_c Q^{\pi _\alpha}(s’, c) - \sum_b \pi _{\alpha}(s’, b)Q^{\pi _{\alpha}}(s’,b)]$</li>
+<li>$= \mathbb{E} _{s’}[\sum_b \pi _{\alpha}(s’, b) (max_c Q^{\pi _\alpha}(s’, c) - Q^{\pi _{\alpha}}(s’,b))]$</li>
+<li>$\leq \mathbb{E} _{s’}[\sum_b exp((Q^{\pi _{\alpha}}(s’, b) - Q^{\pi _\alpha}(s’, b^\ast)) / \alpha) (max_c Q^{\pi _\alpha}(s’, c) - Q^{\pi _{\alpha}}(s’,b))]$</li>
+<li>$= \mathbb{E} _{s’}[\sum_b f _{\alpha} (max_c Q^{\pi _\alpha}(s’, c) - Q^{\pi _{\alpha}}(s’,b))]$<ul>
+<li>$f _{\alpha}(x) = x exp(-x / \alpha)$</li>
+<li>Since $f _\alpha (x) \leq sup_x f _{\alpha}(x) = f _{\alpha}(\alpha) = ae^{-1}$, we get:<ul>
+<li>$0 \leq \mathcal{T}^\ast Q^{\pi _\alpha}(s,a) - Q^{\pi _\alpha}(s, a) \leq \vert \mathcal{A}\vert \alpha e^{-1}$</li>
+<li>This tells us the bellman residual converges to 0 with decreasing $\alpha$</li>
+<li>Also implies $\lim _{\alpha \rightarrow 0} Q^{\pi _\alpha} = Q^\ast$</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li></ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>PGQL</strong><ul>
+<li>
+<strong>PGQL Update</strong><ul>
+<li>Estimate of Q using policy: $\tilde{Q}^\pi(s,a) = \alpha(\log \pi(s,a) + H^{\pi}(s) + V(s))$<ul><li>Update parameters to reduce bellman residual similar to Q learning<ul>
+<li>$\Delta \theta \propto \mathbb{E} _{s,a}[(\mathcal{T}^\ast \tilde{Q}^\pi(s,a) - \tilde{Q}^\pi(s,a))\nabla _{\theta} \log \pi(s,a)]$</li>
+<li>$\Delta w \propto \mathbb{E} _{s,a}[(\mathcal{T}^\ast \tilde{Q}^\pi(s,a) - \tilde{Q}^\pi(s,a))\nabla_w V(s)]$</li>
+</ul>
+</li></ul>
+</li>
+<li>Full PGQL update combines regularized policy gradient with Q learning update<ul>
+<li>$\Delta \theta \propto (1 - \eta) \mathbb{E} _{s,a}[(Q^\pi-\tilde{Q}^\pi)\nabla _{\theta}\log \pi ] +\eta \mathbb{E} _{s,a}[(\mathcal{T}^\ast \tilde{Q}^\pi(s,a) - \tilde{Q}^\pi(s,a))\nabla _{\theta} \log \pi]$</li>
+<li>$\Delta w \propto (1-\eta) \mathbb{E} _{s,a}[(Q^\pi-\tilde{Q}^\pi)\nabla_w V] + \eta\mathbb{E} _{s,a}[(\mathcal{T}^\ast \tilde{Q}^\pi(s,a) - \tilde{Q}^\pi(s,a))\nabla_w V]$<ul>
+<li>$\eta$: Weighting parameter to control how much of each update to apply<ul>
+<li>$\eta = 0$: Entropy regularized policy gradient</li>
+<li>$\eta = 1$: Q learning variant</li>
+</ul>
+</li>
+<li>First term in updates encourage consistency with critic</li>
+<li>Second term in updates encourage optimality over time</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Interpretations:<ul>
+<li>Actor critic update where critic is weighted between standard and optimizing critic</li>
+<li>Update is a combination of expected SARSA and Q-learning<ul><li>Q values paramterized as sum of advantage and value functions</li></ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Practical Implementation</strong><ul>
+<li>We don’t have access to an exact critic, $Q^\pi$</li>
+<li>Instead agents interact with environment and update shared paramters of actor-critic algorithm<ul>
+<li>Policy + critic update online</li>
+<li>Maintains a replay buffer that is occasionally sampled and performs a step of Q learning on policy<ul>
+<li>Allows critic to accumulate MC return over many time periods</li>
+<li>Can prioritize important samples</li>
+<li>Reduces temporal correlation</li>
+<li>Acts as a regularizer to prevent policy from moving too far from bellman equations</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Modified Fixed Point</strong><ul>
+<li>PGQL updates modified the fixed point of the algorithm</li>
+<li>New Q value estimate: $\tilde{Q}^\pi = (1 - \eta)Q^\pi + \eta \mathcal{T}^\ast \tilde{Q}^\pi$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Numerical Experiments</strong><ul>
+<li>
+<strong>Grid World</strong><ul>
+<li>Tested against actor-critic where estimate of value function is used for critic and Q learning where an update is performed from replay buffer data</li>
+<li>Deterministic environment</li>
+<li>PGQL outperformed Actor-Critic and Q learning</li>
+</ul>
+</li>
+<li>
+<strong>Atari</strong><ul>
+<li>Compared against A3C + asynchronous version of deep Q learning</li>
+<li>PGQL performed the best 34 games, A3C in 7, and Q learning in 10<ul><li>6 games had two methods tie</li></ul>
+</li>
+<li>PGQL has highest mean + median in human starts</li>
+<li>PGQL only the worst in 1 game</li>
+<li>In every game that PGQL did not perform well, it had better data efficiency early on</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<span class="meta"><time datetime="2025-05-18T00:00:00+00:00">May 18, 2025</time> · <a href="/tags/research">research</a></span></section></main><footer class="footer"><div class="wrap"> © 2026 <a href="/">Samrat Sahoo</a>
+</div></footer><script src="/assets/js/site.js" defer></script>
+</body>
+</html>
